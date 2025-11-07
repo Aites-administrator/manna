@@ -1,0 +1,59 @@
+﻿Imports T.R.ZCommonClass.clsCommonFnc
+Imports T.R.ZCommonClass.clsGlobalData
+
+Public Class TxtItemType2Code
+  Inherits TxtNumericBase
+
+  ' 商品分類コード２入力用テキストボックス
+
+#Region "コンストラクタ"
+
+  Public Sub New()
+    ' 数値3桁のみ入力可
+    MyBase.New(3)
+    ' フォーカス時、表示メッセージ設定
+    MyBase.SetMsgLabelText("商品分類コード２を入力してください。")
+  End Sub
+#End Region
+
+#Region "初期化処理"
+  ' コントロール配置
+  Protected Overrides Sub InitLayout()
+    Me.TextAlign = HorizontalAlignment.Left
+  End Sub
+#End Region
+
+#Region "イベントプロシージャー"
+  Private Sub TxtDateBase_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Validating
+    Dim tmpDateText As String = String.Empty
+    With Me
+
+      ' 商品分類コード２が空白の場合
+      If String.IsNullOrWhiteSpace(.Text) Then
+        Return
+      End If
+
+      .Text = StringToInt(.Text).ToString(PRODUCTCLS2_ZERO_PADDING)
+
+    End With
+
+  End Sub
+
+  Private Sub TxtDateBase_Leave(sender As Object, e As EventArgs) Handles Me.Leave
+
+    Dim tmpDateText As String = String.Empty
+    With Me
+
+      ' 商品分類コード２が空白の場合
+      If String.IsNullOrWhiteSpace(.Text) Then
+        Return
+      End If
+
+      .Text = StringToInt(.Text).ToString(PRODUCTCLS2_ZERO_PADDING)
+
+    End With
+  End Sub
+
+#End Region
+
+End Class

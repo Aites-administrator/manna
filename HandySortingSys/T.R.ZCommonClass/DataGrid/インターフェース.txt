@@ -1,0 +1,198 @@
+      IDgvForm02
+
+
+  ************
+      iDgvForm02
+  ''' 
+  ''' VisualStudioのツール>コード スニペット マネージャーの​インポートボタンで登録します
+  ''' 
+#region "データグリッドビュー２つの画面用操作関連共通"
+  '１つ目のDataGridViewオブジェクト格納先
+  Private DG2V1 As DataGridView
+  '２つ目のDataGridViewオブジェクト格納先
+  Private DG2V2 As DataGridView
+
+  ''' <summary>
+  ''' 初期化処理
+  ''' </summary>
+  ''' <remarks>
+  ''' コントロールの初期化（Form_Loadで実行して下さい）
+  ''' </remarks>
+  Private Sub InitForm02() Implements IDgvForm02.InitForm02
+
+    '１つ目のDataGridViewオブジェクトの設定
+    DG2V1 = Me.DataGridView1
+    '２つ目のDataGridViewオブジェクトの設定
+    DG2V2 = Me.DataGridView2
+
+    ' グリッド初期化
+    Call InitGrid(DG2V1, CreateGrid2Src1(), CreateGrid2Layout1())
+
+    With DG2V1
+
+      '１つ目のDataGridViewオブジェクトを表示する
+      .Visible = True
+
+      'デフォルトスタイルを無効にする
+      .EnableHeadersVisualStyles = False
+
+      '列ヘッダ
+      .ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+
+      'セル、行、列が複数選択されないようにする
+      .MultiSelect = False
+
+      'セルを選択すると行全体が選択されるようにする
+      .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
+      '行の高さをユーザーが変更できないようにする
+      .AllowUserToResizeRows = False
+
+      '行ヘッダーを非表示にする
+      .RowHeadersVisible = False
+
+      'ユーザーが新しい行を追加できないようにする
+      .AllowUserToAddRows = False
+
+      ' １つ目のDataGridViewオブジェクトのグリッド動作設定
+      With Controlz(.Name)
+        ' １つ目のDataGridViewオブジェクトの固定列設定
+        '.FixedRow = 2
+
+        ' １つ目のDataGridViewオブジェクトの検索コントロール設定
+        '.AddSearchControl([コントロール], "絞り込み項目名", [絞り込み方法], [絞り込み項目の型])
+
+        ' １つ目のDataGridViewオブジェクトの編集可能列設定
+        .EditColumnList = CreateGrid2EditCol1()
+      End With
+    End With
+
+    Call InitGrid(DG2V2, CreateGrid2Src2(), CreateGrid2Layout2())
+
+    With DG2V2
+
+      '２つ目のDataGridViewオブジェクトを非表示する
+      .Visible = False
+
+      'デフォルトスタイルを無効にする
+      .EnableHeadersVisualStyles = False
+
+      '列ヘッダ
+      .ColumnHeadersDefaultCellStyle.BackColor = Color.LightGray
+
+      'セル、行、列が複数選択されないようにする
+      .MultiSelect = False
+
+      'セルを選択すると行全体が選択されるようにする
+      .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
+      '行の高さをユーザーが変更できないようにする
+      .AllowUserToResizeRows = False
+
+      '行ヘッダーを非表示にする
+      .RowHeadersVisible = False
+
+      'ユーザーが新しい行を追加できないようにする
+      .AllowUserToAddRows = False
+
+      ' ２つ目のDataGridViewオブジェクトのグリッド動作設定
+      With Controlz(.Name)
+
+        ' ２つ目のDataGridViewオブジェクトの検索コントロール設定
+        '.AddSearchControl([コントロール], "絞り込み項目名", [絞り込み方法], [絞り込み項目の型])
+
+        ' ２つ目のDataGridViewオブジェクトの編集可能列設定
+        .EditColumnList = CreateGrid2EditCol2()
+      End With
+    End With
+
+  End Sub
+
+  ''' <summary>
+  ''' １つ目のDataGridViewオブジェクトの一覧表示データ抽出SQL文作成
+  ''' </summary>
+  ''' <returns>作成したSQL文</returns>
+  ''' <remarks>
+  '''   画面毎の抽出内容をここに記載する
+  ''' </remarks>
+  Private Function CreateGrid2Src1() As String Implements IDgvForm02.CreateGrid2Src1
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT * "
+    sql &= " FROM XXXX "
+
+    Return sql
+  End Function
+
+  ''' <summary>
+  ''' １つ目のDataGridViewオブジェクトの一覧表示レイアウト設定作成
+  ''' </summary>
+  ''' <returns>作成したレイアウト</returns>
+  Public Function CreateGrid2Layout1() As List(Of clsDGVColumnSetting) Implements IDgvForm02.CreateGrid2Layout1
+    Dim ret As New List(Of clsDGVColumnSetting)
+
+    With ret
+      ' .Add(New clsDGVColumnSetting("タイトル", "データソース", argTextAlignment:=[表示位置]))
+    End With
+
+    Return ret
+  End Function
+
+  ''' <summary>
+  ''' １つ目のDataGridViewオブジェクトの一覧表示編集可能カラム設定
+  ''' </summary>
+  ''' <returns>作成した編集可能カラム配列</returns>
+  Public Function CreateGrid2EditCol1() As List(Of clsDataGridEditTextBox) Implements IDgvForm02.CreateGrid2EditCol1
+    Dim ret As New List(Of clsDataGridEditTextBox)
+
+    With ret
+      ’.Add(New clsDataGridEditTextBox("タイトル", prmUpdateFnc:=AddressOf [更新時実行関数], prmValueType:=[データ型]))
+
+    End With
+
+    Return ret
+  End Function
+
+  ''' <summary>
+  ''' ２つ目のDataGridViewオブジェクトの一覧表示データ抽出SQL文作成
+  ''' </summary>
+  ''' <returns>作成したSQL文</returns>
+  ''' <remarks>
+  '''   画面毎の抽出内容をここに記載する
+  ''' </remarks>
+  Private Function CreateGrid2Src2() As String Implements IDgvForm02.CreateGrid2Src2
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT * "
+    sql &= " FROM XXXX "
+
+    Return sql
+  End Function
+
+  ''' <summary>
+  ''' ２つ目のDataGridViewオブジェクトの一覧表示レイアウト設定作成
+  ''' </summary>
+  ''' <returns>作成したレイアウト</returns>
+  Public Function CreateGrid2Layout2() As List(Of clsDGVColumnSetting) Implements IDgvForm02.CreateGrid2Layout2
+    Dim ret As New List(Of clsDGVColumnSetting)
+
+    With ret
+      ' .Add(New clsDGVColumnSetting("タイトル", "データソース", argTextAlignment:=[表示位置]))
+    End With
+
+    Return ret
+  End Function
+
+  ''' <summary>
+  ''' ２つ目のDataGridViewオブジェクトの一覧表示編集可能カラム設定
+  ''' </summary>
+  ''' <returns>作成した編集可能カラム配列</returns>
+  Public Function CreateGrid2EditCol2() As List(Of clsDataGridEditTextBox) Implements IDgvForm02.CreateGrid2EditCol2
+    Dim ret As New List(Of clsDataGridEditTextBox)
+
+    With ret
+      ’.Add(New clsDataGridEditTextBox("タイトル", prmUpdateFnc:=AddressOf [更新時実行関数], prmValueType:=[データ型]))
+    End With
+
+    Return ret
+  End Function
