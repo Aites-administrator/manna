@@ -123,7 +123,55 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Button\BtnAddNew.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnClear.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnCopy.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnDelete.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnDetail.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnEdit.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnEnabled.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Button\BtnEnd.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnExcel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnPrint.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnRegist.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnSend.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\ButtonCancel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\ButtonReflesh.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\ButtoSyuka.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\ButtoUpdate.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\ButtoEnd.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Button\BtnBase.vb">
@@ -135,7 +183,67 @@
     <Compile Include="ComboBox\CmbDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ComboBox\CmbDateShiirebi.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateShukaBi.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateKakouHani.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateKakouBi.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateProcessing.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateTanaorosi.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComboBox\CmbMstBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstCattle.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstCustomer.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstGBFlg.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstIngredient.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstKikaku.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstOriginPlace.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstHenpin.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstRating.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstRatioSetting.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstRecipe.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstRecipeType.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstSetType.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbMstShiresaki.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbMstStaff.vb">
@@ -187,28 +295,160 @@
     <Compile Include="TextAndLabel\TxtLblMstBase.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstGB.Designer.vb">
+      <DependentUpon>TxtLblMstGB.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstGB.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstGensanchi.Designer.vb">
+      <DependentUpon>TxtLblMstGensanchi.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstGensanchi.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstItem.Designer.vb">
+      <DependentUpon>TxtLblMstItem.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstItem.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstKakuduke.Designer.vb">
+      <DependentUpon>TxtLblMstKakuduke.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstKakuduke.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstKikaku.Designer.vb">
+      <DependentUpon>TxtLblMstKikaku.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstKikaku.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstShiresaki.Designer.vb">
+      <DependentUpon>TxtLblMstShiresaki.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstShiresaki.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstStaff.Designer.vb">
+      <DependentUpon>TxtLblMstStaff.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstStaff.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstSyubetsu.Designer.vb">
+      <DependentUpon>TxtLblMstSyubetsu.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TextAndLabel\TxtLblMstSyubetsu.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="TextAndLabel\TxtLblMstTojyo.Designer.vb">
       <DependentUpon>TxtLblMstTojyo.vb</DependentUpon>
     </Compile>
     <Compile Include="TextAndLabel\TxtLblMstTojyo.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TextBox\TxtBachCount.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TextBox\TxtBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtBaika.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TextBox\TxtDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TextBox\TxtIngredientCode.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtIngredientName.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtIngredientCode2.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TextBox\TxtMstBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstBlockCode.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstComment.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstCustomer.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstGB.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstGensanchi.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstItem.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstKakuduke.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstKikaku.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstManufacturing.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstShiresaki.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstStaff.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstSyubetsu.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtMstTojyo.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtCartonNumber.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TextBox\TxtPassWord.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TextBox\TxtRecipeCode.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtRecipeName.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtRecipeOrgCode.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtRecipeRatio.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TextBox\TxtSignedNumericBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TextBox\TxtJyuryo.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtTanka.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtKotaiNo.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtEdaban.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TextBox\TxtNumericBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TextBox\TxtWeitghtKg.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
@@ -234,6 +474,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TextAndLabel\TxtLblMstBase.resx">
       <DependentUpon>TxtLblMstBase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextAndLabel\TxtLblMstGB.resx">
+      <DependentUpon>TxtLblMstGB.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextAndLabel\TxtLblMstGensanchi.resx">
+      <DependentUpon>TxtLblMstGensanchi.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextBox\TxtKotaiNo.resx">
+      <DependentUpon>TxtKotaiNo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextBox\TxtWeitghtKg.resx">
+      <DependentUpon>TxtWeitghtKg.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -261,16 +513,25 @@
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Resources\ButtonCancel.png" />
+    <None Include="Resources\ButtonCancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonEnd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonPrint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonUpdate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButtonSyuka.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Resources\ButtonCancelS.png" />
-    <Content Include="Resources\ButtonEnd.png" />
     <Content Include="Resources\ButtonEndS.png" />
-    <Content Include="Resources\ButtonPrint.png" />
     <Content Include="Resources\ButtonReflesh.png" />
-    <Content Include="Resources\ButtonSyuka.png" />
-    <Content Include="Resources\ButtonUpdate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
