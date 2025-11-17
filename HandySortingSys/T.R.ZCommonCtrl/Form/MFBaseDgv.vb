@@ -24,11 +24,14 @@ Public Class MFBaseDgv
   ''' <param name="prmGridSrcSql">一覧表示内容（SQL文）</param>
   ''' <param name="prmGridLayout">一覧表示レイアウト</param>
   ''' <param name="prmGridSelecter">行セレクター設定オブジェクト</param>
+  ''' <param name="prmDatabase">データベースオブジェクト</param>
+  ''' <param name="prmRequiredCondition">検索条件必須フラグ</param>
   Public Sub InitGrid(prmDgv As DataGridView _
                    , prmGridSrcSql As String _
                    , prmGridLayout As List(Of clsDGVColumnSetting) _
                    , Optional prmGridSelecter As clsDataGridSelecter = Nothing _
-                   , Optional prmSelectionMode As DataGridViewSelectionMode = DataGridViewSelectionMode.CellSelect)
+                   , Optional prmDatabase As clsComDatabase = Nothing _
+                   , Optional prmRequiredCondition As Boolean = False)
 
     Dim tmpDataGrid As clsDataGrid = Nothing
 
@@ -36,14 +39,14 @@ Public Class MFBaseDgv
       ' 二回目の初期化に対応してません
 
     Else
-      tmpDataGrid = New clsDataGrid(prmDgv, prmGridSrcSql, prmGridLayout, prmGridSelecter)
+      tmpDataGrid = New clsDataGrid(prmDgv, prmGridSrcSql, prmGridLayout, prmGridSelecter, prmRequiredCondition)
       Call Controlz.Add(prmDgv.Name, tmpDataGrid)
-      With tmpDataGrid
-        .SqlCon = New clsSqlServer
-      End With
+      If prmDatabase Is Nothing Then
+        tmpDataGrid.SqlCon = New clsSqlServer
+      Else
+        tmpDataGrid.SqlCon = prmDatabase
+      End If
     End If
-
-    prmDgv.SelectionMode = prmSelectionMode
 
   End Sub
 
@@ -66,6 +69,12 @@ Public Class MFBaseDgv
 
   End Sub
 
+  Public Overloads Sub AllClear(Optional prmExclusionControls As List(Of Control) = Nothing)
+    For Each tmpDgvName In Controlz.Keys
+      Controlz(tmpDgvName).ClearSearchCondition(prmExclusionControls)
+    Next
+    MyBase.AllClear(prmExclusionControls)
+  End Sub
 #End Region
 
 #End Region
@@ -80,6 +89,20 @@ Public Class MFBaseDgv
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     ' DataGridView保持用連想配列初期化
     Controlz = New Dictionary(Of String, clsDataGrid)
+  End Sub
+
+  ''' <summary>
+  ''' キー押下時
+  ''' </summary>
+  ''' <param name="sender"></param>
+  ''' <param name="e"></param>
+  Private Sub BaseForm_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles MyBase.KeyDown
+    'Control+Rの時再表示を行う
+    If (e.Modifiers And Keys.Control) = Keys.Control And e.KeyCode = Keys.R Then
+      For Each tmpDataGrid As clsDataGrid In Controlz.Values
+        tmpDataGrid.ShowList()
+      Next
+    End If
   End Sub
 
 #End Region
