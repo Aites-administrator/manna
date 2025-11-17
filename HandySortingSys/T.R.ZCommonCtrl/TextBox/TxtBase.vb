@@ -1,21 +1,8 @@
-﻿Imports System.Runtime.InteropServices
-Imports T.R.ZCommonClass
-Imports T.R.ZCommonClass.clsCommonFnc
-
-Public Class TxtBase
+﻿Public Class TxtBase
   Inherits TextBox
 
-#Region "定数定義"
-  Private Const WM_PASTE As Integer = &H302
-  Private Const WM_LBUTTONDOWN As Integer = &H201
-  Private Const WM_RBUTTONDOWN As Integer = &H204
-  Private Const WM_MBUTTONDOWN As Integer = &H207
-  Private Const WM_LBUTTONDBLCLK As Integer = &H203
-  Private Const WM_MBUTTONDBLCLK As Integer = &H206
-  Private Const WM_SETFOCUS As Integer = &H7
-#End Region
-
 #Region "メンバ"
+
 #Region "プライベート"
   ' フォーカス取得フラグ
   ' マウスでのフォーカス移動時の全選択に使用
@@ -32,25 +19,14 @@ Public Class TxtBase
   Private _MaxChar As Integer
 
   ''' <summary>
-  ''' Multiline設定時、改行入力可能設定
-  ''' </summary>
-  Private _MultiLineInput As Boolean = False
-
-  ''' <summary>
   ''' 最終入力テキスト
   ''' </summary>
   Private _LastText As String
 
   ''' <summary>
-  ''' デフォルト背景色
+  ''' フォーカス時文字列全選択有効フラグ
   ''' </summary>
-  Private _BackColor As Color
-
-  ''' <summary>
-  ''' フォーカス選択不可設定
-  ''' </summary>
-  Private _NoFocus As Boolean = False
-
+  Private _DisableAllSelect As Boolean = False
 #End Region
 
 #Region "パブリック"
@@ -58,7 +34,7 @@ Public Class TxtBase
   Delegate Sub CallBackValidated(sender As Object, e As EventArgs)
   Public lcCallBackValidated As CallBackValidated = Nothing
 
-  Delegate Sub CallBackSetText()
+  Delegate Sub CallBackSetText(sender As Object)
   Public lcCallBackSetText As CallBackSetText = Nothing
 
 #End Region
@@ -81,23 +57,6 @@ Public Class TxtBase
     End Get
   End Property
 
-  ''' <summary>
-  ''' Multiline設定時、改行入力可能設定
-  ''' </summary>
-  ''' <returns>True：改行入力可能、False:改行入力不可</returns>
-  Public Property MultiLineInput As Boolean
-    Get
-      Return _MultiLineInput
-    End Get
-    Set(value As Boolean)
-      _MultiLineInput = value
-    End Set
-  End Property
-
-  ''' <summary>
-  ''' Textプロパティのオーバーライド
-  ''' </summary>
-  ''' <returns></returns>
   Public Overrides Property Text As String
     Get
       Return MyBase.Text
@@ -106,7 +65,7 @@ Public Class TxtBase
       MyBase.Text = value
 
       If lcCallBackSetText IsNot Nothing Then
-        Call lcCallBackSetText()
+        Call lcCallBackSetText(Me)
       End If
 
       If _LastText <> value Then
@@ -117,18 +76,17 @@ Public Class TxtBase
   End Property
 
   ''' <summary>
-  ''' フォーカス選択不可設定
+  ''' フォーカス時全選択無効設定
   ''' </summary>
-  ''' <returns>True：選択可能、False:選択不可</returns>
-  Public Property NoFocus As Boolean
+  ''' <returns></returns>
+  Public Property DisableAllSelect As Boolean
     Get
-      Return _NoFocus
+      Return _DisableAllSelect
     End Get
     Set(value As Boolean)
-      _NoFocus = value
+      _DisableAllSelect = value
     End Set
   End Property
-
 #End Region
 
 #End Region
@@ -189,26 +147,22 @@ Public Class TxtBase
 #End Region
 
 #Region "イベントプロシージャー"
-  Private Sub TxtBase_TextChanged(sender As Object, e As EventArgs) Handles Me.TextChanged
-
-    Dim wkText As TextBox = CType(sender, TextBox)
-    clsCommonFnc.SetLeftMargin(wkText.Handle, 10)
-
-  End Sub
-
   Private Sub TxtBase_MousUp(sender As Object, e As EventArgs) Handles Me.MouseUp
     If _OnFocus Then
       _OnFocus = False
-      sender.SelectAll()
+      If _DisableAllSelect = False Then
+        sender.SelectAll()
+      End If
     End If
   End Sub
 
   Private Sub TxtBase_OnEnter(sender As Object, e As EventArgs) Handles Me.Enter
-    sender.SelectAll()
-    _OnFocus = True
+    Dim tmpTextBox = DirectCast(sender, TextBox)
 
-    _BackColor = Me.BackColor
-    Me.BackColor = Color.Aqua
+    If _DisableAllSelect = False Then
+      sender.SelectAll()
+    End If
+    _OnFocus = True
 
     'メッセージラベルの定義が未設定の場合
     If _msgLabel Is Nothing Then
@@ -220,9 +174,6 @@ Public Class TxtBase
 
   End Sub
 
-  Private Sub TxtBase_Leave(sender As Object, e As EventArgs) Handles Me.Leave
-    Me.BackColor = _BackColor
-  End Sub
   ''' <summary>
   ''' キー入力時処理
   ''' </summary>
@@ -236,15 +187,6 @@ Public Class TxtBase
         e.Handled = True
       End If
     End If
-
-    ' 改行入力不可の場合
-    If (MultiLineInput = False) Then
-      If e.KeyChar = vbCr Then
-        e.Handled = True
-      End If
-    End If
-
-    e.KeyChar = ComXmlEscapeToZenkaku(e.KeyChar)
 
   End Sub
 
@@ -270,36 +212,4 @@ Public Class TxtBase
 
 #End Region
 
-#Region "プロテクテッド"
-
-  ''' <summary>
-  ''' WndProcメソッドオーバーライド(フォーカス選択不可判定）
-  ''' </summary>
-  ''' <param name="m"></param>
-  Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
-
-    If (NoFocus) Then
-      Select Case m.Msg
-        Case WM_PASTE
-          Return
-        Case WM_LBUTTONDOWN
-          Return
-        Case WM_RBUTTONDOWN
-          Return
-        Case WM_MBUTTONDOWN
-          Return
-        Case WM_LBUTTONDBLCLK
-          Return
-        Case WM_MBUTTONDBLCLK
-          Return
-        Case WM_SETFOCUS
-          Return
-      End Select
-    End If
-
-    MyBase.WndProc(m)
-
-  End Sub
-
-#End Region
 End Class

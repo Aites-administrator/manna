@@ -2,6 +2,7 @@
 Imports T.R.ZCommonClass.clsDataGridSearchControl
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsDataGridEditTextBox.typValueType
+Imports T.R.ZCommonClass.clsDataGridSelecter.typClickAction
 Imports System.Reflection
 Imports T.R.ZCommonClass.clsDataGridEditTextBox
 
@@ -56,6 +57,19 @@ Public Class clsDataGrid
   ''' コンテキストメニュー
   ''' </summary>
   Private _ContextMenu As ContextMenuStrip
+
+  ''' <summary>
+  ''' 抽出条件必須フラグ
+  ''' </summary>
+  ''' <remarks>true設定時に抽出条件未設定の場合はGrid消去</remarks>
+  Private _RequiredCondition As Boolean
+
+  ''' <summary>
+  ''' 行追加可否フラグ
+  ''' </summary>
+  Public _EnableAddNewLine As Boolean
+
+  Private _RowHeight As Integer? = Nothing
 #End Region
 
 #Region "データベース関連"
@@ -68,11 +82,6 @@ Public Class clsDataGrid
   ''' 一覧表示用SQL文
   ''' </summary>
   Private _SrcSql As String
-
-  ''' <summary>
-  ''' 一覧表示用SQL文(修正元)
-  ''' </summary>
-  Private _BeforeSrcSql As String
 
 #End Region
 
@@ -180,6 +189,25 @@ Public Class clsDataGrid
   ' ユーザー操作によるデータグリッド編集エラー発生時イベント
   Delegate Sub CallBackValidatingFailed(sender As Object, e As Exception)
   Public lcCallBackValidatingFailed As CallBackValidatingFailed
+
+  ' セレクター操作イベント
+  Delegate Sub CallBackSelectorValueChanged(TargetRow As DataRow, bChecked As Boolean)
+  Public lcCallBackSelectorValueChanged As CallBackSelectorValueChanged
+
+  ''' <summary>
+  ''' 検索条件変更時イベント
+  ''' </summary>
+  ''' <param name="ConditionText"></param>
+  Delegate Function CallbackConditionChanged(ConditionText As String) As Boolean
+  Public lcCallbackConditionChanged As CallbackConditionChanged
+
+  ''' <summary>
+  ''' データ編集前イベント
+  ''' </summary>
+  ''' <param name="CellName"></param>
+  Delegate Sub CallbackCellEnter(CellName As String)
+  Public lcCallbackCellEnter As CallbackCellEnter
+
 #End Region
 
 #Region "セレクター関連"
@@ -242,7 +270,6 @@ Public Class clsDataGrid
     End Get
     Set(value As String)
       _SrcSql = value
-      _BeforeSrcSql = value
       If IsInitialized AndAlso _AutoSearch Then
         ShowList()
       End If
@@ -270,21 +297,38 @@ Public Class clsDataGrid
     End Set
   End Property
 
+  ''' <summary>
+  ''' 検索処理自動実行フラグ
+  ''' </summary>
+  ''' <returns>フラグ</returns>
+  ''' <remarks>True設定時に検索処理を行わない</remarks>
+  Public Property SearchFlg As Boolean
+    Get
+      Return _AutoSearch
+    End Get
+    Set(value As Boolean)
+      _AutoSearch = value
+    End Set
+  End Property
+
   Public ReadOnly Property SelectedRow() As Dictionary(Of String, String)
     Get
       Dim ret As New Dictionary(Of String, String)
 
-      ' データグリッド上でCTRLキーを押しながらクリックすると落ちる不具合対応
-      Dim RowIdx As Integer = 0
-      If _DataGridView.SelectedCells.Count > 0 Then
-        RowIdx = _DataGridView.SelectedCells(0).RowIndex
-      Else
-        RowIdx = 0
+      If Me.DataCount > 0 Then
+        ' データグリッド上でCTRLキーを押しながらクリックすると落ちる不具合対応
+        Dim RowIdx As Integer = 0
+        If _DataGridView.SelectedCells.Count > 0 Then
+          RowIdx = _DataGridView.SelectedCells(0).RowIndex
+        Else
+          RowIdx = 0
+        End If
+
+        For Each tmpCel As DataGridViewCell In _DataGridView.Rows(RowIdx).Cells
+          ret.Add(_DataGridView.Columns(tmpCel.ColumnIndex).Name, tmpCel.Value.ToString())
+        Next
       End If
 
-      For Each tmpCel As DataGridViewCell In _DataGridView.Rows(RowIdx).Cells
-        ret.Add(_DataGridView.Columns(tmpCel.ColumnIndex).Name, tmpCel.Value.ToString())
-      Next
       Return ret
     End Get
   End Property
@@ -422,6 +466,17 @@ Public Class clsDataGrid
       End If
     End Get
   End Property
+
+  ''' <summary>
+  ''' 検索条件を取得する
+  ''' </summary>
+  ''' <returns></returns>
+  Public ReadOnly Property SearchCondition As String
+    Get
+      Return CreateConditionText()
+    End Get
+  End Property
+
 #End Region
 
 #End Region
@@ -430,7 +485,10 @@ Public Class clsDataGrid
   Public Sub New(prmDataGridView As DataGridView _
                  , prmGridSrcSql As String _
                  , prmGridLayout As List(Of clsDGVColumnSetting) _
-                 , Optional prmGridSelecter As clsDataGridSelecter = Nothing)
+                 , Optional prmGridSelecter As clsDataGridSelecter = Nothing _
+                 , Optional prmRequiredCondition As Boolean = False _
+                 , Optional prmEnableAddNewLine As Boolean = False _
+                 , Optional prmRowHeight As Integer? = Nothing)
 
     ' ソート設定初期化
     _SortSetting = New Dictionary(Of String, String)
@@ -449,10 +507,18 @@ Public Class clsDataGrid
 
     ' 表示用SQL文を保持
     _SrcSql = prmGridSrcSql
-    _BeforeSrcSql = _SrcSql
 
     ' 一覧表示レイアウトを保持
     _ColumnList = prmGridLayout
+
+    ' 抽出条件必須フラグを保持
+    _RequiredCondition = prmRequiredCondition
+
+    ' 行追加可否設定
+    _EnableAddNewLine = prmEnableAddNewLine
+
+    ' 行高さ
+    _RowHeight = prmRowHeight
 
     ' 選択列追加
     If prmGridSelecter IsNot Nothing Then
@@ -500,6 +566,13 @@ Public Class clsDataGrid
       .RowHeadersVisible = False
       'ユーザーが新しい行を追加できないようにする
       .AllowUserToAddRows = False
+      ' ツールチップを非表示にする
+      .ShowCellToolTips = False
+
+      ' 行の高さを設定
+      If _RowHeight IsNot Nothing Then
+        .RowTemplate.Height = _RowHeight
+      End If
 
       '--------------------------
       '   以下、高速化処理
@@ -519,6 +592,52 @@ Public Class clsDataGrid
     End With
   End Sub
 
+  Private Sub SetSelectMark()
+    ' 選択列追加
+    If _GridSelecter IsNot Nothing Then
+      With _GridSelecter
+        If _GridSrc.Columns.Contains(.DataSourcName) = False Then
+          _GridSrc.Columns.Add(.DataSourcName)
+        End If
+
+        ' 表示中のデータを最終までループ
+        For idx As Integer = 0 To _DataGridView.Rows.Count - 1
+          Dim tmpCurrentKey As String = String.Empty
+
+
+          ' 選択キー作成
+          For Each tmpKey As String In .SelectKeyList
+            tmpCurrentKey &= GetDataRow_ByDataGridViewRowIdx(idx)(tmpKey).ToString() & "<>"
+          Next
+
+          ' 選択キーが選択edリストに存在するか？
+          If _SelectedList.Contains(tmpCurrentKey) = False Then
+            ' 存在しない
+            GetDataRow_ByDataGridViewRowIdx(idx)(.DataSourcName) = String.Empty
+          Else
+            ' 存在する
+            Dim tmpEnableSelect As Boolean = True
+
+            ' 選択可能条件が設定されているなら満たしているかチェック
+            If .SelectingCondition IsNot Nothing Then
+              For Each tmpKey As String In .SelectingCondition.Keys
+                If GetDataRow_ByDataGridViewRowIdx(idx)(tmpKey).ToString() <> .SelectingCondition(tmpKey) Then
+                  tmpEnableSelect = False
+                  Exit For
+                End If
+              Next
+            End If
+
+            If tmpEnableSelect Then
+              GetDataRow_ByDataGridViewRowIdx(idx)(.DataSourcName) = .SelectChar
+            End If
+          End If
+        Next
+      End With
+    End If
+  End Sub
+
+
   ' 検索条件文字列の作成
   Private Function CreateConditionText() As String
     Dim sqlWhere As String = String.Empty
@@ -527,28 +646,20 @@ Public Class clsDataGrid
       With tmpSc
         If Not .Value.Equals(String.Empty) Then
           sqlWhere &= .SearchItemName
-          If (.SearchType = typExtraction.EX_NULL) Then
-            sqlWhere &= " IS NULL "
-            sqlWhere &= " AND "
-          ElseIf (.SearchType = typExtraction.EX_NOT_NULL) Then
-            sqlWhere &= " IS NOT NULL "
-            sqlWhere &= " AND "
-          Else
-            sqlWhere &= ComSearchType2Text(.SearchType)
-            sqlWhere &= ComGetLiteralChar(.DataType, _SqlCon.Provider)
-            Select Case .SearchType
-              Case typExtraction.EX_LIK
-                sqlWhere &= "%" & .Value & "%"
-              Case typExtraction.EX_LIKB
-                sqlWhere &= "%" & .Value
-              Case typExtraction.EX_LIKF
-                sqlWhere &= .Value & "%"
-              Case Else
-                sqlWhere &= .Value
-            End Select
-            sqlWhere &= ComGetLiteralChar(.DataType, _SqlCon.Provider)
-            sqlWhere &= " AND "
-          End If
+          sqlWhere &= ComSearchType2Text(.SearchType)
+          sqlWhere &= ComGetLiteralChar(.DataType, _SqlCon.Provider)
+          Select Case .SearchType
+            Case typExtraction.EX_LIK
+              sqlWhere &= "%" & .Value & "%"
+            Case typExtraction.EX_LIKB
+              sqlWhere &= "%" & .Value
+            Case typExtraction.EX_LIKF
+              sqlWhere &= .Value & "%"
+            Case Else
+              sqlWhere &= .Value
+          End Select
+          sqlWhere &= ComGetLiteralChar(.DataType, _SqlCon.Provider)
+          sqlWhere &= " AND "
         End If
       End With
     Next
@@ -619,6 +730,7 @@ Public Class clsDataGrid
                                   , pColSetting As clsDGVColumnSetting)
     With pDgvColumn
       .HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter           ' タイトルは中央固定
+      .HeaderCell.Style.Padding = New Padding(Int(pColSetting.FontSize), 1, 1, 1)
       .HeaderCell.Style.Font = New System.Drawing.Font(pColSetting.GetFontName, pColSetting.TitleFontSize)  ' フォント
       .Width = pColSetting.ColumnWidth  ' セル幅
       With .DefaultCellStyle
@@ -666,17 +778,35 @@ Public Class clsDataGrid
   ''' <remarks>
   '''  DisplayIndexで並び替えを行っている為、表示位置とインデックスは一致しない場合があります
   ''' </remarks>
-  Private Function GetColPosByDataSource(tmpDsName As String) As Integer
+  Private Function GetColPosByDataSource(prmDsName As String) As Integer
     Dim ret As Integer = -1
 
     For idx As Integer = 0 To _GridSrc.Columns.Count - 1
-      If _DataGridView.Columns(idx).Name.Equals(tmpDsName) Then
+      If _DataGridView.Columns(idx).Name.Equals(prmDsName) Then
         ret = idx
         Exit For
       End If
     Next
 
     Return ret
+  End Function
+
+  ''' <summary>
+  ''' 表示位置のインデックスからデータソース名を取得する
+  ''' </summary>
+  ''' <param name="prmColPos">col位置</param>
+  ''' <returns>データソース名</returns>
+  Private Function GetDataSourceByColPos(prmColPos As Integer) As String
+    Dim tmpDataSource As String = ""
+
+    For Each tmpCol As DataGridViewColumn In _DataGridView.Columns
+      If tmpCol.DisplayIndex = prmColPos Then
+        tmpDataSource = tmpCol.Name
+        Exit For
+      End If
+    Next
+
+    Return tmpDataSource
   End Function
 
   ''' <summary>
@@ -708,7 +838,9 @@ Public Class clsDataGrid
   ''' <param name="prmSelectChar">表示する記号</param>
   Private Function ChangeRowSelectMark(prmEqList As Dictionary(Of String, String) _
                             , prmNEqList As Dictionary(Of String, String) _
-                            , prmSelectChar As String) As Long
+                            , prmSelectChar As String _
+                            , Optional prmReload As Boolean = True _
+                            , Optional prmRiseChangeEvent As Boolean = True) As Long
 
     Dim tmpCnt As Long = 0
 
@@ -731,9 +863,9 @@ Public Class clsDataGrid
 
       ' ノットイコールリストと一致しないか？
       If tmpMuch AndAlso prmNEqList IsNot Nothing Then
-        For Each tmpKey As String In prmEqList.Keys
+        For Each tmpKey As String In prmNEqList.Keys
           With GetDataRow_ByDataGridViewRowIdx(idx)(tmpKey)
-            If .ToString() = prmEqList(tmpKey) Then
+            If .ToString() = prmNEqList(tmpKey) Then
               tmpMuch = False
               Exit For
             End If
@@ -742,29 +874,8 @@ Public Class clsDataGrid
       End If
 
       If tmpMuch Then
-        Dim tmpDr As DataRow = GetDataRow_ByDataGridViewRowIdx(idx)
-        Dim tmpSelectedKey As String = String.Empty
-
-        ' 選択マーク更新
-        tmpDr(_GridSelecter.DataSourcName) = prmSelectChar
-        For Each tmpKey As String In _GridSelecter.SelectKeyList
-          tmpSelectedKey &= tmpDr(tmpKey).ToString & "<>"
-        Next
-
-        If prmSelectChar = _GridSelecter.SelectChar Then
-          ' チェックON時
-          If _SelectedList.Contains(tmpSelectedKey) = False Then
-            _SelectedList.Add(tmpSelectedKey)       ' リストに追加
-          End If
-        Else
-          ' チェックOFF時
-          If _SelectedList.Contains(tmpSelectedKey) Then
-            _SelectedList.Remove(tmpSelectedKey)    ' リストから削除
-          End If
-        End If
-
+        SelectorCheckChange(idx, prmSelectChar, prmReload:=prmReload, prmRiseChangeEvent:=prmRiseChangeEvent)
         tmpCnt += 1
-
       End If
     Next
 
@@ -772,21 +883,124 @@ Public Class clsDataGrid
 
   End Function
 
+  ''' <summary>
+  ''' 選択可不可チェック
+  ''' </summary>
+  ''' <param name="prmGridSrc">チェック対象の行オブジェクト</param>
+  ''' <returns>True:選択可/False:選択不可</returns>
+  Private Function CanSelect(prmGridSrc As DataRow) As Boolean
+    ' 選択キー作成
+    Dim tmpSelectedKey As String = String.Empty
+
+    Dim tmpEnableSelect As Boolean = True
+
+    ' 選択可能条件が設定されている場合は、条件に一致するかチェック
+    With _GridSelecter
+      If .SelectingCondition IsNot Nothing Then
+        For Each tmpKey As String In .SelectingCondition.Keys
+          If prmGridSrc(tmpKey).ToString() <> .SelectingCondition(tmpKey) Then
+            tmpEnableSelect = False
+            Exit For
+          End If
+        Next
+      End If
+    End With
+
+    Return tmpEnableSelect
+  End Function
+
+  ''' <summary>
+  ''' 選択状態変更
+  ''' </summary>
+  ''' <param name="prmRowIndex">変更対象の行番号</param>
+  ''' <param name="prmSelectChar">変更する値（未指定時は反転）</param>
+  Private Sub SelectorCheckChange(prmRowIndex As Integer _
+                                , Optional prmSelectChar As String = Nothing _
+                                , Optional prmReload As Boolean = True _
+                                , Optional prmRiseChangeEvent As Boolean = True)
+    Dim tmpDr As DataRow = GetDataRow_ByDataGridViewRowIdx(prmRowIndex)
+    Dim tmpSelectedKey As String = String.Empty
+    Dim tmpChecked As Boolean = False
+    Dim tmpSelectChar As String = prmSelectChar
+
+    If tmpSelectChar Is Nothing Then
+      If tmpDr(_GridSelecter.DataSourcName).ToString() = "" Then
+        tmpSelectChar = _GridSelecter.SelectChar
+      Else
+        tmpSelectChar = ""
+      End If
+    End If
+
+    ' 選択マーク更新
+    'tmpDr(_GridSelecter.DataSourcName) = prmSelectChar
+    For Each tmpKey As String In _GridSelecter.SelectKeyList
+      tmpSelectedKey &= tmpDr(tmpKey).ToString & "<>"
+    Next
+
+    If tmpSelectChar = _GridSelecter.SelectChar Then
+      ' チェックON時
+      If _SelectedList.Contains(tmpSelectedKey) = False Then
+        If _GridSelecter.MaxSelectedCount <= _SelectedList.Count Then
+          _SelectedList.RemoveAt(0)
+        End If
+
+        _SelectedList.Add(tmpSelectedKey)       ' リストに追加
+        tmpChecked = True
+      End If
+    Else
+      ' チェックOFF時
+      If _SelectedList.Contains(tmpSelectedKey) Then
+        _SelectedList.Remove(tmpSelectedKey)    ' リストから削除
+        tmpChecked = False
+      End If
+    End If
+
+    If prmReload Then
+      Call ShowList(True)
+    Else
+      Call SetSelectMark()
+    End If
+
+    If lcCallBackSelectorValueChanged IsNot Nothing AndAlso prmRiseChangeEvent Then
+      lcCallBackSelectorValueChanged(GetDataRow_ByDataGridViewRowIdx(prmRowIndex), tmpChecked)
+    End If
+
+  End Sub
 #End Region
 
 #Region "パブリック"
-
   ''' <summary>
-  ''' 一覧表示（パラメータ変更）
+  ''' 行番号検索
   ''' </summary>
-  ''' <param name="prmKbn">置き換える区分名</param>
-  ''' <param name="prmData">置き換える文字</param>
-  Public Sub ChgShowList(prmKbn As String, prmData As String)
+  ''' <param name="prmCondition">検索条件</param>
+  ''' <returns>条件に一致する行が存在した：表示位置
+  '''          条件に一致する行が存在しなかった：-1
+  ''' </returns>
+  Public Function SearchRowPos(prmCondition As Dictionary(Of String, String)) As Long
+    Dim bFined As Boolean = True
+    Dim tmpRowPos As Integer = 0
 
-    ' 表示用SQL文(修正元)から、指定した区分を置き換える
-    _SrcSql = Replace(_BeforeSrcSql, prmKbn, prmData, 1, 1, CompareMethod.Binary)
+    For tmpRowPos = 0 To _DataGridView.Rows.Count - 1
+      Dim tmpRow = GetDataRow_ByDataGridViewRowIdx(tmpRowPos)
+      bFined = True
+      For Each tmpSearchKey In prmCondition.Keys
+        If tmpRow(tmpSearchKey).ToString() <> prmCondition(tmpSearchKey) Then
+          bFined = False
+          Exit For
+        End If
+      Next
+      If bFined Then
+        Exit For
+      End If
+    Next
 
-  End Sub
+    If Not bFined Then
+      tmpRowPos = -1
+    End If
+
+    Return tmpRowPos
+  End Function
+
 
   ''' <summary>
   ''' 選択リストクリア
@@ -839,110 +1053,107 @@ Public Class clsDataGrid
   ''' 抽出コントロール変更時コールバックに使用
   ''' </remarks>
   Public Sub ExecSearch()
+    If lcCallbackConditionChanged IsNot Nothing Then
+      Call lcCallbackConditionChanged(CreateConditionText())
+    End If
     If AutoSearch Then
       ShowList()
     End If
   End Sub
 
-    ''' <summary>
-    ''' 一覧表示
-    ''' </summary>
-    ''' <param name="prmKeepCurrentPos"></param>
-    Public Sub ShowList(Optional prmKeepCurrentPos As Boolean = False, Optional prmReadDb As Boolean = True)
+  ''' <summary>
+  ''' 一覧表示
+  ''' </summary>
+  ''' <param name="prmKeepCurrentPos"></param>
+  Public Sub ShowList(Optional prmKeepCurrentPos As Boolean = False)
 
-        ' 現在カーソル位置取得
-        Dim CurrentPos As Point = Me._DataGridView.CurrentCellAddress
+    ' 抽出条件必須かつ抽出条件未設定なら処理を抜ける
+    If _RequiredCondition AndAlso CreateConditionText() = String.Empty Then
+      _GridSrc.Clear()
 
-        ' 現在最上位セル取得
-        Dim tmpTopRow As Integer = _DataGridView.FirstDisplayedScrollingRowIndex
+      ' 一応、、、更新処理コールバック実行
+      If lcCallBackReLoadData IsNot Nothing Then
+        Call lcCallBackReLoadData(_DataGridView, LastUpdate, DataCount)
+      End If
 
-        Me._DataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing
+      Exit Sub
+    End If
 
-        'DB取得フラグがONのとき
-        If prmReadDb Then
-            ' 一覧表示更新
-            _SqlCon.GetResult(_GridSrc, ComAddSqlSearchCondition(_SrcSql, CreateConditionText()))
-        End If
+    ' 現在カーソル位置取得
+    Dim CurrentPos As Point = Me._DataGridView.CurrentCellAddress
 
-        ' 選択列追加
-        If _GridSelecter IsNot Nothing Then
-            With _GridSelecter
-                If _GridSrc.Columns.Contains(.DataSourcName) = False Then
-                    _GridSrc.Columns.Add(.DataSourcName)
-                End If
+    ' 現在最上位セル取得
+    Dim tmpTopRow As Integer = _DataGridView.FirstDisplayedScrollingRowIndex
 
-                ' 表示中のデータを最終までループ
-                For idx As Integer = 0 To _DataGridView.Rows.Count - 1
-                    Dim tmpCurrentKey As String = String.Empty
+    Me._DataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.EnableResizing
 
 
-                    ' 選択キー作成
-                    For Each tmpKey As String In .SelectKeyList
-                        tmpCurrentKey &= GetDataRow_ByDataGridViewRowIdx(idx)(tmpKey).ToString() & "<>"
-                    Next
+    ' 一覧表示更新
+    _SqlCon.GetResult(_GridSrc, ComAddSqlSearchCondition(_SrcSql, CreateConditionText()))
 
-                    ' 選択キーが選択edリストに存在するか？
-                    If _SelectedList.Contains(tmpCurrentKey) = False Then
-                        ' 存在しない
-                        GetDataRow_ByDataGridViewRowIdx(idx)(.DataSourcName) = String.Empty
-                    Else
-                        ' 存在する
-                        Dim tmpEnableSelect As Boolean = True
+    ' 選択列追加
+    Call SetSelectMark()
 
-                        ' 選択可能条件が設定されているなら満たしているかチェック
-                        If .SelectingCondition IsNot Nothing Then
-                            For Each tmpKey As String In .SelectingCondition.Keys
-                                If GetDataRow_ByDataGridViewRowIdx(idx)(tmpKey).ToString() <> .SelectingCondition(tmpKey) Then
-                                    tmpEnableSelect = False
-                                    Exit For
-                                End If
-                            Next
-                        End If
+    ' 新規登録行追加
+    If _EnableAddNewLine Then
+      _GridSrc.Rows.Add()
+    End If
 
-                        If tmpEnableSelect Then
-                            GetDataRow_ByDataGridViewRowIdx(idx)(.DataSourcName) = .SelectChar
-                        End If
-                    End If
-                Next
-            End With
-        End If
+    ' 最終更新日時更新
+    _lastUpdate = CDate(ComGetProcTime())
 
-        ' 最終更新日時更新
-        _lastUpdate = CDate(ComGetProcTime())
+    ' レイアウト変更
+    If _bLayOuted = False Then SetLayout()
 
-        ' レイアウト変更
-        If _bLayOuted = False Then SetLayout()
-
-        ' 固定列設定
-        If _FixedRow > 0 _
+    ' 固定列設定
+    If _FixedRow > 0 _
       AndAlso _DataGridView.Columns(ColumnList(_FixedRow).DataSrc).Frozen = False Then
-            Me.FixedRow = _FixedRow
+      Me.FixedRow = _FixedRow
+    End If
+
+    ' 編集列設定
+    If _bSetEditColum = False Then SetEditColum()
+
+    ' データグリッドが０件の場合、処理を行わない
+    ' カーソル位置復帰
+    If (prmKeepCurrentPos) And (Me._DataGridView.Rows.Count >= 1) Then
+      If CurrentPos.X >= 0 AndAlso CurrentPos.Y >= 0 Then
+        If CurrentPos.Y > _DataGridView.Rows.Count - 1 Then
+          CurrentPos.Y = _DataGridView.Rows.Count - 1
+        End If
+        If CurrentPos.X > _DataGridView.Columns.Count - 1 Then
+          CurrentPos.X = _DataGridView.Columns.Count - 1
         End If
 
-        ' 編集列設定
-        If _bSetEditColum = False Then SetEditColum()
+        Me._DataGridView.CurrentCell = Me._DataGridView(CurrentPos.X, CurrentPos.Y)
+        _DataGridView.FirstDisplayedScrollingRowIndex = tmpTopRow
+      End If
+    End If
 
-        ' データグリッドが０件の場合、処理を行わない
-        ' カーソル位置復帰
-        If (prmKeepCurrentPos) And (Me._DataGridView.Rows.Count >= 1) Then
-            If CurrentPos.X >= 0 AndAlso CurrentPos.Y >= 0 Then
-                Me._DataGridView.CurrentCell = Me._DataGridView(CurrentPos.X, CurrentPos.Y)
-                _DataGridView.FirstDisplayedScrollingRowIndex = tmpTopRow
-            End If
-        End If
+    If lcCallBackReLoadData IsNot Nothing Then
+      Call lcCallBackReLoadData(_DataGridView, LastUpdate, DataCount)
+    End If
 
-        If lcCallBackReLoadData IsNot Nothing Then
-            Call lcCallBackReLoadData(_DataGridView, CType(LastUpdate, String), DataCount)
-        End If
+  End Sub
 
-    End Sub
+  ''' <summary>
+  ''' 一覧表示(並び替えが設定されている場合)
+  ''' </summary>
+  ''' <param name="orderSql"></param>
 
-    ''' <summary>
-    ''' 一覧表示(並び替えが設定されている場合)
-    ''' </summary>
-    ''' <param name="orderSql"></param>
+  Public Sub ShowList(orderSql As String)
 
-    Public Sub ShowList(orderSql As String)
+    ' 抽出条件必須かつ抽出条件未設定なら処理を抜ける
+    If _RequiredCondition AndAlso CreateConditionText() = String.Empty Then
+      _GridSrc.Clear()
+
+      ' 一応、、、更新処理コールバック実行
+      If lcCallBackReLoadData IsNot Nothing Then
+        Call lcCallBackReLoadData(_DataGridView, LastUpdate, DataCount)
+      End If
+
+      Exit Sub
+    End If
 
     ' 現在カーソル位置取得
     Dim CurrentPos As Point = Me._DataGridView.CurrentCellAddress
@@ -1023,7 +1234,7 @@ Public Class clsDataGrid
     End If
 
     If lcCallBackReLoadData IsNot Nothing Then
-      Call lcCallBackReLoadData(_DataGridView, CType(LastUpdate, String), DataCount)
+      Call lcCallBackReLoadData(_DataGridView, LastUpdate, DataCount)
     End If
 
   End Sub
@@ -1090,6 +1301,14 @@ Public Class clsDataGrid
 
   End Sub
 
+  Public Sub ClearSearchCondition(Optional prmExclusionControls As List(Of Control) = Nothing)
+    For Each tmpSc In _SearchConditionz
+      If prmExclusionControls Is Nothing _
+          OrElse prmExclusionControls.Contains(tmpSc.TargetControl) = False Then
+        tmpSc.ClearLastText()
+      End If
+    Next
+  End Sub
   ''' <summary>
   ''' 表示中データ全件取得
   ''' </summary>
@@ -1208,8 +1427,12 @@ Public Class clsDataGrid
   ''' <param name="prmEqList">一致条件</param>
   ''' <param name="prmNEqList">不一致条件</param>
   Public Function UnSetRowSelectMark(prmEqList As Dictionary(Of String, String) _
-                            , Optional prmNEqList As Dictionary(Of String, String) = Nothing) As Long
-    Return ChangeRowSelectMark(prmEqList, prmNEqList, "")
+                            , Optional prmNEqList As Dictionary(Of String, String) = Nothing _
+                            , Optional prmReload As Boolean = True _
+                            , Optional prmRiseChangeEvent As Boolean = True) As Long
+    Return ChangeRowSelectMark(prmEqList, prmNEqList, "" _
+                              , prmReload:=prmReload _
+                              , prmRiseChangeEvent:=prmRiseChangeEvent)
   End Function
 
   ''' <summary>
@@ -1218,15 +1441,59 @@ Public Class clsDataGrid
   ''' <param name="prmEqList">一致条件</param>
   ''' <param name="prmNEqList">不一致条件</param>
   Public Function SetRowSelectMark(prmEqList As Dictionary(Of String, String) _
-                            , Optional prmNEqList As Dictionary(Of String, String) = Nothing) As Long
-    Return ChangeRowSelectMark(prmEqList, prmNEqList, _GridSelecter.SelectChar)
+                            , Optional prmNEqList As Dictionary(Of String, String) = Nothing _
+                            , Optional prmReload As Boolean = True _
+                            , Optional prmRiseChangeEvent As Boolean = True) As Long
+    Return ChangeRowSelectMark(prmEqList, prmNEqList, _GridSelecter.SelectChar _
+                              , prmReload:=prmReload _
+                              , prmRiseChangeEvent:=prmRiseChangeEvent)
   End Function
+
+  ''' <summary>
+  ''' 選択中の行数を返す
+  ''' </summary>
+  ''' <returns>選択中の行数</returns>
+  Public Function GetSelectedRowCount() As Integer
+    Return _SelectedList.Count
+  End Function
+
+  ''' <summary>
+  ''' セルを選択状態にする
+  ''' </summary>
+  ''' <param name="prmRowPos">行位置</param>
+  ''' <param name="prmColPos">列位置</param>
+  Public Sub SetCurrentCell(prmRowPos As Long, prmColPos As Integer)
+    _DataGridView.CurrentCell = _DataGridView.Rows(prmRowPos).Cells(GetDataSourceByColPos(prmColPos))
+  End Sub
+
+  ''' <summary>
+  ''' セルを選択状態にする
+  ''' </summary>
+  ''' <param name="prmRowPos">行位置</param>
+  ''' <param name="prmCellTitle">列名称</param>
+  Public Sub SetCurrentCell(prmRowPos As Long, prmCellTitle As String)
+    SetCurrentCell(prmRowPos, GetColPosByDataSource(prmCellTitle))
+  End Sub
 
 #End Region
 
 #End Region
 
 #Region "イベントプロシージャー"
+
+  ''' <summary>
+  ''' データグリッドアクティブセル変更時イベント
+  ''' </summary>
+  ''' <param name="sender"></param>
+  ''' <param name="e"></param>
+  Private Sub DataGridView1_CellEnter(ByVal sender As Object, ByVal e As DataGridViewCellEventArgs) Handles _DataGridView.CellEnter
+    Dim tmpCellName =
+      _GridSrc.Columns(e.ColumnIndex).Caption
+    If lcCallbackCellEnter IsNot Nothing Then
+      Call lcCallbackCellEnter(tmpCellName)
+    End If
+
+  End Sub
 
   ''' <summary>
   ''' データグリッドダブルクリック時イベント
@@ -1238,53 +1505,17 @@ Public Class clsDataGrid
 
 
     ' 選択キー追加・削除
-    If _GridSelecter IsNot Nothing Then
-      'If e.RowIndex >= 0 _
-      '  AndAlso e.ColumnIndex = (_GridSrc.Columns.Count - 1) Then
-      If e.RowIndex >= 0 Then
+    If _GridSelecter IsNot Nothing _
+          AndAlso _GridSelecter.ClickAction = Double_CLick _
+          AndAlso e.RowIndex >= 0 _
+          AndAlso CanSelect(GetDataRow_ByDataGridViewRowIdx(e.RowIndex)) Then
 
-        ' 選択キー作成
-        Dim tmpSelectedKey As String = String.Empty
-        Dim tmpGridSrc As DataRow = GetDataRow_ByDataGridViewRowIdx(e.RowIndex)
-
-        Dim tmpEnableSelect As Boolean = True
-
-        ' 選択可能条件が設定されている場合は、条件に一致するかチェック
-        With _GridSelecter
-          If .SelectingCondition IsNot Nothing Then
-            For Each tmpKey As String In .SelectingCondition.Keys
-              If tmpGridSrc(tmpKey).ToString() <> .SelectingCondition(tmpKey) Then
-                tmpEnableSelect = False
-                Exit For
-              End If
-            Next
-          End If
-        End With
-
-        If tmpEnableSelect Then
-          For Each tmpKey As String In _GridSelecter.SelectKeyList
-            tmpSelectedKey &= tmpGridSrc(tmpKey).ToString & "<>"
-          Next
-
-          ' 選択edリストに存在するか？
-          With _SelectedList
-            If .Contains(tmpSelectedKey) Then
-              ' 存在する
-              .Remove(tmpSelectedKey)   ' リストから削除
-            Else
-              ' 存在しない
-              .Add(tmpSelectedKey)      ' リストに追加
-            End If
-          End With
-
-                    Me.ShowList(True, False)
-                End If
-      End If
+      SelectorCheckChange(e.RowIndex, prmReload:=_GridSelecter.Reload)
 
     End If
 
-      ' コールバックが設定されているかつタイトル以外をダブルクリック
-      If Me.lcCallBackCellDoubleClick IsNot Nothing _
+    ' コールバックが設定されているかつタイトル以外をダブルクリック
+    If Me.lcCallBackCellDoubleClick IsNot Nothing _
       AndAlso e.RowIndex >= 0 Then
       Call lcCallBackCellDoubleClick(sender, e)
     End If
@@ -1345,7 +1576,7 @@ Public Class clsDataGrid
     End If
 
     ' クリックされた行タイトル取得
-    tmpHeaderTxt = CType(tmpDg.Columns(e.ColumnIndex).HeaderCell.Value, String)
+    tmpHeaderTxt = tmpDg.Columns(e.ColumnIndex).HeaderCell.Value
 
     If _OrderUpSetting.ContainsKey(tmpHeaderTxt) Then
 
@@ -1374,7 +1605,7 @@ Public Class clsDataGrid
 
     Else
 
-        If _SortSetting.ContainsKey(tmpHeaderTxt) Then
+      If _SortSetting.ContainsKey(tmpHeaderTxt) Then
         ' 並び替えが設定されている
         ' 設定されている値で並び替え
         tmpColumn = tmpDg.Columns(GetColPosByDataSource(_SortSetting(tmpHeaderTxt)))
@@ -1387,19 +1618,19 @@ Public Class clsDataGrid
       ' 並び替え方向取得
       If SortDirection.ContainsKey(tmpHeaderTxt) = False Then
         ' 初回並び替えなら昇順
-        SortDirection.Add(tmpHeaderTxt, CType(System.ComponentModel.ListSortDirection.Ascending, SortOrder))
+        SortDirection.Add(tmpHeaderTxt, System.ComponentModel.ListSortDirection.Ascending)
       Else
         ' 二回目以降はトグル
         If SortDirection(tmpHeaderTxt) = System.ComponentModel.ListSortDirection.Ascending Then
-          SortDirection(tmpHeaderTxt) = CType(System.ComponentModel.ListSortDirection.Descending, SortOrder)
+          SortDirection(tmpHeaderTxt) = System.ComponentModel.ListSortDirection.Descending
         Else
-          SortDirection(tmpHeaderTxt) = CType(System.ComponentModel.ListSortDirection.Ascending, SortOrder)
+          SortDirection(tmpHeaderTxt) = System.ComponentModel.ListSortDirection.Ascending
         End If
 
       End If
 
       ' 並び替え処理実行
-      tmpDg.Sort(tmpColumn, CType(SortDirection(tmpHeaderTxt), ComponentModel.ListSortDirection))
+      tmpDg.Sort(tmpColumn, SortDirection(tmpHeaderTxt))
 
     End If
 
@@ -1411,11 +1642,7 @@ Public Class clsDataGrid
   ''' <param name="sender"></param>
   ''' <param name="e"></param>
   Private Sub ContextCopy(sender As Object, e As System.EventArgs)
-    If (_DataGridView.CurrentCell IsNot Nothing) Then
-      If String.IsNullOrWhiteSpace(_DataGridView.CurrentCell.FormattedValue().ToString()) = False Then
-        Clipboard.SetText(_DataGridView.CurrentCell.FormattedValue().ToString())
-      End If
-    End If
+    Clipboard.SetText(_DataGridView.CurrentCell.FormattedValue().ToString())
   End Sub
 
   ''' <summary>
@@ -1425,7 +1652,7 @@ Public Class clsDataGrid
   ''' <param name="e"></param>
   Private Sub CellContextMenuStripNeeded(ByVal sender As Object _
                                                       , ByVal e As DataGridViewCellContextMenuStripNeededEventArgs) Handles _DataGridView.CellContextMenuStripNeeded
-
+    Dim dgv As DataGridView = CType(sender, DataGridView)
     If e.RowIndex < 0 Then
       ' 行ヘッダークリック時はメニュー非表示
       _DataGridView.ContextMenuStrip = Nothing
@@ -1442,15 +1669,22 @@ Public Class clsDataGrid
   Private Sub CellMouseDown(ByVal sender As Object _
                           , ByVal e As DataGridViewCellMouseEventArgs) Handles _DataGridView.CellMouseDown
 
-    '右クリック時のみ処理を実行します。
-    If e.Button = Windows.Forms.MouseButtons.Right Then
-      ' クリックされたセルと選択中のセルが異なる場合はクリックされたセルを選択状態に
+    If e.Button = MouseButtons.Left Then
+      '左クリック時
+      If _GridSelecter IsNot Nothing _
+          AndAlso _GridSelecter.ClickAction = Single_Click _
+          AndAlso e.RowIndex >= 0 _
+          AndAlso CanSelect(GetDataRow_ByDataGridViewRowIdx(e.RowIndex)) _
+          AndAlso _GridSelecter.ColIndex = DirectCast(sender, DataGridView).Columns(e.ColumnIndex).DisplayIndex Then
+        SelectorCheckChange(e.RowIndex, prmReload:=_GridSelecter.Reload)
+      End If
+    ElseIf e.Button = MouseButtons.Right Then
+      '右クリック時
       If _DataGridView.CurrentCell Is Nothing OrElse
           Not _DataGridView.CurrentCell.Equals(_DataGridView(e.ColumnIndex, e.RowIndex)) Then
 
         Me._DataGridView.ClearSelection()
         _DataGridView.CurrentCell = _DataGridView(e.ColumnIndex, e.RowIndex)
-
       End If
     End If
 
@@ -1469,6 +1703,7 @@ Public Class clsDataGrid
             = _DataGridView.Columns(DirectCast(sender, DataGridView).SelectedCells(0).ColumnIndex).Name
 
       Dim tmpDgvEc As clsDataGridEditTextBox = Nothing
+
       If TryGetEditColumn(tmpDgvEc) Then
 
         ' 値の種別に合わせて入力時イベントを設定
@@ -1483,6 +1718,9 @@ Public Class clsDataGrid
           Case VT_DATE
             ' 日付入力
             AddHandler _DgvTextBoxEditingControl.KeyPress, AddressOf DGVDateEditingControlKeyPress
+          Case VT_DECIMAL1
+            ' 小数点第一位迄
+            AddHandler _DgvTextBoxEditingControl.KeyPress, AddressOf DGVDecimal1EditingControlKeyPress
           Case Else
         End Select
 
@@ -1547,6 +1785,16 @@ Public Class clsDataGrid
               _DgvTextBoxEditingControl.Text = ComCreateDateText(_DgvTextBoxEditingControl.Text)
               ' 入力制限解除
               RemoveHandler _DgvTextBoxEditingControl.KeyPress, AddressOf DGVDateEditingControlKeyPress
+            Case VT_DECIMAL1
+              Dim tmpDecimalValue As Decimal
+              If False = Decimal.TryParse(_DgvTextBoxEditingControl.Text, tmpDecimalValue) Then
+                ' 小数点第二位四捨五入
+                _DgvTextBoxEditingControl.Text = "0"
+              Else
+                _DgvTextBoxEditingControl.Text = Math.Round(tmpDecimalValue, 1, MidpointRounding.AwayFromZero)
+              End If
+              ' 入力制限解除
+              RemoveHandler _DgvTextBoxEditingControl.KeyPress, AddressOf DGVDecimal1EditingControlKeyPress
           End Select
         Catch ex As Exception
           '失敗
@@ -1670,6 +1918,18 @@ Public Class clsDataGrid
       AndAlso e.KeyChar <> ControlChars.Back Then
       e.Handled = True
     End If
+  End Sub
+
+  Private Sub DGVDecimal1EditingControlKeyPress(sender As Object, e As KeyPressEventArgs)
+    Dim tmpSender As TextBox = DirectCast(sender, TextBox)
+
+    ' 数値、バックスペースとカンマのみ入力可
+    If (e.KeyChar < "0"c OrElse "9"c < e.KeyChar) _
+      AndAlso e.KeyChar <> ControlChars.Back _
+      AndAlso Not (tmpSender.Text.IndexOf("."c) < 0 AndAlso e.KeyChar = "."c) Then
+      e.Handled = True
+    End If
+
   End Sub
 #End Region
 

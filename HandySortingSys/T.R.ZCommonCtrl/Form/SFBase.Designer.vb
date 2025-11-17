@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class SFBase
-  Inherits System.Windows.Forms.Form
+  Inherits MFBaseDgv
 
   'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
   <System.Diagnostics.DebuggerNonUserCode()> _

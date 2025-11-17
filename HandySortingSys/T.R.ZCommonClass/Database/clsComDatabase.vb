@@ -116,7 +116,7 @@ Public Class clsComDatabase
     _TrnRunnig = False
 
     ' クエリータイムアウトデフォルト
-    _QueryTimeOut = 180
+    _QueryTimeOut = 30
 
     ' SQL実行履歴初期化
     _SqlHistory = String.Empty
@@ -232,14 +232,12 @@ Public Class clsComDatabase
   ''' <param name="dt">実行結果を保持するデータテーブル</param>
   ''' <param name="sql">実行するSQL文</param>
   Public Sub GetResult(ByRef dt As DataTable _
-                                , sql As String, Optional prmLog As Boolean = False)
+                                , sql As String)
 
     '指定したSQL文が空白の場合、クエリーを実行しない
     If String.IsNullOrWhiteSpace(sql) Then
       Return
     End If
-
-    Console.WriteLine(sql)
 
     Try
       _ObjCmd = DbConnection.CreateCommand
@@ -250,13 +248,6 @@ Public Class clsComDatabase
           .Transaction = _ObjTran
         End If
       End With
-
-      If (prmLog = False) Then
-        If (_Provider = typProvider.sqlServer) Then
-          Call WriteExecuteLog(sql)
-        End If
-      End If
-
       '---
       _ObjDa = New OleDb.OleDbDataAdapter
       _ObjDa.SelectCommand = _ObjCmd
@@ -308,9 +299,9 @@ Public Class clsComDatabase
 
     Catch ex As Exception
 
-            Call ComWriteErrLog(ex, False)   ' Error出力
+      Call ComWriteErrLog(ex)   ' Error出力
 
-            If _TrnRunnig = False Then
+      If _TrnRunnig = False Then
         ReleaseTrnRb()
       End If
 
@@ -346,6 +337,7 @@ Public Class clsComDatabase
     End If
   End Sub
 
+
   ''' <summary>
   ''' SQL実行ログ保存
   ''' </summary>
@@ -358,89 +350,11 @@ Public Class clsComDatabase
       Dim tmpExeFileName As String = System.IO.Path.GetFileName(System.Windows.Forms.Application.ExecutablePath)
       Dim logFileName As String = "SqlLog_" & Date.Parse(tmpProcTime).ToString("yyyyMM") & ".log"
       Dim logText As String = tmpProcTime & ":" & Dns.GetHostName() & ":" & tmpExeFileName & ":" & prmSql
-      ' ComWriteLog(logText, "\\nikserver21\d$\TRZdotDX\sqllog\" & logFileName)
-      Dim myPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, logFileName)
-      ComWriteLog(logText, myPath)
-
+      ComWriteLog(logText, "\\nikserver2023\d$\TRZdotDX\sqllog\" & logFileName)
     Catch ex As Exception
 
     End Try
   End Sub
-
-  ''' <summary>
-  ''' PCA実行ログ保存
-  ''' </summary>
-  ''' <param name="prmSql">SQL文</param>
-  ''' <remarks>テストコードの為、エラーが発生しても無視</remarks>
-  Public Sub WriteExecutePCALog(prmSql As String)
-
-    Try
-      Dim tmpProcTime As String = ComGetProcTime()
-      Dim tmpExeFileName As String = System.IO.Path.GetFileName(System.Windows.Forms.Application.ExecutablePath)
-      Dim logFileName As String = "PCA_" & Date.Parse(tmpProcTime).ToString("yyyyMM") & ".log"
-      Dim logText As String = tmpProcTime & ":" & Dns.GetHostName() & ":" & tmpExeFileName & ":" & prmSql
-      Dim myPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, logFileName)
-
-      ComWriteLog(logText, myPath)
-
-    Catch ex As Exception
-
-    End Try
-  End Sub
-
-  ''' <summary>
-  ''' PCA実行ログ保存(PCA項目名と値の紐づけ)
-  ''' </summary>
-  ''' <remarks>テストコードの為、エラーが発生しても無視</remarks>
-  Public Sub WriteExecutePCADetailLog()
-
-    Try
-      Dim tmpProcTime As String = ComGetProcTime()
-      Dim tmpExeFileName As String = System.IO.Path.GetFileName(System.Windows.Forms.Application.ExecutablePath)
-      Dim logFileName As String = "PCA_" & Date.Parse(tmpProcTime).ToString("yyyyMM") & ".log"
-      Dim myPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, logFileName)
-
-      Dim tmpDic As Dictionary(Of String, String) = ComGetPcaDictionary()
-      Dim strLog As String = String.Empty
-
-      For Each tmpKey As String In tmpDic.Keys
-        strLog &= tmpKey & "=" & tmpDic(tmpKey) & vbCrLf
-      Next
-      ComWriteLog(strLog, myPath)
-
-    Catch ex As Exception
-
-    End Try
-  End Sub
-
-  ''' <summary>
-  ''' 操作ログ保存
-  ''' </summary>
-  ''' <param name="prmDic"></param>
-  Public Sub WriteExecuteOperationLog(prmDic As Dictionary(Of String, String))
-
-    Try
-      Dim tmpProcTime As String = ComGetProcTime()
-      Dim tmpExeFileName As String = System.IO.Path.GetFileName(System.Windows.Forms.Application.ExecutablePath)
-      Dim logFileName As String = "OPERATION_" & Date.Parse(tmpProcTime).ToString("yyyyMM") & ".log"
-      Dim myPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, logFileName)
-
-      Dim strLog As String = String.Empty
-
-      For Each tmpKey As String In prmDic.Keys
-        strLog &= tmpKey & "=" & prmDic(tmpKey) & ","
-      Next
-      strLog = strLog.Substring(0, strLog.Length - 1)
-
-      strLog = tmpProcTime & ":" & Dns.GetHostName() & ":" & tmpExeFileName & ":" & strLog
-
-      ComWriteLog(strLog, myPath)
-
-    Catch ex As Exception
-
-    End Try
-  End Sub
-
 
 #End Region
 

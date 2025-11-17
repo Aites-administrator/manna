@@ -23,6 +23,12 @@
     ''' 日付(yyyy/MM/dd)
     ''' </summary>
     VT_DATE
+
+    ''' <summary>
+    ''' 小数点第一位迄
+    ''' </summary>
+    VT_DECIMAL1
+
   End Enum
 
 #Region "メンバ"

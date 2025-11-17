@@ -19,6 +19,7 @@ Public Class BtnBase
   Public AccessKey As Keys
 #End Region
 
+
 #Region "コンストラクタ"
   ''' <summary>
   ''' コンストラクタ
@@ -100,21 +101,9 @@ Public Class BtnBase
 
       Me.Text = tmpKeyLblHeader & vbCrLf & BtnText
       Me.Font = New Font("Segoe UI", 11, FontStyle.Regular)
-      Me.Size = New Size(300, 50)
-      Me.BackColor = Color.White
+      Me.Size = New Size(123, 50)
     End If
     MyBase.InitLayout()
-  End Sub
-
-  Private Sub InitializeComponent()
-    Me.SuspendLayout()
-    '
-    'BtnBase
-    '
-    Me.BackColor = System.Drawing.Color.White
-    Me.UseVisualStyleBackColor = False
-    Me.ResumeLayout(False)
-
   End Sub
 
 #End Region

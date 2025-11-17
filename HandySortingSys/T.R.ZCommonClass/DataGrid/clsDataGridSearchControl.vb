@@ -22,10 +22,6 @@ Public Class clsDataGridSearchControl
     EX_LIKF
     ''' <summary>後方一致検索</summary>
     EX_LIKB
-    ''' <summary>NULL一致</summary>
-    EX_NULL
-    ''' <summary>NULL不一致</summary>
-    EX_NOT_NULL
   End Enum
 
   ' データタイプ
@@ -49,6 +45,8 @@ Public Class clsDataGridSearchControl
 
   Delegate Sub CallBackSetTargetControl()
   Public lcCallBackSetTargetControl As CallBackSetTargetControl
+
+  Protected _LastText As String
 
 #End Region
 
@@ -121,6 +119,11 @@ Public Class clsDataGridSearchControl
     If ret Is Nothing Then ret = String.Empty
     Return ret
   End Function
+
+  Public Sub ClearLastText()
+    Me._LastText = Nothing
+  End Sub
+
 #End Region
 
 #End Region

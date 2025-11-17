@@ -60,7 +60,30 @@ Public Class clsDataGridSelecter
   '''   SelectingCondition([DataSource],[VALUE])
   ''' </remarks>
   Public Property SelectingCondition As Dictionary(Of String, String)
+
+  ''' <summary>
+  ''' 選択可能最大数
+  ''' </summary>
+  ''' <returns></returns>
+  Public Property MaxSelectedCount As Long
+
+  ''' <summary>
+  ''' チェック動作
+  ''' </summary>
+  ''' <returns></returns>
+  Public Property ClickAction As typClickAction
+
+  ''' <summary>
+  ''' チェック変更後画面更新有無
+  ''' </summary>
+  ''' <returns></returns>
+  Public Property Reload As Boolean
 #End Region
+
+  Public Enum typClickAction
+    Single_Click
+    Double_CLick
+  End Enum
 
 #Region "コンストラクタ"
   ''' <summary>
@@ -72,12 +95,18 @@ Public Class clsDataGridSelecter
   ''' <param name="prmDataSourcName">データソース名</param>
   ''' <param name="prmColIndex">表示位置</param>
   ''' <param name="prmSelectingCondition">チェック可能条件</param>
+  ''' <param name="prmClickAction">チェック動作</param>
+  ''' <param name="prmMaxSelectedCount">チェック可能最大数</param>
+  ''' <param name="prmReload">チェック変更後一覧更新有無</param>
   Public Sub New(prmSelectKeyList As List(Of String) _
                  , Optional prmColumWidth As Integer = 40 _
                  , Optional prmSelectChar As String = "〇" _
                  , Optional prmDataSourcName As String = "SelecterCol" _
                  , Optional prmColIndex As Integer = 0 _
-                 , Optional prmSelectingCondition As Dictionary(Of String, String) = Nothing)
+                 , Optional prmSelectingCondition As Dictionary(Of String, String) = Nothing _
+                 , Optional prmMaxSelectedCount As Long = Long.MaxValue _
+                 , Optional prmClickAction As typClickAction = typClickAction.Double_CLick _
+                 , Optional prmReload As Boolean = True)
 
     SelectKeyList = prmSelectKeyList
 
@@ -90,6 +119,12 @@ Public Class clsDataGridSelecter
     ColIndex = prmColIndex
 
     SelectingCondition = prmSelectingCondition
+
+    MaxSelectedCount = prmMaxSelectedCount
+
+    ClickAction = prmClickAction
+
+    Reload = prmReload
   End Sub
 #End Region
 

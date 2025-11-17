@@ -1,11 +1,17 @@
 ﻿Imports T.R.ZCommonClass.DgvForm01
 Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsDGVColumnSetting
-Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsDataGridSearchControl
+Imports T.R.ZCommonClass.clsCommonFnc
 
 Public Class ComSearchForm
   Implements IDgvForm01
+
+#Region "定数定義"
+#Region "public"
+  Public Const UNFINED_MSG = "対象のデータはありません"
+#End Region
+#End Region
 
 #Region "メンバ"
 
@@ -43,8 +49,6 @@ Public Class ComSearchForm
 #End Region
 
 #End Region
-
-
 
 #Region "メソッド"
 
@@ -96,14 +100,14 @@ Public Class ComSearchForm
     Dim tmpDt As New DataTable
 
     Try
-      Call tmpSql.GetResult(tmpDt, ComAddSqlSearchCondition(CreateGrid1Src1, "ListSrc.ItemCode = " & prmItemCode))
+      Call tmpSql.GetResult(tmpDt, ComAddSqlSearchCondition(CreateGrid1Src1, " ListSrc.ItemCode = " & prmItemCode))
 
       If tmpDt.Rows.Count > 0 Then
         _retval.Add("ItemCode", prmItemCode)
         _retval.Add("ItemName", tmpDt.Rows(0)("ItemName").ToString())
       Else
         _retval.Add("ItemCode", prmItemCode)
-        _retval.Add("ItemName", "対象のデータはありません")
+        _retval.Add("ItemName", UNFINED_MSG)
       End If
 
     Catch ex As Exception
@@ -161,6 +165,7 @@ Public Class ComSearchForm
 
     sql &= " SELECT * "
     sql &= " FROM  (" & _sql & ") as ListSrc"
+    sql &= " WHERE 1 = 1 "
     sql &= " ORDER BY ListSrc.ItemCode "
 
     Return sql

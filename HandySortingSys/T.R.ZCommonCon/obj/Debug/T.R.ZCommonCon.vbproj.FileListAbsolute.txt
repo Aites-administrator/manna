@@ -1,0 +1,19 @@
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\bin\Debug\T.R.ZCommonCon.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\bin\Debug\T.R.ZCommonCon.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\ConnectData\DbConnectData.vb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCon.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCon.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.Resources.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.GenerateResource.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.pdb
+C:\Users\kaihatsu\source\repos\exe86\ConnectData\DbConnectData.vb
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCon.dll
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCon.pdb
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.Resources.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.dll
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.pdb

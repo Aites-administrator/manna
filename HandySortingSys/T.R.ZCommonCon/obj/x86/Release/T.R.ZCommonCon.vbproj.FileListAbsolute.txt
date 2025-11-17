@@ -1,0 +1,6 @@
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\bin\x86\Release\ConnectData\DbConnectData.vb
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\bin\x86\Release\T.R.ZCommonCon.dll
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\obj\x86\Release\T.R.ZCommonCon.Resources.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\obj\x86\Release\T.R.ZCommonCon.vbproj.GenerateResource.cache
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\obj\x86\Release\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCon\obj\x86\Release\T.R.ZCommonCon.dll

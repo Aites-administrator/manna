@@ -23,26 +23,21 @@ Public Class CmbMstStaff
 
 #Region "パブリック"
 
-  Public Sub InitCmbData()
-    lcCallBackCreateSql = AddressOf SqlSelListSrc
-    InitCmb()
-  End Sub
-
-
   ' コンボボックスソース抽出用
   Public Function SqlSelListSrc(prmCode As String) As String
     Dim sql As String = String.Empty
 
     If (ComChkNumeric(prmCode)) Then
+      sql &= " SELECT OPERATOR_CODE  as ItemCode "
+      sql &= "      , FORMAT(OPERATOR_CODE,'" & CODE_FORMAT & "') + ':' + OPERATOR_NAME  as ItemName"
+      sql &= " FROM T_OPERATOR "
+      'sql &= " WHERE ENABLED <> 0 "
 
-      sql &= " SELECT TANTOC  as ItemCode "
-      sql &= "      , CONCAT(FORMAT(TANTOC,'" & CODE_FORMAT & "') , ':', TANTOMEI)  as ItemName"
-      sql &= " FROM TANTO_TBL "
       If prmCode <> "" Then
-        sql &= "  WHERE TANTOC = " & prmCode
+        sql &= "  WHERE OPERATOR_CODE = " & prmCode
       End If
-      sql &= " ORDER BY TANTOC "
 
+      sql &= " ORDER BY OPERATOR_CODE "
     End If
 
     Return sql

@@ -25,7 +25,7 @@
   Private Sub TxtLblMstLoad(sender As Object, e As EventArgs) Handles MyBase.Load
 
     ' 動作設定
-    Call MyBase.InitCtrl(Me, New TxtMstTojyo, SERCH_FORM_TITLE, INF_MSG_TEXT)
+    'Call MyBase.InitCtrl(Me, New TxtMstTojyo, SERCH_FORM_TITLE, INF_MSG_TEXT)
   End Sub
 
 #End Region

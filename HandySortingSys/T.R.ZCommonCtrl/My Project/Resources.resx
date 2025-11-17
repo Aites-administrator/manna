@@ -118,9 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BtnRound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BtnRound.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ButtonCancel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonCancel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -133,25 +130,13 @@
   <data name="ButtonEndSmall" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonEndS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ButtonFuncBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ButtonFuncBig.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ButtonFunction" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ButtonFunc.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ButtonPrint" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonPrint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ButtonReflesh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ButtonReflesh.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ButtonUpdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonUpdate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="CMBBTN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\cmbbtn.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="COPYBTN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\COPYBTN.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LINKBTN" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LINKBTN.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -45,6 +45,10 @@ Public Class TxtMstBase
 
   Delegate Sub CallBackMstTxtValidated(sender As Object, e As EventArgs)
   Public lcCallBackMstTxtValidated As CallBackMstTxtValidated = Nothing
+
+  Delegate Sub CallBackUnFinedMaster(prmItemCode As String, prmItemName As String)
+  Public lcCallBackUnfinedMaster As CallBackUnFinedMaster = Nothing
+
 #End Region
 
 #End Region
@@ -80,6 +84,12 @@ Public Class TxtMstBase
 
   End Property
 
+  Public ReadOnly Property NameTextBox As TextBox
+    Get
+      Return Me._txtName
+    End Get
+  End Property
+
 #End Region
 #End Region
 
@@ -111,16 +121,18 @@ Public Class TxtMstBase
   ''' 名称表示用ラベル設定
   ''' </summary>
   ''' <param name="prmCtrl"></param>
-  Public Sub SetNameCtrl(prmCtrl As TextBox)
+  Public Sub SetNameCtrl(prmCtrl As TextBox, Optional prmModDesign As Boolean = True)
     _txtName = prmCtrl
 
     ' 名称表示用テキストボックスデザイン設定
-    With _txtName
-      .Enabled = False
-      .ReadOnly = True
-      .BorderStyle = BorderStyle.None
-      .BackColor = .Parent.BackColor
-    End With
+    If prmModDesign Then
+      With _txtName
+        .Enabled = False
+        .ReadOnly = True
+        .BorderStyle = BorderStyle.None
+        .BackColor = .Parent.BackColor
+      End With
+    End If
   End Sub
 
   ''' <summary>
@@ -137,10 +149,6 @@ Public Class TxtMstBase
     Dim tmpSerchForm As New ComSearchForm
     Dim tmpItemData As New Dictionary(Of String, String)
 
-    If ((_CodeName Is Nothing) Or (_ValueName Is Nothing)) Then
-      Exit Sub
-    End If
-
     '汎用検索画面表示
     tmpItemData = tmpSerchForm.ShowSubForm(_CodeName, _ValueName, lcCallBackCreateGridSrcSql(), _FormTitle, Trim(_Text & ""))
 
@@ -152,7 +160,12 @@ Public Class TxtMstBase
       _ShowSf = True
 
       If Me._txtName IsNot Nothing Then
-        Me._txtName.Text = tmpItemData("ItemName")
+        If tmpItemData("ItemName") = ComSearchForm.UNFINED_MSG _
+            AndAlso lcCallBackUnfinedMaster IsNot Nothing Then
+          Call lcCallBackUnfinedMaster(tmpItemData("ItemCode"), tmpItemData("ItemName"))
+        Else
+          Me._txtName.Text = tmpItemData("ItemName")
+        End If
       End If
     End If
 

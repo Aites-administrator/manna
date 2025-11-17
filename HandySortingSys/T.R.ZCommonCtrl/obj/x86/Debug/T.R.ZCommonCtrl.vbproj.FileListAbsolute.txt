@@ -1,0 +1,145 @@
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonCtrl.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\IpcService.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\Microsoft.VisualBasic.PowerPacks.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonClass.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\IpcService.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\IpcService.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonClass.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonClass.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\T.R.ZCommonClass.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\bin\x86\Debug\ja\Microsoft.VisualBasic.PowerPacks.resources.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\ConnectData\DbConnectData.vb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb
+C:\Users\kaihatsu\source\repos\exe86\ConnectData\DbConnectData.vb
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.dll.config
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.dll
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.pdb
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+D:\SerialCommunicationSam\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb
+D:\Serial2CSV\Serial2CSV\exe86\ConnectData\DbConnectData.vb
+D:\Serial2CSV\Serial2CSV\exe86\T.R.ZCommonCtrl.dll.config
+D:\Serial2CSV\Serial2CSV\exe86\T.R.ZCommonCtrl.dll
+D:\Serial2CSV\Serial2CSV\exe86\T.R.ZCommonCtrl.pdb
+D:\Serial2CSV\Serial2CSV\exe86\T.R.ZCommonCtrl.xml
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+D:\Serial2CSV\Serial2CSV\projectz\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb
+D:\exe86\ConnectData\DbConnectData.vb
+D:\exe86\T.R.ZCommonCtrl.dll.config
+D:\exe86\T.R.ZCommonCtrl.dll
+D:\exe86\T.R.ZCommonCtrl.pdb
+D:\exe86\T.R.ZCommonCtrl.xml
+D:\IZ配合\src\IZ_Ds_VerR\x86\ConnectData\DbConnectData.vb
+D:\IZ配合\src\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.dll.config
+D:\IZ配合\src\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.dll
+D:\IZ配合\src\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.pdb
+D:\IZ配合\src\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.xml
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.AssemblyReference.cache
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+D:\IZ配合\src\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb
+D:\IZ_Ds_VerR\x86\ConnectData\DbConnectData.vb
+D:\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.dll.config
+D:\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.dll
+D:\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.pdb
+D:\IZ_Ds_VerR\x86\T.R.ZCommonCtrl.xml
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.dll
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.xml
+D:\IZ_Ds_VerR\T.R.ZCommonCtrl\obj\x86\Debug\T.R.ZCommonCtrl.pdb

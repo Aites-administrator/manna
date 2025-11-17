@@ -31,7 +31,9 @@ Public Class MFBaseDgv
                    , prmGridLayout As List(Of clsDGVColumnSetting) _
                    , Optional prmGridSelecter As clsDataGridSelecter = Nothing _
                    , Optional prmDatabase As clsComDatabase = Nothing _
-                   , Optional prmRequiredCondition As Boolean = False)
+                   , Optional prmRequiredCondition As Boolean = False _
+                   , Optional prmEnableAddNewLine As Boolean = False _
+                   , Optional prmRowHeight As Integer? = Nothing)
 
     Dim tmpDataGrid As clsDataGrid = Nothing
 
@@ -39,7 +41,13 @@ Public Class MFBaseDgv
       ' 二回目の初期化に対応してません
 
     Else
-      tmpDataGrid = New clsDataGrid(prmDgv, prmGridSrcSql, prmGridLayout, prmGridSelecter, prmRequiredCondition)
+      tmpDataGrid = New clsDataGrid(prmDgv _
+                                  , prmGridSrcSql _
+                                  , prmGridLayout _
+                                  , prmGridSelecter _
+                                  , prmRequiredCondition _
+                                  , prmEnableAddNewLine:=prmEnableAddNewLine _
+                                  , prmRowHeight:=prmRowHeight)
       Call Controlz.Add(prmDgv.Name, tmpDataGrid)
       If prmDatabase Is Nothing Then
         tmpDataGrid.SqlCon = New clsSqlServer

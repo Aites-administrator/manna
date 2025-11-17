@@ -50,7 +50,7 @@ Public Class SFBase
   ''' </remarks>
   Public Function ShowSubForm(prmTargetData As Dictionary(Of String, String)) As typSfResult
 
-    SfResult = typSfResult.SF_OK
+    SfResult = typSfResult.SF_CANCEL
 
     ' 画面初期化処理
     If lcCallBackInitForm IsNot Nothing Then
@@ -140,6 +140,13 @@ Public Class SFBase
         Me.Owner.Location.Y + (Me.Owner.Height - Me.Height) \ 2)
     End If
 
+    ' タイトル表示
+    Dim cs As Control() = Me.Controls.Find("lblTitleBar", True)
+    'TextBox1が見つかれば、Textを変更する
+    If cs.Length > 0 Then
+      CType(cs(0), Label).Text += ":" & T.R.ZCommonClass.clsGlobalData.PRG_TITLE
+    End If
+
   End Sub
 
   ''' <summary>
@@ -150,11 +157,11 @@ Public Class SFBase
   Private Sub SFBase_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
     ' DataGridView以外でエンターキーが押されたら次のコントロールにフォーカスを移動する
-    If e.KeyCode = Keys.Enter _
-      AndAlso Me.ActiveControl IsNot Nothing _
-      AndAlso Me.ActiveControl.GetType().Name.ToUpper <> "DataGridView".ToUpper Then
-      Call SetFocusNextCtrl(Me.ActiveControl)
-    End If
+    'If e.KeyCode = Keys.Enter _
+    '  AndAlso Me.ActiveControl IsNot Nothing _
+    '  AndAlso Me.ActiveControl.GetType().Name.ToUpper <> "DataGridView".ToUpper Then
+    '  Call SetFocusNextCtrl(Me.ActiveControl)
+    'End If
   End Sub
 
   ''' <summary>

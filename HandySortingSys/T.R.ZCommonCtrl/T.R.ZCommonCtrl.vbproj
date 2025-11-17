@@ -12,11 +12,11 @@
     <AssemblyName>T.R.ZCommonCtrl</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <SccProjectName>%24/モリタ屋トレ蔵改修/TRZORDER/T.R.ZCommonCtrl</SccProjectName>
+    <SccProjectName>%24/モリタ屋トレ蔵改修/TRZ/T.R.ZCommonCtrl</SccProjectName>
     <SccLocalPath>.</SccLocalPath>
     <SccAuxPath>http://nikserver21:8080/tfs/t.r.zdotdx</SccAuxPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
@@ -27,11 +27,9 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\Debug_exe\</OutputPath>
+    <OutputPath>..\..\exe86\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,9 +39,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -61,43 +57,51 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\exe\</OutputPath>
+    <OutputPath>..\x64\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\exe\</OutputPath>
+    <OutputPath>..\..\release\exe\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>none</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\x86\</OutputPath>
+    <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GrapeCity.Framework.InputMan.v24, Version=2.4.4006.2012, Culture=neutral, PublicKeyToken=fdd90f5c44b73170" />
-    <Reference Include="GrapeCity.Framework.MultiRow.v24, Version=2.4.4006.2012, Culture=neutral, PublicKeyToken=fdd90f5c44b73170, processorArchitecture=MSIL" />
-    <Reference Include="GrapeCity.Framework.PlusPak.v24, Version=2.4.4006.2012, Culture=neutral, PublicKeyToken=fdd90f5c44b73170" />
-    <Reference Include="GrapeCity.Win.Editors.v100, Version=10.0.4006.2012, Culture=neutral, PublicKeyToken=0ce01a33ce55ca12" />
-    <Reference Include="GrapeCity.Win.MultiRow.v100, Version=10.0.4006.2012, Culture=neutral, PublicKeyToken=0f7a722ee3c2bdd9, processorArchitecture=MSIL" />
-    <Reference Include="GrapeCity.Win.PlusPak.Calendar.v100, Version=10.0.4006.2012, Culture=neutral, PublicKeyToken=63a9ba12b6923243" />
-    <Reference Include="GrapeCity.Win.PlusPak.v100, Version=10.0.4006.2012, Culture=neutral, PublicKeyToken=63a9ba12b6923243" />
     <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Remoting" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -119,17 +123,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Button\BtnEnd.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Button\BtnBase.vb">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\FunctionBtnSam.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBoxAndText\CmbMstCustomerAndText.Designer.vb">
-      <DependentUpon>CmbMstCustomerAndText.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ComboBoxAndText\CmbMstCustomerAndText.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbBase.vb">
       <SubType>Component</SubType>
@@ -137,151 +135,13 @@
     <Compile Include="ComboBox\CmbDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ComboBox\CmbDateKubun.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateShiirebi.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateShukaBi.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateKakouHani.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateKakouBi.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateProcessing.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDateTanaorosi.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbShukkaMeisai.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbExcelOut.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbSalesTaxKbn.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbSalesTaxMethod.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbRoundingMoney.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDepositMonth.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceConstant.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrTaxType.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrMstConstant.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrMstDescription.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrMstUnit.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrMstItem.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstRoot.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstTekiyou.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMultiCellBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceHTWeightDecimalDigitsKbn.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceFaxOcr.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDelivaryPrintKubun.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceMstBui.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDeadLine.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbRePrintFlg.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPrintKubun.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbShukeiKubun.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbSortOrder.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceStopFlag.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbStopFlag.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPriceHTProcessDivision.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbHTWeightDecimalDigits.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ComboBox\CmbMstBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstCattle.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstCustomer.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstItem.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstOffice.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstOriginPlace.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstHenpin.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstRating.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstSetType.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbMstShiresaki.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbDrMstStaff.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ComboBox\CmbPrintFlg.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbMstStaff.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="LabelDR\LabelDRBase.vb">
+    <Compile Include="ComboBox\CmbUseFlg.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Form\ComSearchForm.Designer.vb">
@@ -291,12 +151,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\FormBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MFBaseDrv.Designer.vb">
-      <DependentUpon>MFBaseDrv.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\MFBaseDrv.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\MFBaseDgv.Designer.vb">
@@ -310,27 +164,6 @@
     </Compile>
     <Compile Include="Form\SFBase.vb">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Label\LabelBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Label\LabelGridTitleBase.Designer.vb">
-      <DependentUpon>LabelGridTitleBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Label\LabelGridTitleBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Label\LabelTitleBase.Designer.vb">
-      <DependentUpon>LabelTitleBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Label\LabelTitleBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Label\LabelSearchNameBase.Designer.vb">
-      <DependentUpon>LabelSearchNameBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Label\LabelSearchNameBase.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -348,63 +181,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Resource1.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource1.resx</DependentUpon>
-    </Compile>
     <Compile Include="TextAndLabel\TxtLblMstBase.Designer.vb">
       <DependentUpon>TxtLblMstBase.vb</DependentUpon>
     </Compile>
     <Compile Include="TextAndLabel\TxtLblMstBase.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstGB.Designer.vb">
-      <DependentUpon>TxtLblMstGB.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstGB.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstGensanchi.Designer.vb">
-      <DependentUpon>TxtLblMstGensanchi.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstGensanchi.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstItem.Designer.vb">
-      <DependentUpon>TxtLblMstItem.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstItem.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstKakuduke.Designer.vb">
-      <DependentUpon>TxtLblMstKakuduke.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstKakuduke.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstKikaku.Designer.vb">
-      <DependentUpon>TxtLblMstKikaku.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstKikaku.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstShiresaki.Designer.vb">
-      <DependentUpon>TxtLblMstShiresaki.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstShiresaki.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstStaff.Designer.vb">
-      <DependentUpon>TxtLblMstStaff.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstStaff.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstSyubetsu.Designer.vb">
-      <DependentUpon>TxtLblMstSyubetsu.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TextAndLabel\TxtLblMstSyubetsu.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TextAndLabel\TxtLblMstTojyo.Designer.vb">
@@ -413,85 +193,7 @@
     <Compile Include="TextAndLabel\TxtLblMstTojyo.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TextBox\TxtTantoCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtItemType2Code.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtItemType1Code.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCustomerType2Code.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCustomerType1Code.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtIriSu.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtDeliveryCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtTanka.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtJanCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCodeBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtItemCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtDrCount.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtDrGenka.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtDestCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtUnitCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtWideChar.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtRealNumberBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtTKCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtInputCombo.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMultiName.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TextBox\TxtBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCustomerCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCustomerName.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtCustomerNameKana.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMeatStandardCode.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TextBox\TxtDateBase.vb">
@@ -500,116 +202,22 @@
     <Compile Include="TextBox\TxtMstBase.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TextBox\TxtMstBlockCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstComment.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstCustomer.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstGB.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstGensanchi.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstItem.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstKakuduke.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstKikaku.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstManufacturing.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstShiresaki.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstStaff.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstSyubetsu.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtMstTojyo.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtKatakanaHalfBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtNumericPhoneBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtOfficeCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TextBox\TxtPassWord.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtPostCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtPriceBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtProductCode.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtProductName.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtProductNameKana.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="TextBox\TxtSignedNumericBase.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TextBox\TxtJyuryo.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtKotaiNo.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtEdaban.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="TextBox\TxtNumericBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtWeitghtKg.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtAddress.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtHalfCharBase.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TextBox\TxtWideCharBase.vb">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ComboBoxAndText\CmbMstCustomerAndText.resx">
-      <DependentUpon>CmbMstCustomerAndText.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form\ComSearchForm.resx">
       <DependentUpon>ComSearchForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MFBaseDrv.resx">
-      <DependentUpon>MFBaseDrv.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\MFBaseDgv.resx">
       <DependentUpon>MFBaseDgv.vb</DependentUpon>
@@ -617,48 +225,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SFBase.resx">
       <DependentUpon>SFBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Label\LabelGridTitleBase.resx">
-      <DependentUpon>LabelGridTitleBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Label\LabelTitleBase.resx">
-      <DependentUpon>LabelTitleBase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Label\LabelSearchNameBase.resx">
-      <DependentUpon>LabelSearchNameBase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resource1.resx">
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource1.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="TextAndLabel\TxtLblMstBase.resx">
       <DependentUpon>TxtLblMstBase.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextAndLabel\TxtLblMstGB.resx">
-      <DependentUpon>TxtLblMstGB.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextAndLabel\TxtLblMstGensanchi.resx">
-      <DependentUpon>TxtLblMstGensanchi.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextBox\TxtKotaiNo.resx">
-      <DependentUpon>TxtKotaiNo.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextBox\TxtOfficeCode.resx">
-      <DependentUpon>TxtOfficeCode.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TextBox\TxtWeitghtKg.resx">
-      <DependentUpon>TxtWeitghtKg.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -671,9 +246,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\IpcService\IpcService.vbproj">
@@ -683,37 +256,21 @@
     <ProjectReference Include="..\T.R.ZCommonClass\T.R.ZCommonClass.vbproj">
       <Project>{b555bcbf-591c-4bd1-95d1-53ab1771eea5}</Project>
       <Name>T.R.ZCommonClass</Name>
-      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <None Include="Resources\ButtonCancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ButtonEnd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ButtonPrint.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ButtonUpdate.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ButtonSyuka.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\BtnRound.bmp" />
+    <Content Include="Resources\ButtonCancel.png" />
     <Content Include="Resources\ButtonCancelS.png" />
+    <Content Include="Resources\ButtonEnd.png" />
     <Content Include="Resources\ButtonEndS.png" />
-    <None Include="Resources\ROUNDBTN.bmp" />
-    <None Include="Resources\ButtonFunc.bmp" />
-    <None Include="Resources\ButtonFuncBig.bmp" />
-    <Content Include="Resources\CMBBTN.bmp" />
-    <Content Include="Resources\COPYBTN.bmp" />
-    <Content Include="Resources\LINKBTN.bmp" />
+    <Content Include="Resources\ButtonPrint.png" />
+    <Content Include="Resources\ButtonReflesh.png" />
+    <Content Include="Resources\ButtonSyuka.png" />
+    <Content Include="Resources\ButtonUpdate.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

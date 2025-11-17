@@ -1,0 +1,9 @@
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\bin\x86\Release\IpcService.dll
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\bin\x86\Release\IpcService.pdb
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\bin\x86\Release\IpcService.xml
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.Resources.resources
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.vbproj.GenerateResource.cache
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.vbproj.CoreCompileInputs.cache
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.dll
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.xml
+D:\Serial2CSV\Serial2CSV\projectz\IpcService\obj\x86\Release\IpcService.pdb

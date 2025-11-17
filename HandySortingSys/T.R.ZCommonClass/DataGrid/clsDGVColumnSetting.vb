@@ -163,7 +163,7 @@
   ''' <param name="argFontName">フォント名</param>
   ''' <param name="argFontSize">フォントサイズ</param>
   ''' <param name="argTextAlignment">表示位置</param>
-  ''' <param name="artTitleFontSize">タイトルフォントサイズ</param>
+  ''' <param name="argTitleFontSize">タイトルフォントサイズ</param>
   ''' <param name="argColumnWidth">幅</param>
   ''' <param name="argFormat">書式</param>
   Public Sub New(argTitelCaption As String _
@@ -171,7 +171,7 @@
                  , Optional argFontName As typFontName = typFontName.MSゴシック _
                  , Optional argFontSize As Single = 12 _
                  , Optional argTextAlignment As typAlignment = typAlignment.MiddleLeft _
-                 , Optional artTitleFontSize As Single = 10 _
+                 , Optional argTitleFontSize As Single = 10 _
                  , Optional argColumnWidth As Integer = 120 _
                  , Optional argFormat As String = "")
     _DataSrc = argDataSrc
@@ -181,7 +181,7 @@
     _TextAlignment = argTextAlignment
     _ColumnWidth = argColumnWidth
     _Format = argFormat
-    _TitleFontSize = artTitleFontSize
+    _TitleFontSize = argTitleFontSize
   End Sub
 #End Region
 

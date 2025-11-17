@@ -1,0 +1,6 @@
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.Form1.resources
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.Resources.resources
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.sfEdit.resources
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\MainMenu\obj\Debug\MainMenu.vbproj.CoreCompileInputs.cache

@@ -3,24 +3,11 @@ Imports IpcService
 Imports System.Runtime.Remoting
 Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Channels.Ipc
-Imports System.IO
-Imports System.Reflection
-Imports T.R.ZCommonClass
 
 Public Class FormBase
   Inherits Form
 
 #Region "メンバ"
-#Region "プライベート"
-  ''' <summary>
-  ''' ボタン二度押し防止フラグ
-  ''' </summary>
-  Private _IsEventProcessing As Boolean
-
-  Private BtnList As List(Of ButtonBase) = New List(Of ButtonBase)
-
-#End Region
-
 #Region "パブリック"
 
   'IPC用クラスの生成
@@ -35,20 +22,20 @@ Public Class FormBase
   Public lcCallBackShowFormLc As CallBackShowFormLc
 
   ''' <summary>
-  ''' ボタン二度押し防止フラグ
+  ''' フォームタイトル
   ''' </summary>
-  ''' <returns></returns>
-  Public Property EventProcessing As Boolean
-    Get
-      Return _IsEventProcessing
-    End Get
-    Set(value As Boolean)
-      _IsEventProcessing = value
-    End Set
-  End Property
+  Public FORM_TITLE_BASE As String = Nothing
+
+  ''' <summary>
+  ''' 実行ファイル
+  ''' </summary>
+  Public TARGET_EXE As String = Nothing
 
 #End Region
 
+#Region "プライベート"
+  Private BtnList As List(Of ButtonBase) = New List(Of ButtonBase)
+#End Region
 #End Region
 
 #Region "メソッド"
@@ -149,42 +136,6 @@ Public Class FormBase
 
   End Sub
 
-
-  ''' <summary>
-  ''' 画面上の全てのコントロールにメッセージラベルを設定
-  ''' </summary>
-  ''' <param name="prmMsglbl">メッセージを表示するラベル</param>
-  ''' <remarks>
-  '''  CmbBase,TxtBase,BtnBaseを継承しているコントロールと
-  '''  clsDataGridが対象
-  ''' </remarks>
-  Public Sub SetMsgLbl(prmMsglbl As Label, pnlFrame As Panel)
-    Dim tmpControls As Control() = ComGetAllControls(Me)
-
-    ' CmbBase,TxtBase,BtnBaseを継承しているコントロールにメッセージ表示オブジェクトを設定
-    For Each tmpCtrl As Control In tmpControls
-      If IsTargetControl(New CmbBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, CmbBase).SetMsgLabel(prmMsglbl)
-      ElseIf IsTargetControl(New TxtBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, TxtBase).SetMsgLabel(prmMsglbl)
-      ElseIf IsTargetControl(New BtnBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, BtnBase).SetMsgLabel(prmMsglbl)
-      End If
-    Next
-
-    For Each tmpCtrl In pnlFrame.Controls
-      If IsTargetControl(New CmbBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, CmbBase).SetMsgLabel(prmMsglbl)
-      ElseIf IsTargetControl(New TxtBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, TxtBase).SetMsgLabel(prmMsglbl)
-      ElseIf IsTargetControl(New BtnBase, tmpCtrl) Then
-        DirectCast(tmpCtrl, BtnBase).SetMsgLabel(prmMsglbl)
-      End If
-    Next
-
-  End Sub
-
-
   ''' <summary>
   ''' 画面上の全てのコントロールを非表示にする
   ''' </summary>
@@ -195,8 +146,6 @@ Public Class FormBase
       tmpCtrl.Hide()
     Next
   End Sub
-
-
 
   ''' <summary>
   ''' 画面上の全テキストボックス初期化
@@ -226,17 +175,28 @@ Public Class FormBase
     Next
 
   End Sub
+
 #End Region
+
+#Region "汎用"
+  Private Function GetExeFileTimeStamp() As DateTime
+    Dim ret As DateTime
+
+    If TARGET_EXE Is Nothing Then
+      ret = System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location)
+    Else
+      ret = System.IO.File.GetLastWriteTime(TARGET_EXE)
+    End If
+
+    Return ret
+  End Function
+#End Region
+
 
 #End Region
 
 #Region "イベントプロシージャー"
 
-  ''' <summary>
-  ''' キーが押された時のイベント
-  ''' </summary>
-  ''' <param name="sender"></param>
-  ''' <param name="e"></param>
   Private Sub BaseForm_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
 
     ' DataGridView以外でエンターキーが押されたら次のコントロールにフォーカスを移動する
@@ -252,29 +212,14 @@ Public Class FormBase
       End If
     Next
 
-
   End Sub
 
-  ''' <summary>
-  ''' ボタン二度押し防止フラグ解除
-  ''' </summary>
-  ''' <param name="sender"></param>
-  ''' <param name="e"></param>
-  Private Sub Application_Idle(ByVal sender As Object, ByVal e As System.EventArgs)
-
-    _IsEventProcessing = False
-
-  End Sub
-
-  ''' <summary>
-  ''' フォームロード時
-  ''' </summary>
-  ''' <param name="sender"></param>
-  ''' <param name="e"></param>
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    Me.KeyPreview = True
 
-    AddHandler Application.Idle, New EventHandler(AddressOf Application_Idle)
+    'フォームを画面の真ん中に表示する
+    Me.SetBounds((Screen.PrimaryScreen.Bounds.Width - Width) / 2, (Screen.PrimaryScreen.Bounds.Height - Height) / 2 - 25, Width, Height)
+
+    Me.KeyPreview = True
 
     ' コンボボックス初期化
     ComInitCmb(Me)
@@ -282,26 +227,22 @@ Public Class FormBase
     ' ダブルバッファリング有効
     Me.DoubleBuffered = True
 
-    For Each tmpCtrl As Control In GetAllControlz(Me)
+    ' タイトル表示
+    Dim cs As Control() = Me.Controls.Find("lblTitleBar", True)
+    'TextBox1が見つかれば、Textを変更する
+    If cs.Length > 0 Then
+      CType(cs(0), Label).Text += ":" & T.R.ZCommonClass.clsGlobalData.PRG_TITLE
+    End If
+
+
+    For Each tmpCtrl As Control In Me.Controls
       If IsTargetControl(New BtnBase, tmpCtrl) Then
         BtnList.Add(tmpCtrl)
       End If
     Next
 
-
-
-  End Sub
-
-  ''' <summary>
-  ''' Shownイベント時
-  ''' </summary>
-  ''' <param name="sender"></param>
-  ''' <param name="e"></param>
-  Private Sub BaseForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
-
-    Dim verDate As Date = File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location)
-    verDate = verDate + New TimeSpan(9, 0, 0)
-    Me.Text = Me.Text & verDate.ToString("(yyyy/MM/dd HH:mm:ss)")
+    MaximizeBox = False
+    FormBorderStyle = FormBorderStyle.FixedSingle
 
   End Sub
 
@@ -317,6 +258,19 @@ Public Class FormBase
         DirectCast(tmpCtrl, DataGridView).ShowCellToolTips = True
       End If
     Next
+
+    ' タイトルバー表示
+    Dim updateTime As DateTime = GetExeFileTimeStamp()
+
+    Me.Text = T.R.ZCommonClass.clsGlobalData.PRG_TITLE & ":" & FORM_TITLE_BASE & " (" & updateTime & ")"
+
+    ' タイトルラベル表示
+    For Each tmpCtrl As Control In Me.Controls
+      If IsTargetControl(New Label, tmpCtrl) AndAlso tmpCtrl.Name = "lblFormTitle" Then
+        tmpCtrl.Text = FORM_TITLE_BASE
+      End If
+    Next
+
   End Sub
 
   ''' <summary>
@@ -344,17 +298,6 @@ Public Class FormBase
     Me.ClientSize = New System.Drawing.Size(284, 261)
     Me.Name = "FormBase"
     Me.ResumeLayout(False)
-
-  End Sub
-
-  ''' <summary>
-  ''' フォーム終了時、プロセスの終了
-  ''' </summary>
-  ''' <param name="sender"></param>
-  ''' <param name="e"></param>
-  Private Sub FormBase_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-
-    ProcessKill()
 
   End Sub
 

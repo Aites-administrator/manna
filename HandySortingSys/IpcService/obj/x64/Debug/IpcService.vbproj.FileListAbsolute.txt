@@ -1,0 +1,49 @@
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\bin\x64\Debug\IpcService.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\bin\x64\Debug\IpcService.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\bin\x64\Debug\IpcService.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\EXE\IpcService.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\EXE\IpcService.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\EXE\IpcService.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.vbprojAssemblyReference.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.Resources.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.vbproj.GenerateResource.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.vbproj.CoreCompileInputs.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\IpcService\obj\x64\Debug\IpcService.pdb
+C:\Users\kaihatsu\source\repos\EXE\IpcService.dll
+C:\Users\kaihatsu\source\repos\EXE\IpcService.pdb
+C:\Users\kaihatsu\source\repos\EXE\IpcService.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\EXE\IpcService.dll
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\EXE\IpcService.pdb
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\EXE\IpcService.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.Resources.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.dll
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.pdb
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbprojAssemblyReference.cache
+D:\SerialCommunicationSam\EXE\IpcService.dll
+D:\SerialCommunicationSam\EXE\IpcService.pdb
+D:\SerialCommunicationSam\EXE\IpcService.xml
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbprojAssemblyReference.cache
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.Resources.resources
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbproj.GenerateResource.cache
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.vbproj.CoreCompileInputs.cache
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.dll
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.xml
+D:\SerialCommunicationSam\IpcService\obj\x64\Debug\IpcService.pdb
+D:\IZ_Ds_VerR\EXE\IpcService.dll
+D:\IZ_Ds_VerR\EXE\IpcService.pdb
+D:\IZ_Ds_VerR\EXE\IpcService.xml
+D:\IZ_Ds_VerR\x64\IpcService.dll
+D:\IZ_Ds_VerR\x64\IpcService.pdb
+D:\IZ_Ds_VerR\x64\IpcService.xml
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.vbprojAssemblyReference.cache
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.Resources.resources
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.vbproj.GenerateResource.cache
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.vbproj.CoreCompileInputs.cache
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.dll
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.xml
+D:\IZ_Ds_VerR\IpcService\obj\x64\Debug\IpcService.pdb

@@ -11,6 +11,11 @@ Public Class TxtDateBase
 #End Region
 #End Region
 
+
+  ' 重量受信時イベント
+  Delegate Sub CallBackSetFormatText(tmpDateText As String)
+  Public lcCallBackSetFormatText As CallBackSetFormatText
+
 #Region "プロパティー"
 #Region "パブリック"
 
@@ -31,9 +36,8 @@ Public Class TxtDateBase
 
 #Region "コンストラクタ"
   Public Sub New()
-    MyBase.New("yyyy/MM/dd".Length + 1)
+    MyBase.New("yyyy/MM/dd".Length)
     _HasError = False
-    Me.ImeMode = ImeMode.Alpha        ' IMEモード設定(半角英数字)
   End Sub
 #End Region
 
@@ -61,13 +65,13 @@ Public Class TxtDateBase
     Dim tmpDateText As String = String.Empty
     With Me
       If .Text.Length > 0 Then
-        If .Text.Length > 10 Then
-          .Text = .Text.Substring(0, 10)
-        End If
         Try
           ' 入力された値を日付形式に変換
           tmpDateText = ComCreateDateText(.Text)
           .Text = ComCreateDateText(.Text)
+          If lcCallBackSetFormatText IsNot Nothing Then
+            Call lcCallBackSetFormatText(.Text)
+          End If
           _HasError = False
         Catch ex As Exception
           e.Cancel = True

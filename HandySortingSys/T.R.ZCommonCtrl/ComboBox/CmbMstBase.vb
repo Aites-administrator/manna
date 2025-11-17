@@ -8,9 +8,6 @@ Public Class CmbMstBase
 
 #Region "プライベート"
   Private _CodeFormat As String
-
-  Private _SkipChkCode As Boolean = False
-
 #End Region
 
 #End Region
@@ -30,25 +27,6 @@ Public Class CmbMstBase
 
 #End Region
 
-#Region "プロパティー"
-#Region "パブリック"
-
-  ''' <summary>
-  ''' コード存在確認のスキップ有無
-  ''' </summary>
-  ''' <returns></returns>
-  ''' <remarks>デフォルト False</remarks>
-  Public Property SkipChkCode As Boolean
-    Get
-      Return _SkipChkCode
-    End Get
-    Set(value As Boolean)
-      _SkipChkCode = value
-    End Set
-  End Property
-#End Region
-#End Region
-
 #Region "メソッド"
 
 #Region "プライベート"
@@ -57,10 +35,6 @@ Public Class CmbMstBase
   Private Function ChkCode(prmCode As String) As Boolean
     Dim tmpDb As New clsSqlServer
     Dim tmpDt As New DataTable
-
-    If (lcCallBackCreateSql Is Nothing) Then
-      Return FALSE
-    End If
 
     tmpDb.GetResult(tmpDt, lcCallBackCreateSql(prmCode))
     Return (1 <= tmpDt.Rows.Count)
@@ -71,21 +45,16 @@ Public Class CmbMstBase
       If .Text.Length <= 0 Then
         .SelectedIndex = -1
       Else
-        If (SkipChkCode()) Then
-          ' 表示内容設定
-          .Text = .Text
-        Else
-          If .Text.Length <= Len(_CodeFormat) Then
-            ' マスタ検索
-            If ChkCode(.Text) Then
-              ' 表示内容設定
-              .SelectedValue = .Text
-              .Text = .Text
-            Else
-              ' 全選択
-              Me.Select(.Text.Length, 0)
-              e.Cancel = True
-            End If
+        If .Text.Length <= Len(_CodeFormat) Then
+          ' マスタ検索
+          If ChkCode(.Text) Then
+            ' 表示内容設定
+            .SelectedValue = .Text
+            .Text = .Text
+          Else
+            ' 全選択
+            Me.Select(.Text.Length, 0)
+            e.Cancel = True
           End If
         End If
       End If

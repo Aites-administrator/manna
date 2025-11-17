@@ -1,0 +1,133 @@
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll.config
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.pdb
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.xml
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.dll
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.pdb
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.xml
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.pdb
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.xml
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll.config
+D:\TRZ\T.R.ZCommonCtrl\bin\Debug\ja\Microsoft.VisualBasic.PowerPacks.resources.dll
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.dll
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.xml
+D:\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.pdb
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll.config
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.pdb
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.xml
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.pdb
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.xml
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.pdb
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.xml
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll.config
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\ja\Microsoft.VisualBasic.PowerPacks.resources.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.dll
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.xml
+D:\20240110 京都協同管理\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\IpcService.xml
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.xml
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\T.R.ZCommonClass.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\bin\Debug\ja\Microsoft.VisualBasic.PowerPacks.resources.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZ_モリタ屋verインボイス対応_20231130\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.dll.config
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.pdb
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\exe86\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.FormBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.SFBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.Resources.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.dll
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.xml
+D:\京都協同管理  トレ蔵DX対応\TRZdotDX\TRZ\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.pdb
+C:\Users\kaihatsu\source\repos\exe86\ConnectData\DbConnectData.vb
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.dll.config
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.dll
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.pdb
+C:\Users\kaihatsu\source\repos\exe86\T.R.ZCommonCtrl.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.ComSearchForm.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.FormBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.MFBaseDgv.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.SFBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.Resources.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstBase.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGB.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtLblMstGensanchi.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxKotaiNo.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.TxtWeitghtKg.resources
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.vbproj.CopyComplete
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.dll
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.xml
+C:\Users\kaihatsu\source\repos\SerialCommunicationSam\T.R.ZCommonCtrl\obj\Debug\T.R.ZCommonCtrl.pdb

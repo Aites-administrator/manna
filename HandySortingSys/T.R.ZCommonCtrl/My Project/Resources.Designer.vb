@@ -63,16 +63,6 @@ Namespace My.Resources
         '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property BtnRound() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("BtnRound", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
         Friend ReadOnly Property ButtonCancel() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ButtonCancel", resourceCulture)
@@ -113,26 +103,6 @@ Namespace My.Resources
         '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
-        Friend ReadOnly Property ButtonFuncBig() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ButtonFuncBig", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
-        Friend ReadOnly Property ButtonFunction() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("ButtonFunction", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
         Friend ReadOnly Property ButtonPrint() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ButtonPrint", resourceCulture)
@@ -143,39 +113,19 @@ Namespace My.Resources
         '''<summary>
         '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         '''</summary>
+        Friend ReadOnly Property ButtonReflesh() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ButtonReflesh", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        '''</summary>
         Friend ReadOnly Property ButtonUpdate() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ButtonUpdate", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
-        Friend ReadOnly Property CMBBTN() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("CMBBTN", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
-        Friend ReadOnly Property COPYBTN() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("COPYBTN", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
-        '''</summary>
-        Friend ReadOnly Property LINKBTN() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("LINKBTN", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -12,26 +12,24 @@
     <AssemblyName>T.R.ZCommonClass</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
-    <SccProjectName>%24/モリタ屋トレ蔵改修/TRZORDER/T.R.ZCommonClass</SccProjectName>
+    <SccProjectName>%24/モリタ屋トレ蔵改修/TRZ/T.R.ZCommonClass</SccProjectName>
     <SccLocalPath>.</SccLocalPath>
     <SccAuxPath>http://nikserver21:8080/tfs/t.r.zdotdx</SccAuxPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\Debug_exe\</OutputPath>
+    <OutputPath>..\..\exe86\</OutputPath>
     <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,9 +39,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -61,31 +57,45 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\exe\</OutputPath>
+    <OutputPath>..\x64\</OutputPath>
     <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\exe\</OutputPath>
+    <OutputPath>..\..\release\exe\</OutputPath>
     <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
     <Optimize>true</Optimize>
-    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
-    <DebugType>pdbonly</DebugType>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>none</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <WarningsAsErrors>
-    </WarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\x86\</OutputPath>
+    <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GrapeCity.Framework.MultiRow.v24, Version=2.4.4006.2012, Culture=neutral, PublicKeyToken=fdd90f5c44b73170, processorArchitecture=MSIL" />
-    <Reference Include="GrapeCity.Win.MultiRow.v100, Version=10.0.4006.2012, Culture=neutral, PublicKeyToken=0f7a722ee3c2bdd9, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.VisualBasic.PowerPacks, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -98,10 +108,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="T.R.ZCommonCon, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\exe\T.R.ZCommonCon.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -117,9 +123,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\clsComDatabase.vb" />
-    <Compile Include="Database\clsSeisanBackup.vb" />
     <Compile Include="Database\clsReport.vb" />
+    <Compile Include="EXCEL\clsExcel.vb" />
+    <Compile Include="Database\clsComDatabase.vb" />
+    <Compile Include="Database\clsPcaDb.vb" />
+    <Compile Include="Database\clsPcaFnc.vb" />
     <Compile Include="Database\clsSqlServer.vb" />
     <Compile Include="DataGrid\clsDataGrid.vb" />
     <Compile Include="DataGrid\clsDataGridEditTextBox.vb" />
@@ -128,21 +136,25 @@
     <Compile Include="DataGrid\clsDataGridSearchTextBox.vb" />
     <Compile Include="DataGrid\clsDataGridSelecter.vb" />
     <Compile Include="DataGrid\clsDGVColumnSetting.vb" />
-    <Compile Include="DataRepeater\clsDataRepeaterCtrl.vb" />
-    <Compile Include="DataRepeater\clsDataRepeater.vb" />
-    <Compile Include="Function\ClassAutoSetKana.vb" />
-    <Compile Include="Function\clsInfoClass.vb" />
+    <Compile Include="DataGrid\DgvCCC.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Form\ComErrorDialogue.Designer.vb">
+      <DependentUpon>ComErrorDialogue.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form\ComErrorDialogue.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Function\clsGlobalData.vb" />
     <Compile Include="Function\clsCommonFnc.vb" />
-    <Compile Include="Function\clsGlobalDataOrder.vb" />
-    <Compile Include="Function\clsMnuFIle.vb" />
-    <Compile Include="Interface\MrForm.vb" />
-    <Compile Include="Interface\DrForm.vb" />
+    <Compile Include="Function\Form_MsgBox.Designer.vb">
+      <DependentUpon>Form_MsgBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Function\Form_MsgBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Interface\DgvForm02.vb" />
     <Compile Include="Interface\DgvForm01.vb" />
-    <Compile Include="MultiRow\clsMultiRow.vb" />
-    <Compile Include="MultiRow\clsMultiRowCtrl.vb" />
-    <Compile Include="MultiRow\CustomMoveToNextControl.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -161,6 +173,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form\ComErrorDialogue.resx">
+      <DependentUpon>ComErrorDialogue.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Function\Form_MsgBox.resx">
+      <DependentUpon>Form_MsgBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -185,6 +203,49 @@
       <Project>{0cef3710-7f88-46ed-a0d3-e6d6ff778f1d}</Project>
       <Name>IpcService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\T.R.ZCommonCon\T.R.ZCommonCon.vbproj">
+      <Project>{1e1b85f1-87d2-4f40-ba16-c3621c8644a0}</Project>
+      <Name>T.R.ZCommonCon</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>8</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>9</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
