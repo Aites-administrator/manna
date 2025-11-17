@@ -128,8 +128,6 @@
     <Compile Include="DataGrid\clsDataGridSearchTextBox.vb" />
     <Compile Include="DataGrid\clsDataGridSelecter.vb" />
     <Compile Include="DataGrid\clsDGVColumnSetting.vb" />
-    <Compile Include="DataRepeater\clsDataRepeaterCtrl.vb" />
-    <Compile Include="DataRepeater\clsDataRepeater.vb" />
     <Compile Include="Function\ClassAutoSetKana.vb" />
     <Compile Include="Function\clsInfoClass.vb" />
     <Compile Include="Function\clsGlobalData.vb" />
@@ -140,9 +138,6 @@
     <Compile Include="Interface\DrForm.vb" />
     <Compile Include="Interface\DgvForm02.vb" />
     <Compile Include="Interface\DgvForm01.vb" />
-    <Compile Include="MultiRow\clsMultiRow.vb" />
-    <Compile Include="MultiRow\clsMultiRowCtrl.vb" />
-    <Compile Include="MultiRow\CustomMoveToNextControl.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

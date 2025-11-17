@@ -287,22 +287,8 @@
     <Compile Include="Form\ComSearchForm.Designer.vb">
       <DependentUpon>ComSearchForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form\ComSearchForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Form\ComSearchForm.vb" />
     <Compile Include="Form\FormBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MFBaseDrv.Designer.vb">
-      <DependentUpon>MFBaseDrv.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\MFBaseDrv.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MFBaseDgv.Designer.vb">
-      <DependentUpon>MFBaseDgv.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\MFBaseDgv.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\SFBase.Designer.vb">
@@ -605,14 +591,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MFBaseDrv.resx">
-      <DependentUpon>MFBaseDrv.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MFBaseDgv.resx">
-      <DependentUpon>MFBaseDgv.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\SFBase.resx">
