@@ -1,6 +1,4 @@
-﻿Imports System.Drawing.Text
-Imports System.Text.RegularExpressions
-''' <summary>
+﻿''' <summary>
 ''' Btn操作クラス
 ''' </summary>
 ''' 
@@ -14,7 +12,11 @@ Public Class BtnBase
   ' メッセージ出力ラベルテキスト
   Private _msgLabelText As String
 
+#End Region
 
+#Region "パブリック"
+  Public BtnText As String
+  Public AccessKey As Keys
 #End Region
 
 #Region "コンストラクタ"
@@ -25,7 +27,7 @@ Public Class BtnBase
 
     'イメージがコントロールのテキストの上部に表示されるように指定します。
     Me.TextImageRelation = TextImageRelation.ImageAboveText
-
+    BtnText = Nothing
   End Sub
 
 
@@ -64,191 +66,54 @@ Public Class BtnBase
 
   End Sub
 
-  ''' <summary>
-  ''' ファンクションキー名設定
-  ''' </summary>
-  ''' <param name="prmFuncName">ファンクションキー名</param>
-  Public Sub SetFunctionKeyName(prmFuncName As String)
+  Protected Overrides Sub InitLayout()
+    Dim tmpKeyLblHeader As String = String.Empty
+    If BtnText IsNot Nothing Then
+      Select Case Me.AccessKey
+        Case Keys.Escape
+          tmpKeyLblHeader = "ESC"
+        Case Keys.F1
+          tmpKeyLblHeader = "F1"
+        Case Keys.F2
+          tmpKeyLblHeader = "F2"
+        Case Keys.F3
+          tmpKeyLblHeader = "F3"
+        Case Keys.F4
+          tmpKeyLblHeader = "F4"
+        Case Keys.F5
+          tmpKeyLblHeader = "F5"
+        Case Keys.F6
+          tmpKeyLblHeader = "F6"
+        Case Keys.F7
+          tmpKeyLblHeader = "F7"
+        Case Keys.F8
+          tmpKeyLblHeader = "F8"
+        Case Keys.F9
+          tmpKeyLblHeader = "F9"
+        Case Keys.F10
+          tmpKeyLblHeader = "F10"
+        Case Keys.F11
+          tmpKeyLblHeader = "F11"
+        Case Keys.F12
+          tmpKeyLblHeader = "F12"
+      End Select
 
-    ' キャンバス
-    Dim gra As Graphics = Graphics.FromImage(Me.Image)
-
-    ' 書き出すテキストのフォントを作成
-    Dim myFont As Font = New Font(FontFamily.GenericSansSerif, 9, FontStyle.Bold)
-    ' 黒色で書きだす
-    Dim myBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
-    ' アンチエイリアス設定
-    gra.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-    ' 書き出し
-    gra.DrawString(prmFuncName, myFont, myBrush, 10, 2)
-
-    ' コントロール上のテキストおよびイメージの位置
-    Me.TextImageRelation = TextImageRelation.ImageAboveText
-
-  End Sub
-
-  ''' <summary>
-  ''' コンボボックスマーク設定
-  ''' </summary>
-  ''' <param name="prmMark">コンボボックスマーク</param>
-  Public Sub SetComboMark(prmMark As String)
-
-    ' キャンバス
-    Dim gra As Graphics = Graphics.FromImage(Me.Image)
-
-    ' 書き出すテキストのフォントを作成
-    Dim myFont As Font = New Font(FontFamily.GenericSansSerif, 9, FontStyle.Bold)
-    ' 黒色で書きだす
-    Dim myBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
-    ' アンチエイリアス設定
-    gra.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-    ' 書き出し
-    gra.DrawString(prmMark, myFont, myBrush, 10, 2)
-
-    ' コントロール上のテキストおよびイメージの位置
-    Me.TextImageRelation = TextImageRelation.ImageAboveText
-
-  End Sub
-
-  ''' <summary>
-  ''' ファンクションテキスト設定
-  ''' </summary>
-  ''' <param name="prmText">テキスト</param>
-  Public Sub SetText(prmText As String)
-
-    ' キャンバス
-    Dim gra As Graphics = Graphics.FromImage(Me.Image)
-
-    ' 書き出すテキストのフォントを作成
-    Dim myFont As Font = New Font(FontFamily.GenericSansSerif, 11, FontStyle.Regular)
-    ' 黒色で書きだす
-    Dim myBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
-    ' アンチエイリアス設定
-    gra.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-    ' 書き出し
-    Select Case prmText.Length
-      Case 2
-        drawIntervalString(gra, prmText, myFont, myBrush, 35, 22, 5)
-
-      Case 3
-        drawIntervalString(gra, prmText, myFont, myBrush, 26, 22, 4)
-      Case 4
-        drawIntervalString(gra, prmText, myFont, myBrush, 17, 22, 3)
-      Case 5
-        Dim chkKana As Boolean = False
-        For i = 0 To prmText.Length - 1
-          If Regex.IsMatch(prmText(i), "^[ァ-ー]+$") Then
-            chkKana = True
-          End If
-        Next
-        If (chkKana) Then
-          drawIntervalString(gra, prmText, myFont, myBrush, 16, 22, 3)
-        Else
-          gra.DrawString(prmText, myFont, myBrush, 10, 22)
-        End If
-      Case Else
-        gra.DrawString(prmText, myFont, myBrush, 10, 22)
-    End Select
-
-    ' コントロール上のテキストおよびイメージの位置
-    Me.TextImageRelation = TextImageRelation.ImageAboveText
-
-  End Sub
-
-  ''' <summary>
-  ''' ファンクションテキスト設定
-  ''' </summary>
-  ''' <param name="prmText">テキスト</param>
-  Public Sub SetText2(prmText As String)
-
-    ' キャンバス
-    Dim gra As Graphics = Graphics.FromImage(Me.Image)
-
-    ' 書き出すテキストのフォントを作成
-    Dim myFont As Font = New Font(FontFamily.GenericSansSerif, 16, FontStyle.Regular)
-    ' 黒色で書きだす
-    Dim myBrush As New SolidBrush(Color.FromArgb(0, 0, 0))
-    ' アンチエイリアス設定
-    gra.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-    ' 書き出し
-    gra.DrawString(prmText, myFont, myBrush, 35, 12)
-
-    ' コントロール上のテキストおよびイメージの位置
-    Me.TextImageRelation = TextImageRelation.ImageAboveText
-
-  End Sub
-
-
-
-  ''' <summary>
-  ''' ファンクションテキスト間隔設定
-  ''' </summary>
-  ''' <param name="prmGra">キャンバス</param>
-  ''' <param name="prmText">テキスト</param>
-  ''' <param name="prmFont">フォント</param>
-  ''' <param name="prmBrush">ブラシの色</param>
-  ''' <param name="x">横位置</param>
-  ''' <param name="y">縦位置</param>
-  ''' <param name="prmInterval"></param>
-  Public Sub drawIntervalString(prmGra As Graphics,
-                                prmText As String,
-                                prmFont As Font,
-                                prmBrush As Brush,
-                                x As Integer,
-                                y As Integer,
-                                prmInterval As Integer)
-    If (prmInterval > 0) Then
-      Dim sz As SizeF
-
-      For Each c As Char In prmText
-
-        sz = prmGra.MeasureString(c.ToString, prmFont, PointF.Empty, StringFormat.GenericTypographic)
-
-        prmGra.DrawString(c.ToString, prmFont, prmBrush, x, y)
-
-        x = x + sz.Width + prmInterval
-
-      Next
-    Else
-      prmGra.DrawString(prmText, prmFont, prmBrush, x, y)
+      Me.Text = tmpKeyLblHeader & vbCrLf & BtnText
+      Me.Font = New Font("Segoe UI", 11, FontStyle.Regular)
+      Me.Size = New Size(300, 50)
+      Me.BackColor = Color.White
     End If
-
+    MyBase.InitLayout()
   End Sub
 
-  ''' <summary>
-  ''' ファンクションテキスト設定
-  ''' </summary>
-  ''' <param name="prmText">テキスト</param>
-  Public Sub SetFunctionText(prmFunName As String, prmText As String)
-
-    InitSetFunction()
-
-    ' ファンクションキー名設定
-    SetFunctionKeyName(prmFunName)
-
-    SetText(prmText)
-
-  End Sub
-
-  ''' <summary>
-  ''' ファンクションボタン初期設定
-  ''' </summary>
-  Public Sub InitSetFunction()
-
-    Me.BackColor = Color.Transparent
-
-    Me.FlatStyle = FlatStyle.Flat
-    Me.Text = ""
-    Me.FlatAppearance.BorderSize = 0
-    Me.FlatAppearance.MouseDownBackColor = Color.Transparent
-    Me.FlatAppearance.MouseOverBackColor = Color.Transparent
-
-    ' 画像を設定
-    Me.Image = My.Resources.ButtonFunction
-
-    Me.Size = New Size(115, 48)
-
-    Me.TabStop = False
+  Private Sub InitializeComponent()
+    Me.SuspendLayout()
+    '
+    'BtnBase
+    '
+    Me.BackColor = System.Drawing.Color.White
+    Me.UseVisualStyleBackColor = False
+    Me.ResumeLayout(False)
 
   End Sub
 

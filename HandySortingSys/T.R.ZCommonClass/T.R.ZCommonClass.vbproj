@@ -135,6 +135,7 @@
     <Compile Include="Function\clsGlobalData.vb" />
     <Compile Include="Function\clsCommonFnc.vb" />
     <Compile Include="Function\clsGlobalDataOrder.vb" />
+    <Compile Include="Function\clsMnuFIle.vb" />
     <Compile Include="Interface\MrForm.vb" />
     <Compile Include="Interface\DrForm.vb" />
     <Compile Include="Interface\DgvForm02.vb" />

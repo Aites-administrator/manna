@@ -2169,29 +2169,61 @@ Err_Exit:
         Return sql
     End Function
 
-    ''' <summary>
-    ''' 印刷件数チェック
-    ''' </summary>
-    ''' <param name="prmCount"></param>
-    ''' <param name="prmTitle"></param>
-    ''' <returns></returns>
-    Public Shared Function ComChkPrint(prmCount As Integer,
-                                     prmTitle As String) As Boolean
+  ''' <summary>
+  ''' 印刷件数チェック
+  ''' </summary>
+  ''' <param name="prmCount"></param>
+  ''' <param name="prmTitle"></param>
+  ''' <returns></returns>
+  Public Shared Function ComChkPrint(prmCount As Integer,
+                                   prmTitle As String) As Boolean
 
-        Dim rtn As typMsgBoxResult
-        Dim ret As Boolean = False
+    Dim rtn As typMsgBoxResult
+    Dim ret As Boolean = False
 
-        rtn = ComMessageBox("出力するデータが" & prmCount.ToString & "件あります。" & vbCrLf & vbCrLf & "印刷してもよろしいですか？" _
-      , prmTitle _
-      , typMsgBox.MSG_NORMAL _
-      , typMsgBoxButton.BUTTON_YESNO)
+    rtn = ComMessageBox("出力するデータが" & prmCount.ToString & "件あります。" & vbCrLf & vbCrLf & "印刷してもよろしいですか？" _
+  , prmTitle _
+  , typMsgBox.MSG_NORMAL _
+  , typMsgBoxButton.BUTTON_YESNO)
 
-        ' 確認メッセージボックスで、NOボタン選択時
-        If rtn = typMsgBoxResult.RESULT_NO Then
-            ret = True
+    ' 確認メッセージボックスで、NOボタン選択時
+    If rtn = typMsgBoxResult.RESULT_NO Then
+      ret = True
+    End If
+
+    Return ret
+
+  End Function
+
+  Public Shared Function GetAllControlz(prmTargetControl As Control) As List(Of Control)
+    Dim ret As New List(Of Control)
+
+    If prmTargetControl.Controls.Count > 0 Then
+      For Each tmpCtrl As Control In prmTargetControl.Controls
+        ret.Add(tmpCtrl)
+        If tmpCtrl.Controls.Count > 0 Then
+          For Each tmpChildCtrl As Control In GetAllControlz(tmpCtrl)
+            ret.Add(tmpChildCtrl)
+          Next
         End If
+      Next
+    End If
 
-        Return ret
+    Return ret
+  End Function
 
-    End Function
+  Public Shared Function ComCreateInsertItem(prmKeyValue As Dictionary(Of String, String)) As Dictionary(Of String, String)
+    Dim tmpKeyz As String = String.Empty
+    Dim tmpValuez As String = String.Empty
+
+    For Each tmpKey As String In prmKeyValue.Keys
+      tmpKeyz += tmpKey & ","
+      tmpValuez += prmKeyValue(tmpKey) & ","
+    Next
+
+    tmpKeyz = tmpKeyz.Substring(1, tmpKeyz.Length - 1)
+    tmpValuez = tmpValuez.Substring(1, tmpValuez.Length - 1)
+
+    Return New Dictionary(Of String, String) From {{"Keyz", tmpKeyz}, {"Valuez", tmpValuez}}
+  End Function
 End Class

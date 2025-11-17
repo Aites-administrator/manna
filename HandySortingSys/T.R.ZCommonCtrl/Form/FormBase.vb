@@ -13,16 +13,14 @@ Public Class FormBase
 #Region "メンバ"
 #Region "プライベート"
   ''' <summary>
-  ''' ファンクションキー記憶領域
-  ''' </summary>
-  Private _FuncBtn As New Dictionary(Of Keys, BtnFunc)
-
-  ''' <summary>
   ''' ボタン二度押し防止フラグ
   ''' </summary>
   Private _IsEventProcessing As Boolean
 
+  Private BtnList As List(Of ButtonBase) = New List(Of ButtonBase)
+
 #End Region
+
 #Region "パブリック"
 
   'IPC用クラスの生成
@@ -50,6 +48,7 @@ Public Class FormBase
   End Property
 
 #End Region
+
 #End Region
 
 #Region "メソッド"
@@ -197,40 +196,7 @@ Public Class FormBase
     Next
   End Sub
 
-  ''' <summary>
-  ''' ファンクションキー登録
-  ''' </summary>
-  ''' <param name="prmBtn">ボタンコントロール</param>
-  ''' <param name="prmKey">ファンクションキーコード</param>
-  Public Sub FuncBtnAdd(prmBtn As BtnFunc, prmKey As Keys)
 
-    If _FuncBtn.ContainsKey(prmKey) = False Then
-      _FuncBtn.Add(prmKey, prmBtn)
-    End If
-
-  End Sub
-
-  ''' <summary>
-  ''' ファンクションキーかどうか判定し、ファンクイションキーの場合イベントの関連付けを行う
-  ''' </summary>
-  ''' <param name="prmObjCtr">コントロール</param>
-  ''' <param name="prmObjBtn">ボタンコントロール</param>
-  ''' <returns></returns>
-  Public Function TryGetFuncButton(ByVal prmObjCtr As Control,
-                                   ByRef prmObjBtn As BtnFunc) As Boolean
-    Dim bRet As Boolean = False
-
-    ' ファンクションキーのイベントの関連付け
-    If (IsTargetControl(New BtnFunc, prmObjCtr)) Then
-      'ボタンコントロールに変換
-      prmObjBtn = DirectCast(prmObjCtr, BtnFunc)
-
-      bRet = True
-    End If
-
-    Return bRet
-
-  End Function
 
   ''' <summary>
   ''' 画面上の全テキストボックス初期化
@@ -280,34 +246,12 @@ Public Class FormBase
       Call SetFocusNextCtrl(Me.ActiveControl)
     End If
 
-    ' ファンクションキーが押された場合、ファンクションキー記憶領域に対応するキーイベントを実行する
-    Try
-
-      ' ファンクションキー記憶領域に、入力したキーが存在するかどうか判定
-      If (_FuncBtn.ContainsKey(e.KeyCode)) Then
-
-        ' ファンクションキー記憶領域からボタンコントロールを取得
-        Dim tmpBtn As BtnFunc = _FuncBtn(e.KeyCode)
-        With tmpBtn
-
-          ' ボタン使用不可をチェックする
-          If .Enabled = True Then
-
-            .Focus()
-            ' ボタンのクリックを実行
-            .PerformClick()
-
-            ' KeyDownイベントを発生させない
-            e.Handled = True
-
-          End If
-        End With
-
+    For Each tmpBtn As BtnBase In BtnList
+      If tmpBtn.AccessKey = e.KeyCode Then
+        tmpBtn.PerformClick()
       End If
+    Next
 
-    Catch ex As Exception
-
-    End Try
 
   End Sub
 
@@ -338,37 +282,13 @@ Public Class FormBase
     ' ダブルバッファリング有効
     Me.DoubleBuffered = True
 
-    ' コントロールがある分だけループ
-    For Each objCtr As Control In Me.Controls
-
-      ' ファンクションキー配列設定
-      If objCtr.GetType Is GetType(BtnF1) Then
-        FuncBtnAdd(objCtr, Keys.F1)
-      ElseIf objCtr.GetType Is GetType(BtnF2) Then
-        FuncBtnAdd(objCtr, Keys.F2)
-      ElseIf objCtr.GetType Is GetType(BtnF3) Then
-        FuncBtnAdd(objCtr, Keys.F3)
-      ElseIf objCtr.GetType Is GetType(BtnF4) Then
-        FuncBtnAdd(objCtr, Keys.F4)
-      ElseIf objCtr.GetType Is GetType(BtnF5) Then
-        FuncBtnAdd(objCtr, Keys.F5)
-      ElseIf objCtr.GetType Is GetType(BtnF6) Then
-        FuncBtnAdd(objCtr, Keys.F6)
-      ElseIf objCtr.GetType Is GetType(BtnF7) Then
-        FuncBtnAdd(objCtr, Keys.F7)
-      ElseIf objCtr.GetType Is GetType(BtnF8) Then
-        FuncBtnAdd(objCtr, Keys.F8)
-      ElseIf objCtr.GetType Is GetType(BtnF9) Then
-        FuncBtnAdd(objCtr, Keys.F9)
-      ElseIf objCtr.GetType Is GetType(BtnF10) Then
-        FuncBtnAdd(objCtr, Keys.F10)
-      ElseIf objCtr.GetType Is GetType(BtnF11) Then
-        FuncBtnAdd(objCtr, Keys.F11)
-      ElseIf objCtr.GetType Is GetType(BtnF12) Then
-        FuncBtnAdd(objCtr, Keys.F12)
+    For Each tmpCtrl As Control In GetAllControlz(Me)
+      If IsTargetControl(New BtnBase, tmpCtrl) Then
+        BtnList.Add(tmpCtrl)
       End If
-
     Next
+
+
 
   End Sub
 

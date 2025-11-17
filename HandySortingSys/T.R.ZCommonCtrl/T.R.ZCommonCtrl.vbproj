@@ -119,37 +119,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Button\BtnCombo.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\BtnCopyBtn.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\BtnFunc.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\BtnLinkBtn.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\ButtonCancel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\BtnSerch.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\ButtoSyuka.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\ButtoUpdate.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\ButtoPrint.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Button\ButtoEnd.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Button\BtnBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\FunctionBtnSam.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBoxAndText\CmbMstCustomerAndText.Designer.vb">
@@ -306,42 +279,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbMstStaff.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Form\FormMultiRowBase.Designer.vb">
-      <DependentUpon>FormMultiRowBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormMultiRowBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\FormBaseOrder.Designer.vb">
-      <DependentUpon>FormBaseOrder.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormBaseOrder.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\FormComboBox.Designer.vb">
-      <DependentUpon>FormComboBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormComboBox.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\FormMasterMenteBase.Designer.vb">
-      <DependentUpon>FormMasterMenteBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormMasterMenteBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\FormMasterSearchBase.designer.vb">
-      <DependentUpon>FormMasterSearchBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormMasterSearchBase.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\FormComboBoxTemplate.designer.vb">
-      <DependentUpon>FormComboBoxTemplate.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\FormComboBoxTemplate.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="LabelDR\LabelDRBase.vb">
@@ -656,12 +593,6 @@
     <Compile Include="TextBox\TxtWideCharBase.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TxtBtnLbl\TxtBtnLblBase.Designer.vb">
-      <DependentUpon>TxtBtnLblBase.vb</DependentUpon>
-    </Compile>
-    <Compile Include="TxtBtnLbl\TxtBtnLblBase.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ComboBoxAndText\CmbMstCustomerAndText.resx">
@@ -674,26 +605,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\FormBaseOrder.resx">
-      <DependentUpon>FormBaseOrder.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\FormComboBox.resx">
-      <DependentUpon>FormComboBox.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\FormMasterSearchBase.resx">
-      <DependentUpon>FormMasterSearchBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\FormMultiRowBase.resx">
-      <DependentUpon>FormMultiRowBase.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\FormComboBoxTemplate.resx">
-      <DependentUpon>FormComboBoxTemplate.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\MFBaseDrv.resx">
@@ -748,9 +659,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TextBox\TxtWeitghtKg.resx">
       <DependentUpon>TxtWeitghtKg.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TxtBtnLbl\TxtBtnLblBase.resx">
-      <DependentUpon>TxtBtnLblBase.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

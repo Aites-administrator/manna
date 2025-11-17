@@ -95,13 +95,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="sfEdit.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sfEdit.resx">
+      <DependentUpon>sfEdit.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +124,20 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\T.R.ZCommonClass\T.R.ZCommonClass.vbproj">
+      <Project>{b555bcbf-591c-4bd1-95d1-53ab1771eea5}</Project>
+      <Name>T.R.ZCommonClass</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\T.R.ZCommonCon\T.R.ZCommonCon.vbproj">
+      <Project>{1e1b85f1-87d2-4f40-ba16-c3621c8644a0}</Project>
+      <Name>T.R.ZCommonCon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\T.R.ZCommonCtrl\T.R.ZCommonCtrl.vbproj">
+      <Project>{f38c221b-17e9-4ab3-8fda-658a1e265d4f}</Project>
+      <Name>T.R.ZCommonCtrl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
