@@ -123,11 +123,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\clsReport.vb" />
     <Compile Include="EXCEL\clsExcel.vb" />
     <Compile Include="Database\clsComDatabase.vb" />
-    <Compile Include="Database\clsPcaDb.vb" />
-    <Compile Include="Database\clsPcaFnc.vb" />
     <Compile Include="Database\clsSqlServer.vb" />
     <Compile Include="DataGrid\clsDataGrid.vb" />
     <Compile Include="DataGrid\clsDataGridEditTextBox.vb" />

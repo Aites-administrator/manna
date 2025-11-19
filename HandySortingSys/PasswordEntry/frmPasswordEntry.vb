@@ -1,5 +1,6 @@
 ﻿Imports T.R.ZCommonCtrl
 Imports T.R.ZCommonClass.clsCommonFnc
+Imports T.R.ZCommonClass.clsGlobalData
 
 Public Class frmPasswordEntry
   Inherits FormBase
@@ -79,13 +80,33 @@ Public Class frmPasswordEntry
   End Sub
 #End Region
 
+  Private EntryCount As Integer = 0
+  Private Const RETRY_MAX As Integer = 5
+  Private TargetFileName As String = String.Empty
+
   Public Sub New()
     ' この呼び出しはデザイナーで必要です。
     InitializeComponent()
 
+    'コマンドライン引数を配列で取得する
+    Dim tmpCmdArgs As String() = System.Environment.GetCommandLineArgs()
+    If tmpCmdArgs.Length > 1 Then
+      TargetFileName = tmpCmdArgs(1)
+    End If
+
   End Sub
 
   Private Sub BtnOk1_Click(sender As Object, e As EventArgs) Handles BtnOk1.Click
-    Call ComGetProcessByFilePath("C:\Windows\System32\calc.exe")
+
+    If RETRY_MAX < EntryCount Then
+      ComMessageBox("試行回数を越えました。プログラムを終了します。", PRG_TITLE, typMsgBox.MSG_ERROR)
+      Me.Close()
+    Else
+      If PASSWORD = Me.TxtPassWord1.Text Then
+        Call ComGetProcessByFilePath(My.Application.Info.DirectoryPath & "\" & TargetFileName)
+      Else
+        EntryCount += 1
+      End If
+    End If
   End Sub
 End Class

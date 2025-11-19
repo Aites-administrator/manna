@@ -54,57 +54,8 @@ Public Class clsCommonFnc
   Private Shared procesID As System.Diagnostics.Process
 #End Region
 
-  ''' <summary>
-  ''' ACCESSファイルを開く
-  ''' </summary>
-  ''' <param name="printPreview">プレビューフラグ</param>
-  ''' <param name="strReportName">レポートファイル名</param>
-  ''' <returns>
-  ''' True :ファイルオープン成功
-  ''' False:ファイルオープン失敗
-  ''' </returns>
-  Public Shared Function ComAccessRun(printPreview As Integer, strReportName As String) As Boolean
-    Try
-
-      ' Threadオブジェクトを作成する
-      Dim MultiProgram_run = New System.Threading.Thread(AddressOf DoSomething01)
-      ' １つ目のスレッドを開始する
-      MultiProgram_run.Start(New prmReport(printPreview.ToString, strReportName))
-    Catch ex As Exception
-      Call ComWriteErrLog(ex)
-      Return False
-    End Try
-
-    Return True
-
-  End Function
 
 
-  ''' <summary>
-  ''' 印刷スレッド
-  ''' </summary>
-  ''' <param name="arg"></param>
-  Private Shared Sub DoSomething01(arg As Object)
-
-    Dim prm As prmReport = DirectCast(arg, prmReport)
-    Dim myPath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, clsGlobalData.REPORT_FILENAME)
-
-    Dim strPrintPrwview As String
-    If (prm.printPreview.Equals("1")) Then
-      strPrintPrwview = "1"
-    Else
-      strPrintPrwview = "0"
-    End If
-
-    'ファイルを開く
-    procesID = System.Diagnostics.Process.Start(myPath, " /runtime /cmd " & strPrintPrwview & prm.strReportName)
-    If procesID IsNot Nothing Then
-      '終了するまで待機する
-      procesID.WaitForExit()
-      procesID = Nothing
-    End If
-
-  End Sub
 
   ''' <summary>
   ''' 任意のプログラムを起動する
@@ -1577,4 +1528,57 @@ Optional ByVal columnCtl As Boolean = False)
     End If
   End Function
 
+  Public Shared Function GetParentProcessID() As Integer
+    Dim tmpMyProcId As Integer = System.Diagnostics.Process.GetCurrentProcess().Id
+    Dim tmpQuery As String
+    Dim tmpObjectSearcher As System.Management.ManagementObjectSearcher = Nothing
+    Dim tmpObjectEnumlator As System.Management.ManagementObjectCollection.ManagementObjectEnumerator = Nothing
+    Dim tmpBaseObject As System.Management.ManagementBaseObject = Nothing
+    Dim tmpProcessId As Integer = Integer.MinValue
+
+    Try
+      tmpQuery = String.Format("SELECT ParentProcessId FROM Win32_Process WHERE ProcessId = {0}", tmpMyProcId)
+      tmpObjectSearcher = New System.Management.ManagementObjectSearcher("root\CIMV2", tmpQuery)
+
+      'クエリから結果を取得
+      tmpObjectEnumlator = tmpObjectSearcher.Get().GetEnumerator()
+
+
+      If (False = tmpObjectEnumlator.MoveNext()) Then Throw New ApplicationException("Couldn't Get ParrentProcessId.")
+      tmpBaseObject = tmpObjectEnumlator.Current
+
+      '親プロセスのPIDを取得
+      tmpProcessId = tmpBaseObject.Item("ParentProcessId")
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+      Throw New Exception("親プロセスの取得に失敗しました")
+    Finally
+      If tmpBaseObject IsNot Nothing Then
+        tmpBaseObject.Dispose()
+      End If
+      If tmpObjectEnumlator IsNot Nothing Then
+        tmpObjectEnumlator.Dispose()
+      End If
+      If tmpObjectSearcher IsNot Nothing Then
+        tmpObjectSearcher.Dispose()
+      End If
+    End Try
+
+    Return tmpProcessId
+  End Function
+
+  Public Shared Function ValidateParentModuleName() As Boolean
+    Dim ret As Boolean = False
+    If clsGlobalData.PASSWORD_ENTRY_MODULE = Process.GetProcessById(GetParentProcessID()).ProcessName Then
+      ret = True
+      Dim tmpProcesiz As Process() = Process.GetProcessesByName(clsGlobalData.PASSWORD_ENTRY_MODULE)
+
+      For Each tmpProcess As Process In tmpProcesiz
+        'プロセスを強制的に終了させる
+        tmpProcess.Kill()
+      Next
+    End If
+    Return ret
+  End Function
 End Class
