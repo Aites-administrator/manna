@@ -14,10 +14,9 @@ D:\IZ_Ds_VerR\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.Resources.resources
 D:\IZ_Ds_VerR\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.GenerateResource.cache
 D:\IZ_Ds_VerR\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
 D:\IZ_Ds_VerR\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.dll
-C:\Users\kaihatsu\Source\Repos\manna\release\exe\ConnectData\DbConnectData.vb
-C:\Users\kaihatsu\Source\Repos\manna\release\exe\T.R.ZCommonCon.dll
-C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbprojAssemblyReference.cache
-C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.Resources.resources
-C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.GenerateResource.cache
-C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
-C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.dll
+C:\Users\kaihatsu\source\repos\manna\release\exe\ConnectData\DbConnectData.vb
+C:\Users\kaihatsu\source\repos\manna\release\exe\T.R.ZCommonCon.dll
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.Resources.resources
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\T.R.ZCommonCon\obj\x64\Release\T.R.ZCommonCon.dll

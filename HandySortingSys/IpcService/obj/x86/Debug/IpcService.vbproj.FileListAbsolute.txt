@@ -58,3 +58,13 @@ D:\IZ_Ds_VerR\IpcService\obj\x86\Debug\IpcService.dll
 D:\IZ_Ds_VerR\IpcService\obj\x86\Debug\IpcService.xml
 D:\IZ_Ds_VerR\IpcService\obj\x86\Debug\IpcService.pdb
 D:\IZ_Ds_VerR\IpcService\obj\x86\Debug\IpcService.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\x86\IpcService.dll
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\x86\IpcService.pdb
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\x86\IpcService.xml
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.vbprojAssemblyReference.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.Resources.resources
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.vbproj.GenerateResource.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.vbproj.CoreCompileInputs.cache
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.dll
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.xml
+C:\Users\kaihatsu\source\repos\manna\HandySortingSys\IpcService\obj\x86\Debug\IpcService.pdb
