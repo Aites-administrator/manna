@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1C1B71C4-112E-40C8-AF21-07B414C6BEFE}</ProjectGuid>
+    <ProjectGuid>{DF641FF4-31E4-4865-A1DF-77843FC541F1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>MainMenu.My.MyApplication</StartupObject>
-    <RootNamespace>MainMenu</RootNamespace>
-    <AssemblyName>MainMenu</AssemblyName>
+    <StartupObject>MasterMaintenance.My.MyApplication</StartupObject>
+    <RootNamespace>MasterMaintenance</RootNamespace>
+    <AssemblyName>MasterMaintenance</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
@@ -23,7 +23,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +33,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -53,7 +53,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -63,7 +63,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -76,7 +76,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -86,7 +86,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>MainMenu.xml</DocumentationFile>
+    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -120,10 +120,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmMainMenu.Designer.vb">
-      <DependentUpon>frmMainMenu.vb</DependentUpon>
+    <Compile Include="frmMasterMaintenance.vb">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMainMenu.vb">
+    <Compile Include="frmMasterMaintenance.Designer.vb">
+      <DependentUpon>frmMasterMaintenance.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -143,8 +144,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmMainMenu.resx">
-      <DependentUpon>frmMainMenu.vb</DependentUpon>
+    <EmbeddedResource Include="frmMasterMaintenance.resx">
+      <DependentUpon>frmMasterMaintenance.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -166,6 +167,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IpcService\IpcService.vbproj">
+      <Project>{0cef3710-7f88-46ed-a0d3-e6d6ff778f1d}</Project>
+      <Name>IpcService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\T.R.ZCommonClass\T.R.ZCommonClass.vbproj">
       <Project>{b555bcbf-591c-4bd1-95d1-53ab1771eea5}</Project>
       <Name>T.R.ZCommonClass</Name>

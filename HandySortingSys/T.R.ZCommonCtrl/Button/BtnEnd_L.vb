@@ -1,4 +1,4 @@
-﻿Public Class BtnEnd
+﻿Public Class BtnEnd_L
   Inherits BtnBase
 
 

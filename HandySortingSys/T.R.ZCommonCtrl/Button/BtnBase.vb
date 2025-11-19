@@ -101,7 +101,6 @@ Public Class BtnBase
 
       Me.Text = tmpKeyLblHeader & vbCrLf & BtnText
       Me.Font = New Font("Segoe UI", 11, FontStyle.Regular)
-      Me.Size = New Size(123, 50)
     End If
     MyBase.InitLayout()
   End Sub

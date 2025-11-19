@@ -126,6 +126,9 @@
     <Compile Include="Button\BtnAddNew.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Button\BtnCancel.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Button\BtnClear.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -147,7 +150,16 @@
     <Compile Include="Button\BtnEnd.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Button\BtnEnd_L.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Button\BtnExcel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnMenuBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnOk.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Button\BtnPrint.vb">
@@ -272,6 +284,12 @@
     </Compile>
     <Compile Include="Form\SFBase.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Label\LblBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Label\LblProcDateTime.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
