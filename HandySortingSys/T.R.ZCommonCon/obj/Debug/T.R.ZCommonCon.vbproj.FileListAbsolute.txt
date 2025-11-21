@@ -25,3 +25,14 @@ C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.
 C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
 C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.dll
 C:\Users\kaihatsu\Source\Repos\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.pdb
+D:\manna\exe86\ConnectData\DbConnectData.vb
+D:\manna\exe86\T.R.ZCommonCon.dll
+D:\manna\exe86\T.R.ZCommonCon.pdb
+D:\manna\HandySortingSys\Debug_exe\ConnectData\DbConnectData.vb
+D:\manna\HandySortingSys\Debug_exe\T.R.ZCommonCon.dll
+D:\manna\HandySortingSys\Debug_exe\T.R.ZCommonCon.pdb
+D:\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.Resources.resources
+D:\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.GenerateResource.cache
+D:\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.vbproj.CoreCompileInputs.cache
+D:\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.dll
+D:\manna\HandySortingSys\T.R.ZCommonCon\obj\Debug\T.R.ZCommonCon.pdb

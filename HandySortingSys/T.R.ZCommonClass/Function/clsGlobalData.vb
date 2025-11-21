@@ -8,7 +8,7 @@
   ''' <summary>
   ''' プログラム名
   ''' </summary>
-  Public Shared ReadOnly PRG_TITLE As String = "入出庫管理システム"
+  Public Shared ReadOnly PRG_TITLE As String = "ハンディ仕分システム"
 
   ''' <summary>
   ''' 印刷プレビューフラグ

@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\exe86\</OutputPath>
+    <OutputPath>..\Debug_exe\</OutputPath>
     <DocumentationFile>T.R.ZCommonClass.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Interface\DgvForm02.vb" />
     <Compile Include="Interface\DgvForm01.vb" />
+    <Compile Include="Mapping\clsMapping.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

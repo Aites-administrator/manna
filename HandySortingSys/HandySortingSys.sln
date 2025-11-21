@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1738
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34601.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MainMenu", "MainMenu\MainMenu.vbproj", "{1C1B71C4-112E-40C8-AF21-07B414C6BEFE}"
 EndProject
@@ -18,6 +18,13 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "PasswordEntry", "PasswordEntry\PasswordEntry.vbproj", "{7DE21293-5417-4613-826F-4F7540A20C7E}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "StartUpControlSam", "StartUpControlSam\StartUpControlSam.vbproj", "{AC94D75B-0C28-45D3-870C-9A243E9F8CE3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "NyukaImport", "NyukaImport\NyukaImport.vbproj", "{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F38C221B-17E9-4AB3-8FDA-658A1E265D4F} = {F38C221B-17E9-4AB3-8FDA-658A1E265D4F}
+		{B555BCBF-591C-4BD1-95D1-53AB1771EEA5} = {B555BCBF-591C-4BD1-95D1-53AB1771EEA5}
+		{1E1B85F1-87D2-4F40-BA16-C3621C8644A0} = {1E1B85F1-87D2-4F40-BA16-C3621C8644A0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -125,6 +132,18 @@ Global
 		{AC94D75B-0C28-45D3-870C-9A243E9F8CE3}.Release|x64.Build.0 = Release|x64
 		{AC94D75B-0C28-45D3-870C-9A243E9F8CE3}.Release|x86.ActiveCfg = Release|x86
 		{AC94D75B-0C28-45D3-870C-9A243E9F8CE3}.Release|x86.Build.0 = Release|x86
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|x64.Build.0 = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Debug|x86.Build.0 = Debug|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|x64.ActiveCfg = Release|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|x64.Build.0 = Release|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|x86.ActiveCfg = Release|Any CPU
+		{57D5DE8A-C64D-4399-B33B-061A2BDAF34B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

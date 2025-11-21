@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\exe86\</OutputPath>
+    <OutputPath>..\Debug_exe\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -123,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Button\BtnAddNew.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Button\BtnInput.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Button\BtnCancel.vb">
@@ -263,11 +266,17 @@
     <Compile Include="ComboBox\CmbUseFlg.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataGrid\DgvList.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form\ComSearchForm.Designer.vb">
       <DependentUpon>ComSearchForm.vb</DependentUpon>
     </Compile>
     <Compile Include="Form\ComSearchForm.vb">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\PanelBase.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Form\FormBase.vb">
       <SubType>Form</SubType>
@@ -472,6 +481,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form\ComSearchForm.resx">
       <DependentUpon>ComSearchForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\PanelBase.resx">
+      <DependentUpon>PanelBase.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>

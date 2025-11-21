@@ -1,0 +1,49 @@
+﻿Imports System.Text
+Imports T.R.ZCommonCtrl
+
+Public Class frmNyukaImport
+  Inherits FormBase
+
+  Private Const TABLE_NAME As String = "TRN_NYUKA"
+
+  Private Sub BtnInput1_Click(sender As Object, e As EventArgs) Handles BtnInput1.Click
+    Dim dtNyukaData As New DataTable
+    Dim ofd As New OpenFileDialog()
+
+    'CSV取込
+    ofd.Filter = "CSVファイル|*.csv|すべてのファイル|*.*"
+    ' 親フォームを渡して前面表示を確実に
+    Dim result = ofd.ShowDialog(Me)
+
+    'DataTable変換
+    If result = DialogResult.OK Then
+      dtNyukaData = LoadCsvToDataTable(ofd.FileName)
+      '値設定
+      BtnInput1.TargetDataTable = dtNyukaData
+      BtnInput1.TargetTableName = TABLE_NAME
+
+      DgvList1.SetData(dtNyukaData)
+    End If
+  End Sub
+
+  Private Function LoadCsvToDataTable(filePath As String) As DataTable
+    Dim dt As New DataTable()
+    Try
+      Dim lines = IO.File.ReadAllLines(filePath, Encoding.GetEncoding("Shift-JIS"))
+      If lines.Length = 0 Then Return dt
+
+      Dim headers = lines(0).Split(","c)
+      For Each h In headers
+        dt.Columns.Add(h)
+      Next
+      For i As Integer = 1 To lines.Length - 1
+        dt.Rows.Add(lines(i).Split(","c))
+      Next
+      Return dt
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+  End Function
+
+End Class
