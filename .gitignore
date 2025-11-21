@@ -4,3 +4,13 @@
 /release
 bin
 obj
+/HandySortingSys/MainMenu/bin
+/HandySortingSys/MainMenu/obj
+/HandySortingSys/PasswordEntry/bin
+/HandySortingSys/T.R.ZCommonClass/bin
+/HandySortingSys/T.R.ZCommonClass/obj
+/HandySortingSys/T.R.ZCommonCon/bin
+/HandySortingSys/T.R.ZCommonCon/obj
+/HandySortingSys/T.R.ZCommonCtrl/bin
+/HandySortingSys/T.R.ZCommonCtrl/obj
+/HandySortingSys/x64
