@@ -1,9 +1,0 @@
-D:\TRZ\IpcService\bin\Release\IpcService.dll
-D:\TRZ\IpcService\bin\Release\IpcService.pdb
-D:\TRZ\IpcService\bin\Release\IpcService.xml
-D:\TRZ\IpcService\obj\Release\IpcService.Resources.resources
-D:\TRZ\IpcService\obj\Release\IpcService.vbproj.GenerateResource.cache
-D:\TRZ\IpcService\obj\Release\IpcService.vbproj.CoreCompileInputs.cache
-D:\TRZ\IpcService\obj\Release\IpcService.dll
-D:\TRZ\IpcService\obj\Release\IpcService.xml
-D:\TRZ\IpcService\obj\Release\IpcService.pdb
