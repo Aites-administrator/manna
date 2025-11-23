@@ -18,12 +18,17 @@ Public Class frmNyukaImport
     'DataTable変換
     If result = DialogResult.OK Then
       dtNyukaData = LoadCsvToDataTable(ofd.FileName)
+
+      For Each row As DataRow In dtNyukaData.Rows
+        row("取込状況FLG") = "2"
+      Next
       '値設定
       BtnInput1.TargetDataTable = dtNyukaData
       BtnInput1.TargetTableName = TABLE_NAME
 
       DgvList1.SetData(dtNyukaData)
     End If
+
   End Sub
 
   Private Function LoadCsvToDataTable(filePath As String) As DataTable
@@ -46,4 +51,6 @@ Public Class frmNyukaImport
     End Try
   End Function
 
+  Private Sub Button1_Click(sender As Object, e As EventArgs) 
+  End Sub
 End Class

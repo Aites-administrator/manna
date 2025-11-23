@@ -1,4 +1,4 @@
-﻿Imports System.Data.SqlClient
+﻿Imports System.Data
 Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
 
