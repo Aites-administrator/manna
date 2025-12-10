@@ -17,19 +17,24 @@
 #End Region
 
   Public Sub SetData(dt As DataTable)
-    Me.DataSource = Nothing
-    Me.AutoGenerateColumns = True
-    Me.DataSource = dt
-    Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-    Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
-    Me.AllowUserToAddRows = False
-    Me.ReadOnly = True
+    Try
+      Me.DataSource = Nothing
+      Me.AutoGenerateColumns = True
+      Me.DataSource = dt
+      Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+      Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+      Me.AllowUserToAddRows = False
+      Me.ReadOnly = True
 
-    ' フォント設定
-    Me.EnableHeadersVisualStyles = False ' 
-    Me.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue
-    Me.DefaultCellStyle.Font = New Font("MS UI Gothic", 16)
-    Me.ColumnHeadersDefaultCellStyle.Font = New Font("MS UI Gothic", 16)
+      ' フォント設定
+      Me.EnableHeadersVisualStyles = False ' 
+      Me.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue
+      Me.DefaultCellStyle.Font = New Font("MS UI Gothic", 16)
+      Me.ColumnHeadersDefaultCellStyle.Font = New Font("MS UI Gothic", 16)
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+
   End Sub
 
 End Class

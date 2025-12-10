@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CD45A3D5-E905-440F-9C03-53AF27317246}</ProjectGuid>
+    <ProjectGuid>{A94326F0-D745-475F-B4CA-4CF1C1749765}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>NyukaPrint.My.MyApplication</StartupObject>
-    <RootNamespace>NyukaPrint</RootNamespace>
-    <AssemblyName>NyukaPrint</AssemblyName>
+    <StartupObject>HandyComm.My.MyApplication</StartupObject>
+    <RootNamespace>HandyComm</RootNamespace>
+    <AssemblyName>HandyComm</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>NyukaPrint.xml</DocumentationFile>
+    <DocumentationFile>HandyComm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>NyukaPrint.xml</DocumentationFile>
+    <DocumentationFile>HandyComm.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,6 +48,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClsHandyCommunication">
+      <HintPath>..\Debug_exe\ClsHandyCommunication.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -58,13 +61,8 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="T.R.ZCommonClass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="T.R.ZCommonClass">
       <HintPath>..\Debug_exe\T.R.ZCommonClass.dll</HintPath>
-    </Reference>
-    <Reference Include="T.R.ZCommonCon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug_exe\T.R.ZCommonCon.dll</HintPath>
     </Reference>
     <Reference Include="T.R.ZCommonCtrl">
       <HintPath>..\Debug_exe\T.R.ZCommonCtrl.dll</HintPath>
@@ -84,11 +82,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmNyukaPrint.vb">
+    <Compile Include="frmHandyComm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmNyukaPrint.Designer.vb">
-      <DependentUpon>frmNyukaPrint.vb</DependentUpon>
+    <Compile Include="frmHandyComm.Designer.vb">
+      <DependentUpon>frmHandyComm.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -108,8 +106,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmNyukaPrint.resx">
-      <DependentUpon>frmNyukaPrint.vb</DependentUpon>
+    <EmbeddedResource Include="frmHandyComm.resx">
+      <DependentUpon>frmHandyComm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

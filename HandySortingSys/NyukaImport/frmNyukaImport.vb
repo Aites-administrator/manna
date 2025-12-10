@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonCtrl
 
 Public Class frmNyukaImport
@@ -6,28 +7,34 @@ Public Class frmNyukaImport
 
   Private Const TABLE_NAME As String = "TRN_NYUKA"
 
+  Private Const CSV_TYPE As String = "入荷予定データ"
+
   Private Sub BtnInput1_Click(sender As Object, e As EventArgs) Handles BtnInput1.Click
     Dim dtNyukaData As New DataTable
     Dim ofd As New OpenFileDialog()
 
-    'CSV取込
-    ofd.Filter = "CSVファイル|*.csv|すべてのファイル|*.*"
-    ' 親フォームを渡して前面表示を確実に
-    Dim result = ofd.ShowDialog(Me)
+    Try
+      'CSV取込
+      ofd.Filter = "CSVファイル|*.csv|すべてのファイル|*.*"
+      Dim result = ofd.ShowDialog(Me)
 
-    'DataTable変換
-    If result = DialogResult.OK Then
-      dtNyukaData = LoadCsvToDataTable(ofd.FileName)
+      'DataTable変換
+      If result = DialogResult.OK Then
+        dtNyukaData = LoadCsvToDataTable(ofd.FileName)
 
-      For Each row As DataRow In dtNyukaData.Rows
-        row("取込状況FLG") = "2"
-      Next
-      '値設定
-      BtnInput1.TargetDataTable = dtNyukaData
-      BtnInput1.TargetTableName = TABLE_NAME
+        For Each row As DataRow In dtNyukaData.Rows
+          row("取込状況FLG") = "2"
+        Next
+        '値設定
+        BtnInput1.TargetDataTable = dtNyukaData
+        BtnInput1.TargetTableName = TABLE_NAME
+        BtnInput1.TargetCsvType = CSV_TYPE
+        DgvList1.SetData(dtNyukaData)
+      End If
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+    End Try
 
-      DgvList1.SetData(dtNyukaData)
-    End If
 
   End Sub
 
@@ -51,6 +58,4 @@ Public Class frmNyukaImport
     End Try
   End Function
 
-  Private Sub Button1_Click(sender As Object, e As EventArgs) 
-  End Sub
 End Class

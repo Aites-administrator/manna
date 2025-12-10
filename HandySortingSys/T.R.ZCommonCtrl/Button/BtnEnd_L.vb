@@ -27,4 +27,19 @@
 
 #End Region
 
+#Region "イベントプロシージャー"
+  Protected Overrides Sub OnClick(e As EventArgs)
+    MyBase.OnClick(e)
+
+    ' 親フォームを取得して閉じる
+    Dim parentForm As Form = Me.FindForm()
+    If parentForm IsNot Nothing Then
+      parentForm.Close()
+    End If
+
+  End Sub
+
+
+#End Region
+
 End Class

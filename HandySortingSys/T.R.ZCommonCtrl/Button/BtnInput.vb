@@ -7,6 +7,7 @@ Public Class BtnInput
 
 #Region "プライベート"
   Private SqlServer As New clsSqlServer
+
 #End Region
 
 #Region "パブリック"
@@ -15,7 +16,8 @@ Public Class BtnInput
 
   ' プロパティ：登録先テーブル名
   Public Property TargetTableName As String
-
+  ' プロパティ：CSVタイプ
+  Public Property TargetCsvType As String
 #End Region
 
 #Region "コンストラクタ"
@@ -64,7 +66,7 @@ Public Class BtnInput
           Dim key As String = col.ColumnName
           Dim value As Object = row(col)
 
-          TargetRowData.Add(mapper.GetMapping("入荷予定データ")(key), value)
+          TargetRowData.Add(mapper.GetMapping(TargetCsvType)(key), value)
 
         Next
         SqlServer.Execute(SqlInsTargetTable(TargetRowData))
@@ -75,7 +77,8 @@ Public Class BtnInput
       SqlServer.TrnCommit()
     Catch ex As Exception
       SqlServer.TrnRollBack()
-      MessageBox.Show("エラー: " & ex.Message)
+      ComWriteErrLog(ex, False)
+      TargetDataTable.Clear()
     End Try
   End Sub
 
