@@ -133,6 +133,9 @@
     <Compile Include="Button\BtnAddNew.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Button\BtnRecieveHandy.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Button\BtnSendHandy.vb">
       <SubType>Component</SubType>
     </Compile>

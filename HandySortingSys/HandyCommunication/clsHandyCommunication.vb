@@ -6,8 +6,15 @@ Imports System.Windows.Forms
 Imports T.R.ZCommonClass
 
 Public Class clsHandyCommunication
-  Private Const STATUS_FLAG_FILE_NAME As String = "D:\manna\SEND\Communication.FLG"
-  Private Const COMMUNICATION_FILE_NAME As String = "D:\manna\SEND\Acquisition.FLG"
+#Region "パブリック"
+  ' プロパティ：ファイル名
+  Public Property TargetFolder As String
+#End Region
+
+  Private Const STATUS_FLAG_FILE_NAME As String = "Communication.FLG"
+  Private Const COMMUNICATION_FILE_NAME As String = "Acquisition.FLG"
+  Private StatusFlagFilePath As String
+  Private CommunicationFilePath As String
   Private FlgHandySendStart As Boolean = False
   Private watcher As FileSystemWatcher
   Private TargetFileName As String
@@ -101,7 +108,7 @@ Public Class clsHandyCommunication
       Dim intervalMs As Integer = 10 ' チェック間隔（ミリ秒）
       Dim elapsed As Integer = 0
 
-      While IO.File.Exists(STATUS_FLAG_FILE_NAME)
+      While IO.File.Exists(StatusFlagFilePath)
         Threading.Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
@@ -121,10 +128,13 @@ Public Class clsHandyCommunication
     End Try
   End Function
 
-  Public Function CreateCommnicationFile(prmOutFilePath As String) As Boolean
+  Public Function CreateCommnicationFile(prmOutFilePath As String, prmWorkFilePath As String) As Boolean
     Dim response As New Integer
     Try
-      File.WriteAllText(COMMUNICATION_FILE_NAME, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
+      StatusFlagFilePath = prmWorkFilePath & STATUS_FLAG_FILE_NAME
+      CommunicationFilePath = prmWorkFilePath & COMMUNICATION_FILE_NAME
+
+      File.WriteAllText(CommunicationFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
@@ -137,8 +147,8 @@ Public Class clsHandyCommunication
   Public Function DeleteCommnicationFile() As Boolean
     Dim response As New Integer
     Try
-      If File.Exists(COMMUNICATION_FILE_NAME) Then
-        File.Delete(COMMUNICATION_FILE_NAME)
+      If File.Exists(CommunicationFilePath) Then
+        File.Delete(CommunicationFilePath)
       End If
 
       Return True
@@ -169,8 +179,8 @@ Public Class clsHandyCommunication
     End If
 
     watcher = New FileSystemWatcher()
-    watcher.Path = Path.GetDirectoryName(STATUS_FLAG_FILE_NAME)
-    watcher.Filter = Path.GetFileName(STATUS_FLAG_FILE_NAME)
+    watcher.Path = Path.GetDirectoryName(StatusFlagFilePath)
+    watcher.Filter = Path.GetFileName(StatusFlagFilePath)
     watcher.NotifyFilter = NotifyFilters.FileName Or NotifyFilters.CreationTime Or NotifyFilters.LastWrite
 
     AddHandler watcher.Created, AddressOf OnFlagCreated

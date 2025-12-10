@@ -12,6 +12,10 @@ Public Class frmNyukaPrint
   '一旦2にしている。本当は3
   Private Const TORIKOMIZUMI As Integer = 2
 
+  Private Sub frmNyukaPrint_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    CmbDateSagyoBi1.SelectedIndex = 0
+  End Sub
+
   Private Sub BtnOutput1_Click(sender As Object, e As EventArgs) Handles BtnOutput1.Click
     'datagridview1.Columns.Add("商品コード", "商品コード")
     'datagridview1.Columns.Add("商品名", "商品名")
@@ -69,4 +73,5 @@ Public Class frmNyukaPrint
     DgvList1.SetData(tmpDt)
 
   End Sub
+
 End Class

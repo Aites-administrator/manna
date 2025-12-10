@@ -3,7 +3,7 @@ Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports ClsHandyCommunication
 
-Public Class BtnSendHandy
+Public Class BtnRecieveHandy
   Inherits BtnBase
 
 #Region "プライベート"
@@ -14,19 +14,20 @@ Public Class BtnSendHandy
   ' プロパティ：ファイル名
   Public Property TargetFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
+
 #End Region
 
 #Region "コンストラクタ"
   ''' <summary>
-  ''' 送信ボタン
+  ''' 受信ボタン
   ''' </summary>
   Public Sub New()
 
     ' フォーカス時、表示メッセージ設定
-    MyBase.SetMsgLabelText("送信を行います。")
+    MyBase.SetMsgLabelText("受信を行います。")
 
-    Me.AccessKey = Keys.F5
-    Me.BtnText = "送信"
+    Me.AccessKey = Keys.F6
+    Me.BtnText = "受信"
     MyBase.InitLayout()
 
   End Sub
@@ -50,7 +51,6 @@ Public Class BtnSendHandy
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
-
       '状態管理ファイル作成チェック
       If Handy.CreateChkStatusFlagFile() Then
         Console.WriteLine("ファイル作成OK")
@@ -61,7 +61,7 @@ Public Class BtnSendHandy
       End If
       Handy.CloseCommunicationTool()
 
-      ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
+      ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
       ComWriteErrLog(ex, False)
       Handy.CloseCommunicationTool()

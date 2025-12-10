@@ -11,7 +11,8 @@ Public Class frmNyukaSendCommunication
   Inherits FormCommunication
 
   Private SqlServer As New clsSqlServer
-  Private Const SEND_NYUKA_FILE_NAME As String = "D:\manna\SEND\SEND.DAT"
+  Private Const SEND_FOLDER As String = "D:\manna\SEND\"
+  Private Const SEND_NYUKA_FILE_NAME As String = "D:\manna\SEND\IN_ITEM.DAT"
 
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateSagyoBi1.SelectedIndex = 0
@@ -125,12 +126,13 @@ Public Class frmNyukaSendCommunication
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(SEND_NYUKA_FILE_NAME)
 
     Try
-      Handy.CreateCommnicationFile(SEND_NYUKA_FILE_NAME)
+      Handy.CreateCommnicationFile(SEND_NYUKA_FILE_NAME, SEND_FOLDER)
       SqlServer.GetResult(tmpDt, SqlSelTrnNyuka)
 
       FormatFixedLengthTrnNyuka(tmpDt, SEND_NYUKA_FILE_NAME)
       Handy.DeleteCommnicationFile()
 
+      BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = SEND_NYUKA_FILE_NAME
 
     Catch ex As Exception
