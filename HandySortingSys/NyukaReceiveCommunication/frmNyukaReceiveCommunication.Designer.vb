@@ -26,6 +26,8 @@ Partial Class frmNyukaReceiveCommunication
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
         Me.BtnRecieveHandy1 = New T.R.ZCommonCtrl.BtnRecieveHandy()
+        Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
+        CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'LblBase1
@@ -65,11 +67,21 @@ Partial Class frmNyukaReceiveCommunication
         Me.BtnRecieveHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnRecieveHandy1.UseVisualStyleBackColor = False
         '
+        'DgvList1
+        '
+        Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvList1.Location = New System.Drawing.Point(20, 146)
+        Me.DgvList1.Name = "DgvList1"
+        Me.DgvList1.RowTemplate.Height = 21
+        Me.DgvList1.Size = New System.Drawing.Size(1352, 703)
+        Me.DgvList1.TabIndex = 14
+        '
         'frmNyukaReceiveCommunication
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1384, 861)
+        Me.Controls.Add(Me.DgvList1)
         Me.Controls.Add(Me.BtnRecieveHandy1)
         Me.Controls.Add(Me.BtnEnd_L1)
         Me.Controls.Add(Me.LblBase1)
@@ -79,6 +91,7 @@ Partial Class frmNyukaReceiveCommunication
         Me.MaximizeBox = False
         Me.Name = "frmNyukaReceiveCommunication"
         Me.Text = "Form1"
+        CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -87,4 +100,5 @@ Partial Class frmNyukaReceiveCommunication
     Friend WithEvents LblBase1 As LblBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
     Friend WithEvents BtnRecieveHandy1 As BtnRecieveHandy
+    Friend WithEvents DgvList1 As DgvList
 End Class

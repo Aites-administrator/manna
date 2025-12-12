@@ -14,6 +14,17 @@ Public Class BtnSendHandy
   ' プロパティ：ファイル名
   Public Property TargetFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
+  ' プロパティ：項目長
+  Public Property TargetLenClumn As List(Of Tuple(Of String, Integer))
+  ' プロパティ：更新テーブル
+  Public Property TargetTableName As String
+  ' プロパティ：更新条件
+  Public Property TargetWhere As List(Of String)
+  ' プロパティ：更新項目
+  Public Property TargetUpdColumn As List(Of String)
+  ' プロパティ：更新ステータス
+  Public Property TargetUpdStatus As String
+
 #End Region
 
 #Region "コンストラクタ"
@@ -46,19 +57,27 @@ Public Class BtnSendHandy
   Protected Overrides Sub OnClick(e As EventArgs)
     MyBase.OnClick(e)
 
+    Dim tmpDt As New DataTable
+
     Try
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
-
       '状態管理ファイル作成チェック
-      If Handy.CreateChkStatusFlagFile() Then
+      If Not Handy.CreateChkStatusFlagFile() Then
+        Exit Sub
+      Else
         Console.WriteLine("ファイル作成OK")
       End If
       '状態管理ファイルチェック
-      If Handy.ChkStatusFlagFile() Then
+      If Not Handy.ChkStatusFlagFile() Then
+        Exit Sub
+      Else
         Console.WriteLine("状態管理OK")
       End If
+
+      tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
+
       Handy.CloseCommunicationTool()
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)

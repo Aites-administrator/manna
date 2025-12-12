@@ -9,8 +9,6 @@ Public Class frmNyukaPrint
   Private SqlServer As New clsSqlServer
   Private datagridview1 As New DataGridView
 #End Region
-  '一旦2にしている。本当は3
-  Private Const TORIKOMIZUMI As Integer = 2
 
   Private Sub frmNyukaPrint_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateSagyoBi1.SelectedIndex = 0
@@ -57,7 +55,7 @@ Public Class frmNyukaPrint
     sql &= "      ,	NYUKA_JISSEKISU_JISYA	入荷実績数_自社 "
     sql &= "      ,	MAKER_HACHU_TANI		単位 "
     sql &= " FROM TRN_NYUKA"
-    sql &= " WHERE TORIKOMI_JOKYO_FLG = " & TORIKOMIZUMI
+    sql &= " WHERE TORIKOMI_JOKYO_FLG = " & CInt(STATUS.KEPINZUMI)
     If Not String.IsNullOrWhiteSpace(CmbDateSagyoBi1.SelectedValue) Then
       sql &= " AND NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
     End If

@@ -11,6 +11,7 @@ Public Class clsHandyCommunication
   Public Property TargetFolder As String
 #End Region
 
+  Private Const BHT_COMMICATION_TOOL As String = "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\BHTADP2T.exe"
   Private Const STATUS_FLAG_FILE_NAME As String = "Communication.FLG"
   Private Const COMMUNICATION_FILE_NAME As String = "Acquisition.FLG"
   Private StatusFlagFilePath As String
@@ -18,6 +19,7 @@ Public Class clsHandyCommunication
   Private FlgHandySendStart As Boolean = False
   Private watcher As FileSystemWatcher
   Private TargetFileName As String
+  Private p As New Process
 
   Public Sub New(prmFileName As String)
     TargetFileName = prmFileName
@@ -27,8 +29,8 @@ Public Class clsHandyCommunication
 
   Public Function OpenCommunicationTool() As Boolean
     Try
-      Dim p As New Process
-      p.StartInfo.FileName = "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\Tool\通信ツール(バッチ通信)"
+      p.StartInfo.FileName = BHT_COMMICATION_TOOL
+      'p.StartInfo.FileName = "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\Tool\通信ツール(バッチ通信)"
       p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
       p.Start()
       ' 起動完了まで少し待つ（必要に応じて調整）
@@ -58,11 +60,19 @@ Public Class clsHandyCommunication
       ' 起動完了まで少し待つ（必要に応じて調整）
       Thread.Sleep(3000)
 
-      ' Alt + F4 を送信して閉じる
-      SendKeys.SendWait("%{F4}")
+      If Not p.HasExited Then
+        If Process.GetProcessesByName(p.ProcessName).Any() Then
+          p.Kill()
+        End If
+      End If
+
 
       ' 監視終了
       StopWatching()
+
+      If IO.File.Exists(TargetFileName) Then
+        IO.File.Delete(TargetFileName)
+      End If
 
       Return True
     Catch ex As Exception
@@ -76,11 +86,16 @@ Public Class clsHandyCommunication
 
   Public Function CreateChkStatusFlagFile() As Boolean
     Try
-      Dim timeoutSec As Integer = 120 ' 最大待機時間（秒）
+      Dim timeoutSec As Integer = 30 ' 最大待機時間（秒）
       Dim intervalMs As Integer = 10 ' チェック間隔（ミリ秒）
       Dim elapsed As Integer = 0
 
       While Not FlgHandySendStart
+        If Not Process.GetProcessesByName(p.ProcessName).Any() Then
+          Return False
+        End If
+
+
         Threading.Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
@@ -109,6 +124,10 @@ Public Class clsHandyCommunication
       Dim elapsed As Integer = 0
 
       While IO.File.Exists(StatusFlagFilePath)
+        If Not Process.GetProcessesByName(p.ProcessName).Any() Then
+          Return False
+        End If
+
         Threading.Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
@@ -134,7 +153,7 @@ Public Class clsHandyCommunication
       StatusFlagFilePath = prmWorkFilePath & STATUS_FLAG_FILE_NAME
       CommunicationFilePath = prmWorkFilePath & COMMUNICATION_FILE_NAME
 
-      File.WriteAllText(CommunicationFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
+      IO.File.WriteAllText(CommunicationFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
@@ -147,8 +166,8 @@ Public Class clsHandyCommunication
   Public Function DeleteCommnicationFile() As Boolean
     Dim response As New Integer
     Try
-      If File.Exists(CommunicationFilePath) Then
-        File.Delete(CommunicationFilePath)
+      If IO.File.Exists(CommunicationFilePath) Then
+        IO.File.Delete(CommunicationFilePath)
       End If
 
       Return True
@@ -204,8 +223,5 @@ Public Class clsHandyCommunication
   End Sub
 
   Private Sub OnFlagDeleted(sender As Object, e As FileSystemEventArgs)
-    If File.Exists(TargetFileName) Then
-      File.Delete(TargetFileName)
-    End If
   End Sub
 End Class

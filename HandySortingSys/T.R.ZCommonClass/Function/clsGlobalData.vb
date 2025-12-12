@@ -28,4 +28,5 @@
   ''' パスワード
   ''' </summary>
   Public Shared ReadOnly PASSWORD As String = "1234"
+
 End Class

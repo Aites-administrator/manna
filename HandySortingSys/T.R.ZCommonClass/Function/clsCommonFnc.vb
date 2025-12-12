@@ -8,6 +8,7 @@ Imports System.Runtime.Remoting.Channels.Ipc
 Imports System.Text
 Imports System.Management
 Imports System.Runtime.InteropServices
+Imports Microsoft.Office.Interop
 
 Public Class clsCommonFnc
 
@@ -42,6 +43,13 @@ Public Class clsCommonFnc
     RESULT_IGNORE
     RESULT_YES
     RESULT_NO
+  End Enum
+
+  ' ステータスタイプ
+  Public Enum STATUS
+    TORIKOMIZUMI = 1
+    SOUSINZUMI = 2
+    KEPINZUMI = 3
   End Enum
 
 
@@ -1353,6 +1361,121 @@ Err_Exit:
     End Try
   End Function
 
+  ''' <summary>
+  ''' CSV出力
+  ''' </summary>
+  ''' <param name="prmCsvFilePath">ファイル出力先パス</param>
+  ''' <returns>
+  '''   true  : 出力対象有り
+  '''   false : 出力対象無し
+  ''' </returns>
+  Public Shared Function DataTable2CSV(prmDt As DataTable, prmCsvFilePath As String, Optional ByRef prmOutPutCount As Integer = 0) As Boolean
+    Dim tmpDb As New clsSqlServer
+    Dim tmpCsvText As String = String.Empty
+    Dim tmpKeyList As New List(Of String)
+
+    Try
+
+      If prmDt.Rows.Count <= 0 Then
+        Return False
+      Else
+        prmOutPutCount = prmDt.Rows.Count
+        ' カラム名称取得
+        For Each tmpCol As DataColumn In prmDt.Columns
+          tmpKeyList.Add(tmpCol.ColumnName)
+        Next
+
+        'ヘッダー行作成
+        For Each tmpKeyName As String In tmpKeyList
+          tmpCsvText &= tmpKeyName & ","
+        Next
+        tmpCsvText = tmpCsvText.Substring(0, tmpCsvText.Length - 1) & vbCrLf
+
+        ' 全データをループ
+        For Each tmpCurrentRow As DataRow In prmDt.Rows
+          For Each tmpKeyName As String In tmpKeyList
+            tmpCsvText &= tmpCurrentRow(tmpKeyName).ToString() & ","
+          Next
+          tmpCsvText = tmpCsvText.Substring(0, tmpCsvText.Length - 1) & vbCrLf
+        Next
+
+        System.IO.File.Delete(prmCsvFilePath)
+        ComWriteLog(tmpCsvText, prmCsvFilePath, System.Text.Encoding.GetEncoding("shift_jis"))
+
+        Return True
+      End If
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+      Throw New Exception("CSVファイルの出力に失敗しました。")
+    Finally
+      prmDt.Clear()
+      prmDt.Dispose()
+      tmpDb.Dispose()
+    End Try
+  End Function
+
+  Public Shared Function DataTable2Excel(prmDt As DataTable, prmExcelFilePath As String, Optional ByRef prmOutPutCount As Integer = 0) As Boolean
+    Dim xlApp As Excel.Application = Nothing
+    Dim xlBook As Excel.Workbook = Nothing
+    Dim xlSheet As Excel.Worksheet = Nothing
+
+    Try
+      If prmDt Is Nothing OrElse prmDt.Rows.Count = 0 Then
+        Return False
+      End If
+
+      prmOutPutCount = prmDt.Rows.Count
+
+      xlApp = New Excel.Application()
+      xlBook = xlApp.Workbooks.Add()
+      xlSheet = CType(xlBook.Sheets(1), Excel.Worksheet)
+
+      Dim totalRows = prmDt.Rows.Count
+      Dim totalCols = prmDt.Columns.Count
+
+      ' 文字列書式を全体に適用
+      Dim dataRange As Excel.Range = xlSheet.Range(xlSheet.Cells(1, 1), xlSheet.Cells(totalRows + 1, totalCols))
+      dataRange.NumberFormat = "@"
+
+      ' ヘッダー出力
+      For col As Integer = 0 To prmDt.Columns.Count - 1
+        xlSheet.Cells(1, col + 1) = prmDt.Columns(col).ColumnName
+      Next
+
+      ' データ出力
+      For row As Integer = 0 To prmDt.Rows.Count - 1
+        For col As Integer = 0 To prmDt.Columns.Count - 1
+          xlSheet.Cells(row + 2, col + 1) = prmDt.Rows(row)(col).ToString()
+        Next
+      Next
+
+      ' 保存
+      xlBook.SaveAs(prmExcelFilePath)
+      xlBook.Close()
+      xlApp.Quit()
+
+      Return True
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+      Throw New Exception("Excelファイルの出力に失敗しました。")
+    Finally
+      ' COMオブジェクトの解放（重要！）
+      If Not xlSheet Is Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlSheet)
+      If Not xlBook Is Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlBook)
+      If Not xlApp Is Nothing Then
+        xlApp.Quit()
+        Runtime.InteropServices.Marshal.ReleaseComObject(xlApp)
+      End If
+      xlSheet = Nothing
+      xlBook = Nothing
+      xlApp = Nothing
+      GC.Collect()
+      GC.WaitForPendingFinalizers()
+    End Try
+  End Function
+
   ' ------------------------------------------------------
   ' ini ファイル読み込み
   ' ------------------------------------------------------
@@ -1581,4 +1704,71 @@ Optional ByVal columnCtl As Boolean = False)
     End If
     Return ret
   End Function
+
+  Public Shared Function CreateUpdateSql(prmTableName As String, prmUpdColumn As Dictionary(Of String, String), prmWhere As Dictionary(Of String, String)) As String
+
+    If String.IsNullOrWhiteSpace(prmTableName) Then
+      Return ""
+    End If
+    If prmUpdColumn Is Nothing OrElse prmUpdColumn.Count = 0 Then
+      Return ""
+    End If
+
+    Dim setParts As New List(Of String)
+    For Each kvp In prmUpdColumn
+      setParts.Add($"{kvp.Key} = '{EscapeSql(kvp.Value)}'")
+    Next
+
+    Dim whereParts As New List(Of String)
+    If prmWhere IsNot Nothing Then
+      For Each kvp In prmWhere
+        whereParts.Add($"{kvp.Key} = '{EscapeSql(kvp.Value)}'")
+      Next
+    End If
+
+    Dim sql As String = $"UPDATE {prmTableName} SET {String.Join(", ", setParts)}"
+    If whereParts.Count > 0 Then
+      sql &= $" WHERE {String.Join(" AND ", whereParts)}"
+    End If
+
+    Return sql
+  End Function
+
+  Private Shared Function EscapeSql(value As String) As String
+    If value Is Nothing Then
+      Return ""
+    End If
+    Return value.Replace("'", "''") ' シングルクォートのエスケープ
+  End Function
+
+  Public Shared Function ParseFixedLengthTextToTable(filePath As String, prmLenColumn As List(Of Tuple(Of String, Integer))) As DataTable
+    Dim dt As New DataTable()
+    For Each def In prmLenColumn
+      dt.Columns.Add(def.Item1)
+    Next
+
+    Dim enc = System.Text.Encoding.GetEncoding("Shift_JIS")
+    Dim lines = System.IO.File.ReadAllLines(filePath, enc)
+
+    For Each line In lines
+      Dim bytes = enc.GetBytes(line)
+      Dim values As New List(Of String)()
+      Dim byteIndex As Integer = 0
+
+      For Each def In prmLenColumn
+        Dim byteLength = def.Item2
+        Dim fieldBytes = New Byte(byteLength - 1) {}
+        If byteIndex + byteLength <= bytes.Length Then
+          Array.Copy(bytes, byteIndex, fieldBytes, 0, byteLength)
+        End If
+        values.Add(enc.GetString(fieldBytes).Trim())
+        byteIndex += byteLength
+      Next
+
+      dt.Rows.Add(values.ToArray())
+    Next
+
+    Return dt
+  End Function
+
 End Class

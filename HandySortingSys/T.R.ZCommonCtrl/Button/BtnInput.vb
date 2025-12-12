@@ -69,6 +69,7 @@ Public Class BtnInput
           TargetRowData.Add(mapper.GetMapping(TargetCsvType)(key), value)
 
         Next
+
         SqlServer.Execute(SqlInsTargetTable(TargetRowData))
 
       Next

@@ -14,6 +14,20 @@ Public Class BtnRecieveHandy
   ' プロパティ：ファイル名
   Public Property TargetFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
+  ' プロパティ：データグリッド
+  Public Property TargetDataGridView As DgvList
+  ' プロパティ：項目長
+  Public Property TargetLenClumn As List(Of Tuple(Of String, Integer))
+  ' プロパティ：更新テーブル
+  Public Property TargetTableName As String
+  ' プロパティ：更新条件
+  Public Property TargetWhere As List(Of String)
+  ' プロパティ：更新項目
+  Public Property TargetUpdColumn As List(Of String)
+  ' プロパティ：更新項目
+  Public Property TargetItemUpdColumn As List(Of String)
+  ' プロパティ：更新ステータス
+  Public Property TargetUpdStatus As String
 
 #End Region
 
@@ -47,22 +61,80 @@ Public Class BtnRecieveHandy
   Protected Overrides Sub OnClick(e As EventArgs)
     MyBase.OnClick(e)
 
+    Dim tmpDt As New DataTable
     Try
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
       '状態管理ファイル作成チェック
-      If Handy.CreateChkStatusFlagFile() Then
+      If Not Handy.CreateChkStatusFlagFile() Then
+        Exit Sub
+      Else
         Console.WriteLine("ファイル作成OK")
+
       End If
       '状態管理ファイルチェック
-      If Handy.ChkStatusFlagFile() Then
+      If Not Handy.ChkStatusFlagFile() Then
+        Exit Sub
+      Else
         Console.WriteLine("状態管理OK")
       End If
+      tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
+      TargetDataGridView.SetData(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn))
+
+      SqlServer.TrnStart()
+
+      For Each tmpRow In tmpDt.Rows
+        If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "0" Then
+          Continue For
+        End If
+        '更新項目生成
+        Dim tmpUpdColumn As New Dictionary(Of String, String)
+        For Each UpdColumn In TargetUpdColumn
+          If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
+            tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+          Else
+            tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
+          End If
+        Next
+
+        '条件項目生成
+        Dim tmpWhere As New Dictionary(Of String, String)
+        For Each Where In TargetWhere
+          tmpWhere.Add(Where, tmpRow(Where).ToString)
+        Next
+
+        '更新処理
+        SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
+
+        '条件項目生成
+        If TargetItemUpdColumn IsNot Nothing Then
+          Dim tmpItemUpdColumn As New Dictionary(Of String, String)
+          For Each ItemUpdColumn In TargetItemUpdColumn
+            tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
+          Next
+
+          tmpWhere.Clear()
+          tmpWhere.Add("SHOHIN_CD", tmpRow("JISYA_SHOHIN_CD").ToString)
+
+          '更新処理
+          SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
+
+        End If
+
+
+      Next
+
+      SqlServer.TrnCommit()
+
+      'Excel出力
+      DataTable2Excel(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), "D:\manna\OUTPUT\OUTPUT.xlsx")
+
       Handy.CloseCommunicationTool()
 
       ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
+      SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
       Handy.CloseCommunicationTool()
     Finally
@@ -71,22 +143,21 @@ Public Class BtnRecieveHandy
 
 #End Region
 
+#Region "ファンクション"
+  Private Sub UpdItem(prmItemCd As String)
 
+  End Sub
 
-  'なかったので仮に作成したので頂ければ削除！
-  Private Function ComCreateInsertItem(prmKeyValuez As Dictionary(Of String, String)) As Dictionary(Of String, String)
-    Dim result As New Dictionary(Of String, String)
+  Private Function SqlUpdItem(prmItemCd As String) As String
+    Dim sql As String = String.Empty
 
-    ' 列名をカンマ区切りで連結
-    Dim keys As String = String.Join(",", prmKeyValuez.Keys)
+    sql += " UPDATE MST_ITEM "
+    sql += " WHERE ITEM_CODE = '" & prmItemCd & "'"
 
-    ' 値をカンマ区切りで連結（シングルクォートで囲む）
-    Dim values As String = String.Join(",", prmKeyValuez.Values.Select(Function(v) $"'{v}'"))
-
-    result("Keyz") = keys
-    result("Valuez") = values
-
-    Return result
+    Return sql
   End Function
+#End Region
+
+
 
 End Class

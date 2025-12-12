@@ -3,6 +3,7 @@
   Private MappingDictionary As New Dictionary(Of String, Dictionary(Of String, String))
 
   Public Sub New()
+
     ' マッピング定義
     MappingDictionary("入荷予定データ") = New Dictionary(Of String, String) From {
       {"入荷予定日", "NYUKA_YOTEI_DATE"},

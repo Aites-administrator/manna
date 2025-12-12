@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Threading
 Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
+Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
 
@@ -12,7 +13,7 @@ Public Class frmNyukaSendCommunication
 
   Private SqlServer As New clsSqlServer
   Private Const SEND_FOLDER As String = "D:\manna\SEND\"
-  Private Const SEND_NYUKA_FILE_NAME As String = "D:\manna\SEND\IN_ITEM.DAT"
+  Private Const SEND_NYUKA_FILE_NAME As String = SEND_FOLDER & "IN_ITEM.DAT"
 
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateSagyoBi1.SelectedIndex = 0
@@ -31,28 +32,16 @@ Public Class frmNyukaSendCommunication
     Try
       Dim line As String = String.Empty
 
-
+      'DataGridのデータを固定長に変換して出力
       For Each tmpRow In prmDt.Rows
-        line &= ToFixedLength(tmpRow("HACHU_NO").ToString(), 6)
-        line &= ToFixedLength(tmpRow("GYO_NO").ToString(), 2)
-        line &= ToFixedLength(tmpRow("JISYA_SHOHIN_CD").ToString(), 5)
-        line &= ToFixedLength(StrConv(tmpRow("MAKER_SHOHIN_MEI").ToString(), VbStrConv.Narrow), 80)
-        line &= ToFixedLength(StrConv(tmpRow("MAKER_KIKAKU_MEI").ToString(), VbStrConv.Narrow), 30)
-        line &= ToFixedLength(tmpRow("NYUKA_YOTEISU_CASE").ToString(), 4)
-        line &= ToFixedLength(tmpRow("NYUKA_YOTEISU_KOGUCHI").ToString(), 4)
-        line &= ToFixedLength(tmpRow("NYUKA_YOTEISU_JISYA").ToString(), 4)
-        line &= ToFixedLength(tmpRow("NYUKA_JISSEKISU_CASE").ToString(), 4)
-        line &= ToFixedLength(tmpRow("NYUKA_JISSEKISU_JISYA").ToString(), 4)
-        line &= ToFixedLength(tmpRow("MAKER_NIAISU").ToString(), 2)
-        line &= ToFixedLength(tmpRow("MAKER_HACHU_TANI").ToString(), 6)
-        line &= ToFixedLength(tmpRow("JAN").ToString(), 13)
-        line &= ToFixedLength(tmpRow("ITF").ToString(), 16)
-        line &= ToFixedLength(tmpRow("NYUKA_YOTEI_DATE").ToString(), 8)
-        line &= ToFixedLength(tmpRow("GOUKI").ToString(), 2)
-        line &= ToFixedLength(tmpRow("TANTO").ToString(), 3)
-        line &= ToFixedLength(tmpRow("KENPIN_DATE").ToString(), 8)
-        line &= ToFixedLength(tmpRow("STATUS").ToString(), 1)
-        line &= ToFixedLength(tmpRow("HACHU_GYO_NO").ToString(), 9)
+        For Each LenColumnInNyukaTup In LenColumnInNyuka
+          If LenColumnInNyukaTup.Item1 = "MAKER_SHOHIN_MEI" Or LenColumnInNyukaTup.Item1 = "MAKER_KIKAKU_MEI" Then
+            line &= ToFixedLength(StrConv(tmpRow(LenColumnInNyukaTup.Item1).ToString(), VbStrConv.Narrow), LenColumnInNyukaTup.Item2)
+          Else
+            line &= ToFixedLength(tmpRow(LenColumnInNyukaTup.Item1).ToString(), LenColumnInNyukaTup.Item2)
+          End If
+        Next
+
         writer.WriteLine(line)
         line = String.Empty
       Next
@@ -96,25 +85,27 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.MAKER_SHOHIN_MEI "
     sql &= "      ,	TRN_NYUKA.MAKER_KIKAKU_MEI "
     sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER * IIF(MAKER_NIAISU=0,1,MAKER_NIAISU) AS NYUKA_YOTEISU_CASE "
-    sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER NYUKA_YOTEISU_KOGUCHI "
+    sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER "
     sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA % MST_ITEM.IRISU) NYUKA_YOTEISU_JISYA  "
-    sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_MAKER NYUKA_JISSEKISU_CASE "
+    sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_MAKER "
     sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_JISYA "
     sql &= "      ,	TRN_NYUKA.MAKER_NIAISU "
     sql &= "      ,	TRN_NYUKA.MAKER_HACHU_TANI "
     sql &= "      ,	JAN "
     sql &= "      ,	ITF "
     sql &= "      ,	TRN_NYUKA.NYUKA_YOTEI_DATE "
-    sql &= "      ,	LEFT('' + SPACE(2), 2)  GOUKI "
-    sql &= "      ,	LEFT('' + SPACE(3), 3)  TANTO "
+    sql &= "      ,	TRN_NYUKA.GOUKI "
+    sql &= "      ,	TRN_NYUKA.TANTO_CD "
     sql &= "      ,	LEFT('' + SPACE(8), 8)  KENPIN_DATE "
-    sql &= "      ,	LEFT('0' + SPACE(1), 1) STATUS "
+    sql &= "      ,	LEFT('' + SPACE(1), 8) SHOMIKIGEN "
+    sql &= "      ,	LEFT('0' + SPACE(1), 1) TORIKOMI_JOKYO_FLG "
     sql &= "      ,	LEFT(TRN_NYUKA.HACHU_NO + SPACE(6), 6) + '_' + LEFT(TRN_NYUKA.GYO_NO + SPACE(2), 2) HACHU_GYO_NO "
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(STATUS.KEPINZUMI)
     If Not String.IsNullOrWhiteSpace(CmbDateSagyoBi1.SelectedValue) Then
-      sql &= " WHERE NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
+      sql &= " AND NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
     End If
 
     Return sql
@@ -124,6 +115,8 @@ Public Class frmNyukaSendCommunication
   Private Sub BtnSendHandy1_Click(sender As Object, e As EventArgs) Handles BtnSendHandy1.Click
     Dim tmpDt As New DataTable
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(SEND_NYUKA_FILE_NAME)
+    Dim tmpWhere As New List(Of String)
+    Dim tmpUpdColumn As New List(Of String)
 
     Try
       Handy.CreateCommnicationFile(SEND_NYUKA_FILE_NAME, SEND_FOLDER)
@@ -132,8 +125,21 @@ Public Class frmNyukaSendCommunication
       FormatFixedLengthTrnNyuka(tmpDt, SEND_NYUKA_FILE_NAME)
       Handy.DeleteCommnicationFile()
 
+      '条件項目生成
+      tmpWhere.Add("HACHU_NO")
+      tmpWhere.Add("GYO_NO")
+
+      '更新項目生成
+      tmpUpdColumn.Add("TORIKOMI_JOKYO_FLG")
+
       BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = SEND_NYUKA_FILE_NAME
+      BtnSendHandy1.TargetTableName = "TRN_NYUKA"
+      BtnSendHandy1.TargetLenClumn = LenColumnInNyuka
+      BtnSendHandy1.TargetWhere = tmpWhere
+      BtnSendHandy1.TargetUpdColumn = tmpUpdColumn
+      BtnSendHandy1.TargetUpdStatus = CInt(STATUS.SOUSINZUMI)
+
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)
