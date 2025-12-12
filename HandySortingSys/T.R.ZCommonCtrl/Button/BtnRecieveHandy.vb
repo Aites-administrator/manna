@@ -17,17 +17,19 @@ Public Class BtnRecieveHandy
   ' プロパティ：データグリッド
   Public Property TargetDataGridView As DgvList
   ' プロパティ：項目長
-  Public Property TargetLenClumn As List(Of Tuple(Of String, Integer))
+  Public Property TargetLenClumn As New List(Of Tuple(Of String, Integer))
   ' プロパティ：更新テーブル
   Public Property TargetTableName As String
   ' プロパティ：更新条件
-  Public Property TargetWhere As List(Of String)
+  Public Property TargetWhere As New List(Of String)
   ' プロパティ：更新項目
-  Public Property TargetUpdColumn As List(Of String)
+  Public Property TargetUpdColumn As New List(Of String)
   ' プロパティ：更新項目
-  Public Property TargetItemUpdColumn As List(Of String)
+  Public Property TargetItemUpdColumn As New List(Of String)
   ' プロパティ：更新ステータス
   Public Property TargetUpdStatus As String
+  ' プロパティ：通信時間更新
+  Public Property TargetCommunicationDate As New Dictionary(Of String, String)
 
 #End Region
 
@@ -93,39 +95,47 @@ Public Class BtnRecieveHandy
         For Each UpdColumn In TargetUpdColumn
           If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
             tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+          ElseIf UpdColumn = "RECEIVE_DATE" Then
+            tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
           Else
             tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
           End If
         Next
 
-        '条件項目生成
-        Dim tmpWhere As New Dictionary(Of String, String)
-        For Each Where In TargetWhere
-          tmpWhere.Add(Where, tmpRow(Where).ToString)
+        For Each tmpCommunicationDate In TargetCommunicationDate
+          tmpUpdColumn.Add(tmpCommunicationDate.Key, tmpCommunicationDate.Value)
         Next
 
-        '更新処理
-        SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
+        tmpUpdColumn.Add("UPDATE_DATE", ComGetProcTime)
 
-        '条件項目生成
-        If TargetItemUpdColumn IsNot Nothing Then
-          Dim tmpItemUpdColumn As New Dictionary(Of String, String)
-          For Each ItemUpdColumn In TargetItemUpdColumn
-            tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
+          '条件項目生成
+          Dim tmpWhere As New Dictionary(Of String, String)
+          For Each Where In TargetWhere
+            tmpWhere.Add(Where, tmpRow(Where).ToString)
           Next
 
-          tmpWhere.Clear()
-          tmpWhere.Add("SHOHIN_CD", tmpRow("JISYA_SHOHIN_CD").ToString)
-
           '更新処理
-          SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
+          SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
 
-        End If
+          '条件項目生成
+          If TargetItemUpdColumn IsNot Nothing Then
+            Dim tmpItemUpdColumn As New Dictionary(Of String, String)
+            For Each ItemUpdColumn In TargetItemUpdColumn
+              tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
+            Next
+
+            tmpWhere.Clear()
+            tmpWhere.Add("SHOHIN_CD", tmpRow("JISYA_SHOHIN_CD").ToString)
+
+            '更新処理
+            SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
+
+          End If
 
 
-      Next
+        Next
 
-      SqlServer.TrnCommit()
+        SqlServer.TrnCommit()
 
       'Excel出力
       DataTable2Excel(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), "D:\manna\OUTPUT\OUTPUT.xlsx")
@@ -144,10 +154,17 @@ Public Class BtnRecieveHandy
 #End Region
 
 #Region "ファンクション"
-  Private Sub UpdItem(prmItemCd As String)
+  Private Function DateTimeConvert(prmStrDate As String)
+    Dim rtn As String
+    If String.IsNullOrWhiteSpace(prmStrDate) OrElse prmStrDate.Length <> 14 Then
+      Return ""
+    End If
 
-  End Sub
+    Dim dt As DateTime = DateTime.ParseExact(prmStrDate, "yyyyMMddHHmmss", Nothing)
+    rtn = dt.ToString("yyyy/MM/dd HH:mm:ss")
 
+    Return rtn
+  End Function
   Private Function SqlUpdItem(prmItemCd As String) As String
     Dim sql As String = String.Empty
 

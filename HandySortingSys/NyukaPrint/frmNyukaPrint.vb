@@ -15,18 +15,12 @@ Public Class frmNyukaPrint
   End Sub
 
   Private Sub BtnOutput1_Click(sender As Object, e As EventArgs) Handles BtnOutput1.Click
-    'datagridview1.Columns.Add("商品コード", "商品コード")
-    'datagridview1.Columns.Add("商品名", "商品名")
-    'datagridview1.Columns.Add("規格", "規格")
-    'datagridview1.Columns.Add("発注数量", "発注数量")
-    'datagridview1.Columns.Add("入荷数量", "入荷数量")
-    'datagridview1.Columns.Add("備考", "備考")
+    Try
+      BtnOutput1.TargetDataGridView = DgvList1
 
-    'datagridview1.Rows.Add("17842", "ブルガリアヨーグルト　いちご", "（７０Ｇ×４）×６", "2", "2", "OK")
-    'datagridview1.Rows.Add("33722", "クルルマーク　上白糖ＣＩＳ２　いちご", "２０ＫＧ", "2", "1", "NG")
+    Catch ex As Exception
 
-    BtnOutput1.TargetDataGridView = DgvList1
-    BtnOutput1.TargetFormatFile = "D:\manna\HandySortingSys\REPORT\【ひな形】入荷検品報告書.xlsx"
+    End Try
 
   End Sub
 
@@ -48,13 +42,16 @@ Public Class frmNyukaPrint
     sql &= "      ,	MAKER_SHOHIN_MEI		メーカー商品名 "
     sql &= "      ,	MAKER_KIKAKU_MEI		メーカー規格名 "
     sql &= "      ,	MAKER_NIAISU			            荷数 "
-    sql &= "      ,	'20251202'			            賞味期限 "
+    sql &= "      ,	MST_ITEM.SHOMIKIGEN			            賞味期限 "
+    sql &= "      ,	MST_ITEM.IRISU		入り数 "
     sql &= "      ,	NYUKA_YOTEISU_MAKER		入荷予定数_メーカー "
     sql &= "      ,	NYUKA_YOTEISU_JISYA		入荷予定数_自社 "
     sql &= "      ,	NYUKA_JISSEKISU_MAKER	入荷実績数_メーカー "
-    sql &= "      ,	NYUKA_JISSEKISU_JISYA	入荷実績数_自社 "
+    sql &= "      ,	ISNULL(NYUKA_JISSEKISU_JISYA,0)	入荷実績数_自社 "
     sql &= "      ,	MAKER_HACHU_TANI		単位 "
     sql &= " FROM TRN_NYUKA"
+    sql &= " LEFT JOIN MST_ITEM "
+    sql &= " ON MST_ITEM.SHOHIN_CD = JISYA_SHOHIN_CD "
     sql &= " WHERE TORIKOMI_JOKYO_FLG = " & CInt(STATUS.KEPINZUMI)
     If Not String.IsNullOrWhiteSpace(CmbDateSagyoBi1.SelectedValue) Then
       sql &= " AND NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")

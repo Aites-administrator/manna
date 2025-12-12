@@ -19,11 +19,10 @@
       Tuple.Create("NYUKA_YOTEI_DATE", 8),
       Tuple.Create("GOUKI", 2),
       Tuple.Create("TANTO_CD", 3),
-      Tuple.Create("KENPIN_DATE", 14),
+      Tuple.Create("RECEIVE_DATE", 14),
       Tuple.Create("SHOMIKIGEN", 8),
       Tuple.Create("TORIKOMI_JOKYO_FLG", 1),
       Tuple.Create("HACHU_GYO_NO", 9)
     }
-  'Tuple.Create("KENPIN_DATE", 14),
 
 End Class

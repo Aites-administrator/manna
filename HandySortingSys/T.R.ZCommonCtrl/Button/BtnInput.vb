@@ -70,7 +70,12 @@ Public Class BtnInput
 
         Next
 
-        SqlServer.Execute(SqlInsTargetTable(TargetRowData))
+        '重複チェック
+        If IsDuplicate(TargetRowData) Then
+          Throw New Exception("既に取込済みです。")
+        Else
+          SqlServer.Execute(SqlInsTargetTable(TargetRowData))
+        End If
 
       Next
 
@@ -119,4 +124,25 @@ Public Class BtnInput
     Return result
   End Function
 
+  '重複チェック
+  Private Function IsDuplicate(prmTargetRow As Dictionary(Of String, String)) As Boolean
+    Dim mapper As New clsMapping
+    Dim keyCols = mapper.GetDuplicateKeyColumns(TargetCsvType)
+    Dim tmpDt As New DataTable
+    If keyCols.Count = 0 Then Return False ' キー定義がなければチェックしない
+
+    Dim whereList As New List(Of String)
+    For Each col In keyCols
+      If Not prmTargetRow.ContainsKey(col) Then Return False ' 必須キーがなければスキップ
+      Dim val = prmTargetRow(col).Replace("'", "''") ' SQLエスケープ
+      whereList.Add($"{col} = '{val}'")
+    Next
+
+    Dim whereClause = String.Join(" AND ", whereList)
+    Dim sql = $"SELECT COUNT(*) cnt FROM {TargetTableName} WHERE {whereClause}"
+
+    SqlServer.GetResult(tmpDt, sql)
+    Dim count = tmpDt.Rows(0).Item("cnt").ToString
+    Return count > 0
+  End Function
 End Class

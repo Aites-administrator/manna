@@ -22,9 +22,9 @@ Public Class frmNyukaReceiveCommunication
       tmpWhere.Add("GYO_NO")
 
       '更新項目生成
-      'tmpUpdColumn.Add("GOUKI")
-      'tmpUpdColumn.Add("TANTO")
-      'tmpUpdColumn.Add("KENPIN_DATE")
+      tmpUpdColumn.Add("GOUKI")
+      tmpUpdColumn.Add("TANTO_CD")
+      tmpUpdColumn.Add("RECEIVE_DATE")
       tmpUpdColumn.Add("TORIKOMI_JOKYO_FLG")
       tmpUpdColumn.Add("NYUKA_JISSEKISU_MAKER")
       tmpUpdColumn.Add("NYUKA_JISSEKISU_JISYA")
@@ -41,7 +41,6 @@ Public Class frmNyukaReceiveCommunication
       BtnRecieveHandy1.TargetUpdColumn = tmpUpdColumn
       BtnRecieveHandy1.TargetUpdStatus = CInt(STATUS.KEPINZUMI)
       BtnRecieveHandy1.TargetItemUpdColumn = tmpItemUpdColumn
-
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

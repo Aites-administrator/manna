@@ -96,7 +96,7 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.NYUKA_YOTEI_DATE "
     sql &= "      ,	TRN_NYUKA.GOUKI "
     sql &= "      ,	TRN_NYUKA.TANTO_CD "
-    sql &= "      ,	LEFT('' + SPACE(8), 8)  KENPIN_DATE "
+    sql &= "      ,	LEFT('' + SPACE(8), 8)  RECEIVE_DATE "
     sql &= "      ,	LEFT('' + SPACE(1), 8) SHOMIKIGEN "
     sql &= "      ,	LEFT('0' + SPACE(1), 1) TORIKOMI_JOKYO_FLG "
     sql &= "      ,	LEFT(TRN_NYUKA.HACHU_NO + SPACE(6), 6) + '_' + LEFT(TRN_NYUKA.GYO_NO + SPACE(2), 2) HACHU_GYO_NO "

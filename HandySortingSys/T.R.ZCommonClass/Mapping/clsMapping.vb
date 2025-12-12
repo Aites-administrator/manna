@@ -1,6 +1,7 @@
 ﻿Public Class clsMapping
   ' CSV種別 → ヘッダ → カラム名 の辞書
   Private MappingDictionary As New Dictionary(Of String, Dictionary(Of String, String))
+  Private DuplicateKeyDictionary As New Dictionary(Of String, List(Of String))
 
   Public Sub New()
 
@@ -32,6 +33,10 @@
       {"取込状況FLG", "TORIKOMI_JOKYO_FLG"}
     }
 
+    DuplicateKeyDictionary("入荷予定データ") = New List(Of String) From {
+    "NYUKA_YOTEI_DATE", "HACHU_NO", "GYO_NO"
+  }
+
   End Sub
 
   ' CSV種別を指定してマッピングを取得
@@ -40,6 +45,15 @@
       Return MappingDictionary(csvType)
     Else
       Return New Dictionary(Of String, String) ' 空を返す
+    End If
+  End Function
+
+  ' 重複キーチェックカラム
+  Public Function GetDuplicateKeyColumns(csvType As String) As List(Of String)
+    If DuplicateKeyDictionary.ContainsKey(csvType) Then
+      Return DuplicateKeyDictionary(csvType)
+    Else
+      Return New List(Of String)
     End If
   End Function
 End Class

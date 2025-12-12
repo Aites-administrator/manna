@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports Microsoft.Office.Interop
+Imports Microsoft.Office.Interop.Excel
 Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
 
@@ -103,129 +104,178 @@ Public Class BtnOutput
   Private Sub NyukaPrint()
     Dim excelApp As New Excel.Application
     excelApp.Visible = False
-    Dim wb = excelApp.Workbooks.Add()
-    Dim ws = CType(wb.Sheets(1), Excel.Worksheet)
+    With excelApp
+      .ScreenUpdating = False
+      .DisplayAlerts = False
+    End With
+
+    Dim wb As Excel.Workbook = excelApp.Workbooks.Add()
+    Dim ws As Excel.Worksheet = CType(wb.Sheets(1), Excel.Worksheet)
 
     Dim row As Integer = 1
 
-    ' タイトル行
-    ws.Cells(row, 1).Value = "入荷検品一覧表"
-    ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Merge()
-    With ws.Cells(row, 1)
-      .Font.Bold = True
-      .Font.Size = 16
-      .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-    End With
-    row += 2
+    Try
+      ' タイトル行
+      ws.Cells(row, 1).Value = "入荷検品一覧表"
+      ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Merge()
+      With ws.Cells(row, 1)
+        .Font.Bold = True
+        .Font.Size = 16
+        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+      End With
+      row += 2
 
-    ' データ抽出
-    Dim list As New List(Of 検品データ)
-    For Each r As DataGridViewRow In TargetDataGridView.Rows
-      If Not r.IsNewRow Then
-        list.Add(New 検品データ With {
-                .温度帯 = r.Cells("温度帯").Value?.ToString(),
-                .発注No = r.Cells("発注No").Value?.ToString(),
-                .行No = r.Cells("行NO").Value?.ToString(),
-                .発注先コード = r.Cells("発注先コード").Value?.ToString(),
-                .発注先名 = r.Cells("発注先名").Value?.ToString(),
-                .商品CD = r.Cells("自社商品コード").Value?.ToString(),
-                .商品名 = r.Cells("メーカー商品名").Value?.ToString(),
-                .規格 = r.Cells("メーカー規格名").Value?.ToString(),
-                .荷数 = r.Cells("荷数").Value?.ToString(),
-                .賞味期限 = r.Cells("賞味期限").Value?.ToString(),
-                .入荷予定数 = Convert.ToInt32(r.Cells("入荷予定数_自社").Value),
-                .実績数 = Convert.ToInt32(r.Cells("入荷実績数_自社").Value),
-                .発注単位 = r.Cells("単位").Value?.ToString()
-            })
-      End If
-    Next
-
-    ' 温度帯ごとにグループ化 → 商品CD順に並べ替え
-    Dim grouped = list _
-        .GroupBy(Function(x) x.温度帯) _
-        .Select(Function(g) New With {
-            .Key = g.Key,
-            .Items = g.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
-        }) _
-        .ToList()
-
-    For Each group In grouped
-      ' 温度帯見出し
-      ws.Cells(row, 1).Value = $"温度帯：{group.Key}"
-      ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Font.Bold = True
-      row += 1
-
-      ' ヘッダー
-      Dim headers = {"チェック", "発注NO", "行NO", "発注先コード", "発注先名", "商品CD", "商品名", "規格", "荷数", "賞味期限", "入荷予定数", "実績数", "発注単位"}
-      For i = 0 To headers.Length - 1
-        With ws.Cells(row, i + 1)
-          .Value = headers(i)
-          .Font.Bold = True
-          .Interior.Color = RGB(220, 230, 241)
-          .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
-          .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-        End With
+      ' データ抽出
+      Dim list As New List(Of 検品データ)
+      For Each r As DataGridViewRow In TargetDataGridView.Rows
+        If Not r.IsNewRow Then
+          list.Add(New 検品データ With {
+                    .温度帯 = r.Cells("温度帯").Value?.ToString(),
+                    .発注No = r.Cells("発注No").Value?.ToString(),
+                    .行No = r.Cells("行NO").Value?.ToString(),
+                    .発注先コード = r.Cells("発注先コード").Value?.ToString(),
+                    .発注先名 = r.Cells("発注先名").Value?.ToString(),
+                    .商品CD = r.Cells("自社商品コード").Value?.ToString(),
+                    .商品名 = r.Cells("メーカー商品名").Value?.ToString(),
+                    .規格 = r.Cells("メーカー規格名").Value?.ToString(),
+                    .荷数 = r.Cells("荷数").Value?.ToString(),
+                    .賞味期限 = r.Cells("賞味期限").Value?.ToString(),
+                    .入荷予定数 = Convert.ToInt32(r.Cells("入荷予定数_メーカー").Value),
+                    .入り数 = Convert.ToInt32(r.Cells("入り数").Value),
+                    .自社数量 = Convert.ToInt32(r.Cells("入荷予定数_自社").Value),
+                    .発注単位 = r.Cells("単位").Value?.ToString()
+                })
+        End If
       Next
-      row += 1
 
-      ' 明細
-      For Each item In group.Items
-        ws.Cells(row, 1).Value = "□"
-        ws.Cells(row, 2).Value = item.発注No
-        ws.Cells(row, 3).Value = item.行NO
-        ws.Cells(row, 4).Value = item.発注先コード
-        ws.Cells(row, 5).Value = item.発注先名
-        ws.Cells(row, 6).Value = item.商品CD
-        ws.Cells(row, 7).Value = item.商品名
-        ws.Cells(row, 8).Value = item.規格
-        ws.Cells(row, 9).Value = item.荷数
-        ws.Cells(row, 10).Value = FormatShomikigen(item.賞味期限)
-        ws.Cells(row, 11).Value = item.入荷予定数
-        ws.Cells(row, 12).Value = item.実績数
-        ws.Cells(row, 13).Value = item.発注単位
+      ' グループ化＆並べ替え
+      Dim grouped = list _
+            .GroupBy(Function(x) x.温度帯) _
+            .Select(Function(g) New With {
+                .Key = g.Key,
+                .Items = g.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
+            }) _
+            .ToList()
 
-        ' 罫線
-        For c = 1 To 13
-          ws.Cells(row, c).Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+      For Each group In grouped
+        ' 温度帯見出し
+        ws.Cells(row, 1).Value = $"温度帯：{group.Key}"
+        ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Font.Bold = True
+        row += 1
+
+        ' ヘッダー
+        Dim headers = {
+                "チェック", "発注NO", "行NO", "発注先コード", "発注先名",
+                "商品CD", "商品名/規格名", "荷数", "賞味期限",
+                "自社数量", "入り数", "入荷予定数", "発注単位"
+            }
+        For i = 0 To headers.Length - 1
+          With ws.Cells(row, i + 1)
+            .Value = headers(i)
+            .Font.Bold = True
+            .Interior.Color = RGB(220, 230, 241)
+            .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+            .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+          End With
+        Next
+        row += 1
+
+        ' 明細（2次元配列で一括書き込み）
+        Dim itemCount = group.Items.Count
+        Dim data(itemCount - 1, 12) As Object ' 13列（0〜12）
+
+        For i = 0 To itemCount - 1
+          Dim item = group.Items(i)
+          data(i, 0) = "□"
+          data(i, 1) = item.発注No
+          data(i, 2) = item.行No
+          data(i, 3) = item.発注先コード
+          data(i, 4) = item.発注先名
+          data(i, 5) = item.商品CD
+          data(i, 6) = item.商品名 & vbLf & item.規格
+          data(i, 7) = item.荷数
+          data(i, 8) = FormatShomikigen(item.賞味期限)
+          data(i, 9) = item.自社数量
+          data(i, 10) = item.入り数
+          data(i, 11) = item.入荷予定数
+          data(i, 12) = item.発注単位
         Next
 
-        row += 1
+        Dim startCell = ws.Cells(row, 1)
+        Dim endCell = ws.Cells(row + itemCount - 1, 13)
+        Dim writeRange = ws.Range(startCell, endCell)
+        writeRange.Value = data
+
+        ' 商品名/規格名列（G列）だけWrapTextを有効に
+        Dim productColRange = ws.Range(ws.Cells(row, 7), ws.Cells(row + itemCount - 1, 7))
+        productColRange.WrapText = True
+
+        ' 他の列はWrapTextを無効に
+        For col = 1 To 13
+          If col <> 7 Then
+            ws.Range(ws.Cells(row, col), ws.Cells(row + itemCount - 1, col)).WrapText = False
+          End If
+        Next
+
+        ' 罫線
+        With writeRange.Borders
+          .LineStyle = Excel.XlLineStyle.xlContinuous
+          .Weight = Excel.XlBorderWeight.xlThin
+        End With
+
+        row += itemCount + 2
       Next
 
-      row += 2 ' グループ間に空行
-    Next
+      ' 整形
+      ws.Cells.Font.Size = 9
+      ws.Columns("A:F").AutoFit()
+      ws.Columns("G").ColumnWidth = 30
+      ws.Columns("H:M").AutoFit()
 
-    ' 整形
-    ws.Columns.AutoFit()
+      ' 印刷設定
+      With ws.PageSetup
+        .PaperSize = Excel.XlPaperSize.xlPaperA4
+        .Orientation = Excel.XlPageOrientation.xlPortrait
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+        .LeftMargin = excelApp.InchesToPoints(0.3)
+        .RightMargin = excelApp.InchesToPoints(0.3)
+        .TopMargin = excelApp.InchesToPoints(0.5)
+        .BottomMargin = excelApp.InchesToPoints(0.5)
+        .CenterHorizontally = True
+        .PrintGridlines = False
+      End With
 
-    ' 印刷設定
-    With ws.PageSetup
-      .PaperSize = Excel.XlPaperSize.xlPaperA4
-      .Orientation = Excel.XlPageOrientation.xlLandscape
-      .Zoom = False
-      .FitToPagesWide = 1
-      .FitToPagesTall = False
-      .LeftMargin = excelApp.InchesToPoints(0.3)
-      .RightMargin = excelApp.InchesToPoints(0.3)
-      .TopMargin = excelApp.InchesToPoints(0.5)
-      .BottomMargin = excelApp.InchesToPoints(0.5)
-      .CenterHorizontally = True
-      .PrintGridlines = False
-    End With
+      ' 保存＆表示
+      Dim path = "D:\manna\HandySortingSys\REPORT\検品一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
+      wb.SaveAs(path)
 
-    ' 保存＆表示
-    Dim path = "D:\manna\HandySortingSys\REPORT\検品一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
-    wb.SaveAs(path)
-    wb.Close(SaveChanges:=False)
-    excelApp.Visible = True
-    excelApp.Workbooks.Open(path)
+      With excelApp
+        .ScreenUpdating = True
+        .DisplayAlerts = True
+        .Visible = True
+        wb.Activate()
+      End With
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    Finally
+      ' メモリ解放（Excelは開いたまま）
+      System.Runtime.InteropServices.Marshal.ReleaseComObject(ws)
+      System.Runtime.InteropServices.Marshal.ReleaseComObject(wb)
+      ws = Nothing
+      wb = Nothing
+      GC.Collect()
+      GC.WaitForPendingFinalizers()
+
+    End Try
   End Sub
 
   Private Function FormatShomikigen(raw As String) As String
     If String.IsNullOrEmpty(raw) OrElse raw.Length <> 8 Then Return ""
     Return $"{raw.Substring(0, 4)}年{raw.Substring(4, 2)}月{raw.Substring(6, 2)}日"
   End Function
-
   'Private Sub NyukaPrint()
   '  Dim excelApp As New Excel.Application
   '  Dim maxRowsPerPage As Integer = 40 ' 
@@ -915,7 +965,7 @@ Public Class BtnOutput
     Public Property 賞味期限 As String
     Public Property 入荷予定日 As String
     Public Property 自社数量 As String
-    Public Property 倉庫 As String
+    Public Property 入り数 As String
     Public Property 実績数 As String
     Public Property 実績自社数 As String
     Public Property 発注単位 As String
