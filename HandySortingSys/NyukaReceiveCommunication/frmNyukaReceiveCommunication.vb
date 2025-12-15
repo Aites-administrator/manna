@@ -1,20 +1,23 @@
 ﻿Imports T.R.ZCommonCtrl
+Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Public Class frmNyukaReceiveCommunication
   Inherits FormCommunication
 
-  Private Const RECEIVE_FOLDER As String = "D:\manna\RECEIVE\"
+  Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "IN_ITEM.DAT"
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
-    Dim Handy As New ClsHandyCommunication.clsHandyCommunication(RECEIVE_NYUKA_FILE_NAME)
+    Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
     Dim tmpWhere As New List(Of String)
     Dim tmpUpdColumn As New List(Of String)
     Dim tmpItemUpdColumn As New List(Of String)
 
     Try
-      Handy.CreateCommnicationFile(RECEIVE_NYUKA_FILE_NAME, RECEIVE_FOLDER)
+      ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+
+      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME, PROJECT_DIR_NAME & RECEIVE_FOLDER)
       Handy.DeleteCommnicationFile()
 
       '条件項目生成
@@ -33,7 +36,7 @@ Public Class frmNyukaReceiveCommunication
       tmpItemUpdColumn.Add("SHOMIKIGEN")
 
       BtnRecieveHandy1.Handy = Handy
-      BtnRecieveHandy1.TargetFileName = RECEIVE_NYUKA_FILE_NAME
+      BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
       BtnRecieveHandy1.TargetDataGridView = DgvList1
       BtnRecieveHandy1.TargetLenClumn = LenColumnInNyuka
       BtnRecieveHandy1.TargetTableName = "TRN_NYUKA"
@@ -41,6 +44,7 @@ Public Class frmNyukaReceiveCommunication
       BtnRecieveHandy1.TargetUpdColumn = tmpUpdColumn
       BtnRecieveHandy1.TargetUpdStatus = CInt(STATUS.KEPINZUMI)
       BtnRecieveHandy1.TargetItemUpdColumn = tmpItemUpdColumn
+      BtnRecieveHandy1.TargetOutputFileName = "OUTPUT_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

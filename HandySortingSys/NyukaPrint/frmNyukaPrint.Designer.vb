@@ -1,4 +1,6 @@
 ﻿Imports T.R.ZCommonCtrl
+Imports T.R.ZCommonClass.clsCommonFnc
+
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmNyukaPrint
   Inherits FormBase
@@ -80,10 +82,10 @@ Partial Class frmNyukaPrint
         Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
         Me.CmbDateSagyoBi1.TabIndex = 4
         Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
-        '
-        'DgvList1
-        '
-        Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+    '
+    'DgvList1
+    '
+    Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvList1.Location = New System.Drawing.Point(20, 146)
         Me.DgvList1.Name = "DgvList1"
         Me.DgvList1.RowTemplate.Height = 21

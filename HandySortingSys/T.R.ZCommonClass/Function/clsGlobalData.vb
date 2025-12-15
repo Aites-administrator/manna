@@ -1,6 +1,11 @@
 ﻿Public Class clsGlobalData
 
   ''' <summary>
+  ''' プロジェクトフォルダ名
+  ''' </summary>
+  Public Shared ReadOnly PROJECT_DIR_NAME As String = "C:\manna\"
+
+  ''' <summary>
   ''' ログ保存フォルダ名
   ''' </summary>
   Public Shared ReadOnly LOG_DIR_NAME As String = "LOG"

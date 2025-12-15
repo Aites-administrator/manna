@@ -23,8 +23,9 @@ Partial Class frmNyukaReceiveCommunication
   'コード エディターを使って変更しないでください。
   <System.Diagnostics.DebuggerStepThrough()> _
   Private Sub InitializeComponent()
-    Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
-    Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNyukaReceiveCommunication))
+        Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
+        Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
         Me.BtnRecieveHandy1 = New T.R.ZCommonCtrl.BtnRecieveHandy()
         Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
         CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -38,7 +39,7 @@ Partial Class frmNyukaReceiveCommunication
         Me.LblBase1.Name = "LblBase1"
         Me.LblBase1.Size = New System.Drawing.Size(562, 48)
         Me.LblBase1.TabIndex = 11
-        Me.LblBase1.Text = "ハンディ入荷検品データ送信"
+        Me.LblBase1.Text = "ハンディ入荷検品データ受信"
         '
         'BtnEnd_L1
         '
@@ -62,7 +63,16 @@ Partial Class frmNyukaReceiveCommunication
         Me.BtnRecieveHandy1.Name = "BtnRecieveHandy1"
         Me.BtnRecieveHandy1.Size = New System.Drawing.Size(320, 60)
         Me.BtnRecieveHandy1.TabIndex = 13
+        Me.BtnRecieveHandy1.TargetCommunicationDate = CType(resources.GetObject("BtnRecieveHandy1.TargetCommunicationDate"), System.Collections.Generic.Dictionary(Of String, String))
+        Me.BtnRecieveHandy1.TargetDataGridView = Nothing
         Me.BtnRecieveHandy1.TargetFileName = Nothing
+        Me.BtnRecieveHandy1.TargetItemUpdColumn = CType(resources.GetObject("BtnRecieveHandy1.TargetItemUpdColumn"), System.Collections.Generic.List(Of String))
+        Me.BtnRecieveHandy1.TargetLenClumn = CType(resources.GetObject("BtnRecieveHandy1.TargetLenClumn"), System.Collections.Generic.List(Of System.Tuple(Of String, Integer)))
+        Me.BtnRecieveHandy1.TargetOutputFileName = Nothing
+        Me.BtnRecieveHandy1.TargetTableName = Nothing
+        Me.BtnRecieveHandy1.TargetUpdColumn = CType(resources.GetObject("BtnRecieveHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
+        Me.BtnRecieveHandy1.TargetUpdStatus = Nothing
+        Me.BtnRecieveHandy1.TargetWhere = CType(resources.GetObject("BtnRecieveHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
         Me.BtnRecieveHandy1.Text = "F6" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "受信"
         Me.BtnRecieveHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnRecieveHandy1.UseVisualStyleBackColor = False

@@ -24,6 +24,8 @@ Public Class BtnSendHandy
   Public Property TargetUpdColumn As List(Of String)
   ' プロパティ：更新ステータス
   Public Property TargetUpdStatus As String
+  ' プロパティ：通信時間更新
+  Public Property TargetCommunicationDate As New Dictionary(Of String, String)
 
 #End Region
 
@@ -60,6 +62,8 @@ Public Class BtnSendHandy
     Dim tmpDt As New DataTable
 
     Try
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
+
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
@@ -76,13 +80,49 @@ Public Class BtnSendHandy
         Console.WriteLine("状態管理OK")
       End If
 
+      'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
+
+
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
+
+      For Each tmpRow In tmpDt.Rows
+        '更新項目生成
+        Dim tmpUpdColumn As New Dictionary(Of String, String)
+        For Each UpdColumn In TargetUpdColumn
+          If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
+            tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+          Else
+            tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
+          End If
+        Next
+
+        For Each tmpCommunicationDate In TargetCommunicationDate
+          tmpUpdColumn.Add(tmpCommunicationDate.Key, tmpCommunicationDate.Value)
+        Next
+
+        tmpUpdColumn.Add("UPDATE_DATE", ComGetProcTime)
+
+        '条件項目生成
+        Dim tmpWhere As New Dictionary(Of String, String)
+        For Each Where In TargetWhere
+          tmpWhere.Add(Where, tmpRow(Where).ToString)
+        Next
+
+        '更新処理
+        SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
+
+      Next
+
+      SqlServer.TrnCommit()
+
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
       Handy.CloseCommunicationTool()
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
       ComWriteErrLog(ex, False)
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
     Finally
     End Try
@@ -90,6 +130,17 @@ Public Class BtnSendHandy
 
 #End Region
 
+  Private Function DateTimeConvert(prmStrDate As String)
+    Dim rtn As String
+    If String.IsNullOrWhiteSpace(prmStrDate) OrElse prmStrDate.Length <> 14 Then
+      Return ""
+    End If
+
+    Dim dt As DateTime = DateTime.ParseExact(prmStrDate, "yyyyMMddHHmmss", Nothing)
+    rtn = dt.ToString("yyyy/MM/dd HH:mm:ss")
+
+    Return rtn
+  End Function
 
 
   'なかったので仮に作成したので頂ければ削除！

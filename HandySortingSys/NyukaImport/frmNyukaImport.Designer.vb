@@ -40,9 +40,9 @@ Partial Class frmNyukaImport
         Me.BtnInput1.Name = "BtnInput1"
         Me.BtnInput1.Size = New System.Drawing.Size(320, 60)
         Me.BtnInput1.TabIndex = 2
+        Me.BtnInput1.TargetCsvType = Nothing
         Me.BtnInput1.TargetDataTable = Nothing
         Me.BtnInput1.TargetTableName = Nothing
-        Me.BtnInput1.Text = "F1" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "F1:取込"
         Me.BtnInput1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnInput1.UseVisualStyleBackColor = False
         '

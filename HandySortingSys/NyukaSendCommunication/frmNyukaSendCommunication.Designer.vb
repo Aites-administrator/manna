@@ -57,10 +57,10 @@ Partial Class frmNyukaSendCommunication
         Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
         Me.CmbDateSagyoBi1.TabIndex = 8
         Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
-        '
-        'LblBase2
-        '
-        Me.LblBase2.AutoSize = True
+    '
+    'LblBase2
+    '
+    Me.LblBase2.AutoSize = True
         Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
         Me.LblBase2.Location = New System.Drawing.Point(12, 96)
         Me.LblBase2.Name = "LblBase2"

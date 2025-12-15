@@ -30,7 +30,7 @@ Public Class BtnInput
     MyBase.SetMsgLabelText("取込を行います。")
 
     Me.AccessKey = Keys.F1
-    Me.BtnText = "F1:取込"
+    Me.BtnText = "取込"
     MyBase.InitLayout()
 
   End Sub

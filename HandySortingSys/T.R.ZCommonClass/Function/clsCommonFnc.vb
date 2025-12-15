@@ -50,6 +50,7 @@ Public Class clsCommonFnc
     TORIKOMIZUMI = 1
     SOUSINZUMI = 2
     KEPINZUMI = 3
+    SHUTSURYOKUZUMI = 4
   End Enum
 
 

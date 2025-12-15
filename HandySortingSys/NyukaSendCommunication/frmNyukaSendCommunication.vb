@@ -3,6 +3,7 @@ Imports System.Text
 Imports System.IO
 Imports System.Threading
 Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
@@ -12,7 +13,7 @@ Public Class frmNyukaSendCommunication
   Inherits FormCommunication
 
   Private SqlServer As New clsSqlServer
-  Private Const SEND_FOLDER As String = "D:\manna\SEND\"
+  Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_NYUKA_FILE_NAME As String = SEND_FOLDER & "IN_ITEM.DAT"
 
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -114,15 +115,18 @@ Public Class frmNyukaSendCommunication
 
   Private Sub BtnSendHandy1_Click(sender As Object, e As EventArgs) Handles BtnSendHandy1.Click
     Dim tmpDt As New DataTable
-    Dim Handy As New ClsHandyCommunication.clsHandyCommunication(SEND_NYUKA_FILE_NAME)
+    Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
     Dim tmpWhere As New List(Of String)
     Dim tmpUpdColumn As New List(Of String)
+    Dim tmpCommunicationDate As New Dictionary(Of String, String)
 
     Try
-      Handy.CreateCommnicationFile(SEND_NYUKA_FILE_NAME, SEND_FOLDER)
+      ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+
+      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
       SqlServer.GetResult(tmpDt, SqlSelTrnNyuka)
 
-      FormatFixedLengthTrnNyuka(tmpDt, SEND_NYUKA_FILE_NAME)
+      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
       Handy.DeleteCommnicationFile()
 
       '条件項目生成
@@ -132,14 +136,17 @@ Public Class frmNyukaSendCommunication
       '更新項目生成
       tmpUpdColumn.Add("TORIKOMI_JOKYO_FLG")
 
+      '通信日付項目生成
+      tmpCommunicationDate.Add("SEND_DATE", ComGetProcTime)
+
       BtnSendHandy1.Handy = Handy
-      BtnSendHandy1.TargetFileName = SEND_NYUKA_FILE_NAME
+      BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME
       BtnSendHandy1.TargetTableName = "TRN_NYUKA"
       BtnSendHandy1.TargetLenClumn = LenColumnInNyuka
       BtnSendHandy1.TargetWhere = tmpWhere
       BtnSendHandy1.TargetUpdColumn = tmpUpdColumn
       BtnSendHandy1.TargetUpdStatus = CInt(STATUS.SOUSINZUMI)
-
+      BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

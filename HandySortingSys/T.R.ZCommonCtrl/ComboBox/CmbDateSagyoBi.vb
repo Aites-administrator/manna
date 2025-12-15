@@ -34,7 +34,6 @@ Public Class CmbDateSagyoBi
 
     sql &= " SELECT  CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  AS ItemCode  "
     sql &= " FROM TRN_NYUKA "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG  =  " & CInt(STATUS.TORIKOMIZUMI)
     sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  "
     sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  DESC"
 

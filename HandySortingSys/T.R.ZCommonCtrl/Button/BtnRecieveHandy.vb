@@ -1,5 +1,6 @@
 ﻿Imports System.Data
 Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports ClsHandyCommunication
 
@@ -7,12 +8,15 @@ Public Class BtnRecieveHandy
   Inherits BtnBase
 
 #Region "プライベート"
+  Private OUTPUT_DIR_NAME As String = "OUTPUT\"
   Private SqlServer As New clsSqlServer
 #End Region
 
 #Region "パブリック"
   ' プロパティ：ファイル名
   Public Property TargetFileName As String
+  ' プロパティ：出力ファイル名
+  Public Property TargetOutputFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
   ' プロパティ：データグリッド
   Public Property TargetDataGridView As DgvList
@@ -65,6 +69,9 @@ Public Class BtnRecieveHandy
 
     Dim tmpDt As New DataTable
     Try
+
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
+
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
@@ -81,22 +88,25 @@ Public Class BtnRecieveHandy
       Else
         Console.WriteLine("状態管理OK")
       End If
+      'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
+
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
       TargetDataGridView.SetData(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn))
 
       SqlServer.TrnStart()
 
       For Each tmpRow In tmpDt.Rows
-        If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "0" Then
-          Continue For
-        End If
         '更新項目生成
         Dim tmpUpdColumn As New Dictionary(Of String, String)
         For Each UpdColumn In TargetUpdColumn
           If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
-            tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+            If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
+              tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+            End If
           ElseIf UpdColumn = "RECEIVE_DATE" Then
-            tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
+            If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
+              tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
+            End If
           Else
             tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
           End If
@@ -108,44 +118,46 @@ Public Class BtnRecieveHandy
 
         tmpUpdColumn.Add("UPDATE_DATE", ComGetProcTime)
 
-          '条件項目生成
-          Dim tmpWhere As New Dictionary(Of String, String)
-          For Each Where In TargetWhere
-            tmpWhere.Add(Where, tmpRow(Where).ToString)
-          Next
-
-          '更新処理
-          SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
-
-          '条件項目生成
-          If TargetItemUpdColumn IsNot Nothing Then
-            Dim tmpItemUpdColumn As New Dictionary(Of String, String)
-            For Each ItemUpdColumn In TargetItemUpdColumn
-              tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
-            Next
-
-            tmpWhere.Clear()
-            tmpWhere.Add("SHOHIN_CD", tmpRow("JISYA_SHOHIN_CD").ToString)
-
-            '更新処理
-            SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
-
-          End If
-
-
+        '条件項目生成
+        Dim tmpWhere As New Dictionary(Of String, String)
+        For Each Where In TargetWhere
+          tmpWhere.Add(Where, tmpRow(Where).ToString)
         Next
 
-        SqlServer.TrnCommit()
+        '更新処理
+        SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
+
+        '条件項目生成
+        If TargetItemUpdColumn IsNot Nothing Then
+          Dim tmpItemUpdColumn As New Dictionary(Of String, String)
+          For Each ItemUpdColumn In TargetItemUpdColumn
+            tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
+          Next
+
+          tmpWhere.Clear()
+          tmpWhere.Add("SHOHIN_CD", tmpRow("JISYA_SHOHIN_CD").ToString)
+
+          '更新処理
+          SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
+
+        End If
+
+
+      Next
+
+      SqlServer.TrnCommit()
 
       'Excel出力
-      DataTable2Excel(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), "D:\manna\OUTPUT\OUTPUT.xlsx")
+      DataTable2Excel(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
 
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
 
       ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
     Finally
     End Try
