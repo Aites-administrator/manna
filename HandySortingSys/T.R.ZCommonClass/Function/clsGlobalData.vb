@@ -3,7 +3,7 @@
   ''' <summary>
   ''' プロジェクトフォルダ名
   ''' </summary>
-  Public Shared ReadOnly PROJECT_DIR_NAME As String = "C:\manna\"
+  Public Shared ReadOnly PROJECT_DIR_NAME As String = "D:\manna\"
 
   ''' <summary>
   ''' ログ保存フォルダ名

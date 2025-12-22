@@ -1,7 +1,7 @@
 ﻿Imports T.R.ZCommonClass.clsCommonFnc
 
-Public Class CmbDateSagyoBi
-  Inherits CmbDateBase
+Public Class CmbDateSagyoBiZumi
+  Inherits CmbBase
 
   Private Const CODE_FORMAT As String = "yyyy/MM/dd"
 
@@ -34,8 +34,6 @@ Public Class CmbDateSagyoBi
 
     sql &= " SELECT  CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  AS ItemCode  "
     sql &= " FROM TRN_NYUKA "
-    sql &= " WHERE (TORIKOMI_JOKYO_FLG NOT IN (" & CInt(STATUS.KEPINZUMI) & "," & CInt(STATUS.SHUTSURYOKUZUMI) & ")"
-    sql &= " OR RECEIVE_DATE IS NULL) "
     sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  "
     sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NYUKA_YOTEI_DATE, 112), 111)  DESC"
 

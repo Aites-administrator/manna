@@ -11,7 +11,7 @@ Public Class frmNyukaPrint
 #End Region
 
   Private Sub frmNyukaPrint_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    CmbDateSagyoBi1.SelectedIndex = 0
+    '    CmbDateSagyoBi1.SelectedIndex = 0
   End Sub
 
   Private Sub BtnOutput1_Click(sender As Object, e As EventArgs) Handles BtnOutput1.Click
@@ -46,16 +46,23 @@ Public Class frmNyukaPrint
     sql &= "      ,	MST_ITEM.IRISU		入り数 "
     sql &= "      ,	NYUKA_YOTEISU_MAKER		入荷予定数_メーカー "
     sql &= "      ,	NYUKA_YOTEISU_JISYA		入荷予定数_自社 "
-    sql &= "      ,	NYUKA_JISSEKISU_MAKER	入荷実績数_メーカー "
+    sql &= "      , CASE "
+    sql &= "          WHEN NYUKA_YOTEISU_MAKER = NYUKA_JISSEKISU_MAKER "
+    sql &= "          THEN 'OK'  "
+    sql &= "        ELSE CAST(NYUKA_JISSEKISU_MAKER - NYUKA_YOTEISU_MAKER AS NVARCHAR) "
+    sql &= "        END AS 検品結果 "
     sql &= "      ,	ISNULL(NYUKA_JISSEKISU_JISYA,0)	入荷実績数_自社 "
     sql &= "      ,	MAKER_HACHU_TANI		単位 "
     sql &= " FROM TRN_NYUKA"
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = JISYA_SHOHIN_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG = " & CInt(STATUS.KEPINZUMI)
-    If Not String.IsNullOrWhiteSpace(CmbDateSagyoBi1.SelectedValue) Then
-      sql &= " AND NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
+    If CmbDateSagyoBi1.SelectedValue Is Nothing Then
+      sql &= " WHERE NYUKA_YOTEI_DATE = ''"
+    Else
+      sql &= " WHERE NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
     End If
+    sql &= " ORDER BY HACHU_NO,GYO_NO "
+
 
     Return sql
 

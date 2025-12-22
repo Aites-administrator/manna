@@ -21,10 +21,14 @@ Public Class frmNyukaSendCommunication
   End Sub
 
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateSagyoBi1.SelectedIndexChanged
+    Dim mapper As New clsDtHeaderMapping
     Dim tmpDt As New DataTable
+    Dim tmpDtJP As New DataTable
     SqlServer.GetResult(tmpDt, SqlSelTrnNyuka())
 
-    DgvList1.SetData(tmpDt)
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "入荷予定データ")
+
+    DgvList1.SetData(tmpDtJP)
 
   End Sub
 
@@ -86,7 +90,7 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.MAKER_SHOHIN_MEI "
     sql &= "      ,	TRN_NYUKA.MAKER_KIKAKU_MEI "
     sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER * IIF(MAKER_NIAISU=0,1,MAKER_NIAISU) AS NYUKA_YOTEISU_CASE "
-    sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER "
+    sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA/MST_ITEM.IRISU) AS NYUKA_YOTEISU_MAKER "
     sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA % MST_ITEM.IRISU) NYUKA_YOTEISU_JISYA  "
     sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_MAKER "
     sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_JISYA "
@@ -98,14 +102,16 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.GOUKI "
     sql &= "      ,	TRN_NYUKA.TANTO_CD "
     sql &= "      ,	LEFT('' + SPACE(8), 8)  RECEIVE_DATE "
-    sql &= "      ,	LEFT('' + SPACE(1), 8) SHOMIKIGEN "
-    sql &= "      ,	LEFT('0' + SPACE(1), 1) TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	LEFT(ISNULL(SHOMIKIGEN,'') + SPACE(1), 8) SHOMIKIGEN "
+    sql &= "      , CASE WHEN RECEIVE_DATE IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	LEFT(TRN_NYUKA.HACHU_NO + SPACE(6), 6) + '_' + LEFT(TRN_NYUKA.GYO_NO + SPACE(2), 2) HACHU_GYO_NO "
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "
     sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(STATUS.KEPINZUMI)
-    If Not String.IsNullOrWhiteSpace(CmbDateSagyoBi1.SelectedValue) Then
+    If CmbDateSagyoBi1.SelectedValue Is Nothing Then
+      sql &= " AND NYUKA_YOTEI_DATE = ''"
+    Else
       sql &= " AND NYUKA_YOTEI_DATE = " & CmbDateSagyoBi1.SelectedValue.ToString.Replace("/", "")
     End If
 
@@ -121,7 +127,7 @@ Public Class frmNyukaSendCommunication
     Dim tmpCommunicationDate As New Dictionary(Of String, String)
 
     Try
-      ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
       Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
       SqlServer.GetResult(tmpDt, SqlSelTrnNyuka)

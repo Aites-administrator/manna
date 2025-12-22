@@ -29,7 +29,7 @@ Partial Class frmNyukaPrint
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
     Me.BtnOutput1 = New T.R.ZCommonCtrl.BtnOutput()
-    Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateSagyoBi()
+    Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateSagyoBiZumi()
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
         Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
         CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,7 +81,8 @@ Partial Class frmNyukaPrint
         Me.CmbDateSagyoBi1.Name = "CmbDateSagyoBi1"
         Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
         Me.CmbDateSagyoBi1.TabIndex = 4
-        Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
+    Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
+
     '
     'DgvList1
     '
@@ -131,7 +132,7 @@ Partial Class frmNyukaPrint
     Friend WithEvents LblBase1 As LblBase
     Friend WithEvents LblBase2 As LblBase
     Friend WithEvents BtnOutput1 As BtnOutput
-    Friend WithEvents CmbDateSagyoBi1 As CmbDateSagyoBi
+  Friend WithEvents CmbDateSagyoBi1 As CmbDateSagyoBiZumi
   Friend WithEvents DgvList1 As DgvList
     Friend WithEvents BtnEnd_L1 As BtnEnd_L
 End Class

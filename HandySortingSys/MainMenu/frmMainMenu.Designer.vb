@@ -24,24 +24,51 @@ Partial Class frmMainMenu
   <System.Diagnostics.DebuggerStepThrough()>
   Private Sub InitializeComponent()
     Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.LblProcDateTime4 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime3 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime2 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime1 = New T.R.ZCommonCtrl.LblProcDateTime()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase9 = New T.R.ZCommonCtrl.BtnMenuBase()
+        Me.BtnMenuBase8 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase5 = New T.R.ZCommonCtrl.BtnMenuBase()
+        Me.BtnMenuBase1 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.LblProcDateTime7 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime6 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime5 = New T.R.ZCommonCtrl.LblProcDateTime()
         Me.Label6 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase11 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase6 = New T.R.ZCommonCtrl.BtnMenuBase()
+        Me.BtnMenuBase2 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.LblProcDateTime13 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime12 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime11 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime10 = New T.R.ZCommonCtrl.LblProcDateTime()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase10 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase15 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase7 = New T.R.ZCommonCtrl.BtnMenuBase()
+        Me.BtnMenuBase3 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase4 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.LblProcDateTime9 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime8 = New T.R.ZCommonCtrl.LblProcDateTime()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
+        Me.BtnMenuBase13 = New T.R.ZCommonCtrl.BtnMenuBase()
+        Me.BtnMenuBase14 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -54,33 +81,6 @@ Partial Class frmMainMenu
         Me.Label21 = New System.Windows.Forms.Label()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
-        Me.LblProcDateTime9 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime8 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.BtnMenuBase13 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase14 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase4 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.LblProcDateTime13 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime12 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime11 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime10 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.BtnMenuBase10 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase15 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase7 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase3 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.LblProcDateTime7 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime6 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime5 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.BtnMenuBase11 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase6 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase2 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.LblProcDateTime4 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime3 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime2 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.LblProcDateTime1 = New T.R.ZCommonCtrl.LblProcDateTime()
-        Me.BtnMenuBase9 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase8 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase5 = New T.R.ZCommonCtrl.BtnMenuBase()
-        Me.BtnMenuBase1 = New T.R.ZCommonCtrl.BtnMenuBase()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -111,6 +111,42 @@ Partial Class frmMainMenu
         Me.Panel1.Size = New System.Drawing.Size(320, 837)
         Me.Panel1.TabIndex = 1
         '
+        'LblProcDateTime4
+        '
+        Me.LblProcDateTime4.AutoSize = True
+        Me.LblProcDateTime4.Location = New System.Drawing.Point(88, 520)
+        Me.LblProcDateTime4.Name = "LblProcDateTime4"
+        Me.LblProcDateTime4.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime4.TabIndex = 14
+        Me.LblProcDateTime4.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime3
+        '
+        Me.LblProcDateTime3.AutoSize = True
+        Me.LblProcDateTime3.Location = New System.Drawing.Point(88, 391)
+        Me.LblProcDateTime3.Name = "LblProcDateTime3"
+        Me.LblProcDateTime3.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime3.TabIndex = 13
+        Me.LblProcDateTime3.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime2
+        '
+        Me.LblProcDateTime2.AutoSize = True
+        Me.LblProcDateTime2.Location = New System.Drawing.Point(88, 261)
+        Me.LblProcDateTime2.Name = "LblProcDateTime2"
+        Me.LblProcDateTime2.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime2.TabIndex = 12
+        Me.LblProcDateTime2.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime1
+        '
+        Me.LblProcDateTime1.AutoSize = True
+        Me.LblProcDateTime1.Location = New System.Drawing.Point(88, 138)
+        Me.LblProcDateTime1.Name = "LblProcDateTime1"
+        Me.LblProcDateTime1.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime1.TabIndex = 11
+        Me.LblProcDateTime1.Text = "2025/12/12 12:12:12"
+        '
         'Label11
         '
         Me.Label11.AutoSize = True
@@ -138,6 +174,30 @@ Partial Class frmMainMenu
         Me.Label7.TabIndex = 8
         Me.Label7.Text = "▼"
         '
+        'BtnMenuBase9
+        '
+        Me.BtnMenuBase9.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase9.Location = New System.Drawing.Point(17, 454)
+        Me.BtnMenuBase9.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase9.Name = "BtnMenuBase9"
+        Me.BtnMenuBase9.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase9.TabIndex = 6
+        Me.BtnMenuBase9.Text = "入荷検品報告書"
+        Me.BtnMenuBase9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase9.UseVisualStyleBackColor = True
+        '
+        'BtnMenuBase8
+        '
+        Me.BtnMenuBase8.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase8.Location = New System.Drawing.Point(17, 325)
+        Me.BtnMenuBase8.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase8.Name = "BtnMenuBase8"
+        Me.BtnMenuBase8.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase8.TabIndex = 5
+        Me.BtnMenuBase8.Text = "ハンディ入荷検品データ受信"
+        Me.BtnMenuBase8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase8.UseVisualStyleBackColor = True
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -147,6 +207,30 @@ Partial Class frmMainMenu
         Me.Label2.Size = New System.Drawing.Size(212, 48)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "入荷処理"
+        '
+        'BtnMenuBase5
+        '
+        Me.BtnMenuBase5.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase5.Location = New System.Drawing.Point(17, 195)
+        Me.BtnMenuBase5.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase5.Name = "BtnMenuBase5"
+        Me.BtnMenuBase5.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase5.TabIndex = 2
+        Me.BtnMenuBase5.Text = "ハンディ入荷検品データ送信"
+        Me.BtnMenuBase5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase5.UseVisualStyleBackColor = True
+        '
+        'BtnMenuBase1
+        '
+        Me.BtnMenuBase1.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase1.Location = New System.Drawing.Point(17, 72)
+        Me.BtnMenuBase1.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase1.Name = "BtnMenuBase1"
+        Me.BtnMenuBase1.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase1.TabIndex = 1
+        Me.BtnMenuBase1.Text = "入荷検品データ取込"
+        Me.BtnMenuBase1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase1.UseVisualStyleBackColor = True
         '
         'Panel2
         '
@@ -166,6 +250,33 @@ Partial Class frmMainMenu
         Me.Panel2.Size = New System.Drawing.Size(320, 433)
         Me.Panel2.TabIndex = 2
         '
+        'LblProcDateTime7
+        '
+        Me.LblProcDateTime7.AutoSize = True
+        Me.LblProcDateTime7.Location = New System.Drawing.Point(88, 391)
+        Me.LblProcDateTime7.Name = "LblProcDateTime7"
+        Me.LblProcDateTime7.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime7.TabIndex = 14
+        Me.LblProcDateTime7.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime6
+        '
+        Me.LblProcDateTime6.AutoSize = True
+        Me.LblProcDateTime6.Location = New System.Drawing.Point(88, 261)
+        Me.LblProcDateTime6.Name = "LblProcDateTime6"
+        Me.LblProcDateTime6.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime6.TabIndex = 13
+        Me.LblProcDateTime6.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime5
+        '
+        Me.LblProcDateTime5.AutoSize = True
+        Me.LblProcDateTime5.Location = New System.Drawing.Point(88, 138)
+        Me.LblProcDateTime5.Name = "LblProcDateTime5"
+        Me.LblProcDateTime5.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime5.TabIndex = 12
+        Me.LblProcDateTime5.Text = "2025/12/12 12:12:12"
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
@@ -174,6 +285,18 @@ Partial Class frmMainMenu
         Me.Label6.Size = New System.Drawing.Size(34, 24)
         Me.Label6.TabIndex = 11
         Me.Label6.Text = "▼"
+        '
+        'BtnMenuBase11
+        '
+        Me.BtnMenuBase11.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase11.Location = New System.Drawing.Point(17, 325)
+        Me.BtnMenuBase11.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase11.Name = "BtnMenuBase11"
+        Me.BtnMenuBase11.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase11.TabIndex = 10
+        Me.BtnMenuBase11.Text = "ハンディ総出しデータ受信"
+        Me.BtnMenuBase11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase11.UseVisualStyleBackColor = True
         '
         'Label5
         '
@@ -193,6 +316,30 @@ Partial Class frmMainMenu
         Me.Label1.Size = New System.Drawing.Size(151, 48)
         Me.Label1.TabIndex = 5
         Me.Label1.Text = "総出し"
+        '
+        'BtnMenuBase6
+        '
+        Me.BtnMenuBase6.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase6.Location = New System.Drawing.Point(17, 195)
+        Me.BtnMenuBase6.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase6.Name = "BtnMenuBase6"
+        Me.BtnMenuBase6.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase6.TabIndex = 2
+        Me.BtnMenuBase6.Text = "ハンディ総出しデータ送信"
+        Me.BtnMenuBase6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase6.UseVisualStyleBackColor = True
+        '
+        'BtnMenuBase2
+        '
+        Me.BtnMenuBase2.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase2.Location = New System.Drawing.Point(17, 72)
+        Me.BtnMenuBase2.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase2.Name = "BtnMenuBase2"
+        Me.BtnMenuBase2.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase2.TabIndex = 1
+        Me.BtnMenuBase2.Text = "出荷予定データ取込"
+        Me.BtnMenuBase2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase2.UseVisualStyleBackColor = True
         '
         'Panel3
         '
@@ -215,6 +362,42 @@ Partial Class frmMainMenu
         Me.Panel3.Size = New System.Drawing.Size(320, 554)
         Me.Panel3.TabIndex = 3
         '
+        'LblProcDateTime13
+        '
+        Me.LblProcDateTime13.AutoSize = True
+        Me.LblProcDateTime13.Location = New System.Drawing.Point(91, 517)
+        Me.LblProcDateTime13.Name = "LblProcDateTime13"
+        Me.LblProcDateTime13.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime13.TabIndex = 20
+        Me.LblProcDateTime13.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime12
+        '
+        Me.LblProcDateTime12.AutoSize = True
+        Me.LblProcDateTime12.Location = New System.Drawing.Point(91, 389)
+        Me.LblProcDateTime12.Name = "LblProcDateTime12"
+        Me.LblProcDateTime12.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime12.TabIndex = 19
+        Me.LblProcDateTime12.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime11
+        '
+        Me.LblProcDateTime11.AutoSize = True
+        Me.LblProcDateTime11.Location = New System.Drawing.Point(91, 260)
+        Me.LblProcDateTime11.Name = "LblProcDateTime11"
+        Me.LblProcDateTime11.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime11.TabIndex = 18
+        Me.LblProcDateTime11.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime10
+        '
+        Me.LblProcDateTime10.AutoSize = True
+        Me.LblProcDateTime10.Location = New System.Drawing.Point(91, 137)
+        Me.LblProcDateTime10.Name = "LblProcDateTime10"
+        Me.LblProcDateTime10.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime10.TabIndex = 17
+        Me.LblProcDateTime10.Text = "2025/12/12 12:12:12"
+        '
         'Label13
         '
         Me.Label13.AutoSize = True
@@ -223,6 +406,18 @@ Partial Class frmMainMenu
         Me.Label13.Size = New System.Drawing.Size(34, 24)
         Me.Label13.TabIndex = 13
         Me.Label13.Text = "▼"
+        '
+        'BtnMenuBase10
+        '
+        Me.BtnMenuBase10.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase10.Location = New System.Drawing.Point(20, 454)
+        Me.BtnMenuBase10.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase10.Name = "BtnMenuBase10"
+        Me.BtnMenuBase10.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase10.TabIndex = 12
+        Me.BtnMenuBase10.Text = "棚卸報告書"
+        Me.BtnMenuBase10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase10.UseVisualStyleBackColor = True
         '
         'Label12
         '
@@ -242,6 +437,18 @@ Partial Class frmMainMenu
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "▼"
         '
+        'BtnMenuBase15
+        '
+        Me.BtnMenuBase15.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase15.Location = New System.Drawing.Point(20, 323)
+        Me.BtnMenuBase15.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase15.Name = "BtnMenuBase15"
+        Me.BtnMenuBase15.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase15.TabIndex = 7
+        Me.BtnMenuBase15.Text = "ハンディ棚卸実績データ受信"
+        Me.BtnMenuBase15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase15.UseVisualStyleBackColor = True
+        '
         'Label3
         '
         Me.Label3.AutoSize = True
@@ -251,6 +458,30 @@ Partial Class frmMainMenu
         Me.Label3.Size = New System.Drawing.Size(212, 48)
         Me.Label3.TabIndex = 6
         Me.Label3.Text = "棚卸処理"
+        '
+        'BtnMenuBase7
+        '
+        Me.BtnMenuBase7.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase7.Location = New System.Drawing.Point(20, 197)
+        Me.BtnMenuBase7.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase7.Name = "BtnMenuBase7"
+        Me.BtnMenuBase7.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase7.TabIndex = 2
+        Me.BtnMenuBase7.Text = "ハンディ棚卸データ送信"
+        Me.BtnMenuBase7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase7.UseVisualStyleBackColor = True
+        '
+        'BtnMenuBase3
+        '
+        Me.BtnMenuBase3.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase3.Location = New System.Drawing.Point(20, 76)
+        Me.BtnMenuBase3.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase3.Name = "BtnMenuBase3"
+        Me.BtnMenuBase3.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase3.TabIndex = 1
+        Me.BtnMenuBase3.Text = "棚卸データ受信"
+        Me.BtnMenuBase3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase3.UseVisualStyleBackColor = True
         '
         'Panel4
         '
@@ -273,6 +504,18 @@ Partial Class frmMainMenu
         Me.Label4.TabIndex = 7
         Me.Label4.Text = "その他処理"
         '
+        'BtnMenuBase4
+        '
+        Me.BtnMenuBase4.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase4.Location = New System.Drawing.Point(15, 72)
+        Me.BtnMenuBase4.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase4.Name = "BtnMenuBase4"
+        Me.BtnMenuBase4.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase4.TabIndex = 1
+        Me.BtnMenuBase4.Text = "ハンディ通信"
+        Me.BtnMenuBase4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase4.UseVisualStyleBackColor = True
+        '
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.SystemColors.ActiveCaption
@@ -287,6 +530,24 @@ Partial Class frmMainMenu
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Size = New System.Drawing.Size(320, 432)
         Me.Panel5.TabIndex = 12
+        '
+        'LblProcDateTime9
+        '
+        Me.LblProcDateTime9.AutoSize = True
+        Me.LblProcDateTime9.Location = New System.Drawing.Point(88, 261)
+        Me.LblProcDateTime9.Name = "LblProcDateTime9"
+        Me.LblProcDateTime9.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime9.TabIndex = 16
+        Me.LblProcDateTime9.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime8
+        '
+        Me.LblProcDateTime8.AutoSize = True
+        Me.LblProcDateTime8.Location = New System.Drawing.Point(88, 138)
+        Me.LblProcDateTime8.Name = "LblProcDateTime8"
+        Me.LblProcDateTime8.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime8.TabIndex = 15
+        Me.LblProcDateTime8.Text = "2025/12/12 12:12:12"
         '
         'Label14
         '
@@ -303,9 +564,33 @@ Partial Class frmMainMenu
         Me.Label15.Font = New System.Drawing.Font("MS UI Gothic", 36.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
         Me.Label15.Location = New System.Drawing.Point(85, 11)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(155, 48)
+        Me.Label15.Size = New System.Drawing.Size(140, 48)
         Me.Label15.TabIndex = 5
-        Me.Label15.Text = "仕分け"
+        Me.Label15.Text = "種まき"
+        '
+        'BtnMenuBase13
+        '
+        Me.BtnMenuBase13.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase13.Location = New System.Drawing.Point(17, 195)
+        Me.BtnMenuBase13.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase13.Name = "BtnMenuBase13"
+        Me.BtnMenuBase13.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase13.TabIndex = 2
+        Me.BtnMenuBase13.Text = "ハンディ種まきデータ受信"
+        Me.BtnMenuBase13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase13.UseVisualStyleBackColor = True
+        '
+        'BtnMenuBase14
+        '
+        Me.BtnMenuBase14.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.BtnMenuBase14.Location = New System.Drawing.Point(17, 72)
+        Me.BtnMenuBase14.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.BtnMenuBase14.Name = "BtnMenuBase14"
+        Me.BtnMenuBase14.Size = New System.Drawing.Size(290, 60)
+        Me.BtnMenuBase14.TabIndex = 1
+        Me.BtnMenuBase14.Text = "ハンディ種まきデータ送信"
+        Me.BtnMenuBase14.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnMenuBase14.UseVisualStyleBackColor = True
         '
         'Panel6
         '
@@ -428,291 +713,6 @@ Partial Class frmMainMenu
         Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L1.UseVisualStyleBackColor = False
         '
-        'LblProcDateTime9
-        '
-        Me.LblProcDateTime9.AutoSize = True
-        Me.LblProcDateTime9.Location = New System.Drawing.Point(88, 261)
-        Me.LblProcDateTime9.Name = "LblProcDateTime9"
-        Me.LblProcDateTime9.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime9.TabIndex = 16
-        Me.LblProcDateTime9.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime8
-        '
-        Me.LblProcDateTime8.AutoSize = True
-        Me.LblProcDateTime8.Location = New System.Drawing.Point(88, 138)
-        Me.LblProcDateTime8.Name = "LblProcDateTime8"
-        Me.LblProcDateTime8.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime8.TabIndex = 15
-        Me.LblProcDateTime8.Text = "2025/12/12 12:12:12"
-        '
-        'BtnMenuBase13
-        '
-        Me.BtnMenuBase13.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase13.Location = New System.Drawing.Point(17, 195)
-        Me.BtnMenuBase13.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase13.Name = "BtnMenuBase13"
-        Me.BtnMenuBase13.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase13.TabIndex = 2
-        Me.BtnMenuBase13.Text = "ハンディ仕分けデータ受信"
-        Me.BtnMenuBase13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase13.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase14
-        '
-        Me.BtnMenuBase14.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase14.Location = New System.Drawing.Point(17, 72)
-        Me.BtnMenuBase14.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase14.Name = "BtnMenuBase14"
-        Me.BtnMenuBase14.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase14.TabIndex = 1
-        Me.BtnMenuBase14.Text = "ハンディ仕分けデータ送信"
-        Me.BtnMenuBase14.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase14.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase4
-        '
-        Me.BtnMenuBase4.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase4.Location = New System.Drawing.Point(15, 72)
-        Me.BtnMenuBase4.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase4.Name = "BtnMenuBase4"
-        Me.BtnMenuBase4.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase4.TabIndex = 1
-        Me.BtnMenuBase4.Text = "ハンディ通信"
-        Me.BtnMenuBase4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase4.UseVisualStyleBackColor = True
-        '
-        'LblProcDateTime13
-        '
-        Me.LblProcDateTime13.AutoSize = True
-        Me.LblProcDateTime13.Location = New System.Drawing.Point(91, 517)
-        Me.LblProcDateTime13.Name = "LblProcDateTime13"
-        Me.LblProcDateTime13.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime13.TabIndex = 20
-        Me.LblProcDateTime13.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime12
-        '
-        Me.LblProcDateTime12.AutoSize = True
-        Me.LblProcDateTime12.Location = New System.Drawing.Point(91, 389)
-        Me.LblProcDateTime12.Name = "LblProcDateTime12"
-        Me.LblProcDateTime12.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime12.TabIndex = 19
-        Me.LblProcDateTime12.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime11
-        '
-        Me.LblProcDateTime11.AutoSize = True
-        Me.LblProcDateTime11.Location = New System.Drawing.Point(91, 260)
-        Me.LblProcDateTime11.Name = "LblProcDateTime11"
-        Me.LblProcDateTime11.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime11.TabIndex = 18
-        Me.LblProcDateTime11.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime10
-        '
-        Me.LblProcDateTime10.AutoSize = True
-        Me.LblProcDateTime10.Location = New System.Drawing.Point(91, 137)
-        Me.LblProcDateTime10.Name = "LblProcDateTime10"
-        Me.LblProcDateTime10.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime10.TabIndex = 17
-        Me.LblProcDateTime10.Text = "2025/12/12 12:12:12"
-        '
-        'BtnMenuBase10
-        '
-        Me.BtnMenuBase10.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase10.Location = New System.Drawing.Point(20, 454)
-        Me.BtnMenuBase10.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase10.Name = "BtnMenuBase10"
-        Me.BtnMenuBase10.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase10.TabIndex = 12
-        Me.BtnMenuBase10.Text = "棚卸報告書"
-        Me.BtnMenuBase10.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase10.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase15
-        '
-        Me.BtnMenuBase15.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase15.Location = New System.Drawing.Point(20, 323)
-        Me.BtnMenuBase15.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase15.Name = "BtnMenuBase15"
-        Me.BtnMenuBase15.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase15.TabIndex = 7
-        Me.BtnMenuBase15.Text = "ハンディ棚卸実績データ受信"
-        Me.BtnMenuBase15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase15.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase7
-        '
-        Me.BtnMenuBase7.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase7.Location = New System.Drawing.Point(20, 197)
-        Me.BtnMenuBase7.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase7.Name = "BtnMenuBase7"
-        Me.BtnMenuBase7.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase7.TabIndex = 2
-        Me.BtnMenuBase7.Text = "ハンディ棚卸データ送信"
-        Me.BtnMenuBase7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase7.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase3
-        '
-        Me.BtnMenuBase3.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase3.Location = New System.Drawing.Point(20, 76)
-        Me.BtnMenuBase3.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase3.Name = "BtnMenuBase3"
-        Me.BtnMenuBase3.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase3.TabIndex = 1
-        Me.BtnMenuBase3.Text = "棚卸データ受信"
-        Me.BtnMenuBase3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase3.UseVisualStyleBackColor = True
-        '
-        'LblProcDateTime7
-        '
-        Me.LblProcDateTime7.AutoSize = True
-        Me.LblProcDateTime7.Location = New System.Drawing.Point(88, 391)
-        Me.LblProcDateTime7.Name = "LblProcDateTime7"
-        Me.LblProcDateTime7.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime7.TabIndex = 14
-        Me.LblProcDateTime7.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime6
-        '
-        Me.LblProcDateTime6.AutoSize = True
-        Me.LblProcDateTime6.Location = New System.Drawing.Point(88, 261)
-        Me.LblProcDateTime6.Name = "LblProcDateTime6"
-        Me.LblProcDateTime6.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime6.TabIndex = 13
-        Me.LblProcDateTime6.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime5
-        '
-        Me.LblProcDateTime5.AutoSize = True
-        Me.LblProcDateTime5.Location = New System.Drawing.Point(88, 138)
-        Me.LblProcDateTime5.Name = "LblProcDateTime5"
-        Me.LblProcDateTime5.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime5.TabIndex = 12
-        Me.LblProcDateTime5.Text = "2025/12/12 12:12:12"
-        '
-        'BtnMenuBase11
-        '
-        Me.BtnMenuBase11.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase11.Location = New System.Drawing.Point(17, 325)
-        Me.BtnMenuBase11.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase11.Name = "BtnMenuBase11"
-        Me.BtnMenuBase11.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase11.TabIndex = 10
-        Me.BtnMenuBase11.Text = "ハンディ総出しデータ受信"
-        Me.BtnMenuBase11.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase11.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase6
-        '
-        Me.BtnMenuBase6.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase6.Location = New System.Drawing.Point(17, 195)
-        Me.BtnMenuBase6.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase6.Name = "BtnMenuBase6"
-        Me.BtnMenuBase6.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase6.TabIndex = 2
-        Me.BtnMenuBase6.Text = "ハンディ総出しデータ送信"
-        Me.BtnMenuBase6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase6.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase2
-        '
-        Me.BtnMenuBase2.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase2.Location = New System.Drawing.Point(17, 72)
-        Me.BtnMenuBase2.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase2.Name = "BtnMenuBase2"
-        Me.BtnMenuBase2.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase2.TabIndex = 1
-        Me.BtnMenuBase2.Text = "出荷予定データ取込"
-        Me.BtnMenuBase2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase2.UseVisualStyleBackColor = True
-        '
-        'LblProcDateTime4
-        '
-        Me.LblProcDateTime4.AutoSize = True
-        Me.LblProcDateTime4.Location = New System.Drawing.Point(88, 520)
-        Me.LblProcDateTime4.Name = "LblProcDateTime4"
-        Me.LblProcDateTime4.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime4.TabIndex = 14
-        Me.LblProcDateTime4.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime3
-        '
-        Me.LblProcDateTime3.AutoSize = True
-        Me.LblProcDateTime3.Location = New System.Drawing.Point(88, 391)
-        Me.LblProcDateTime3.Name = "LblProcDateTime3"
-        Me.LblProcDateTime3.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime3.TabIndex = 13
-        Me.LblProcDateTime3.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime2
-        '
-        Me.LblProcDateTime2.AutoSize = True
-        Me.LblProcDateTime2.Location = New System.Drawing.Point(88, 261)
-        Me.LblProcDateTime2.Name = "LblProcDateTime2"
-        Me.LblProcDateTime2.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime2.TabIndex = 12
-        Me.LblProcDateTime2.Text = "2025/12/12 12:12:12"
-        '
-        'LblProcDateTime1
-        '
-        Me.LblProcDateTime1.AutoSize = True
-        Me.LblProcDateTime1.Location = New System.Drawing.Point(88, 138)
-        Me.LblProcDateTime1.Name = "LblProcDateTime1"
-        Me.LblProcDateTime1.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime1.TabIndex = 11
-        Me.LblProcDateTime1.Text = "2025/12/12 12:12:12"
-        '
-        'BtnMenuBase9
-        '
-        Me.BtnMenuBase9.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase9.Location = New System.Drawing.Point(17, 454)
-        Me.BtnMenuBase9.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase9.Name = "BtnMenuBase9"
-        Me.BtnMenuBase9.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase9.TabIndex = 6
-        Me.BtnMenuBase9.Text = "入荷検品報告書"
-        Me.BtnMenuBase9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase9.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase8
-        '
-        Me.BtnMenuBase8.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase8.Location = New System.Drawing.Point(17, 325)
-        Me.BtnMenuBase8.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase8.Name = "BtnMenuBase8"
-        Me.BtnMenuBase8.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase8.TabIndex = 5
-        Me.BtnMenuBase8.Text = "ハンディ入荷検品データ受信"
-        Me.BtnMenuBase8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase8.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase5
-        '
-        Me.BtnMenuBase5.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase5.Location = New System.Drawing.Point(17, 195)
-        Me.BtnMenuBase5.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase5.Name = "BtnMenuBase5"
-        Me.BtnMenuBase5.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase5.TabIndex = 2
-        Me.BtnMenuBase5.Text = "ハンディ入荷検品データ送信"
-        Me.BtnMenuBase5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase5.UseVisualStyleBackColor = True
-        '
-        'BtnMenuBase1
-        '
-        Me.BtnMenuBase1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.BtnMenuBase1.Location = New System.Drawing.Point(17, 72)
-        Me.BtnMenuBase1.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
-        Me.BtnMenuBase1.Name = "BtnMenuBase1"
-        Me.BtnMenuBase1.Size = New System.Drawing.Size(290, 60)
-        Me.BtnMenuBase1.TabIndex = 1
-        Me.BtnMenuBase1.Text = "入荷検品データ取込"
-        Me.BtnMenuBase1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.BtnMenuBase1.UseVisualStyleBackColor = True
-        '
         'frmMainMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(13.0!, 24.0!)
@@ -725,8 +725,12 @@ Partial Class frmMainMenu
         Me.Controls.Add(Me.Panel3)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
+        Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("MS UI Gothic", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(128, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
         Me.Margin = New System.Windows.Forms.Padding(7, 6, 7, 6)
+        Me.MaximizeBox = False
         Me.Name = "frmMainMenu"
         Me.Text = "frmMainMenu"
         Me.Panel1.ResumeLayout(False)

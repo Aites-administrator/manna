@@ -153,6 +153,7 @@
     <Compile Include="Interface\DgvForm02.vb" />
     <Compile Include="Interface\DgvForm01.vb" />
     <Compile Include="Mapping\clsLenColumnDef.vb" />
+    <Compile Include="Mapping\clsDtHeaderMapping.vb" />
     <Compile Include="Mapping\clsMapping.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

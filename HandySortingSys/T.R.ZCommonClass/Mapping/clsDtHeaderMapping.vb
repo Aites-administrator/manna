@@ -1,0 +1,61 @@
+﻿Public Class clsDtHeaderMapping
+  ' CSV種別 → ヘッダ → カラム名 の辞書
+  Private MappingDictionary As New Dictionary(Of String, Dictionary(Of String, String))
+  Private DuplicateKeyDictionary As New Dictionary(Of String, List(Of String))
+
+  Public Sub New()
+
+    ' マッピング定義
+    MappingDictionary("入荷予定データ") = New Dictionary(Of String, String) From {
+      {"HACHU_NO", "発注No"},
+      {"GYO_NO", "行No"},
+      {"JISYA_SHOHIN_CD", "自社商品CD"},
+      {"MAKER_SHOHIN_MEI", "メーカー商品名"},
+      {"MAKER_KIKAKU_MEI", "メーカー規格名"},
+      {"NYUKA_YOTEISU_CASE", "個口数"},
+      {"NYUKA_YOTEISU_MAKER", "ケース数"},
+      {"NYUKA_YOTEISU_JISYA", "バラ数量"},
+      {"NYUKA_JISSEKISU_MAKER", "実績ケース数"},
+      {"NYUKA_JISSEKISU_JISYA", "実績バラ数量"},
+      {"MAKER_NIAISU", "荷合数"},
+      {"MAKER_HACHU_TANI", "発注単位"},
+      {"JAN", "JAN"},
+      {"ITF", "ITF"},
+      {"NYUKA_YOTEI_DATE", "入荷予定日"},
+      {"GOUKI", "号機"},
+      {"TANTO_CD", "担当コード"},
+      {"RECEIVE_DATE", "検品日付"},
+      {"SHOMIKIGEN", "賞味期限"},
+      {"TORIKOMI_JOKYO_FLG", "取込状況フラグ"},
+      {"HACHU_GYO_NO", "発注NO_行NO"}
+    }
+
+
+  End Sub
+
+  Public Function ConvertColumnNamesToJapanese(source As DataTable, mappingName As String) As DataTable
+    If Not MappingDictionary.ContainsKey(mappingName) Then
+      Throw New ArgumentException($"マッピング名 '{mappingName}' は定義されていません。")
+    End If
+
+    Dim mapping = MappingDictionary(mappingName)
+    Dim result As New DataTable()
+
+    ' 列定義を変換
+    For Each col As DataColumn In source.Columns
+      Dim newName As String = If(mapping.ContainsKey(col.ColumnName), mapping(col.ColumnName), col.ColumnName)
+      result.Columns.Add(newName, col.DataType)
+    Next
+
+    ' データをコピー
+    For Each row As DataRow In source.Rows
+      Dim newRow = result.NewRow()
+      For i = 0 To source.Columns.Count - 1
+        newRow(i) = row(i)
+      Next
+      result.Rows.Add(newRow)
+    Next
+
+    Return result
+  End Function
+End Class

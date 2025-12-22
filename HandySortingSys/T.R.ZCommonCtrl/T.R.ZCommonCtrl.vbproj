@@ -214,6 +214,9 @@
     <Compile Include="ComboBox\CmbDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ComboBox\CmbDateSagyoBiZumi.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComboBox\CmbDateShiirebi.vb">
       <SubType>Component</SubType>
     </Compile>

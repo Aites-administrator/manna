@@ -72,26 +72,31 @@ Public Class BtnRecieveHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      '通信ツール開示
-      Handy.OpenCommunicationTool()
+      ''通信ツール開示
+      'Handy.OpenCommunicationTool()
 
-      '状態管理ファイル作成チェック
-      If Not Handy.CreateChkStatusFlagFile() Then
-        Exit Sub
-      Else
-        Console.WriteLine("ファイル作成OK")
+      ''状態管理ファイル作成チェック
+      'If Not Handy.CreateChkStatusFlagFile() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("ファイル作成OK")
 
-      End If
-      '状態管理ファイルチェック
-      If Not Handy.ChkStatusFlagFile() Then
-        Exit Sub
-      Else
-        Console.WriteLine("状態管理OK")
-      End If
+      'End If
+      ''状態管理ファイルチェック
+      'If Not Handy.ChkStatusFlagFile() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("状態管理OK")
+      'End If
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
-      TargetDataGridView.SetData(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn))
+
+      Dim mapper As New clsDtHeaderMapping
+
+      Dim tmpDtJP As New DataTable
+      tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), "入荷予定データ")
+      TargetDataGridView.SetData(tmpDtJP)
 
       SqlServer.TrnStart()
 
@@ -148,7 +153,7 @@ Public Class BtnRecieveHandy
       SqlServer.TrnCommit()
 
       'Excel出力
-      DataTable2Excel(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
+      DataTable2Excel(tmpDtJP, PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()

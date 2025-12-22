@@ -15,7 +15,7 @@ Public Class frmNyukaReceiveCommunication
     Dim tmpItemUpdColumn As New List(Of String)
 
     Try
-      ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
       Handy.CreateCommnicationFile(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME, PROJECT_DIR_NAME & RECEIVE_FOLDER)
       Handy.DeleteCommnicationFile()

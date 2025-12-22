@@ -7,7 +7,15 @@ Public Class frmMainMenu
   Inherits FormBase
   Private SqlServer As New clsSqlServer
   Private IniFileName As String
+  Private Const IMAGE_FORDER As String = "IMAGE\"
   Private Sub frmMainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "MainMenuBackGroundImage.png"
+    If IO.File.Exists(path) Then
+      Me.BackgroundImage = Image.FromFile(path)
+      Me.BackgroundImageLayout = ImageLayout.Stretch
+    End If
+
+
     IniFileName = PROJECT_DIR_NAME & "INI\menu.ini"
     CaptionDateDisp()
   End Sub

@@ -73,6 +73,9 @@ Public Class CmbDateBase
         End If
       Else
         Try
+          If String.IsNullOrWhiteSpace(.Text) Then
+            Exit Sub
+          End If
           ' 入力された値を日付形式に変換
           tmpDateText = ComCreateDateText(.Text)
           .Text = ComCreateDateText(.Text)
