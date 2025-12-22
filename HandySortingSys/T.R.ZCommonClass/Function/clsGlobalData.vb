@@ -34,4 +34,9 @@
   ''' </summary>
   Public Shared ReadOnly PASSWORD As String = "1234"
 
+  ''' <summary>
+  ''' イメージフォルダ
+  ''' </summary>
+  Public Shared ReadOnly IMAGE_FORDER As String = "IMAGE\"
+
 End Class

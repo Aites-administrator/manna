@@ -1,0 +1,165 @@
+﻿Imports T.R.ZCommonCtrl
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Partial Class NyukaMenu
+  Inherits FormBase
+
+  'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
+  <System.Diagnostics.DebuggerNonUserCode()> _
+  Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+    Try
+      If disposing AndAlso components IsNot Nothing Then
+        components.Dispose()
+      End If
+    Finally
+      MyBase.Dispose(disposing)
+    End Try
+  End Sub
+
+  'Windows フォーム デザイナーで必要です。
+  Private components As System.ComponentModel.IContainer
+
+  'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
+  'Windows フォーム デザイナーを使用して変更できます。  
+  'コード エディターを使って変更しないでください。
+  <System.Diagnostics.DebuggerStepThrough()> _
+  Private Sub InitializeComponent()
+        Me.LblProcDateTime1 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
+        Me.LblProcDateTime2 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.LblProcDateTime3 = New T.R.ZCommonCtrl.LblProcDateTime()
+        Me.BtnEnd_L2 = New T.R.ZCommonCtrl.BtnEnd_L()
+        Me.BtnMainMenuBase1 = New T.R.ZCommonCtrl.BtnMainMenuBase()
+        Me.BtnMainMenuBase2 = New T.R.ZCommonCtrl.BtnMainMenuBase()
+        Me.BtnMainMenuBase3 = New T.R.ZCommonCtrl.BtnMainMenuBase()
+        Me.SuspendLayout()
+        '
+        'LblProcDateTime1
+        '
+        Me.LblProcDateTime1.AutoSize = True
+        Me.LblProcDateTime1.Location = New System.Drawing.Point(336, 559)
+        Me.LblProcDateTime1.Name = "LblProcDateTime1"
+        Me.LblProcDateTime1.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime1.TabIndex = 12
+        Me.LblProcDateTime1.Text = "2025/12/12 12:12:12"
+        '
+        'LblBase1
+        '
+        Me.LblBase1.AutoSize = True
+        Me.LblBase1.Font = New System.Drawing.Font("MS UI Gothic", 36.0!)
+        Me.LblBase1.Location = New System.Drawing.Point(12, 19)
+        Me.LblBase1.Name = "LblBase1"
+        Me.LblBase1.Size = New System.Drawing.Size(352, 48)
+        Me.LblBase1.TabIndex = 3
+        Me.LblBase1.Text = "入荷処理メニュー"
+        '
+        'LblProcDateTime2
+        '
+        Me.LblProcDateTime2.AutoSize = True
+        Me.LblProcDateTime2.Location = New System.Drawing.Point(781, 559)
+        Me.LblProcDateTime2.Name = "LblProcDateTime2"
+        Me.LblProcDateTime2.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime2.TabIndex = 13
+        Me.LblProcDateTime2.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime3
+        '
+        Me.LblProcDateTime3.AutoSize = True
+        Me.LblProcDateTime3.Location = New System.Drawing.Point(1226, 559)
+        Me.LblProcDateTime3.Name = "LblProcDateTime3"
+        Me.LblProcDateTime3.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime3.TabIndex = 14
+        Me.LblProcDateTime3.Text = "2025/12/12 12:12:12"
+        '
+        'BtnEnd_L2
+        '
+        Me.BtnEnd_L2.BackColor = System.Drawing.Color.Red
+        Me.BtnEnd_L2.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.BtnEnd_L2.ForeColor = System.Drawing.Color.Black
+        Me.BtnEnd_L2.Location = New System.Drawing.Point(1052, 789)
+        Me.BtnEnd_L2.Name = "BtnEnd_L2"
+        Me.BtnEnd_L2.Size = New System.Drawing.Size(320, 60)
+        Me.BtnEnd_L2.TabIndex = 16
+        Me.BtnEnd_L2.Text = "ESC" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "終了"
+        Me.BtnEnd_L2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnEnd_L2.UseVisualStyleBackColor = False
+        '
+        'BtnMainMenuBase1
+        '
+        Me.BtnMainMenuBase1.ButtonColor = System.Drawing.Color.Empty
+        Me.BtnMainMenuBase1.FlatAppearance.BorderSize = 0
+        Me.BtnMainMenuBase1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnMainMenuBase1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnMainMenuBase1.Icon = Nothing
+        Me.BtnMainMenuBase1.Location = New System.Drawing.Point(65, 345)
+        Me.BtnMainMenuBase1.Name = "BtnMainMenuBase1"
+        Me.BtnMainMenuBase1.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase1.TabIndex = 17
+        Me.BtnMainMenuBase1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnMainMenuBase1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.BtnMainMenuBase1.Title = Nothing
+        Me.BtnMainMenuBase1.UseVisualStyleBackColor = True
+        '
+        'BtnMainMenuBase2
+        '
+        Me.BtnMainMenuBase2.ButtonColor = System.Drawing.Color.Empty
+        Me.BtnMainMenuBase2.FlatAppearance.BorderSize = 0
+        Me.BtnMainMenuBase2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnMainMenuBase2.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnMainMenuBase2.Icon = Nothing
+        Me.BtnMainMenuBase2.Location = New System.Drawing.Point(510, 345)
+        Me.BtnMainMenuBase2.Name = "BtnMainMenuBase2"
+        Me.BtnMainMenuBase2.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase2.TabIndex = 18
+        Me.BtnMainMenuBase2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnMainMenuBase2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.BtnMainMenuBase2.Title = Nothing
+        Me.BtnMainMenuBase2.UseVisualStyleBackColor = True
+        '
+        'BtnMainMenuBase3
+        '
+        Me.BtnMainMenuBase3.ButtonColor = System.Drawing.Color.Empty
+        Me.BtnMainMenuBase3.FlatAppearance.BorderSize = 0
+        Me.BtnMainMenuBase3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnMainMenuBase3.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnMainMenuBase3.Icon = Nothing
+        Me.BtnMainMenuBase3.Location = New System.Drawing.Point(955, 345)
+        Me.BtnMainMenuBase3.Name = "BtnMainMenuBase3"
+        Me.BtnMainMenuBase3.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase3.TabIndex = 19
+        Me.BtnMainMenuBase3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.BtnMainMenuBase3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.BtnMainMenuBase3.Title = Nothing
+        Me.BtnMainMenuBase3.UseVisualStyleBackColor = True
+        '
+        'NyukaMenu
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(1384, 861)
+        Me.Controls.Add(Me.BtnMainMenuBase3)
+        Me.Controls.Add(Me.BtnMainMenuBase2)
+        Me.Controls.Add(Me.BtnEnd_L2)
+        Me.Controls.Add(Me.LblProcDateTime3)
+        Me.Controls.Add(Me.LblBase1)
+        Me.Controls.Add(Me.LblProcDateTime2)
+        Me.Controls.Add(Me.LblProcDateTime1)
+        Me.Controls.Add(Me.BtnMainMenuBase1)
+        Me.DoubleBuffered = True
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
+        Me.Name = "NyukaMenu"
+        Me.Text = "Form1"
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents LblProcDateTime1 As LblProcDateTime
+    Friend WithEvents LblBase1 As LblBase
+    Friend WithEvents LblProcDateTime2 As LblProcDateTime
+    Friend WithEvents LblProcDateTime3 As LblProcDateTime
+    Friend WithEvents BtnEnd_L2 As BtnEnd_L
+    Friend WithEvents BtnMainMenuBase1 As BtnMainMenuBase
+    Friend WithEvents BtnMainMenuBase2 As BtnMainMenuBase
+    Friend WithEvents BtnMainMenuBase3 As BtnMainMenuBase
+End Class

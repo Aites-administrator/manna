@@ -22,7 +22,8 @@
       Tuple.Create("RECEIVE_DATE", 14),
       Tuple.Create("SHOMIKIGEN", 8),
       Tuple.Create("TORIKOMI_JOKYO_FLG", 1),
-      Tuple.Create("HACHU_GYO_NO", 9)
+      Tuple.Create("HACHU_GYO_NO", 9),
+      Tuple.Create("TANA_CD", 4)
     }
 
 End Class

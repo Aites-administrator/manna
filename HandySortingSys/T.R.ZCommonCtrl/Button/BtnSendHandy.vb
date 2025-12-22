@@ -64,21 +64,21 @@ Public Class BtnSendHandy
     Try
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      '通信ツール開示
-      Handy.OpenCommunicationTool()
+      ''通信ツール開示
+      'Handy.OpenCommunicationTool()
 
-      '状態管理ファイル作成チェック
-      If Not Handy.CreateChkStatusFlagFile() Then
-        Exit Sub
-      Else
-        Console.WriteLine("ファイル作成OK")
-      End If
-      '状態管理ファイルチェック
-      If Not Handy.ChkStatusFlagFile() Then
-        Exit Sub
-      Else
-        Console.WriteLine("状態管理OK")
-      End If
+      ''状態管理ファイル作成チェック
+      'If Not Handy.CreateChkStatusFlagFile() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("ファイル作成OK")
+      'End If
+      ''状態管理ファイルチェック
+      'If Not Handy.ChkStatusFlagFile() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("状態管理OK")
+      'End If
 
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
@@ -117,13 +117,13 @@ Public Class BtnSendHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      Handy.CloseCommunicationTool()
+      'Handy.CloseCommunicationTool()
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
       ComWriteErrLog(ex, False)
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      Handy.CloseCommunicationTool()
+      'Handy.CloseCommunicationTool()
     Finally
     End Try
   End Sub

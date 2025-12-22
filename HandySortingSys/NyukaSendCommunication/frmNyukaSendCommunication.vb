@@ -105,6 +105,7 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	LEFT(ISNULL(SHOMIKIGEN,'') + SPACE(1), 8) SHOMIKIGEN "
     sql &= "      , CASE WHEN RECEIVE_DATE IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	LEFT(TRN_NYUKA.HACHU_NO + SPACE(6), 6) + '_' + LEFT(TRN_NYUKA.GYO_NO + SPACE(2), 2) HACHU_GYO_NO "
+    sql &= "      ,	TANA_CD TANA_CD "
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "

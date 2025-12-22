@@ -27,7 +27,8 @@ Public Class BtnBase
   Public Sub New()
 
     'イメージがコントロールのテキストの上部に表示されるように指定します。
-    Me.TextImageRelation = TextImageRelation.ImageAboveText
+    Me.TextImageRelation = TextImageRelation.ImageBeforeText
+
     BtnText = Nothing
   End Sub
 
@@ -100,8 +101,8 @@ Public Class BtnBase
       End Select
 
       Me.Text = tmpKeyLblHeader & vbCrLf & BtnText
-      Me.Font = New Font("Segoe UI", 11, FontStyle.Regular)
     End If
+    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
     MyBase.InitLayout()
   End Sub
 

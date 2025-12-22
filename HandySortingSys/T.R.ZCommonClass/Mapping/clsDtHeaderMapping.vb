@@ -27,7 +27,8 @@
       {"RECEIVE_DATE", "検品日付"},
       {"SHOMIKIGEN", "賞味期限"},
       {"TORIKOMI_JOKYO_FLG", "取込状況フラグ"},
-      {"HACHU_GYO_NO", "発注NO_行NO"}
+      {"HACHU_GYO_NO", "発注NO_行NO"},
+      {"TANA_CD", "棚番"}
     }
 
 
