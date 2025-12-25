@@ -29,9 +29,18 @@ Public Class frmSoudashiSendCommunication
     Dim mapper As New clsDtHeaderMapping
     Dim tmpDt As New DataTable
     Dim tmpDtJP As New DataTable
-    SqlServer.GetResult(tmpDt, SqlSelTrnSoudashi())
-    BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
-    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "総出しデータ")
+    SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTanaSelect())
+    'BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "総出し棚データ")
+
+    If Not tmpDtJP.Columns.Contains("チェック") Then
+      tmpDtJP.Columns.Add("チェック", GetType(Boolean))
+      For Each row As DataRow In tmpDtJP.Rows
+        row("チェック") = False ' 初期値
+      Next
+    End If
+    ' チェック列を一番左に移動！
+    tmpDtJP.Columns("チェック").SetOrdinal(0)
 
     DgvList1.SetData(tmpDtJP)
 
@@ -82,8 +91,38 @@ Public Class frmSoudashiSendCommunication
   End Function
 
 
-  Private Function SqlSelTrnSoudashiTana() As String
+  Private Function SqlSelTrnSoudashiTanaSelect() As String
     Dim sql As String = String.Empty
+
+    sql &= " SELECT		LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
+    sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
+    sql &= "      ,	CASE WHEN MAX(SOUDASHI_SEND_DATE) is not null THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE "
+    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & SHUKKA_STATUS.SOUDASHI_ZUMI & " THEN '済' ELSE '未' END AS TORIKOMI_JOKYO_FLG "
+    sql &= " FROM TRN_SHUKKA "
+    sql &= " LEFT JOIN MST_ITEM "
+    sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
+    sql &= " LEFT JOIN MST_TANA "
+    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    If CmbDateNohinBi1.SelectedValue Is Nothing Then
+      sql &= " AND NOUHINBI = ''"
+    Else
+      sql &= " AND NOUHINBI = " & CmbDateNohinBi1.SelectedValue.ToString.Replace("/", "")
+    End If
+
+    sql &= " GROUP BY LEFT(MST_ITEM.TANA_CD,2),MST_TANA.TANA_ONDO,MST_TANA.FLOOR "
+    sql &= "    ,   NOUHINBI "
+    sql &= "    ,   MST_TANA.TANA_ONDO,MST_TANA.FLOOR "
+    sql &= "    ,   MST_TANA.FLOOR "
+    sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2) "
+
+    Return sql
+
+  End Function
+
+  Private Function SqlSelTrnSoudashiTana(prmTanaList As List(Of String)) As String
+    Dim sql As String = String.Empty
+
 
     sql &= " SELECT	NOUHINBI AS NOUHINBI  "
     sql &= " 	    	,	LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
@@ -103,6 +142,12 @@ Public Class frmSoudashiSendCommunication
     Else
       sql &= " AND NOUHINBI = " & CmbDateNohinBi1.SelectedValue.ToString.Replace("/", "")
     End If
+    If prmTanaList.Count > 0 Then
+      Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
+      sql &= " AND LEFT(MST_ITEM.TANA_CD,2) IN (" & tanaInClause & ")"
+    End If
+
+
     sql &= " GROUP BY LEFT(MST_ITEM.TANA_CD,2),MST_TANA.TANA_ONDO,MST_TANA.FLOOR "
     sql &= "    ,   NOUHINBI "
     sql &= "    ,   MST_TANA.TANA_ONDO,MST_TANA.FLOOR "
@@ -113,7 +158,7 @@ Public Class frmSoudashiSendCommunication
 
   End Function
 
-  Private Function SqlSelTrnSoudashi() As String
+  Private Function SqlSelTrnSoudashi(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT	LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
@@ -139,6 +184,11 @@ Public Class frmSoudashiSendCommunication
     Else
       sql &= " AND NOUHINBI = " & CmbDateNohinBi1.SelectedValue.ToString.Replace("/", "")
     End If
+    If prmTanaList.Count > 0 Then
+      Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
+      sql &= " AND LEFT(MST_ITEM.TANA_CD,2) IN (" & tanaInClause & ")"
+    End If
+
     sql &= " GROUP BY MST_ITEM.TANA_CD "
     sql &= "    ,   NOUHINBI "
     sql &= "    ,TRN_SHUKKA.JISYA_SHOHIN_CD "
@@ -161,7 +211,27 @@ Public Class frmSoudashiSendCommunication
 
     Try
 
-      If BlnTorikomiZumi Then
+      'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+
+      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
+
+      ' チェックされたTANA_CDのリストを取得
+      Dim selectedTanaList As New List(Of String)
+
+      For Each row As DataGridViewRow In DgvList1.Rows
+        If Not row.IsNewRow AndAlso Convert.ToBoolean(row.Cells("チェック").Value) = True Then
+          Dim tanaCd As String = row.Cells(1).Value?.ToString()
+          If Not String.IsNullOrEmpty(tanaCd) AndAlso Not selectedTanaList.Contains(tanaCd) Then
+            selectedTanaList.Add(tanaCd)
+          End If
+
+          If row.Cells("SOUDASHI_SEND_DATE").Value?.ToString() = "有" Then
+            BtnSendHandy1.TargetCancelParentClick = True
+          End If
+        End If
+      Next
+
+      If BtnSendHandy1.TargetCancelParentClick Then
         Dim result As String = InputBox("送信済みのデータが含まれます。本当に送信しますか？", "認証")
         If result = ReadSettingIniFile("PASS", "VALUE") Then
           BtnSendHandy1.TargetCancelParentClick = False
@@ -172,16 +242,17 @@ Public Class frmSoudashiSendCommunication
 
       End If
 
-      'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
-      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
-      SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTana)
+
+      SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTana(selectedTanaList))
+
+
 
       '棚番マスタ
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME, LenColumnInSoudashiTana)
 
       '総出しデータ 未実施
-      SqlServer.GetResult(tmpDt, SqlSelTrnSoudashi)
+      SqlServer.GetResult(tmpDt, SqlSelTrnSoudashi(selectedTanaList))
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_SOUDASHI_FILE_NAME, LenColumnInSoudashi)
 
       Handy.DeleteCommnicationFile()

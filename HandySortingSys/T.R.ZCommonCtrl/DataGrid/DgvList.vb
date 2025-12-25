@@ -26,8 +26,15 @@
       'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
       'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
       Me.AllowUserToAddRows = False
-      Me.ReadOnly = True
+      Me.ReadOnly = False
 
+      For Each tmpClomn In Me.Columns
+        ' チェック列だけ編集可能にする
+        If tmpClomn.Name <> "チェック" Then
+          tmpClomn.ReadOnly = True
+        End If
+
+      Next
       ' フォント設定
       Me.EnableHeadersVisualStyles = False ' 
       Me.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue
@@ -39,4 +46,8 @@
 
   End Sub
 
+  Private Sub DgvList_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles Me.DataBindingComplete
+
+
+  End Sub
 End Class

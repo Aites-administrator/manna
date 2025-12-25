@@ -22,7 +22,6 @@ Public Class SoudashiMenu
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_SHUKKA_TORIKOMI "
     sql &= "      ,  MAX(SOUDASHI_SEND_DATE) AS MAX_SHUKKA_SEND	 "
     sql &= "      ,  MAX(SOUDASHI_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
-    sql &= "      FROM TRN_SHUKKA "
     sql &= " FROM TRN_SHUKKA "
 
     Return sql
