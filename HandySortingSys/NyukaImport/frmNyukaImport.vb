@@ -23,7 +23,7 @@ Public Class frmNyukaImport
         dtNyukaData = LoadCsvToDataTable(ofd.FileName)
 
         For Each row As DataRow In dtNyukaData.Rows
-          row("取込状況FLG") = CInt(STATUS.TORIKOMIZUMI)
+          row("取込状況FLG") = CInt(NYUKA_STATUS.TORIKOMIZUMI)
         Next
         '値設定
         BtnInput1.TargetDataTable = dtNyukaData

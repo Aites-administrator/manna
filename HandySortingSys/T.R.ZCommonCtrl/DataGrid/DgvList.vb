@@ -21,8 +21,10 @@
       Me.DataSource = Nothing
       Me.AutoGenerateColumns = True
       Me.DataSource = dt
-      Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-      Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
+      Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+      Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
+      'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+      'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
       Me.AllowUserToAddRows = False
       Me.ReadOnly = True
 

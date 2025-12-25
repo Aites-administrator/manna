@@ -27,7 +27,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\Debug_exe\</OutputPath>
+    <OutputPath>..\..\Debug_exe\</OutputPath>
     <DocumentationFile>T.R.ZCommonCtrl.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -98,7 +98,7 @@
   <ItemGroup>
     <Reference Include="ClsHandyCommunication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug_exe\ClsHandyCommunication.dll</HintPath>
+      <HintPath>..\..\Debug_exe\ClsHandyCommunication.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -113,7 +113,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="T.R.ZCommonCon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Debug_exe\T.R.ZCommonCon.dll</HintPath>
+      <HintPath>..\..\Debug_exe\T.R.ZCommonCon.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +215,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbDateBase.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComboBox\CmbDateNohinBi.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ComboBox\CmbDateSagyoBiZumi.vb">

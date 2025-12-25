@@ -1,4 +1,5 @@
-﻿''' <summary>
+﻿Imports System.Drawing.Drawing2D
+''' <summary>
 ''' Btn操作クラス
 ''' </summary>
 ''' 
@@ -15,6 +16,11 @@ Public Class BtnMainMenuBase
   Private _Icon As Image
   '--- 背景色 ---
   Private _ButtonColor As Color
+  '--- テキスト色 ---
+  Private _ForeColor As Color
+  '--- アクセスキー ---
+  Private _SetAccessKey As Keys
+
 #End Region
 
 #Region "パブリック"
@@ -53,6 +59,29 @@ Public Class BtnMainMenuBase
       Me.FlatAppearance.BorderSize = 0
     End Set
   End Property
+
+  '--- ボタン文字色 ---
+  Public Property BtnForeColor As Color
+    Get
+      Return _ForeColor
+    End Get
+    Set(value As Color)
+      _ForeColor = value
+      Me.ForeColor = value
+    End Set
+  End Property
+
+  '--- アクセスキー ---
+  Public Property SetAccessKey As Keys
+    Get
+      Return _SetAccessKey
+    End Get
+    Set(value As Keys)
+      _SetAccessKey = value
+      Me.AccessKey = value
+    End Set
+  End Property
+
 #End Region
 
 
@@ -61,15 +90,24 @@ Public Class BtnMainMenuBase
   ''' コンストラクタ
   ''' </summary>
   Public Sub New()
-
+    Me.AccessKey = SetAccessKey
+    MyBase.InitLayout()
   End Sub
 
+  Protected Overrides Sub InitLayout()
+    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
+    Me.FlatStyle = FlatStyle.Flat
+    Me.FlatAppearance.BorderSize = 0
+
+  End Sub
 
 #End Region
 
 #Region "イベントプロシージャー"
   Private Sub MenuButtonControl_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
-    ResizeIcon
+    ResizeIcon()
+    MakeRoundedButton(Me, 20)
+
   End Sub
 
 #End Region
@@ -78,7 +116,7 @@ Public Class BtnMainMenuBase
 
     If _Icon IsNot Nothing _
       AndAlso Me.Height > 0 Then
-      Dim scale As Double = 0.6
+      Dim scale As Double = 0.3
       Dim targetHeight As Integer = CInt(Me.Height * scale)
       Dim ratio As Double = _Icon.Width / _Icon.Height
       Dim targetWidth As Integer = CInt(targetHeight * ratio)
@@ -90,5 +128,16 @@ Public Class BtnMainMenuBase
       Me.Image = Nothing
     End If
   End Sub
+
+  Private Sub MakeRoundedButton(btn As Button, radius As Integer)
+    Dim path As New GraphicsPath()
+    path.AddArc(0, 0, radius, radius, 180, 90)
+    path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)
+    path.AddArc(btn.Width - radius, btn.Height - radius, radius, radius, 0, 90)
+    path.AddArc(0, btn.Height - radius, radius, radius, 90, 90)
+    path.CloseAllFigures()
+    btn.Region = New Region(path)
+  End Sub
+
 
 End Class

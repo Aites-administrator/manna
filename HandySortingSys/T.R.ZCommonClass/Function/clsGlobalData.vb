@@ -3,7 +3,8 @@
   ''' <summary>
   ''' プロジェクトフォルダ名
   ''' </summary>
-  Public Shared ReadOnly PROJECT_DIR_NAME As String = "D:\manna\"
+  Public Shared ReadOnly PROJECT_DIR_NAME As String = clsCommonFnc.ReadSettingIniFile("PROJECT_FORDER", "VALUE")
+  '  Public Shared ReadOnly PROJECT_DIR_NAME As String = "D:\manna\"
 
   ''' <summary>
   ''' ログ保存フォルダ名

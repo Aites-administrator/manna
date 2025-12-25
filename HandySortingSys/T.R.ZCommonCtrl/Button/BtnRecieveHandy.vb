@@ -54,7 +54,9 @@ Public Class BtnRecieveHandy
 
   Protected Overrides Sub InitLayout()
     Me.Size = New Size(320, 60)
-    Me.FlatStyle = FlatStyle.Standard
+    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
+    Me.FlatStyle = FlatStyle.Flat
+    Me.FlatAppearance.BorderSize = 0
     Me.BackColor = SystemColors.ActiveCaption
     Me.ForeColor = Color.Black
   End Sub
@@ -156,14 +158,14 @@ Public Class BtnRecieveHandy
       DataTable2Excel(tmpDtJP, PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      Handy.CloseCommunicationTool()
+      'Handy.CloseCommunicationTool()
 
       ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
     Catch ex As Exception
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      Handy.CloseCommunicationTool()
+      'Handy.CloseCommunicationTool()
     Finally
     End Try
   End Sub

@@ -43,15 +43,15 @@ Public Class NyukaMenu
   End Sub
 
   Public Sub BottonSetting()
-    BtnMainMenuBase1.Title = "ハンディ入荷送信"
+    BtnMainMenuBase1.Title = "　ﾊﾝﾃﾞｨ入荷" & vbCrLf & "送信"
     BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaImage.png")
     BtnMainMenuBase1.ButtonColor = Color.LightBlue
 
-    BtnMainMenuBase2.Title = "ハンディ入荷受信"
+    BtnMainMenuBase2.Title = "　ﾊﾝﾃﾞｨ入荷" & vbCrLf & "受信"
     BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SodashiImage.png")
     BtnMainMenuBase2.ButtonColor = Color.Blue
 
-    BtnMainMenuBase3.Title = "入荷検品書"
+    BtnMainMenuBase3.Title = "　入荷検品書"
     BtnMainMenuBase3.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "TanemakiImage.png")
     BtnMainMenuBase3.ButtonColor = Color.DarkBlue
 
@@ -70,4 +70,8 @@ Public Class NyukaMenu
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
     ComGetProcessByFilePath(GetIniString("M04", "EXE", IniFileName))
   End Sub
+
+    Private Sub LblProcDateTime1_Click(sender As Object, e As EventArgs) Handles LblProcDateTime1.Click
+
+    End Sub
 End Class

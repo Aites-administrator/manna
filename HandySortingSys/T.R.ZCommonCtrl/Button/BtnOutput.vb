@@ -427,7 +427,7 @@ Public Class BtnOutput
   Private Function SqlUpdNyuka(prmDataRow As DataGridViewRow) As String
     Dim sql As String = String.Empty
     sql += " UPDATE TRN_NYUKA"
-    sql += " SET TORIKOMI_JOKYO_FLG = " & CInt(STATUS.SHUTSURYOKUZUMI)
+    sql += " SET TORIKOMI_JOKYO_FLG = " & CInt(NYUKA_STATUS.SHUTSURYOKUZUMI)
     sql += " , OUTPUT_DATE = '" & ComGetProcTime() & "'"
     sql += " WHERE NYUKA_YOTEI_DATE = '" & prmDataRow.Cells("入荷予定日").Value & "'"
     sql += " AND HACHU_NO = '" & prmDataRow.Cells("発注NO").Value & "'"

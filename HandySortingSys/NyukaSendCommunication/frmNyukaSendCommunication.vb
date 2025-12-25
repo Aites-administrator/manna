@@ -109,7 +109,7 @@ Public Class frmNyukaSendCommunication
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(STATUS.KEPINZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(NYUKA_STATUS.KEPINZUMI)
     If CmbDateSagyoBi1.SelectedValue Is Nothing Then
       sql &= " AND NYUKA_YOTEI_DATE = ''"
     Else
@@ -152,7 +152,7 @@ Public Class frmNyukaSendCommunication
       BtnSendHandy1.TargetLenClumn = LenColumnInNyuka
       BtnSendHandy1.TargetWhere = tmpWhere
       BtnSendHandy1.TargetUpdColumn = tmpUpdColumn
-      BtnSendHandy1.TargetUpdStatus = CInt(STATUS.SOUSINZUMI)
+      BtnSendHandy1.TargetUpdStatus = CInt(NYUKA_STATUS.SOUSINZUMI)
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception

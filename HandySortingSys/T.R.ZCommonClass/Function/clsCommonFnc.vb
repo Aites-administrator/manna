@@ -45,12 +45,21 @@ Public Class clsCommonFnc
     RESULT_NO
   End Enum
 
-  ' ステータスタイプ
-  Public Enum STATUS
+  ' 入荷ステータスタイプ
+  Public Enum NYUKA_STATUS
     TORIKOMIZUMI = 1
     SOUSINZUMI = 2
     KEPINZUMI = 3
     SHUTSURYOKUZUMI = 4
+  End Enum
+
+  ' 出荷ステータスタイプ
+  Public Enum SHUKKA_STATUS
+    TORIKOMIZUMI = 1
+    SOUDASHI_SOUSINZUMI = 2
+    SOUDASHI_ZUMI = 3
+    TANEMAKI_SOUSINZUMI = 4
+    TANEMAKI_ZUMI = 5
   End Enum
 
 
@@ -111,6 +120,8 @@ Public Class clsCommonFnc
     Return ret
 
   End Function
+
+
 
   Public Shared Sub SetFocusNextCtrl(prmCtrl As Control)
     prmCtrl.Parent.SelectNextControl(prmCtrl, True, True, True, True)
@@ -1770,6 +1781,12 @@ Optional ByVal columnCtl As Boolean = False)
     Next
 
     Return dt
+  End Function
+
+  Public Shared Function ReadSettingIniFile(strKey As String, keyName As String)
+    Dim strPath As String = IO.Directory.GetParent(Application.StartupPath).FullName & "\INI\setting.ini"
+    Dim stringValue As String = GetIniString(strKey, keyName, strPath)
+    Return stringValue
   End Function
 
 End Class

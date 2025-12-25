@@ -42,7 +42,7 @@ Public Class frmNyukaReceiveCommunication
       BtnRecieveHandy1.TargetTableName = "TRN_NYUKA"
       BtnRecieveHandy1.TargetWhere = tmpWhere
       BtnRecieveHandy1.TargetUpdColumn = tmpUpdColumn
-      BtnRecieveHandy1.TargetUpdStatus = CInt(STATUS.KEPINZUMI)
+      BtnRecieveHandy1.TargetUpdStatus = CInt(NYUKA_STATUS.KEPINZUMI)
       BtnRecieveHandy1.TargetItemUpdColumn = tmpItemUpdColumn
       BtnRecieveHandy1.TargetOutputFileName = "OUTPUT_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 

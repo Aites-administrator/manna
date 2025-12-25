@@ -36,9 +36,10 @@ Partial Class NyukaMenu
         'LblProcDateTime1
         '
         Me.LblProcDateTime1.AutoSize = True
-        Me.LblProcDateTime1.Location = New System.Drawing.Point(336, 559)
+        Me.LblProcDateTime1.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+        Me.LblProcDateTime1.Location = New System.Drawing.Point(132, 539)
         Me.LblProcDateTime1.Name = "LblProcDateTime1"
-        Me.LblProcDateTime1.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime1.Size = New System.Drawing.Size(219, 24)
         Me.LblProcDateTime1.TabIndex = 12
         Me.LblProcDateTime1.Text = "2025/12/12 12:12:12"
         '
@@ -55,27 +56,29 @@ Partial Class NyukaMenu
         'LblProcDateTime2
         '
         Me.LblProcDateTime2.AutoSize = True
-        Me.LblProcDateTime2.Location = New System.Drawing.Point(781, 559)
+        Me.LblProcDateTime2.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+        Me.LblProcDateTime2.Location = New System.Drawing.Point(469, 539)
         Me.LblProcDateTime2.Name = "LblProcDateTime2"
-        Me.LblProcDateTime2.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime2.Size = New System.Drawing.Size(219, 24)
         Me.LblProcDateTime2.TabIndex = 13
         Me.LblProcDateTime2.Text = "2025/12/12 12:12:12"
         '
         'LblProcDateTime3
         '
         Me.LblProcDateTime3.AutoSize = True
-        Me.LblProcDateTime3.Location = New System.Drawing.Point(1226, 559)
+        Me.LblProcDateTime3.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+        Me.LblProcDateTime3.Location = New System.Drawing.Point(806, 539)
         Me.LblProcDateTime3.Name = "LblProcDateTime3"
-        Me.LblProcDateTime3.Size = New System.Drawing.Size(109, 12)
+        Me.LblProcDateTime3.Size = New System.Drawing.Size(219, 24)
         Me.LblProcDateTime3.TabIndex = 14
         Me.LblProcDateTime3.Text = "2025/12/12 12:12:12"
         '
         'BtnEnd_L2
         '
-        Me.BtnEnd_L2.BackColor = System.Drawing.Color.Red
+        Me.BtnEnd_L2.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
         Me.BtnEnd_L2.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.BtnEnd_L2.ForeColor = System.Drawing.Color.Black
-        Me.BtnEnd_L2.Location = New System.Drawing.Point(1052, 789)
+        Me.BtnEnd_L2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.BtnEnd_L2.Location = New System.Drawing.Point(702, 789)
         Me.BtnEnd_L2.Name = "BtnEnd_L2"
         Me.BtnEnd_L2.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L2.TabIndex = 16
@@ -85,14 +88,16 @@ Partial Class NyukaMenu
         '
         'BtnMainMenuBase1
         '
+        Me.BtnMainMenuBase1.BtnForeColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase1.ButtonColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase1.FlatAppearance.BorderSize = 0
         Me.BtnMainMenuBase1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnMainMenuBase1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
         Me.BtnMainMenuBase1.Icon = Nothing
-        Me.BtnMainMenuBase1.Location = New System.Drawing.Point(65, 345)
+        Me.BtnMainMenuBase1.Location = New System.Drawing.Point(20, 289)
         Me.BtnMainMenuBase1.Name = "BtnMainMenuBase1"
-        Me.BtnMainMenuBase1.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase1.SetAccessKey = System.Windows.Forms.Keys.None
+        Me.BtnMainMenuBase1.Size = New System.Drawing.Size(331, 235)
         Me.BtnMainMenuBase1.TabIndex = 17
         Me.BtnMainMenuBase1.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnMainMenuBase1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -101,14 +106,16 @@ Partial Class NyukaMenu
         '
         'BtnMainMenuBase2
         '
+        Me.BtnMainMenuBase2.BtnForeColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase2.ButtonColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase2.FlatAppearance.BorderSize = 0
         Me.BtnMainMenuBase2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnMainMenuBase2.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
         Me.BtnMainMenuBase2.Icon = Nothing
-        Me.BtnMainMenuBase2.Location = New System.Drawing.Point(510, 345)
+        Me.BtnMainMenuBase2.Location = New System.Drawing.Point(357, 289)
         Me.BtnMainMenuBase2.Name = "BtnMainMenuBase2"
-        Me.BtnMainMenuBase2.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase2.SetAccessKey = System.Windows.Forms.Keys.None
+        Me.BtnMainMenuBase2.Size = New System.Drawing.Size(331, 235)
         Me.BtnMainMenuBase2.TabIndex = 18
         Me.BtnMainMenuBase2.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnMainMenuBase2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -117,14 +124,16 @@ Partial Class NyukaMenu
         '
         'BtnMainMenuBase3
         '
+        Me.BtnMainMenuBase3.BtnForeColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase3.ButtonColor = System.Drawing.Color.Empty
         Me.BtnMainMenuBase3.FlatAppearance.BorderSize = 0
         Me.BtnMainMenuBase3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnMainMenuBase3.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
         Me.BtnMainMenuBase3.Icon = Nothing
-        Me.BtnMainMenuBase3.Location = New System.Drawing.Point(955, 345)
+        Me.BtnMainMenuBase3.Location = New System.Drawing.Point(694, 289)
         Me.BtnMainMenuBase3.Name = "BtnMainMenuBase3"
-        Me.BtnMainMenuBase3.Size = New System.Drawing.Size(380, 211)
+        Me.BtnMainMenuBase3.SetAccessKey = System.Windows.Forms.Keys.None
+        Me.BtnMainMenuBase3.Size = New System.Drawing.Size(331, 235)
         Me.BtnMainMenuBase3.TabIndex = 19
         Me.BtnMainMenuBase3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.BtnMainMenuBase3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
@@ -135,7 +144,7 @@ Partial Class NyukaMenu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1384, 861)
+        Me.ClientSize = New System.Drawing.Size(1034, 861)
         Me.Controls.Add(Me.BtnMainMenuBase3)
         Me.Controls.Add(Me.BtnMainMenuBase2)
         Me.Controls.Add(Me.BtnEnd_L2)

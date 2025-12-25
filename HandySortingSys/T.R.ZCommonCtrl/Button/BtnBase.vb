@@ -100,9 +100,8 @@ Public Class BtnBase
           tmpKeyLblHeader = "F12"
       End Select
 
-      Me.Text = tmpKeyLblHeader & vbCrLf & BtnText
+      Me.Text = tmpKeyLblHeader & "：" & BtnText
     End If
-    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
     MyBase.InitLayout()
   End Sub
 

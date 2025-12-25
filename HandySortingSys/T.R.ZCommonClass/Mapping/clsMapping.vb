@@ -37,6 +37,67 @@
     "NYUKA_YOTEI_DATE", "HACHU_NO", "GYO_NO"
   }
 
+    MappingDictionary("出荷データ") = New Dictionary(Of String, String) From {
+      {"処理日", "SHORIBI"},
+      {"伝票番号", "DENPYO_NO"},
+      {"行番号", "GYO_NO"},
+      {"伝票区分", "DENPYO_KBN"},
+      {"伝票種別", "DENPYO_SBT"},
+      {"訂正区分", "TEISEI_KBN"},
+      {"訂正カウント", "TEISEI_COUNT"},
+      {"UO伝票番号", "UO_DENPYO_NO"},
+      {"UO行番号", "UO_GYO_NO"},
+      {"地域CD", "AREA_CD"},
+      {"入出荷場所", "NYUSHUKKA_BASHO"},
+      {"発注先親CD", "HACHUSAKI_OYA_CD"},
+      {"発注先枝CD", "HACHUSAKI_EDA_CD"},
+      {"発注先親名", "HACHUSAKI_OYA_MEI"},
+      {"発注先枝名", "HACHUSAKI_EDA_MEI"},
+      {"発注先TEL", "HACHUSAKI_TEL"},
+      {"発注先FAX", "HACHUSAKI_FAX"},
+      {"配送コース名", "HAISOU_COURSE_MEI"},
+      {"配送順", "HAISOU_JUN"},
+      {"事業所CD", "JIGYOSHO_CD"},
+      {"事業所名", "JIGYOSHO_MEI"},
+      {"住所1", "JUSHO1"},
+      {"住所2", "JUSHO2"},
+      {"事業所TEL", "JIGYOSHO_TEL"},
+      {"事業所FAX", "JIGYOSHO_FAX"},
+      {"発注日", "HACHUBI"},
+      {"納品日", "NOUHINBI"},
+      {"使用日", "SIYOBI"},
+      {"区分け番号", "KUWAKE_NO"},
+      {"区分け名称", "KUWAKE_MEI"},
+      {"納品集計", "NOUHIN_SHUKEI"},
+      {"商品CD", "ITEM_CD"},
+      {"商品名", "ITEM_MEI"},
+      {"分類CD", "BUNRUI_CD"},
+      {"発注単位", "HACHU_TANI"},
+      {"発注数量", "HACHU_SURYO"},
+      {"発注単価", "HACHU_TANKA"},
+      {"発注金額", "HACHU_KINGAKU"},
+      {"自社商品CD", "JISHA_ITEM_CD"},
+      {"自社商品名1", "JISHA_ITEM_MEI1"},
+      {"自社商品名2", "JISHA_ITEM_MEI2"},
+      {"温度帯", "ONDOTAI"},
+      {"出荷ラベル区分", "SHUKKA_LABEL"},
+      {"自社発注数量", "JISHA_HACHU_SURYO"},
+      {"自社単価", "JISHA_TANKA"},
+      {"自社金額", "JISHA_KINGAKU"},
+      {"出荷順位", "SHUKKA_RANK"},
+      {"数量変換割数", "SURYO_HEN_WARI_SU"},
+      {"数量変換割数単位", "SURYO_HEN_WARI_TANI"},
+      {"棚番", "TANABAN"},
+      {"発注方法区分", "HACHU_HOU_KBN"},
+      {"発注書区分", "HACHUSHO_KBN"},
+      {"発注区分", "HACHU_KBN"},
+      {"取込状況FLG", "TORIKOMI_JOKYO_FLG"}
+    }
+
+    DuplicateKeyDictionary("出荷データ") = New List(Of String) From {
+    "NOUHINBI", "UO_DENPYO_NO", "UO_GYO_NO"
+  }
+
   End Sub
 
   ' CSV種別を指定してマッピングを取得

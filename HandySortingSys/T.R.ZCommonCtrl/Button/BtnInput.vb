@@ -40,6 +40,10 @@ Public Class BtnInput
     Me.FlatStyle = FlatStyle.Standard
     Me.BackColor = SystemColors.ActiveCaption
     Me.ForeColor = Color.Black
+    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
+    Me.FlatStyle = FlatStyle.Flat
+    Me.FlatAppearance.BorderSize = 0
+
   End Sub
 
 
@@ -50,7 +54,7 @@ Public Class BtnInput
   Protected Overrides Sub OnClick(e As EventArgs)
     MyBase.OnClick(e)
     Dim mapper As New clsMapping
-
+    Dim mapping As New Dictionary(Of String, String)
     Dim TargetRowData As New Dictionary(Of String, String)
     If TargetDataTable Is Nothing OrElse String.IsNullOrEmpty(TargetTableName) Then
       Return
@@ -59,15 +63,14 @@ Public Class BtnInput
     Try
       SqlServer.TrnStart()
 
+      mapping = mapper.GetMapping(TargetCsvType)
       For Each row As DataRow In TargetDataTable.Rows
         TargetRowData.Clear()
 
         For Each col As DataColumn In TargetDataTable.Columns
           Dim key As String = col.ColumnName
           Dim value As Object = row(col)
-
-          TargetRowData.Add(mapper.GetMapping(TargetCsvType)(key), value)
-
+          TargetRowData.Add(mapping(key), value)
         Next
 
         '重複チェック

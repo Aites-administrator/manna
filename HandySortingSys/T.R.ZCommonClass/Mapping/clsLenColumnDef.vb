@@ -26,4 +26,31 @@
       Tuple.Create("TANA_CD", 4)
     }
 
+  '固定桁数定義
+  Public Shared LenColumnInSoudashiTana As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("NOUHINBI", 8),
+      Tuple.Create("TANA_CD", 2),
+      Tuple.Create("TANA_NAME", 10),
+      Tuple.Create("GOUKI", 2),
+      Tuple.Create("TANTO_CD", 3),
+      Tuple.Create("RECEIVE_DATE", 14),
+      Tuple.Create("TORIKOMI_JOKYO_FLG", 1)
+    }
+
+  '固定桁数定義
+  Public Shared LenColumnInSoudashi As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("TANA_CD", 2),
+      Tuple.Create("TANA_AREA", 6),
+      Tuple.Create("JISYA_SHOHIN_CD", 5),
+      Tuple.Create("JISYA_SHOHIN_MEI", 80),
+      Tuple.Create("JAN", 13),
+      Tuple.Create("ITF", 16),
+      Tuple.Create("SHUKKA_YOTEISU_CASE", 5),
+      Tuple.Create("SHUKKA_YOTEISU_BARA", 5),
+      Tuple.Create("GOUKI", 2),
+      Tuple.Create("TANTO_CD", 3),
+      Tuple.Create("RECEIVE_DATE", 14),
+      Tuple.Create("TORIKOMI_JOKYO_FLG", 1)
+    }
+
 End Class
