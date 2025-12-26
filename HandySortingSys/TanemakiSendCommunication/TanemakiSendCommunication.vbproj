@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6CA0D132-3C2E-46C9-9E8B-2ACEE2659257}</ProjectGuid>
+    <ProjectGuid>{AA9869F7-FA83-4F1A-B9CD-134D396D9155}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>SoudashiSendCommunication.My.MyApplication</StartupObject>
-    <RootNamespace>SoudashiSendCommunication</RootNamespace>
-    <AssemblyName>SoudashiSendCommunication</AssemblyName>
+    <StartupObject>TanemakiSendCommunication.My.MyApplication</StartupObject>
+    <RootNamespace>TanemakiSendCommunication</RootNamespace>
+    <AssemblyName>TanemakiSendCommunication</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
@@ -22,7 +22,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\Debug_exe\</OutputPath>
-    <DocumentationFile>SoudashiSendCommunication.xml</DocumentationFile>
+    <DocumentationFile>TanemakiSendCommunication.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -32,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>SoudashiSendCommunication.xml</DocumentationFile>
+    <DocumentationFile>TanemakiSendCommunication.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -61,16 +61,13 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="T.R.ZCommonClass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="T.R.ZCommonClass">
       <HintPath>..\..\Debug_exe\T.R.ZCommonClass.dll</HintPath>
     </Reference>
-    <Reference Include="T.R.ZCommonCon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="T.R.ZCommonCon">
       <HintPath>..\..\Debug_exe\T.R.ZCommonCon.dll</HintPath>
     </Reference>
-    <Reference Include="T.R.ZCommonCtrl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="T.R.ZCommonCtrl">
       <HintPath>..\..\Debug_exe\T.R.ZCommonCtrl.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -88,11 +85,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmSoudashiSendCommunication.vb">
+    <Compile Include="frmTanemakiSendCommunication.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSoudashiSendCommunication.Designer.vb">
-      <DependentUpon>frmSoudashiSendCommunication.vb</DependentUpon>
+    <Compile Include="frmTanemakiSendCommunication.Designer.vb">
+      <DependentUpon>frmTanemakiSendCommunication.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -112,8 +109,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmSoudashiSendCommunication.resx">
-      <DependentUpon>frmSoudashiSendCommunication.vb</DependentUpon>
+    <EmbeddedResource Include="frmTanemakiSendCommunication.resx">
+      <DependentUpon>frmTanemakiSendCommunication.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

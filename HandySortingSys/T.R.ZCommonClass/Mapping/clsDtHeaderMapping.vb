@@ -5,7 +5,7 @@
 
   Public Sub New()
 
-    ' マッピング定義
+    ' 入荷マッピング定義
     MappingDictionary("入荷予定データ") = New Dictionary(Of String, String) From {
       {"HACHU_NO", "発注No"},
       {"GYO_NO", "行No"},
@@ -31,12 +31,47 @@
       {"TANA_CD", "棚番"}
     }
 
-    ' マッピング定義
+    ' 総出しマッピング定義
     MappingDictionary("棚番リスト") = New Dictionary(Of String, String) From {
       {"TANA_CD", "棚番コード"},
       {"TANA_NAME", "棚番名"},
       {"SOUDASHI_SEND_DATE", "送信済み"},
       {"TORIKOMI_JOKYO_FLG", "総出し済"}
+    }
+
+
+    MappingDictionary("総出しデータ") = New Dictionary(Of String, String) From {
+      {"TANA_CD", "棚番コード"},
+      {"TANA_AREA", "棚番エリア"},
+      {"JISYA_SHOHIN_CD", "商品コード"},
+      {"JISYA_SHOHIN_MEI", "商品名"},
+      {"JAN", "JAN"},
+      {"ITF", "ITF"},
+      {"SHUKKA_YOTEISU_CASE", "出荷予定数_ケース数"},
+      {"SHUKKA_YOTEISU_BARA", "出荷予定数_バラ数"},
+      {"GOUKI", "号機"},
+      {"TANTO_CD", "担当者"},
+      {"RECEIVE_DATE", "作業日時"},
+      {"TORIKOMI_JOKYO_FLG", "ステータス"}
+    }
+
+    MappingDictionary("総出し棚データ") = New Dictionary(Of String, String) From {
+      {"NOUHINBI", "納品日"},
+      {"TANA_CD", "棚番コード"},
+      {"TANA_NAME", "棚番名"},
+      {"GOUKI", "号機"},
+      {"TANTO_CD", "担当者"},
+      {"RECEIVE_DATE", "作業日時"},
+      {"TORIKOMI_JOKYO_FLG", "ステータス"}
+    }
+
+    ' 種まきマッピング定義
+
+    MappingDictionary("種まきコースリスト") = New Dictionary(Of String, String) From {
+      {"COURSE_CD", "コースコード"},
+      {"HAISOU_COURSE_MEI", "コース名"},
+      {"TANEMAKI_SEND_DATE", "送信済み"},
+      {"TORIKOMI_JOKYO_FLG", "種まき済"}
     }
 
 

@@ -1,6 +1,6 @@
 ﻿Public Class clsLenColumnDef
 
-  '固定桁数定義
+  '入荷データ固定桁数定義
   Public Shared LenColumnInNyuka As New List(Of Tuple(Of String, Integer)) From {
       Tuple.Create("HACHU_NO", 6),
       Tuple.Create("GYO_NO", 2),
@@ -26,7 +26,7 @@
       Tuple.Create("TANA_CD", 4)
     }
 
-  '固定桁数定義
+  '総出し棚データ固定桁数定義
   Public Shared LenColumnInSoudashiTana As New List(Of Tuple(Of String, Integer)) From {
       Tuple.Create("NOUHINBI", 8),
       Tuple.Create("TANA_CD", 2),
@@ -37,7 +37,7 @@
       Tuple.Create("TORIKOMI_JOKYO_FLG", 1)
     }
 
-  '固定桁数定義
+  '総出しデータ固定桁数定義
   Public Shared LenColumnInSoudashi As New List(Of Tuple(Of String, Integer)) From {
       Tuple.Create("TANA_CD", 2),
       Tuple.Create("TANA_AREA", 6),
@@ -47,6 +47,40 @@
       Tuple.Create("ITF", 16),
       Tuple.Create("SHUKKA_YOTEISU_CASE", 5),
       Tuple.Create("SHUKKA_YOTEISU_BARA", 5),
+      Tuple.Create("GOUKI", 2),
+      Tuple.Create("TANTO_CD", 3),
+      Tuple.Create("RECEIVE_DATE", 14),
+      Tuple.Create("TORIKOMI_JOKYO_FLG", 1)
+    }
+
+  '種まきコースデータ固定桁数定義
+  Public Shared LenColumnInTanemakiCourse As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("NOUHINBI", 8),
+      Tuple.Create("COURSE_CD", 2),
+      Tuple.Create("HAISOU_COURSE_MEI", 6),
+      Tuple.Create("GOUKI", 2),
+      Tuple.Create("TANTO_CD", 3),
+      Tuple.Create("SEND_DATE", 14),
+      Tuple.Create("TORIKOMI_JOKYO_FLG", 1)
+    }
+
+  '種まきデータ固定桁数定義
+  Public Shared LenColumnInTANEMAKI As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("NOUHINBI", 8),
+      Tuple.Create("COURSE_CD", 2),
+      Tuple.Create("HAISOU_COURSE_MEI", 6),
+      Tuple.Create("JISYA_SHOHIN_CD", 5),
+      Tuple.Create("JISYA_SHOHIN_MEI", 80),
+      Tuple.Create("JAN", 13),
+      Tuple.Create("ITF", 16),
+      Tuple.Create("SHUKKA_COURSE_YOTEISU_CASE", 4),
+      Tuple.Create("SHUKKA_COURSE_YOTEISU_BARA", 4),
+      Tuple.Create("JIGYOSHO_CD", 4),
+      Tuple.Create("JIGYOSHO_MEI", 50),
+      Tuple.Create("SHUKKA_YOTEISU_CASE", 4),
+      Tuple.Create("SHUKKA_YOTEISU_BARA", 4),
+      Tuple.Create("CASE_TANI", 6),
+      Tuple.Create("BARA_TANI", 6),
       Tuple.Create("GOUKI", 2),
       Tuple.Create("TANTO_CD", 3),
       Tuple.Create("RECEIVE_DATE", 14),

@@ -67,12 +67,12 @@ Public Class CmbDateBase
   Private Sub CmbDateBase_Validating(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Validating
     Dim tmpDateText As String = String.Empty
     With Me
-      If .Text.Length <= 0 Then
-        If .AvailableBlank = False Then
-          e.Cancel = True
-        End If
-      Else
-        Try
+      'If .Text.Length <= 0 Then
+      '  If .AvailableBlank = False Then
+      '    e.Cancel = True
+      '  End If
+      'Else
+      Try
           If String.IsNullOrWhiteSpace(.Text) Then
             Exit Sub
           End If
@@ -94,7 +94,7 @@ Public Class CmbDateBase
         Catch ex As Exception
           e.Cancel = True
         End Try
-      End If
+      'End If
     End With
 
   End Sub

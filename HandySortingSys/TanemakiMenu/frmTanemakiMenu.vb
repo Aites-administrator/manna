@@ -2,7 +2,7 @@
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonCtrl
-Public Class SoudashiMenu
+Public Class frmTanemakiMenu
   Inherits FormBase
   Private SqlServer As New clsSqlServer
   Private IniFileName As String
@@ -20,8 +20,8 @@ Public Class SoudashiMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_SHUKKA_TORIKOMI "
-    sql &= "      ,  MAX(SOUDASHI_SEND_DATE) AS MAX_SHUKKA_SEND	 "
-    sql &= "      ,  MAX(SOUDASHI_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
+    sql &= "      ,  MAX(TANEMAKI_SEND_DATE) AS MAX_SHUKKA_SEND	 "
+    sql &= "      ,  MAX(TANEMAKI_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
     sql &= " FROM TRN_SHUKKA "
 
     Return sql
@@ -39,23 +39,23 @@ Public Class SoudashiMenu
   End Sub
 
   Public Sub BottonSetting()
-    BtnMainMenuBase1.Title = "ﾊﾝﾃﾞｨ総出し" & vbCrLf & "作業ﾃﾞｰﾀ送信"
+    BtnMainMenuBase1.Title = "ﾊﾝﾃﾞｨ種まき" & vbCrLf & "作業ﾃﾞｰﾀ送信"
     BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaImage.png")
     BtnMainMenuBase1.ButtonColor = Color.LightBlue
 
-    BtnMainMenuBase2.Title = "ﾊﾝﾃﾞｨ総出し" & vbCrLf & "結果受信"
+    BtnMainMenuBase2.Title = "ﾊﾝﾃﾞｨ種まき" & vbCrLf & "結果受信"
     BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SodashiImage.png")
     BtnMainMenuBase2.ButtonColor = Color.Blue
-
 
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M12", "EXE", IniFileName))
+    ComGetProcessByFilePath(GetIniString("M22", "EXE", IniFileName))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M13", "EXE", IniFileName))
-
+    ComGetProcessByFilePath(GetIniString("M23", "EXE", IniFileName))
   End Sub
+
+
 End Class

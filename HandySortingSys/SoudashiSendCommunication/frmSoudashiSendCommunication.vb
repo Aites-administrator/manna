@@ -31,7 +31,7 @@ Public Class frmSoudashiSendCommunication
     Dim tmpDtJP As New DataTable
     SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTanaSelect())
     'BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
-    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "総出し棚データ")
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚番リスト")
 
     If Not tmpDtJP.Columns.Contains("チェック") Then
       tmpDtJP.Columns.Add("チェック", GetType(Boolean))
@@ -225,7 +225,7 @@ Public Class frmSoudashiSendCommunication
             selectedTanaList.Add(tanaCd)
           End If
 
-          If row.Cells("SOUDASHI_SEND_DATE").Value?.ToString() = "有" Then
+          If row.Cells("送信済み").Value?.ToString() = "有" Then
             BtnSendHandy1.TargetCancelParentClick = True
           End If
         End If
