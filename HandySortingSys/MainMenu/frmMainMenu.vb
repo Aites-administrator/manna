@@ -110,4 +110,8 @@ Public Class frmMainMenu
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
     ComGetProcessByFilePath(GetIniString("M10", "EXE", IniFileName))
   End Sub
+
+  Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
+    ComGetProcessByFilePath(GetIniString("M20", "EXE", IniFileName))
+  End Sub
 End Class
