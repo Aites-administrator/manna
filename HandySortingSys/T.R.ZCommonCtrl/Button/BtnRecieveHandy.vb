@@ -15,6 +15,7 @@ Public Class BtnRecieveHandy
 #Region "パブリック"
   ' プロパティ：ファイル名
   Public Property TargetFileName As String
+
   ' プロパティ：出力ファイル名
   Public Property TargetOutputFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
@@ -81,22 +82,22 @@ Public Class BtnRecieveHandy
       '通信ツール開示
       Handy.OpenCommunicationTool()
 
-      'Dim TargetSendFlg As Boolean = False
-      'Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg)
+      Dim TargetReceiveFlg As Boolean = False
+      Handy.WatchAndReceiveFiles(TargetFileName, TargetReceiveFlg)
 
-      '状態管理ファイル作成チェック
-      If Not Handy.WaitCommunicationFlagCreated() Then
-        Exit Sub
-      Else
-        Console.WriteLine("ファイル作成OK")
+      ''状態管理ファイル作成チェック
+      'If Not Handy.WaitCommunicationFlagCreated() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("ファイル作成OK")
 
-      End If
-      '状態管理ファイルチェック
-      If Not Handy.WaitCommunicationFlagDeleted() Then
-        Exit Sub
-      Else
-        Console.WriteLine("状態管理OK")
-      End If
+      'End If
+      ''状態管理ファイルチェック
+      'If Not Handy.WaitCommunicationFlagDeleted() Then
+      '  Exit Sub
+      'Else
+      '  Console.WriteLine("状態管理OK")
+      'End If
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
@@ -106,6 +107,8 @@ Public Class BtnRecieveHandy
       Dim tmpDtJP As New DataTable
       tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), TargetMappingName)
       TargetDataGridView.SetData(tmpDtJP)
+
+      Handy.MoveToBackupFolder(TargetFileName)
 
       SqlServer.TrnStart()
 

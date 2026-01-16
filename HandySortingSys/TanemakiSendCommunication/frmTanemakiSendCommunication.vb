@@ -249,8 +249,6 @@ Public Class frmTanemakiSendCommunication
     End If
     sql &= " GROUP BY MST_COURSE.COURSE_CD "
     sql &= "        ,TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= "        ,JIGYOSHO_CD "
-    sql &= "        ,JIGYOSHO_MEI "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2 "
     sql &= "        ,MST_ITEM.JAN "

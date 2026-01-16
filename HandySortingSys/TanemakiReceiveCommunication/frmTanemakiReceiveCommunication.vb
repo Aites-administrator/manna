@@ -8,6 +8,7 @@ Public Class frmTanemakiReceiveCommunication
 
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "OUT_ITEM.DAT"
+  Private Const RECEIVE_NYUKA_LAST_FILE_NAME As String = RECEIVE_FOLDER & "OUT_ITEM.DAT"
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
@@ -20,6 +21,7 @@ Public Class frmTanemakiReceiveCommunication
 
       BtnRecieveHandy1.Handy = Handy
       Handy.TargetFolder = PROJECT_DIR_NAME & RECEIVE_FOLDER
+      BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
 
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
       Handy.DeleteAcquisitionFlag()
@@ -35,7 +37,6 @@ Public Class frmTanemakiReceiveCommunication
       tmpUpdColumn.Add("TANEMAKI_RECEIVE_DATE")
       tmpUpdColumn.Add("TORIKOMI_JOKYO_FLG")
 
-      BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
       BtnRecieveHandy1.TargetDataGridView = DgvList1
       BtnRecieveHandy1.TargetLenClumn = LenColumnInTANEMAKI
       BtnRecieveHandy1.TargetTableName = "TRN_SHUKKA"

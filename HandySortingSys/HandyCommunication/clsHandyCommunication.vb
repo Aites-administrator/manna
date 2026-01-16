@@ -102,7 +102,7 @@ Public Class clsHandyCommunication
   '==========================================================
   ' Communication.FLG が作られるのを待つ
   '==========================================================
-  Public Function WaitCommunicationFlagCreated() As Boolean
+  Public Function WaitCommunicationFlagCreated(ByRef prmFileName As String) As Boolean
     Try
       If KANKYO_HONBAN <> "HONBAN" Then
         Return True
@@ -127,10 +127,37 @@ Public Class clsHandyCommunication
         End If
       End While
 
+      If Not WaitUntilCommunicationFlagReadable(1000) Then
+        Return False
+      End If
+
+      prmFileName = ReadCommunicationFlag()
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
     End Try
+  End Function
+
+  Private Function WaitUntilCommunicationFlagReadable(timeoutMs As Integer) As Boolean
+    Dim elapsed = 0
+
+    While elapsed < timeoutMs
+      Try
+        ' ファイルが存在し、かつ読み取り可能か？
+        If IO.File.Exists(StatusFlagFilePath) Then
+          Using fs = IO.File.Open(StatusFlagFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            Return True   ' ← 読み取れる状態になった！
+          End Using
+        End If
+      Catch
+        ' まだ書き込み中 or ロック中 → 少し待つ
+      End Try
+
+      Thread.Sleep(20)
+      elapsed += 20
+    End While
+
+    Return False   ' 読み取れる状態にならなかった
   End Function
 
 
@@ -258,10 +285,8 @@ Public Class clsHandyCommunication
             Exit Do
           End If
         End If
-
-        If Not WaitCommunicationFlagCreated() Then Exit Do
-
-        Dim fileName = ReadCommunicationFlag()
+        Dim fileName As String = String.Empty
+        If Not WaitCommunicationFlagCreated(fileName) Then Exit Do
 
 
         If Not WaitCommunicationFlagDeleted() Then Exit Do
@@ -280,6 +305,57 @@ Public Class clsHandyCommunication
       Throw New Exception(ex.Message)
     End Try
   End Function
+
+  Public Function WatchAndReceiveFiles(
+    prmLastFileName As String,
+    ByRef prmAllReceiveComplete As Boolean
+) As Boolean
+
+    Try
+      If KANKYO_HONBAN <> "HONBAN" Then Return True
+
+      StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
+
+      Do While True
+
+        ' Communication.FLG 作成待ち
+        ' ファイル名取得
+        Dim fileName As String = String.Empty
+
+        If Not WaitCommunicationFlagCreated(fileName) Then Exit Do
+
+        ' Communication.FLG 削除待ち
+        If Not WaitCommunicationFlagDeleted() Then Exit Do
+
+        ' DAT 実体が来るまで待つ
+        Dim datPath = Path.Combine(TargetFolder, fileName)
+        Dim timeout = 0
+        While Not IO.File.Exists(datPath)
+          Thread.Sleep(20)
+          timeout += 20
+          If timeout > 5000 Then Exit While
+        End While
+
+        ' 最後のファイルなら終了
+        If fileName = prmLastFileName Then
+          prmAllReceiveComplete = True
+          Exit Do
+        Else
+          ' それ以外はバックアップへ
+          MoveToBackupFolder(fileName)
+        End If
+
+      Loop
+
+      Return True
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+
+  End Function
+
+
 
   '==========================================================
   ' FileSystemWatcher
@@ -312,10 +388,13 @@ Public Class clsHandyCommunication
 
   Private Sub OnFlagCreated(sender As Object, e As FileSystemEventArgs)
     FlgHandySendStart = True
+
+
   End Sub
 
   Private Sub OnFlagDeleted(sender As Object, e As FileSystemEventArgs)
     ' 特に処理なし
+
   End Sub
 
 End Class

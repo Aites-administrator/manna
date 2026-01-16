@@ -19,6 +19,7 @@ Public Class frmShukkaCheckRecieveCommunication
 
       BtnRecieveHandy1.Handy = Handy
       Handy.TargetFolder = PROJECT_DIR_NAME & RECEIVE_FOLDER
+      BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
 
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
       Handy.DeleteAcquisitionFlag()
@@ -34,7 +35,6 @@ Public Class frmShukkaCheckRecieveCommunication
       tmpUpdColumn.Add("KENPIN_RECEIVE_DATE")
       tmpUpdColumn.Add("TORIKOMI_JOKYO_FLG")
 
-      BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
       BtnRecieveHandy1.TargetDataGridView = DgvList1
       BtnRecieveHandy1.TargetLenClumn = LenColumnInShukkaCheck
       BtnRecieveHandy1.TargetTableName = "TRN_SHUKKA"
