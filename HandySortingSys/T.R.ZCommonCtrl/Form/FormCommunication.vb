@@ -10,6 +10,22 @@ Public Class FormCommunication
 
 #Region "イベントプロシージャー"
 
+  Public Sub RegisterSendButton(btn As BtnSendHandy)
+    AddHandler btn.SendCompleted, AddressOf OnSendCompleted
+  End Sub
+
+  Public Sub RegisterReceiveButton(btn As BtnRecieveHandy)
+    AddHandler btn.ReceiveCompleted, AddressOf OnReceiveompleted
+  End Sub
+
+  Protected Overridable Sub OnSendCompleted()
+
+  End Sub
+
+  Protected Overridable Sub OnReceiveompleted()
+
+  End Sub
+
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     Me.BackColor = Color.Aqua

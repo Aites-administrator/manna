@@ -18,18 +18,18 @@ Partial Class frmSoudashiSendCommunication
     'Windows フォーム デザイナーで必要です。
     Private components As System.ComponentModel.IContainer
 
-    'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
-    'Windows フォーム デザイナーを使用して変更できます。  
-    'コード エディターを使って変更しないでください。
-    <System.Diagnostics.DebuggerStepThrough()>
-    Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSoudashiSendCommunication))
-        Me.BtnSendHandy1 = New T.R.ZCommonCtrl.BtnSendHandy()
-        Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
-        Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
-        Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
-        Me.CmbDateNohinBi1 = New T.R.ZCommonCtrl.CmbDateNohinBi()
-        Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
+  'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
+  'Windows フォーム デザイナーを使用して変更できます。  
+  'コード エディターを使って変更しないでください。
+  <System.Diagnostics.DebuggerStepThrough()>
+  Protected Overloads Sub InitializeComponent()
+    Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmSoudashiSendCommunication))
+    Me.BtnSendHandy1 = New T.R.ZCommonCtrl.BtnSendHandy()
+    Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
+    Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
+    Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
+    Me.CmbDateNohinBi1 = New T.R.ZCommonCtrl.CmbDateNohinBi()
+    Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
         CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -110,7 +110,7 @@ Partial Class frmSoudashiSendCommunication
         Me.LblBase2.Name = "LblBase2"
         Me.LblBase2.Size = New System.Drawing.Size(111, 33)
         Me.LblBase2.TabIndex = 13
-        Me.LblBase2.Text = "作業日"
+        Me.LblBase2.Text = "納品日"
         '
         'frmSoudashiSendCommunication
         '

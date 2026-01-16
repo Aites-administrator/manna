@@ -34,7 +34,11 @@ Public Class BtnRecieveHandy
   Public Property TargetUpdStatus As String
   ' プロパティ：通信時間更新
   Public Property TargetCommunicationDate As New Dictionary(Of String, String)
+  ' プロパティ：マッピング名
+  Public Property TargetMappingName As String
 
+  ' 受信完了イベント
+  Public Event ReceiveCompleted()
 #End Region
 
 #Region "コンストラクタ"
@@ -74,22 +78,25 @@ Public Class BtnRecieveHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      ''通信ツール開示
-      'Handy.OpenCommunicationTool()
+      '通信ツール開示
+      Handy.OpenCommunicationTool()
 
-      ''状態管理ファイル作成チェック
-      'If Not Handy.CreateChkStatusFlagFile() Then
-      '  Exit Sub
-      'Else
-      '  Console.WriteLine("ファイル作成OK")
+      'Dim TargetSendFlg As Boolean = False
+      'Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg)
 
-      'End If
-      ''状態管理ファイルチェック
-      'If Not Handy.ChkStatusFlagFile() Then
-      '  Exit Sub
-      'Else
-      '  Console.WriteLine("状態管理OK")
-      'End If
+      '状態管理ファイル作成チェック
+      If Not Handy.WaitCommunicationFlagCreated() Then
+        Exit Sub
+      Else
+        Console.WriteLine("ファイル作成OK")
+
+      End If
+      '状態管理ファイルチェック
+      If Not Handy.WaitCommunicationFlagDeleted() Then
+        Exit Sub
+      Else
+        Console.WriteLine("状態管理OK")
+      End If
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
@@ -97,12 +104,19 @@ Public Class BtnRecieveHandy
       Dim mapper As New clsDtHeaderMapping
 
       Dim tmpDtJP As New DataTable
-      tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), "入荷予定データ")
+      tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), TargetMappingName)
       TargetDataGridView.SetData(tmpDtJP)
 
       SqlServer.TrnStart()
 
       For Each tmpRow In tmpDt.Rows
+
+        '検証用にJAN、ITFが空の場合無視する 本番では不要
+        If String.IsNullOrWhiteSpace(tmpRow("JAN").ToString) AndAlso
+          String.IsNullOrWhiteSpace(tmpRow("ITF").ToString) Then
+          Continue For
+        End If
+
         '更新項目生成
         Dim tmpUpdColumn As New Dictionary(Of String, String)
         For Each UpdColumn In TargetUpdColumn
@@ -110,7 +124,7 @@ Public Class BtnRecieveHandy
             If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
               tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
             End If
-          ElseIf UpdColumn = "RECEIVE_DATE" Then
+          ElseIf UpdColumn.Contains("RECEIVE_DATE") Then
             If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
               tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
             End If
@@ -135,7 +149,7 @@ Public Class BtnRecieveHandy
         SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
 
         '条件項目生成
-        If TargetItemUpdColumn IsNot Nothing Then
+        If TargetItemUpdColumn.Count <> 0 Then
           Dim tmpItemUpdColumn As New Dictionary(Of String, String)
           For Each ItemUpdColumn In TargetItemUpdColumn
             tmpItemUpdColumn.Add(ItemUpdColumn, tmpRow(ItemUpdColumn).ToString)
@@ -158,14 +172,16 @@ Public Class BtnRecieveHandy
       DataTable2Excel(tmpDtJP, PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      'Handy.CloseCommunicationTool()
+      Handy.CloseCommunicationTool()
 
       ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
+      RaiseEvent ReceiveCompleted()
+
     Catch ex As Exception
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      'Handy.CloseCommunicationTool()
+      Handy.CloseCommunicationTool()
     Finally
     End Try
   End Sub

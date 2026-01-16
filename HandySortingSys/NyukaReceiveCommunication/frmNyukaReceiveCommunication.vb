@@ -17,8 +17,12 @@ Public Class frmNyukaReceiveCommunication
     Try
       'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
-      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME, PROJECT_DIR_NAME & RECEIVE_FOLDER)
-      Handy.DeleteCommnicationFile()
+      BtnRecieveHandy1.Handy = Handy
+      Handy.TargetFolder = PROJECT_DIR_NAME & RECEIVE_FOLDER
+
+
+      Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
+      Handy.DeleteAcquisitionFlag()
 
       '条件項目生成
       tmpWhere.Add("HACHU_NO")
@@ -35,7 +39,6 @@ Public Class frmNyukaReceiveCommunication
       '商品更新項目生成
       tmpItemUpdColumn.Add("SHOMIKIGEN")
 
-      BtnRecieveHandy1.Handy = Handy
       BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
       BtnRecieveHandy1.TargetDataGridView = DgvList1
       BtnRecieveHandy1.TargetLenClumn = LenColumnInNyuka
@@ -44,7 +47,8 @@ Public Class frmNyukaReceiveCommunication
       BtnRecieveHandy1.TargetUpdColumn = tmpUpdColumn
       BtnRecieveHandy1.TargetUpdStatus = CInt(NYUKA_STATUS.KEPINZUMI)
       BtnRecieveHandy1.TargetItemUpdColumn = tmpItemUpdColumn
-      BtnRecieveHandy1.TargetOutputFileName = "OUTPUT_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
+      BtnRecieveHandy1.TargetMappingName = "入荷予定データ"
+      BtnRecieveHandy1.TargetOutputFileName = "NYUKA_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

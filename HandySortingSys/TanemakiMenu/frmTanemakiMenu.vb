@@ -8,6 +8,9 @@ Public Class frmTanemakiMenu
   Private IniFileName As String
 
   Private Sub SoudashiMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "TanemakiMenuBackGroundImage.png"
+    SetBackGroundImage(Me, path)
+
     IniFileName = PROJECT_DIR_NAME & "INI\menu.ini"
 
     CaptionDateDisp()
@@ -42,10 +45,13 @@ Public Class frmTanemakiMenu
     BtnMainMenuBase1.Title = "ﾊﾝﾃﾞｨ種まき" & vbCrLf & "作業ﾃﾞｰﾀ送信"
     BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaImage.png")
     BtnMainMenuBase1.ButtonColor = Color.LightBlue
+    BtnMainMenuBase1.Font = New Font("Meiryo", 20, FontStyle.Bold)
+
 
     BtnMainMenuBase2.Title = "ﾊﾝﾃﾞｨ種まき" & vbCrLf & "結果受信"
     BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SodashiImage.png")
     BtnMainMenuBase2.ButtonColor = Color.Blue
+    BtnMainMenuBase2.Font = New Font("Meiryo", 20, FontStyle.Bold)
 
   End Sub
 

@@ -350,7 +350,7 @@ Public Class clsComDatabase
       Dim tmpExeFileName As String = System.IO.Path.GetFileName(System.Windows.Forms.Application.ExecutablePath)
       Dim logFileName As String = "SqlLog_" & Date.Parse(tmpProcTime).ToString("yyyyMM") & ".log"
       Dim logText As String = tmpProcTime & ":" & Dns.GetHostName() & ":" & tmpExeFileName & ":" & prmSql
-      ComWriteLog(logText, "\\nikserver2023\d$\TRZdotDX\sqllog\" & logFileName)
+      ComWriteLog(logText, ".\" & logFileName)
     Catch ex As Exception
 
     End Try

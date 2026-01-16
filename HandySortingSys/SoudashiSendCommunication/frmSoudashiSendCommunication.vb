@@ -16,34 +16,26 @@ Public Class frmSoudashiSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
-  Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "PICK_TANA.DAT"
-  Private Const SEND_SOUDASHI_FILE_NAME As String = SEND_FOLDER & "PICK_ITEM.DAT"
+    Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "MST_TANA.DAT"
+    Private Const SEND_SOUDASHI_FILE_NAME As String = SEND_FOLDER & "MST_PICK.DAT"
 
 
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateNohinBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
+
+  End Sub
+
+  Protected Overrides Sub OnSendCompleted()
+    MyBase.OnSendCompleted()
+    ReloadGrid()
   End Sub
 
 
+
   Private Sub CmbDateNohinBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateNohinBi1.SelectedIndexChanged
-    Dim mapper As New clsDtHeaderMapping
-    Dim tmpDt As New DataTable
-    Dim tmpDtJP As New DataTable
-    SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTanaSelect())
-    'BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
-    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚番リスト")
 
-    If Not tmpDtJP.Columns.Contains("チェック") Then
-      tmpDtJP.Columns.Add("チェック", GetType(Boolean))
-      For Each row As DataRow In tmpDtJP.Rows
-        row("チェック") = False ' 初期値
-      Next
-    End If
-    ' チェック列を一番左に移動！
-    tmpDtJP.Columns("チェック").SetOrdinal(0)
-
-    DgvList1.SetData(tmpDtJP)
-
+    ReloadGrid()
   End Sub
 
   Private Sub FormatFixedLengthTrnNyuka(prmDt As DataTable, prmFileName As String, prmLenColumn As List(Of Tuple(Of String, Integer)))
@@ -54,7 +46,11 @@ Public Class frmSoudashiSendCommunication
       'DataGridのデータを固定長に変換して出力
       For Each tmpRow In prmDt.Rows
         For Each LenColumnInTup In tmpListTuple
-          line &= ToFixedLength(tmpRow(LenColumnInTup.Item1).ToString(), LenColumnInTup.Item2)
+          If LenColumnInTup.Item1 = "JISYA_SHOHIN_MEI" Or LenColumnInTup.Item1 = "JIGYOSHO_MEI" Then
+            line &= ToFixedLength(StrConv(tmpRow(LenColumnInTup.Item1).ToString(), VbStrConv.Narrow), LenColumnInTup.Item2)
+          Else
+            line &= ToFixedLength(tmpRow(LenColumnInTup.Item1).ToString(), LenColumnInTup.Item2)
+          End If
         Next
 
         writer.WriteLine(line)
@@ -130,7 +126,7 @@ Public Class frmSoudashiSendCommunication
     sql &= "      ,	MAX(SOUDASHI_GOUKI) AS GOUKI "
     sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS TANTO_CD "
     sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS RECEIVE_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > 1 THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
@@ -161,7 +157,8 @@ Public Class frmSoudashiSendCommunication
   Private Function SqlSelTrnSoudashi(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
-    sql &= " SELECT	LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
+    sql &= " SELECT	NOUHINBI AS NOUHINBI "
+    sql &= " 	    	,	LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
     sql &= " 	    ,	LEFT(MST_ITEM.TANA_CD,1) + '-' + SUBSTRING(MST_ITEM.TANA_CD,2,1) +'-' + RIGHT(MST_ITEM.TANA_CD,2)  AS TANA_AREA "
     sql &= "      ,	TRN_SHUKKA.JISYA_SHOHIN_CD AS JISYA_SHOHIN_CD  "
     sql &= "      ,	TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2 AS JISYA_SHOHIN_MEI "
@@ -169,10 +166,13 @@ Public Class frmSoudashiSendCommunication
     sql &= "      ,	MST_ITEM.ITF AS ITF "
     sql &= "      ,	SUM(CONVERT(int,TRN_SHUKKA.JISYA_HACHU_SURYO / ISNULL(MST_ITEM.IRISU,1))) AS SHUKKA_YOTEISU_CASE "
     sql &= "      ,	SUM(CONVERT(int,TRN_SHUKKA.JISYA_HACHU_SURYO % ISNULL(MST_ITEM.IRISU,1))) AS SHUKKA_YOTEISU_BARA "
-    sql &= "      ,	MAX(SOUDASHI_GOUKI) AS GOUKI "
-    sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS TANTO_CD "
-    sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS RECEIVE_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > 1 THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	MAX(SOUDASHI_GOUKI) AS SOUDASHI_GOUKI "
+    sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS SOUDASHI_TANTO_CD "
+    sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS SOUDASHI_RECEIVE_DATE "
+    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	 'C/S' AS CASE_TANI"
+    sql &= "      ,	 HACHU_TANI AS HACHU_TANI"
+    sql &= "      ,	 '' AS INDEX_ID"
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
@@ -195,12 +195,12 @@ Public Class frmSoudashiSendCommunication
     sql &= "    ,TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2"
     sql &= "    ,MST_ITEM.JAN"
     sql &= "    ,MST_ITEM.ITF "
+    sql &= "    ,HACHU_TANI "
     sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2),TRN_SHUKKA.JISYA_SHOHIN_CD "
 
     Return sql
 
   End Function
-
 
   Private Sub BtnSendHandy1_Click(sender As Object, e As EventArgs) Handles BtnSendHandy1.Click
     Dim tmpDt As New DataTable
@@ -212,8 +212,11 @@ Public Class frmSoudashiSendCommunication
     Try
 
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      BtnSendHandy1.TargetCancelParentClick = False
+      BtnSendHandy1.Handy = Handy
+      Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
-      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
+      Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME)
 
       ' チェックされたTANA_CDのリストを取得
       Dim selectedTanaList As New List(Of String)
@@ -255,9 +258,10 @@ Public Class frmSoudashiSendCommunication
       SqlServer.GetResult(tmpDt, SqlSelTrnSoudashi(selectedTanaList))
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_SOUDASHI_FILE_NAME, LenColumnInSoudashi)
 
-      Handy.DeleteCommnicationFile()
+      Handy.DeleteAcquisitionFlag()
 
       ''条件項目生成
+      tmpWhere.Add("NOUHINBI")
       tmpWhere.Add("JISYA_SHOHIN_CD")
 
       ''更新項目生成
@@ -266,7 +270,6 @@ Public Class frmSoudashiSendCommunication
       ''通信日付項目生成
       tmpCommunicationDate.Add("SOUDASHI_SEND_DATE", ComGetProcTime)
 
-      BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_SOUDASHI_FILE_NAME
       BtnSendHandy1.TargetTableName = "TRN_SHUKKA"
       BtnSendHandy1.TargetLenClumn = LenColumnInSoudashi
@@ -275,8 +278,30 @@ Public Class frmSoudashiSendCommunication
       BtnSendHandy1.TargetUpdStatus = CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI)
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
+
     Catch ex As Exception
       ComWriteErrLog(ex, False)
     End Try
   End Sub
+
+  Private Sub ReloadGrid()
+    Dim mapper As New clsDtHeaderMapping
+    Dim tmpDt As New DataTable
+    Dim tmpDtJP As New DataTable
+    SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTanaSelect())
+    'BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚番リスト")
+
+    If Not tmpDtJP.Columns.Contains("チェック") Then
+      tmpDtJP.Columns.Add("チェック", GetType(Boolean))
+      For Each row As DataRow In tmpDtJP.Rows
+        row("チェック") = False ' 初期値
+      Next
+    End If
+    ' チェック列を一番左に移動！
+    tmpDtJP.Columns("チェック").SetOrdinal(0)
+
+    DgvList1.SetData(tmpDtJP)
+  End Sub
+
 End Class

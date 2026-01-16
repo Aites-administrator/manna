@@ -17,8 +17,8 @@ Partial Class ComSearchForm
   'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
   'Windows フォーム デザイナーを使用して変更できます。  
   'コード エディターを使って変更しないでください。
-  <System.Diagnostics.DebuggerStepThrough()> _
-  Private Sub InitializeComponent()
+  <System.Diagnostics.DebuggerStepThrough()>
+  Protected Overloads Sub InitializeComponent()
     Me.DataGridView1 = New System.Windows.Forms.DataGridView()
     Me.btnSelect = New System.Windows.Forms.Button()
     Me.btnClose = New System.Windows.Forms.Button()

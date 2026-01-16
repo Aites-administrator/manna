@@ -18,18 +18,12 @@ Public Class frmNyukaSendCommunication
 
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateSagyoBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
+
   End Sub
 
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateSagyoBi1.SelectedIndexChanged
-    Dim mapper As New clsDtHeaderMapping
-    Dim tmpDt As New DataTable
-    Dim tmpDtJP As New DataTable
-    SqlServer.GetResult(tmpDt, SqlSelTrnNyuka())
-
-    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "入荷予定データ")
-
-    DgvList1.SetData(tmpDtJP)
-
+    ReloadGrid()
   End Sub
 
   Private Sub FormatFixedLengthTrnNyuka(prmDt As DataTable, prmFileName As String)
@@ -109,7 +103,7 @@ Public Class frmNyukaSendCommunication
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(NYUKA_STATUS.KEPINZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(NYUKA_STATUS.SHUTSURYOKUZUMI)
     If CmbDateSagyoBi1.SelectedValue Is Nothing Then
       sql &= " AND NYUKA_YOTEI_DATE = ''"
     Else
@@ -130,11 +124,14 @@ Public Class frmNyukaSendCommunication
     Try
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
-      Handy.CreateCommnicationFile(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME, PROJECT_DIR_NAME & SEND_FOLDER)
+      BtnSendHandy1.Handy = Handy
+      Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
+
+      Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
       SqlServer.GetResult(tmpDt, SqlSelTrnNyuka)
 
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
-      Handy.DeleteCommnicationFile()
+      Handy.DeleteAcquisitionFlag()
 
       '条件項目生成
       tmpWhere.Add("HACHU_NO")
@@ -146,7 +143,6 @@ Public Class frmNyukaSendCommunication
       '通信日付項目生成
       tmpCommunicationDate.Add("SEND_DATE", ComGetProcTime)
 
-      BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME
       BtnSendHandy1.TargetTableName = "TRN_NYUKA"
       BtnSendHandy1.TargetLenClumn = LenColumnInNyuka
@@ -158,6 +154,17 @@ Public Class frmNyukaSendCommunication
     Catch ex As Exception
       ComWriteErrLog(ex, False)
     End Try
+  End Sub
+
+  Private Sub ReloadGrid()
+    Dim mapper As New clsDtHeaderMapping
+    Dim tmpDt As New DataTable
+    Dim tmpDtJP As New DataTable
+    SqlServer.GetResult(tmpDt, SqlSelTrnNyuka())
+
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "入荷予定データ")
+
+    DgvList1.SetData(tmpDtJP)
   End Sub
 
 End Class

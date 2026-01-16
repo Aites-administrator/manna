@@ -288,7 +288,7 @@ Public Class FormBase
     Next
   End Sub
 
-  Private Sub InitializeComponent()
+  Protected Overridable Sub InitializeComponent()
     Me.SuspendLayout()
     '
     'FormBase

@@ -9,12 +9,14 @@ Public Class frmMainMenu
   Private IniFileName As String
   Private Sub frmMainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "MainMenuBackGroundImage.png"
-    If IO.File.Exists(path) Then
-      Me.BackgroundImage = Image.FromFile(path)
-      Me.BackgroundImageLayout = ImageLayout.Stretch
-    End If
+        SetBackGroundImage(Me, path)
 
-    path = PROJECT_DIR_NAME & IMAGE_FORDER & "information.png"
+        '    If IO.File.Exists(path) Then
+        '  Me.BackgroundImage = Image.FromFile(path)
+        '  Me.BackgroundImageLayout = ImageLayout.Stretch
+        'End If
+
+        path = PROJECT_DIR_NAME & IMAGE_FORDER & "information.png"
     If IO.File.Exists(path) Then
 
       PanelBase1.BackColor = ColorTranslator.FromHtml("#212480")
@@ -48,11 +50,28 @@ Public Class frmMainMenu
   Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
-    sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_NYUKA_TORIKOMI "
-    sql &= "      ,  MAX(SEND_DATE) AS MAX_NYUKA_SEND "
-    sql &= "      ,  MAX(RECEIVE_DATE) AS MAX_NYUKA_RECEIVE "
-    sql &= "      ,  MAX(OUTPUT_DATE) AS MAX_NYUKA_OUTPUT "
+    sql &= " SELECT  MAX(NYUKA_YOTEI_DATE) AS NYUKA_YOTEI_DATE "
+    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_NYUKA "
+    sql &= " WHERE NYUKA_YOTEI_DATE = ("
+    sql &= "       SELECT	MAX(NYUKA_YOTEI_DATE)"
+    sql &= "       FROM	TRN_NYUKA"
+    sql &= " )"
+
+    Return sql
+
+
+  End Function
+  Private Function SqlSelSyukkaMaxDate() As String
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT  MAX(NOUHINBI) AS NOUHINBI "
+    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
+    sql &= " FROM TRN_SHUKKA "
+    sql &= " WHERE NOUHINBI = ("
+    sql &= "       SELECT	MAX(NOUHINBI)"
+    sql &= "       FROM	TRN_SHUKKA "
+    sql &= " )"
 
     Return sql
 
@@ -61,7 +80,131 @@ Public Class frmMainMenu
   Public Sub CaptionDateDisp()
     Dim tmpNyukaDt As New DataTable
     SqlServer.GetResult(tmpNyukaDt, SqlSelNyukaMaxDate)
+    Dim tmpSyukkaDt As New DataTable
+    SqlServer.GetResult(tmpSyukkaDt, SqlSelSyukkaMaxDate)
 
+
+    LblNyukaSend.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
+    LblNyukaReceive.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
+    LblSoudashiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
+    LblSoudashiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
+    LblTanemakiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
+    LblTanemakiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
+
+    '入荷送信ステータス更新
+    InformationSetting(NyukaSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(NYUKA_STATUS.SOUSINZUMI))
+    '入荷受信ステータス更新
+    InformationSetting(NyukaReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(NYUKA_STATUS.KEPINZUMI))
+    '総出し送信ステータス更新
+    InformationSetting(SoudashiSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI))
+    '総出し受信ステータス更新
+    InformationSetting(SoudashiReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_ZUMI))
+    '種まき送信ステータス更新
+    InformationSetting(TanemakiSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI))
+    '総出し受信ステータス更新
+    InformationSetting(TanemakiReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_ZUMI))
+
+
+
+
+    'With NyukaSendStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(NYUKA_STATUS.SOUSINZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  ElseIf IsDBNull(tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString) Then
+    '    .Text = ""
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+
+    'End With
+
+
+    'With NyukaReceiveStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(NYUKA_STATUS.KEPINZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+    'End With
+
+    'With SoudashiSendStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+    'End With
+
+    'With SoudashiReceiveStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+    'End With
+
+
+    'With TanemakiSendStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+    'End With
+
+    'With TanemakiReceiveStatus
+    '  If tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString < CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) Then
+    '    .Text = "未"
+    '    .BackColor = Color.Red
+    '    .ForeColor = Color.White
+    '  Else
+    '    .Text = "済"
+    '    .BackColor = Color.White
+    '    .ForeColor = Color.Black
+    '  End If
+    'End With
+
+  End Sub
+
+  Private Sub InformationSetting(prmLabel As Label, prmTorikomiJokyoFlg As String, prmStatus As Integer)
+    With prmLabel
+      If String.IsNullOrWhiteSpace(prmTorikomiJokyoFlg) Then
+        .Text = ""
+        .BackColor = Color.White
+        .ForeColor = Color.Black
+      ElseIf CInt(prmTorikomiJokyoFlg) < prmStatus Then
+        .Text = "未"
+        .BackColor = Color.Red
+        .ForeColor = Color.White
+
+      Else
+        .Text = "済"
+        .BackColor = Color.White
+        .ForeColor = Color.Black
+      End If
+    End With
 
   End Sub
 
@@ -84,7 +227,7 @@ Public Class frmMainMenu
     BtnMainMenuBase3.BtnForeColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase3.SetAccessKey = Keys.F3
 
-    BtnMainMenuBase4.Title = "F4:出荷処理"
+    BtnMainMenuBase4.Title = "F4:出荷検品"
     BtnMainMenuBase4.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "ShukkaCheckImage.png")
     BtnMainMenuBase4.ButtonColor = ColorTranslator.FromHtml("#5ddee6")
     BtnMainMenuBase4.BtnForeColor = ColorTranslator.FromHtml("#000000")
@@ -113,5 +256,14 @@ Public Class frmMainMenu
 
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
     ComGetProcessByFilePath(GetIniString("M20", "EXE", IniFileName))
+  End Sub
+
+  Private Sub BtnMainMenuBase4_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase4.Click
+    ComGetProcessByFilePath(GetIniString("M30", "EXE", IniFileName))
+
+  End Sub
+
+  Private Sub BtnMainMenuBase6_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase6.Click
+    ComGetProcessByFilePath(GetIniString("M40", "EXE", IniFileName))
   End Sub
 End Class

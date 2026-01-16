@@ -74,202 +74,198 @@ Public Class BtnOutput
 
   End Sub
 
-  'Private Sub NyukaPrint()
-  '  Dim excelApp As New Excel.Application
-  '  excelApp.Visible = False
-  '  With excelApp
-  '    .ScreenUpdating = False
-  '    .DisplayAlerts = False
-  '  End With
+    'Private Sub NyukaPrint()
+    '  Dim excelApp As New Excel.Application
+    '  excelApp.Visible = False
+    '  With excelApp
+    '    .ScreenUpdating = False
+    '    .DisplayAlerts = False
+    '  End With
 
-  '  Dim wb As Excel.Workbook = excelApp.Workbooks.Add()
-  '  Dim ws As Excel.Worksheet = CType(wb.Sheets(1), Excel.Worksheet)
+    '  Dim wb As Excel.Workbook = excelApp.Workbooks.Add()
+    '  Dim ws As Excel.Worksheet = CType(wb.Sheets(1), Excel.Worksheet)
 
-  '  Dim row As Integer = 1
+    '  Dim row As Integer = 1
 
-  '  Try
-  '    ' タイトル行
-  '    ws.Cells(row, 1).Value = "入荷検品一覧表"
-  '    ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Merge()
-  '    With ws.Cells(row, 1)
-  '      .Font.Bold = True
-  '      .Font.Size = 16
-  '      .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-  '    End With
-  '    row += 2
+    '  Try
+    '    ' タイトル行
+    '    ws.Cells(row, 1).Value = "入荷検品一覧表"
+    '    ws.Range(ws.Cells(row, 1), ws.Cells(row, 13)).Merge()
+    '    With ws.Cells(row, 1)
+    '      .Font.Bold = True
+    '      .Font.Size = 16
+    '      .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+    '    End With
+    '    row += 2
 
-  '    ' データ抽出
-  '    Dim list As New List(Of 検品データ)
-  '    For Each r As DataGridViewRow In TargetDataGridView.Rows
-  '      If Not r.IsNewRow Then
-  '        list.Add(New 検品データ With {
-  '          .温度帯 = r.Cells("温度帯").Value?.ToString(),
-  '          .発注No = r.Cells("発注No").Value?.ToString(),
-  '          .行No = r.Cells("行NO").Value?.ToString(),
-  '          .発注先コード = r.Cells("発注先コード").Value?.ToString(),
-  '          .発注先名 = r.Cells("発注先名").Value?.ToString(),
-  '          .商品CD = r.Cells("自社商品コード").Value?.ToString(),
-  '          .商品名 = r.Cells("メーカー商品名").Value?.ToString(),
-  '          .規格 = r.Cells("メーカー規格名").Value?.ToString(),
-  '          .荷数 = r.Cells("荷数").Value?.ToString(),
-  '          .賞味期限 = r.Cells("賞味期限").Value?.ToString(),
-  '          .入荷予定数 = Convert.ToInt32(r.Cells("入荷予定数_メーカー").Value),
-  '          .入り数 = Convert.ToInt32(r.Cells("入り数").Value),
-  '          .自社数量 = Convert.ToInt32(r.Cells("入荷予定数_自社").Value),
-  '          .発注単位 = r.Cells("単位").Value?.ToString(),
-  '          .検品結果 = r.Cells("検品結果").Value?.ToString()
-  '        })
-  '      End If
-  '    Next
+    '    ' データ抽出
+    '    Dim list As New List(Of 検品データ)
+    '    For Each r As DataGridViewRow In TargetDataGridView.Rows
+    '      If Not r.IsNewRow Then
+    '        list.Add(New 検品データ With {
+    '          .温度帯 = r.Cells("温度帯").Value?.ToString(),
+    '          .発注No = r.Cells("発注No").Value?.ToString(),
+    '          .行No = r.Cells("行NO").Value?.ToString(),
+    '          .発注先コード = r.Cells("発注先コード").Value?.ToString(),
+    '          .発注先名 = r.Cells("発注先名").Value?.ToString(),
+    '          .商品CD = r.Cells("自社商品コード").Value?.ToString(),
+    '          .商品名 = r.Cells("メーカー商品名").Value?.ToString(),
+    '          .規格 = r.Cells("メーカー規格名").Value?.ToString(),
+    '          .荷数 = r.Cells("荷数").Value?.ToString(),
+    '          .賞味期限 = r.Cells("賞味期限").Value?.ToString(),
+    '          .入荷予定数 = Convert.ToInt32(r.Cells("入荷予定数_メーカー").Value),
+    '          .入り数 = Convert.ToInt32(r.Cells("入り数").Value),
+    '          .自社数量 = Convert.ToInt32(r.Cells("入荷予定数_自社").Value),
+    '          .発注単位 = r.Cells("単位").Value?.ToString(),
+    '          .検品結果 = r.Cells("検品結果").Value?.ToString()
+    '        })
+    '      End If
+    '    Next
 
-  '    ' 並べ替え（必要に応じて）
-  '    list = list.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
+    '    ' 並べ替え（必要に応じて）
+    '    list = list.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
 
-  '    ' ヘッダー
-  '    Dim headers = {
-  '      "チェック", "発注NO", "行NO", "発注先コード", "発注先名",
-  '      "商品CD", "商品名/規格名", "荷数", "賞味期限",
-  '      "自社数量", "入り数", "入荷予定数", "発注単位", "検品結果"
-  '    }
-  '    For i = 0 To headers.Length - 1
-  '      With ws.Cells(row, i + 1)
-  '        .Value = headers(i)
-  '        .Font.Bold = True
-  '        .Interior.Color = RGB(220, 230, 241)
-  '        .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
-  '        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-  '      End With
-  '    Next
-  '    row += 1
+    '    ' ヘッダー
+    '    Dim headers = {
+    '      "チェック", "発注NO", "行NO", "発注先コード", "発注先名",
+    '      "商品CD", "商品名/規格名", "荷数", "賞味期限",
+    '      "自社数量", "入り数", "入荷予定数", "発注単位", "検品結果"
+    '    }
+    '    For i = 0 To headers.Length - 1
+    '      With ws.Cells(row, i + 1)
+    '        .Value = headers(i)
+    '        .Font.Bold = True
+    '        .Interior.Color = RGB(220, 230, 241)
+    '        .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+    '        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+    '      End With
+    '    Next
+    '    row += 1
 
-  '    ' 明細（2次元配列で一括書き込み）
-  '    Dim itemCount = list.Count
-  '    Dim data(itemCount - 1, 13) As Object
+    '    ' 明細（2次元配列で一括書き込み）
+    '    Dim itemCount = list.Count
+    '    Dim data(itemCount - 1, 13) As Object
 
-  '    For i = 0 To itemCount - 1
-  '      Dim item = list(i)
-  '      data(i, 0) = "□"
-  '      data(i, 1) = item.発注No
-  '      data(i, 2) = item.行No
-  '      data(i, 3) = item.発注先コード
-  '      data(i, 4) = item.発注先名
-  '      data(i, 5) = item.商品CD
-  '      data(i, 6) = item.商品名 & vbLf & item.規格
-  '      data(i, 7) = item.荷数
-  '      data(i, 8) = FormatShomikigen(item.賞味期限)
-  '      data(i, 9) = item.自社数量
-  '      data(i, 10) = item.入り数
-  '      data(i, 11) = item.入荷予定数
-  '      data(i, 12) = item.発注単位
-  '      data(i, 13) = item.検品結果
-  '    Next
+    '    For i = 0 To itemCount - 1
+    '      Dim item = list(i)
+    '      data(i, 0) = "□"
+    '      data(i, 1) = item.発注No
+    '      data(i, 2) = item.行No
+    '      data(i, 3) = item.発注先コード
+    '      data(i, 4) = item.発注先名
+    '      data(i, 5) = item.商品CD
+    '      data(i, 6) = item.商品名 & vbLf & item.規格
+    '      data(i, 7) = item.荷数
+    '      data(i, 8) = FormatShomikigen(item.賞味期限)
+    '      data(i, 9) = item.自社数量
+    '      data(i, 10) = item.入り数
+    '      data(i, 11) = item.入荷予定数
+    '      data(i, 12) = item.発注単位
+    '      data(i, 13) = item.検品結果
+    '    Next
 
-  '    Dim startCell = ws.Cells(row, 1)
-  '    Dim endCell = ws.Cells(row + itemCount - 1, 14)
-  '    Dim writeRange = ws.Range(startCell, endCell)
-  '    writeRange.Value = data
+    '    Dim startCell = ws.Cells(row, 1)
+    '    Dim endCell = ws.Cells(row + itemCount - 1, 14)
+    '    Dim writeRange = ws.Range(startCell, endCell)
+    '    writeRange.Value = data
 
-  '    ' WrapText設定
-  '    ws.Range(ws.Cells(row, 7), ws.Cells(row + itemCount - 1, 7)).WrapText = True
-  '    For col = 1 To 14
-  '      If col <> 7 Then
-  '        ws.Range(ws.Cells(row, col), ws.Cells(row + itemCount - 1, col)).WrapText = False
-  '      End If
-  '    Next
+    '    ' WrapText設定
+    '    ws.Range(ws.Cells(row, 7), ws.Cells(row + itemCount - 1, 7)).WrapText = True
+    '    For col = 1 To 14
+    '      If col <> 7 Then
+    '        ws.Range(ws.Cells(row, col), ws.Cells(row + itemCount - 1, col)).WrapText = False
+    '      End If
+    '    Next
 
-  '    ' 罫線
-  '    With writeRange.Borders
-  '      .LineStyle = Excel.XlLineStyle.xlContinuous
-  '      .Weight = Excel.XlBorderWeight.xlThin
-  '    End With
+    '    ' 罫線
+    '    With writeRange.Borders
+    '      .LineStyle = Excel.XlLineStyle.xlContinuous
+    '      .Weight = Excel.XlBorderWeight.xlThin
+    '    End With
 
-  '    row += itemCount + 2
+    '    row += itemCount + 2
 
-  '    ' 整形
-  '    ws.Cells.Font.Size = 9
-  '    ws.Columns("A:F").AutoFit()
-  '    ws.Columns("G").ColumnWidth = 30
-  '    ws.Columns("H:M").AutoFit()
+    '    ' 整形
+    '    ws.Cells.Font.Size = 9
+    '    ws.Columns("A:F").AutoFit()
+    '    ws.Columns("G").ColumnWidth = 30
+    '    ws.Columns("H:M").AutoFit()
 
-  '    ' 印刷設定
-  '    With ws.PageSetup
-  '      .PaperSize = Excel.XlPaperSize.xlPaperA4
-  '      .Orientation = Excel.XlPageOrientation.xlPortrait
-  '      .Zoom = False
-  '      .FitToPagesWide = 1
-  '      .FitToPagesTall = False
-  '      .LeftMargin = excelApp.InchesToPoints(0.3)
-  '      .RightMargin = excelApp.InchesToPoints(0.3)
-  '      .TopMargin = excelApp.InchesToPoints(0.5)
-  '      .BottomMargin = excelApp.InchesToPoints(0.5)
-  '      .CenterHorizontally = True
-  '      .PrintGridlines = False
-  '    End With
+    '    ' 印刷設定
+    '    With ws.PageSetup
+    '      .PaperSize = Excel.XlPaperSize.xlPaperA4
+    '      .Orientation = Excel.XlPageOrientation.xlPortrait
+    '      .Zoom = False
+    '      .FitToPagesWide = 1
+    '      .FitToPagesTall = False
+    '      .LeftMargin = excelApp.InchesToPoints(0.3)
+    '      .RightMargin = excelApp.InchesToPoints(0.3)
+    '      .TopMargin = excelApp.InchesToPoints(0.5)
+    '      .BottomMargin = excelApp.InchesToPoints(0.5)
+    '      .CenterHorizontally = True
+    '      .PrintGridlines = False
+    '    End With
 
-  '    ' 保存＆表示
-  '    Dim path = PROJECT_DIR_NAME & REPORT_DIR_NAME
-  '    If Not IO.Directory.Exists(path) Then IO.Directory.CreateDirectory(path)
-  '    path &= REPORT_FILE_NAME & "_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
-  '    wb.SaveAs(path)
+    '    ' 保存＆表示
+    '    Dim path = PROJECT_DIR_NAME & REPORT_DIR_NAME
+    '    If Not IO.Directory.Exists(path) Then IO.Directory.CreateDirectory(path)
+    '    path &= REPORT_FILE_NAME & "_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
+    '    wb.SaveAs(path)
 
-  '    With excelApp
-  '      .ScreenUpdating = True
-  '      .DisplayAlerts = True
-  '      .Visible = True
-  '      wb.Activate()
-  '    End With
+    '    With excelApp
+    '      .ScreenUpdating = True
+    '      .DisplayAlerts = True
+    '      .Visible = True
+    '      wb.Activate()
+    '    End With
 
-  '  Catch ex As Exception
-  '    Throw New Exception(ex.Message)
-  '  Finally
-  '    ' メモリ解放（Excelは開いたまま）
-  '    System.Runtime.InteropServices.Marshal.ReleaseComObject(ws)
-  '    System.Runtime.InteropServices.Marshal.ReleaseComObject(wb)
-  '    ws = Nothing
-  '    wb = Nothing
-  '    GC.Collect()
-  '    GC.WaitForPendingFinalizers()
-  '  End Try
-  'End Sub
+    '  Catch ex As Exception
+    '    Throw New Exception(ex.Message)
+    '  Finally
+    '    ' メモリ解放（Excelは開いたまま）
+    '    System.Runtime.InteropServices.Marshal.ReleaseComObject(ws)
+    '    System.Runtime.InteropServices.Marshal.ReleaseComObject(wb)
+    '    ws = Nothing
+    '    wb = Nothing
+    '    GC.Collect()
+    '    GC.WaitForPendingFinalizers()
+    '  End Try
+    'End Sub
+    Private Sub NyukaPrint()
+        Dim excelApp As New Excel.Application
+        excelApp.Visible = False
+        With excelApp
+            .ScreenUpdating = False
+            .DisplayAlerts = False
+        End With
 
-  Private Sub NyukaPrint()
-    Dim excelApp As New Excel.Application
-    excelApp.Visible = False
-    With excelApp
-      .ScreenUpdating = False
-      .DisplayAlerts = False
-    End With
+        Dim wb As Excel.Workbook = excelApp.Workbooks.Add()
+        Dim ws As Excel.Worksheet = CType(wb.Sheets(1), Excel.Worksheet)
 
-    Dim wb As Excel.Workbook = excelApp.Workbooks.Add()
-    Dim ws As Excel.Worksheet = CType(wb.Sheets(1), Excel.Worksheet)
+        Dim row As Integer = 1
 
-    Dim row As Integer = 1
-
-    Try
-      ' タイトル行（1行目）
-      ws.Cells(row, 1).Value = "入荷検品書"
-      ws.Range(ws.Cells(row, 1), ws.Cells(row, 11)).Merge()
-      With ws.Cells(row, 1)
-        .Font.Bold = True
-        .Font.Size = 28
-        .Font.Name = "メイリオ"
-        .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-      End With
-      ws.Rows(row).RowHeight = 45
+        Try
+            ' タイトル行（1行目）
+            ws.Cells(row, 1).Value = "入荷検品書"
+            ws.Range(ws.Cells(row, 1), ws.Cells(row, 11)).Merge()
+            With ws.Cells(row, 1)
+                .Font.Bold = True
+                .Font.Size = 28
+                .Font.Name = "メイリオ"
+                .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            End With
+      ws.Rows(row).RowHeight = 30
       row += 1
 
-      ' 出力日時（2行目右端）
-      ws.Cells(row, 11).Value = "出力日時：" & Format(Now, "yyyy/MM/dd HH:mm")
-      ws.Cells(row, 11).HorizontalAlignment = Excel.XlHAlign.xlHAlignRight
-      ws.Cells(row, 11).Font.Size = 10
-      ws.Cells(row, 11).Font.Name = "メイリオ"
-      row += 1
+            ' ★ 出力日時は後で書くため、ここでは row だけ進める
+            Dim outputDateRow As Integer = row
+            row += 1
 
-      ' データ抽出
-      Dim list As New List(Of 検品データ)
-      For Each r As DataGridViewRow In TargetDataGridView.Rows
-        If Not r.IsNewRow Then
-          list.Add(New 検品データ With {
+            ' データ抽出
+            Dim list As New List(Of 検品データ)
+            For Each r As DataGridViewRow In TargetDataGridView.Rows
+                If Not r.IsNewRow Then
+                    list.Add(New 検品データ With {
                     .温度帯 = r.Cells("温度帯").Value?.ToString(),
                     .発注No = r.Cells("発注No").Value?.ToString(),
                     .行No = r.Cells("行NO").Value?.ToString(),
@@ -286,140 +282,144 @@ Public Class BtnOutput
                     .発注単位 = r.Cells("単位").Value?.ToString(),
                     .検品結果 = r.Cells("検品結果").Value?.ToString()
                 })
-        End If
-      Next
+                End If
+            Next
 
-      ' 並べ替え（必要に応じて）
-      list = list.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
+            ' 並べ替え
+            list = list.OrderBy(Function(x) x.商品CD).ThenBy(Function(x) x.商品名).ThenBy(Function(x) x.発注No).ToList()
 
-      ' ヘッダー
-      Dim headers = {
+            ' ヘッダー
+            Dim headers = {
             "発注NO", "行NO", "発注先", "商品", "荷数", "賞味期限",
             "自社数量", "入り数", "入荷予定数", "発注単位", "検品結果"
         }
-      For i = 0 To headers.Length - 1
-        With ws.Cells(row, i + 1)
-          .Value = headers(i)
-          .Font.Bold = True
-          .Font.Size = 13
-          .Font.Name = "メイリオ"
-          .Interior.Color = RGB(220, 230, 241)
-          .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
-          .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
-        End With
-      Next
-      row += 1
+            For i = 0 To headers.Length - 1
+                With ws.Cells(row, i + 1)
+                    .Value = headers(i)
+                    .Font.Bold = True
+                    .Font.Size = 13
+                    .Font.Name = "メイリオ"
+                    .Interior.Color = RGB(220, 230, 241)
+                    .Borders.LineStyle = Excel.XlLineStyle.xlContinuous
+                    .HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                End With
+            Next
+            row += 1
 
-      ' 明細（2次元配列で一括書き込み）
-      Dim itemCount = list.Count
-      Dim data(itemCount - 1, 10) As Object
+            ' 明細（2次元配列で一括書き込み）
+            Dim itemCount = list.Count
+            Dim data(itemCount - 1, 10) As Object
 
-      For i = 0 To itemCount - 1
-        Dim item = list(i)
-        data(i, 0) = item.発注No
-        data(i, 1) = item.行No
-        data(i, 2) = item.発注先コード & vbLf & item.発注先名
-        data(i, 3) = item.商品CD & vbLf & item.商品名 & " " & item.規格
-        data(i, 4) = item.荷数
-        data(i, 5) = FormatShomikigen(item.賞味期限)
-        data(i, 6) = item.自社数量
-        data(i, 7) = item.入り数
-        data(i, 8) = item.入荷予定数
-        data(i, 9) = item.発注単位
-        data(i, 10) = item.検品結果
-      Next
+            For i = 0 To itemCount - 1
+                Dim item = list(i)
+                data(i, 0) = item.発注No
+                data(i, 1) = item.行No
+                data(i, 2) = item.発注先コード & vbLf & item.発注先名
+                data(i, 3) = item.商品CD & vbLf & item.商品名 & " " & item.規格
+                data(i, 4) = item.荷数
+                data(i, 5) = FormatShomikigen(item.賞味期限)
+                data(i, 6) = item.自社数量
+                data(i, 7) = item.入り数
+                data(i, 8) = item.入荷予定数
+                data(i, 9) = item.発注単位
+                data(i, 10) = item.検品結果
+            Next
 
-      Dim startCell = ws.Cells(row, 1)
-      Dim endCell = ws.Cells(row + itemCount - 1, 11)
-      Dim writeRange = ws.Range(startCell, endCell)
-      writeRange.Value = data
-      writeRange.Font.Size = 13
-      writeRange.Font.Name = "メイリオ"
+            Dim startCell = ws.Cells(row, 1)
+            Dim endCell = ws.Cells(row + itemCount - 1, 11)
+            Dim writeRange = ws.Range(startCell, endCell)
+            writeRange.Value = data
+            writeRange.Font.Size = 13
+            writeRange.Font.Name = "メイリオ"
 
-      ' WrapText設定（発注先・商品列）
-      ws.Range(ws.Cells(row, 3), ws.Cells(row + itemCount - 1, 4)).WrapText = True
-      For col = 1 To 11
-        If col <> 3 AndAlso col <> 4 Then
-          ws.Range(ws.Cells(row, col), ws.Cells(row + itemCount - 1, col)).WrapText = False
-        End If
-      Next
+            ' WrapText設定
+            ws.Range(ws.Cells(row, 3), ws.Cells(row + itemCount - 1, 4)).WrapText = True
 
-      ' 罫線
-      With writeRange.Borders
-        .LineStyle = Excel.XlLineStyle.xlContinuous
-        .Weight = Excel.XlBorderWeight.xlThin
-      End With
+            ' 罫線
+            With writeRange.Borders
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+            End With
 
-      row += itemCount + 2
+            row += itemCount + 2
 
-      ' 全体フォント設定（タイトル行はあとで再設定）
-      With ws.Cells.Font
-        .Name = "メイリオ"
-        .Size = 13
-      End With
+            ' 全体フォント設定
+            With ws.Cells.Font
+                .Name = "メイリオ"
+                .Size = 13
+            End With
 
-      ' タイトル行のフォント再設定（上書き防止）
-      With ws.Cells(1, 1)
-        .Font.Size = 28
-        .Font.Bold = True
-      End With
-      ws.Rows(1).RowHeight = 45
+            ' タイトル行のフォント再設定
+            With ws.Cells(1, 1)
+                .Font.Size = 28
+                .Font.Bold = True
+            End With
+      ws.Rows(1).RowHeight = 30
 
-      ' 列幅・行高調整
+      ' ★ AutoFit を先に実行（出力日時はまだ入れていない）
       ws.Columns("A:B").AutoFit()
-      ws.Columns("C").ColumnWidth = 30  ' 発注先
-      ws.Columns("D").ColumnWidth = 30  ' 商品
-      ws.Columns("E:K").AutoFit()
-      ws.Rows.AutoFit()
+            ws.Columns("C").ColumnWidth = 30
+            ws.Columns("D").ColumnWidth = 30
+            ws.Columns("E:K").AutoFit()
 
-      ' 印刷設定（横1ページ、縦は改ページOK）
-      With ws.PageSetup
-        .PaperSize = Excel.XlPaperSize.xlPaperA4
-        .Orientation = Excel.XlPageOrientation.xlPortrait
-        .Zoom = False
-        .FitToPagesWide = 1
-        .FitToPagesTall = False
-        .LeftMargin = excelApp.InchesToPoints(0.3)
-        .RightMargin = excelApp.InchesToPoints(0.3)
-        .TopMargin = excelApp.InchesToPoints(0.5)
-        .BottomMargin = excelApp.InchesToPoints(0.5)
-        .CenterHorizontally = True
-        .PrintGridlines = False
-      End With
 
-      ' 保存＆表示
-      Dim path = PROJECT_DIR_NAME & REPORT_DIR_NAME
-      If Not IO.Directory.Exists(path) Then IO.Directory.CreateDirectory(path)
-      path &= REPORT_FILE_NAME & "_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
-      wb.SaveAs(path)
 
-      With excelApp
-        .ScreenUpdating = True
-        .DisplayAlerts = True
-        .Visible = True
-        wb.Activate()
-      End With
 
-    Catch ex As Exception
-      Throw New Exception(ex.Message)
-    Finally
-      ' メモリ解放
-      System.Runtime.InteropServices.Marshal.ReleaseComObject(ws)
-      System.Runtime.InteropServices.Marshal.ReleaseComObject(wb)
-      ws = Nothing
-      wb = Nothing
-      GC.Collect()
-      GC.WaitForPendingFinalizers()
-    End Try
-  End Sub
+      ' ★ AutoFit 後に出力日時を書き込む（列幅に影響しない）
+      With ws.Cells(outputDateRow, 11)
+                .Value = "出力日時：" & Format(Now, "yyyy/MM/dd HH:mm")
+                .HorizontalAlignment = Excel.XlHAlign.xlHAlignRight
+                .Font.Size = 12          ' ← 少し大きく
+                .Font.Name = "メイリオ"
+                .ShrinkToFit = False     ' ← はみ出しOK
+            End With
 
+            ' 印刷設定
+            With ws.PageSetup
+                .PaperSize = Excel.XlPaperSize.xlPaperA4
+                .Orientation = Excel.XlPageOrientation.xlPortrait
+                .Zoom = False
+                .FitToPagesWide = 1
+                .FitToPagesTall = False
+                .LeftMargin = excelApp.InchesToPoints(0.3)
+                .RightMargin = excelApp.InchesToPoints(0.3)
+                .TopMargin = excelApp.InchesToPoints(0.5)
+                .BottomMargin = excelApp.InchesToPoints(0.5)
+                .CenterHorizontally = True
+                .PrintGridlines = False
+            End With
+
+            ' 保存＆表示
+            Dim path = PROJECT_DIR_NAME & REPORT_DIR_NAME
+            If Not IO.Directory.Exists(path) Then IO.Directory.CreateDirectory(path)
+            path &= REPORT_FILE_NAME & "_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
+            wb.SaveAs(path)
+
+            With excelApp
+                .ScreenUpdating = True
+                .DisplayAlerts = True
+                .Visible = True
+                wb.Activate()
+            End With
+
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(ws)
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(wb)
+            ws = Nothing
+            wb = Nothing
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+        End Try
+    End Sub
 
 
 
 #End Region
 
 
-  Private Function FormatShomikigen(raw As String) As String
+    Private Function FormatShomikigen(raw As String) As String
     If String.IsNullOrEmpty(raw) OrElse raw.Length <> 8 Then Return ""
     Return $"{raw.Substring(0, 4)}年{raw.Substring(4, 2)}月{raw.Substring(6, 2)}日"
   End Function

@@ -33,7 +33,6 @@ Public Class BtnMainMenuBase
       _Title = value
       Me.Text = value
       Me.TextAlign = ContentAlignment.MiddleRight
-      Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
     End Set
   End Property
   '--- アイコン ---
@@ -95,7 +94,10 @@ Public Class BtnMainMenuBase
   End Sub
 
   Protected Overrides Sub InitLayout()
-    Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
+    If Me.Font Is Nothing OrElse Me.Font.Size = 0 Then
+      Me.Font = New Font("Meiryo", 24, FontStyle.Bold)
+    End If
+
     Me.FlatStyle = FlatStyle.Flat
     Me.FlatAppearance.BorderSize = 0
 
@@ -116,7 +118,7 @@ Public Class BtnMainMenuBase
 
     If _Icon IsNot Nothing _
       AndAlso Me.Height > 0 Then
-      Dim scale As Double = 0.3
+      Dim scale As Double = 0.35
       Dim targetHeight As Integer = CInt(Me.Height * scale)
       Dim ratio As Double = _Icon.Width / _Icon.Height
       Dim targetWidth As Integer = CInt(targetHeight * ratio)

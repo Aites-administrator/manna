@@ -60,6 +60,8 @@ Public Class clsCommonFnc
     SOUDASHI_ZUMI = 3
     TANEMAKI_SOUSINZUMI = 4
     TANEMAKI_ZUMI = 5
+    KENPIN_SOUSINZUMI = 6
+    KENPIN_ZUMI = 7
   End Enum
 
 
@@ -1717,6 +1719,41 @@ Optional ByVal columnCtl As Boolean = False)
     Return ret
   End Function
 
+
+  Public Shared Function SqlInsTargetTable(prmTargetRow As Dictionary(Of String, String), prmTableName As String) As String
+    Dim sql As String = String.Empty
+    Dim tmpKeyValue As New Dictionary(Of String, String)
+    Dim tmpInsertItemz As New Dictionary(Of String, String)
+
+    For Each KeyValue As KeyValuePair(Of String, String) In prmTargetRow
+      ComSetDictionaryVal(tmpKeyValue, KeyValue.Key, KeyValue.Value)
+    Next
+    tmpInsertItemz = ComCreateInsertItem(tmpKeyValue)
+
+    sql &= " INSERT INTO " & prmTableName & "(" & tmpInsertItemz("Keyz") & ") "
+    sql &= " VALUES(" & tmpInsertItemz("Valuez") & ") "
+
+    Return sql
+
+  End Function
+
+
+  Private Shared Function ComCreateInsertItem(prmKeyValuez As Dictionary(Of String, String)) As Dictionary(Of String, String)
+    Dim result As New Dictionary(Of String, String)
+
+    ' 列名をカンマ区切りで連結
+    Dim keys As String = String.Join(",", prmKeyValuez.Keys)
+
+    ' 値をカンマ区切りで連結（シングルクォートで囲む）
+    Dim values As String = String.Join(",", prmKeyValuez.Values.Select(Function(v) $"'{v}'"))
+
+    result("Keyz") = keys
+    result("Valuez") = values
+
+    Return result
+  End Function
+
+
   Public Shared Function CreateUpdateSql(prmTableName As String, prmUpdColumn As Dictionary(Of String, String), prmWhere As Dictionary(Of String, String)) As String
 
     If String.IsNullOrWhiteSpace(prmTableName) Then
@@ -1745,6 +1782,27 @@ Optional ByVal columnCtl As Boolean = False)
 
     Return sql
   End Function
+
+  Public Shared Function CreateDeleteSql(prmTableName As String,
+                                       prmWhere As Dictionary(Of String, String)) As String
+
+    If String.IsNullOrWhiteSpace(prmTableName) Then
+      Return ""
+    End If
+    If prmWhere Is Nothing OrElse prmWhere.Count = 0 Then
+      Return ""
+    End If
+
+    Dim whereParts As New List(Of String)
+    For Each kvp In prmWhere
+      whereParts.Add($"{kvp.Key} = '{EscapeSql(kvp.Value)}'")
+    Next
+
+    Dim sql As String = $"DELETE FROM {prmTableName} WHERE {String.Join(" AND ", whereParts)}"
+
+    Return sql
+  End Function
+
 
   Private Shared Function EscapeSql(value As String) As String
     If value Is Nothing Then
@@ -1783,10 +1841,18 @@ Optional ByVal columnCtl As Boolean = False)
     Return dt
   End Function
 
-  Public Shared Function ReadSettingIniFile(strKey As String, keyName As String)
-    Dim strPath As String = IO.Directory.GetParent(Application.StartupPath).FullName & "\INI\setting.ini"
-    Dim stringValue As String = GetIniString(strKey, keyName, strPath)
-    Return stringValue
-  End Function
+    Public Shared Function ReadSettingIniFile(strKey As String, keyName As String)
+        Dim strPath As String = IO.Directory.GetParent(Application.StartupPath).FullName & "\INI\setting.ini"
+        Dim stringValue As String = GetIniString(strKey, keyName, strPath)
+        Return stringValue
+    End Function
+
+    Public Shared Sub SetBackGroundImage(prmForm As Form, prmPath As String)
+        If IO.File.Exists(prmPath) Then
+            prmForm.BackgroundImage = Image.FromFile(prmPath)
+            prmForm.BackgroundImageLayout = ImageLayout.Stretch
+        End If
+
+    End Sub
 
 End Class

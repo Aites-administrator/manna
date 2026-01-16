@@ -41,6 +41,7 @@
 
 
     MappingDictionary("総出しデータ") = New Dictionary(Of String, String) From {
+      {"NOUHINBI", "納品日"},
       {"TANA_CD", "棚番コード"},
       {"TANA_AREA", "棚番エリア"},
       {"JISYA_SHOHIN_CD", "商品コード"},
@@ -49,10 +50,13 @@
       {"ITF", "ITF"},
       {"SHUKKA_YOTEISU_CASE", "出荷予定数_ケース数"},
       {"SHUKKA_YOTEISU_BARA", "出荷予定数_バラ数"},
-      {"GOUKI", "号機"},
-      {"TANTO_CD", "担当者"},
-      {"RECEIVE_DATE", "作業日時"},
-      {"TORIKOMI_JOKYO_FLG", "ステータス"}
+      {"SOUDASHI_GOUKI", "号機"},
+      {"SOUDASHI_TANTO_CD", "担当者"},
+      {"SOUDASHI_RECEIVE_DATE", "作業日時"},
+      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"CASE_TANI", "ケース単位"},
+      {"HACHU_TANI", "バラ単位"},
+      {"INDEX_ID", "INDEX_ID"}
     }
 
     MappingDictionary("総出し棚データ") = New Dictionary(Of String, String) From {
@@ -70,24 +74,33 @@
     MappingDictionary("種まきコースリスト") = New Dictionary(Of String, String) From {
       {"COURSE_CD", "コースコード"},
       {"HAISOU_COURSE_MEI", "コース名"},
-      {"TANEMAKI_SEND_DATE", "送信済み"},
-      {"TORIKOMI_JOKYO_FLG", "種まき済"}
+      {"TANEMAKI_SEND_DATE", "未送信(有無)"},
+      {"TORIKOMI_JOKYO_FLG", "種まき済"},
+      {"TANEMAKI_SEND_DATE_ZUMI", "送信済み"}
     }
 
 
-    MappingDictionary("総出しデータ") = New Dictionary(Of String, String) From {
-      {"TANA_CD", "棚番コード"},
-      {"TANA_AREA", "棚番エリア"},
+    MappingDictionary("種まきデータ") = New Dictionary(Of String, String) From {
+      {"NOUHINBI", "納品日"},
+      {"COURSE_CD", "コースコード"},
+      {"HAISOU_COURSE_MEI", "コース名"},
       {"JISYA_SHOHIN_CD", "商品コード"},
       {"JISYA_SHOHIN_MEI", "商品名"},
       {"JAN", "JAN"},
       {"ITF", "ITF"},
-      {"SHUKKA_YOTEISU_CASE", "出荷予定数_ケース数"},
-      {"SHUKKA_YOTEISU_BARA", "出荷予定数_バラ数"},
+      {"SHUKKA_COURSE_YOTEISU_CASE", "コース商品合計ケース数"},
+      {"SHUKKA_COURSE_YOTEISU_BARA", "コース商品合計バラ数"},
+      {"JIGYOSHO_CD", "店舗コード"},
+      {"JIGYOSHO_MEI", "店舗名"},
+      {"SHUKKA_YOTEISU_CASE", "店舗出荷予定ケース数"},
+      {"SHUKKA_YOTEISU_BARA", "店舗出荷予定バラ数"},
+      {"CASE_TANI", "ケース単位"},
+      {"BARA_TANI", "バラ単位"},
       {"GOUKI", "号機"},
       {"TANTO_CD", "担当者"},
       {"RECEIVE_DATE", "作業日時"},
-      {"TORIKOMI_JOKYO_FLG", "ステータス"}
+      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"INDEX_ID", "INDEX_ID"}
     }
 
     MappingDictionary("総出し棚データ") = New Dictionary(Of String, String) From {
@@ -100,6 +113,114 @@
       {"TORIKOMI_JOKYO_FLG", "ステータス"}
     }
 
+    MappingDictionary("出荷検品データ") = New Dictionary(Of String, String) From {
+      {"NOUHINBI", "納品日"},
+      {"JIGYOSHO_CD", "店舗コード"},
+      {"JIGYOSHO_MEI", "店舗名"},
+      {"JISYA_SHOHIN_CD", "商品コード"},
+      {"JISYA_SHOHIN_MEI", "商品名"},
+      {"JAN", "JAN"},
+      {"ITF", "ITF"},
+      {"SHUKKA_YOTEISU_CASE", "ケース数"},
+      {"SHUKKA_YOTEISU_BARA", "バラ数"},
+      {"CASE_TANI", "ケース単位"},
+      {"BARA_TANI", "バラ単位"},
+      {"GOUKI", "号機"},
+      {"TANTO_CD", "担当者"},
+      {"RECEIVE_DATE", "作業日時"},
+      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"INDEX_ID", "INDEX_ID"}
+    }
+
+    MappingDictionary("商品マスタ") = New Dictionary(Of String, String) From {
+      {"SHOHIN_CD", "商品コード"},
+      {"SHOHIN_MEI", "商品名"},
+      {"JAN", "JAN"},
+      {"ITF", "ITF"},
+      {"IRISU", "入り数"},
+      {"TANKA_TANI", "単位"},
+      {"TANA_CD", "棚番"}
+    }
+
+    MappingDictionary("担当者マスタ") = New Dictionary(Of String, String) From {
+      {"TANTO_CD", "担当者コード"},
+      {"TANTO_MEI", "担当者名"}
+    }
+
+    MappingDictionary("コースマスタ") = New Dictionary(Of String, String) From {
+      {"COURSE_CD", "コースコード"},
+      {"COURSE_MEI", "コース名"},
+      {"DISP_ORDER", "表示順"},
+      {"ENTRY_DATE", "登録日"},
+      {"UPDATE_DATE", "更新日"}
+    }
+
+    MappingDictionary("棚番マスタ") = New Dictionary(Of String, String) From {
+      {"TANA_CD", "棚番"},
+      {"TANA_ONDO", "温度帯"},
+      {"FLOOR", "フロア"},
+      {"BLOCK", "ブロック"},
+      {"ENTRY_DATE", "登録日"},
+      {"UPDATE_DATE", "更新日"}
+    }
+
+
+    MappingDictionary("担当者マスタ") = New Dictionary(Of String, String) From {
+      {"TANTO_CD", "担当者コード"},
+      {"TANTO_NM", "担当者名"},
+      {"ENTRY_DATE", "登録日"},
+      {"UPDATE_DATE", "更新日"}
+    }
+
+    MappingDictionary("商品マスタメンテナンス") = New Dictionary(Of String, String) From {
+    {"SHOHIN_RANK", "商品ランク"},
+    {"SHOHIN_CD", "商品コード"},
+    {"SHOHIN_MEI", "商品名"},
+    {"IRISU", "入数"},
+    {"AISU", "荷合数"},
+    {"ONDO_TAI", "温度帯"},
+    {"SHOHI_ZEI", "消費税"},
+    {"TANKA_TANI", "単価単位"},
+    {"SIIRE_CD", "仕入先コード"},
+    {"SIIRE_MEI", "仕入先名"},
+    {"HASSOSAKI_CD", "発送先コード"},
+    {"HASSOSAKI_MEI", "発送先名"},
+    {"MAKER_CD", "メーカーコード"},
+    {"JAN", "JAN"},
+    {"OLD_JAN", "旧JAN"},
+    {"ITF", "ITF"},
+    {"KOKEI_KAISIBI", "後継開始日"},
+    {"KOKEI_SHOHIN_CD", "後継商品コード"},
+    {"KOKEI_SHOHIN_MEI", "後継商品名"},
+    {"LAST_USE_DATE", "最終使用日"},
+    {"TANA_CD", "棚コード"},
+    {"SHOMIKIGEN", "賞味期限"},
+    {"ENTRY_DATE", "登録日"},
+    {"UPDATE_DATE", "更新日"}
+}
+
+    MappingDictionary("商品マスタExcel") = New Dictionary(Of String, String) From {
+      {"SHOHIN_RANK", "商品RANK"},
+      {"SHOHIN_CD", "商品コード"},
+      {"SHOHIN_MEI", "商品名"},
+      {"IRISU", "入数"},
+      {"AISU", "合数"},
+      {"ONDO_TAI", "温度帯"},
+      {"SHOHI_ZEI", "消費税（％）"},
+      {"TANKA_TANI", "単価単位"},
+      {"SIIRE_CD", "仕入先コード"},
+      {"SIIRE_MEI", "仕入先名"},
+      {"HASSOSAKI_CD", "発注先コード"},
+      {"HASSOSAKI_MEI", "発注先名"},
+      {"MAKER_CD", "メーカーコード"},
+      {"JAN", "ＪＡＮ"},
+      {"OLD_JAN", "ＪＡＮ（旧）"},
+      {"ITF", "ＩＴＦ"},
+      {"KOKEI_KAISIBI", "後継開始日"},
+      {"KOKEI_SHOHIN_CD", "後継商品コード"},
+      {"KOKEI_SHOHIN_MEI", "後継商品名"},
+      {"LAST_USE_DATE", "最終使用日"}
+  }
 
 
   End Sub
@@ -129,4 +250,22 @@
 
     Return result
   End Function
+
+  Public Function GetDbColumnName(mappingName As String, jpColumnName As String) As String
+    If Not MappingDictionary.ContainsKey(mappingName) Then
+      Throw New ArgumentException($"マッピング名 '{mappingName}' は定義されていません。")
+    End If
+
+    Dim map = MappingDictionary(mappingName) ' DB → 日本語
+
+    For Each kv In map
+      If kv.Value = jpColumnName Then
+        Return kv.Key ' DB列名
+      End If
+    Next
+
+    ' 見つからなければ日本語名のまま返す
+    Return jpColumnName
+  End Function
+
 End Class

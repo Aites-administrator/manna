@@ -1,5 +1,11 @@
 ﻿Public Class clsGlobalData
 
+
+  ''' <summary>
+  ''' 環境フラグ
+  ''' </summary>
+  Public Shared ReadOnly KANKYO_HONBAN As String = clsCommonFnc.ReadSettingIniFile("KANKYO_HONBAN", "VALUE")
+
   ''' <summary>
   ''' プロジェクトフォルダ名
   ''' </summary>

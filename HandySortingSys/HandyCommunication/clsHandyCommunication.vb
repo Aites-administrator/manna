@@ -3,19 +3,29 @@ Imports System.Text
 Imports System.IO
 Imports System.Threading
 Imports System.Windows.Forms
-Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsGlobalData
 
 Public Class clsHandyCommunication
+
 #Region "パブリック"
-  ' プロパティ：ファイル名
+  ' プロパティ：作業フォルダ（送受信フォルダ）
   Public Property TargetFolder As String
 #End Region
 
-  Private Const BHT_COMMICATION_TOOL As String = "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\BHTADP2T.exe"
-  Private Const STATUS_FLAG_FILE_NAME As String = "Communication.FLG"
-  Private Const COMMUNICATION_FILE_NAME As String = "Acquisition.FLG"
+  ' 通信ツール側が作るフラグ（状態通知）
+  Private Const COMMUNICATION_FLG As String = "Communication.FLG"
+
+  ' 上位アプリ側が作るフラグ（取得要求）
+  Private Const ACQUISITION_FLG As String = "Acquisition.FLG"
+  Private LastReceivedFileName As String
+
+
+  Private Const BHT_COMMICATION_TOOL As String =
+      "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\BHTADP2T.exe"
+
   Private StatusFlagFilePath As String
-  Private CommunicationFilePath As String
+  Private AcquisitionFlagFilePath As String
+
   Private FlgHandySendStart As Boolean = False
   Private watcher As FileSystemWatcher
   Private TargetFileName As String
@@ -26,38 +36,52 @@ Public Class clsHandyCommunication
   End Sub
 
 
-
+  '==========================================================
+  ' 通信ツール起動
+  '==========================================================
   Public Function OpenCommunicationTool() As Boolean
     Try
+      If KANKYO_HONBAN <> "HONBAN" Then
+        Return True
+      End If
+
       p.StartInfo.FileName = BHT_COMMICATION_TOOL
-      'p.StartInfo.FileName = "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\Tool\通信ツール(バッチ通信)"
       p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
       p.Start()
-      ' 起動完了まで少し待つ（必要に応じて調整）
+
       Thread.Sleep(3000)
 
-      ' Ctrl+S を送信
+      ' Ctrl+S で開始
       SendKeys.SendWait("^s")
 
-      ' 監視開始
+      Thread.Sleep(1000)
+
       StartWatching()
 
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
+
+  '==========================================================
+  ' 通信ツール終了
+  '==========================================================
   Public Function CloseCommunicationTool() As Boolean
     Try
-      ' アプリを閉じる
-      ' Ctrl+e を送信
-      SendKeys.SendWait("^e")
+      If KANKYO_HONBAN <> "HONBAN" Then
+        Return True
+      End If
 
-      ' 起動完了まで少し待つ（必要に応じて調整）
+      ' DATファイルがあるなら待機
+      If ExistsOtherDatFile(TargetFileName) Then
+        Return False
+      End If
+
+      WaitCommunicationFlagDeleted()
+
+      SendKeys.SendWait("^e")
       Thread.Sleep(3000)
 
       If Not p.HasExited Then
@@ -66,28 +90,28 @@ Public Class clsHandyCommunication
         End If
       End If
 
-
-      ' 監視終了
       StopWatching()
-
-      If IO.File.Exists(TargetFileName) Then
-        IO.File.Delete(TargetFileName)
-      End If
 
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
 
-  Public Function CreateChkStatusFlagFile() As Boolean
+  '==========================================================
+  ' Communication.FLG が作られるのを待つ
+  '==========================================================
+  Public Function WaitCommunicationFlagCreated() As Boolean
     Try
-      Dim timeoutSec As Integer = 30 ' 最大待機時間（秒）
-      Dim intervalMs As Integer = 10 ' チェック間隔（ミリ秒）
+      If KANKYO_HONBAN <> "HONBAN" Then
+        Return True
+      End If
+
+      FlgHandySendStart = False
+
+      Dim timeoutSec As Integer = 45
+      Dim intervalMs As Integer = 20
       Dim elapsed As Integer = 0
 
       While Not FlgHandySendStart
@@ -95,32 +119,34 @@ Public Class clsHandyCommunication
           Return False
         End If
 
-
-        Threading.Thread.Sleep(intervalMs)
+        Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
         If elapsed >= timeoutSec * 1000 Then
-          ' タイムアウト
           Return False
         End If
       End While
 
-      ' ファイルができたらOK
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
 
-  Public Function ChkStatusFlagFile() As Boolean
-    Dim response As New Integer
+  '==========================================================
+  ' Communication.FLG が消えるのを待つ
+  '==========================================================
+  Public Function WaitCommunicationFlagDeleted() As Boolean
     Try
-      Dim timeoutSec As Integer = 45 ' 最大待機時間（秒）
-      Dim intervalMs As Integer = 10 ' チェック間隔（ミリ秒）
+
+      If KANKYO_HONBAN <> "HONBAN" Then
+        Return True
+
+      End If
+
+      Dim timeoutSec As Integer = 45
+      Dim intervalMs As Integer = 20
       Dim elapsed As Integer = 0
 
       While IO.File.Exists(StatusFlagFilePath)
@@ -128,78 +154,144 @@ Public Class clsHandyCommunication
           Return False
         End If
 
-        Threading.Thread.Sleep(intervalMs)
+        Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
         If elapsed >= timeoutSec * 1000 Then
-          ' タイムアウト
           Return False
         End If
       End While
 
-      ' ファイルが消えたらOK
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
-  Public Function CreateCommnicationFile(prmOutFilePath As String, prmWorkFilePath As String) As Boolean
-    Dim response As New Integer
-    Try
-      StatusFlagFilePath = prmWorkFilePath & STATUS_FLAG_FILE_NAME
-      CommunicationFilePath = prmWorkFilePath & COMMUNICATION_FILE_NAME
 
-      IO.File.WriteAllText(CommunicationFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
+  Private Function ReadCommunicationFlag() As String
+    If IO.File.Exists(StatusFlagFilePath) Then
+      Return IO.File.ReadAllText(StatusFlagFilePath, Encoding.GetEncoding("shift-jis")).Trim()
+    End If
+    Return ""
+  End Function
+
+  Public Sub MoveToBackupFolder(fileName As String)
+    If KANKYO_HONBAN <> "HONBAN" Then
+      Exit Sub
+    End If
+
+
+    Dim src As String = Path.Combine(TargetFolder, fileName)
+
+    If Not IO.File.Exists(src) Then Exit Sub
+
+    Dim bkFolder As String = Path.Combine(TargetFolder, "bk")
+    Directory.CreateDirectory(bkFolder)
+
+    Dim dest As String = Path.Combine(bkFolder, $"{Path.GetFileNameWithoutExtension(fileName)}_{Now:yyyyMMddHHmmss}{Path.GetExtension(fileName)}")
+    File.Move(src, dest)
+  End Sub
+
+  Private Function ExistsOtherDatFile(Optional prmTargetFileName As String = "") As Boolean
+    Dim datFiles = Directory.GetFiles(TargetFolder, "*.dat")
+
+    If String.IsNullOrWhiteSpace(prmTargetFileName) Then
+      Return datFiles.Any()
+    End If
+
+    Dim targetName = Path.GetFileName(prmTargetFileName)
+
+    Return datFiles.Any(Function(f) Path.GetFileName(f) <> targetName)
+  End Function
+
+
+
+
+  '==========================================================
+  ' Acquisition.FLG を作成（上位アプリ側）
+  '==========================================================
+  Public Function CreateAcquisitionFlag(prmOutFilePath As String) As Boolean
+    Try
+      StatusFlagFilePath = TargetFolder & "\" & COMMUNICATION_FLG
+      AcquisitionFlagFilePath = TargetFolder & "\" & ACQUISITION_FLG
+
+      IO.File.WriteAllText(AcquisitionFlagFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
-  Public Function DeleteCommnicationFile() As Boolean
-    Dim response As New Integer
+
+  '==========================================================
+  ' Acquisition.FLG 削除
+  '==========================================================
+  Public Function DeleteAcquisitionFlag() As Boolean
     Try
-      If IO.File.Exists(CommunicationFilePath) Then
-        IO.File.Delete(CommunicationFilePath)
+      If IO.File.Exists(AcquisitionFlagFilePath) Then
+        IO.File.Delete(AcquisitionFlagFilePath)
       End If
 
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
-
     End Try
   End Function
 
 
-  Public Function SendFile(filePath As String) As Boolean
-    Dim response As New Integer
+  Public Function WatchAndArchiveSentFiles(prmTargetFileName As String, ByRef prmTargetSendFlg As Boolean) As Boolean
     Try
+      If KANKYO_HONBAN <> "HONBAN" Then
+        Return True
+      End If
+
+      StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
+
+      Do While True
+
+
+        ' DATファイルがなければターゲットが送信されたかを確認
+        If Not ExistsOtherDatFile(prmTargetFileName) Then
+          'ターゲットが送信済みなら終了
+          If prmTargetSendFlg Then
+            Exit Do
+          End If
+        End If
+
+        If Not WaitCommunicationFlagCreated() Then Exit Do
+
+        Dim fileName = ReadCommunicationFlag()
+
+
+        If Not WaitCommunicationFlagDeleted() Then Exit Do
+
+        If fileName = Path.GetFileName(prmTargetFileName) Then
+          prmTargetSendFlg = True
+        Else
+          MoveToBackupFolder(fileName)
+        End If
+
+      Loop
 
       Return True
+
     Catch ex As Exception
       Throw New Exception(ex.Message)
-      Return False
-    Finally
     End Try
   End Function
 
+  '==========================================================
+  ' FileSystemWatcher
+  '==========================================================
   Private Sub StartWatching()
     If watcher IsNot Nothing Then
       StopWatching()
     End If
 
     watcher = New FileSystemWatcher()
-    watcher.Path = Path.GetDirectoryName(StatusFlagFilePath)
-    watcher.Filter = Path.GetFileName(StatusFlagFilePath)
+    watcher.Path = TargetFolder
+    watcher.Filter = COMMUNICATION_FLG
     watcher.NotifyFilter = NotifyFilters.FileName Or NotifyFilters.CreationTime Or NotifyFilters.LastWrite
 
     AddHandler watcher.Created, AddressOf OnFlagCreated
@@ -223,5 +315,7 @@ Public Class clsHandyCommunication
   End Sub
 
   Private Sub OnFlagDeleted(sender As Object, e As FileSystemEventArgs)
+    ' 特に処理なし
   End Sub
+
 End Class

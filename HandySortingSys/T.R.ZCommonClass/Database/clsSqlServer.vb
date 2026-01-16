@@ -1,4 +1,5 @@
 ﻿Imports T.R.ZCommonCon.DbConnectData
+Imports System.Data.SqlClient
 
 Public Class clsSqlServer
   Inherits clsComDatabase
@@ -10,4 +11,14 @@ Public Class clsSqlServer
     Me.Password = DB_PASSWORD
     Me.Provider = typProvider.sqlServer
   End Sub
+
+  Public Function CreateSqlConnection() As SqlConnection
+    Dim conStr As String =
+        "Server=" & DB_DATASOURCE & ";" &
+        "Database=" & DB_DEFAULTDATABASE & ";" &
+        "User ID=" & DB_USERID & ";" &
+        "Password=" & DB_PASSWORD & ";"
+
+    Return New SqlConnection(conStr)
+  End Function
 End Class

@@ -23,15 +23,15 @@ Partial Class frmNyukaPrint
   'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
   'Windows フォーム デザイナーを使用して変更できます。  
   'コード エディターを使って変更しないでください。
-  <System.Diagnostics.DebuggerStepThrough()> _
-  Private Sub InitializeComponent()
+  <System.Diagnostics.DebuggerStepThrough()>
+  Protected Overloads Sub InitializeComponent()
     Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNyukaPrint))
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
     Me.BtnOutput1 = New T.R.ZCommonCtrl.BtnOutput()
     Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateSagyoBiZumi()
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
-        Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
+    Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
         CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -53,7 +53,7 @@ Partial Class frmNyukaPrint
         Me.LblBase2.Name = "LblBase2"
         Me.LblBase2.Size = New System.Drawing.Size(111, 33)
         Me.LblBase2.TabIndex = 2
-        Me.LblBase2.Text = "作業日"
+        Me.LblBase2.Text = "入荷日"
         '
         'BtnOutput1
         '
@@ -81,12 +81,11 @@ Partial Class frmNyukaPrint
         Me.CmbDateSagyoBi1.Name = "CmbDateSagyoBi1"
         Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
         Me.CmbDateSagyoBi1.TabIndex = 4
-    Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
-
-    '
-    'DgvList1
-    '
-    Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
+        '
+        'DgvList1
+        '
+        Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DgvList1.Location = New System.Drawing.Point(20, 146)
         Me.DgvList1.Name = "DgvList1"
         Me.DgvList1.RowTemplate.Height = 21
@@ -95,9 +94,11 @@ Partial Class frmNyukaPrint
         '
         'BtnEnd_L1
         '
-        Me.BtnEnd_L1.BackColor = System.Drawing.Color.Red
+        Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
+        Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnEnd_L1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.BtnEnd_L1.ForeColor = System.Drawing.Color.Black
+        Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.BtnEnd_L1.Location = New System.Drawing.Point(1052, 7)
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)

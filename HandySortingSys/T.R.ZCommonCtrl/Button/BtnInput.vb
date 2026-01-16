@@ -77,7 +77,7 @@ Public Class BtnInput
         If IsDuplicate(TargetRowData) Then
           Throw New Exception("既に取込済みです。")
         Else
-          SqlServer.Execute(SqlInsTargetTable(TargetRowData))
+          SqlServer.Execute(SqlInsTargetTable(TargetRowData, TargetTableName))
         End If
 
       Next
@@ -93,39 +93,39 @@ Public Class BtnInput
 
 #End Region
 
-  Private Function SqlInsTargetTable(prmTargetRow As Dictionary(Of String, String)) As String
-    Dim sql As String = String.Empty
-    Dim tmpKeyValue As New Dictionary(Of String, String)
-    Dim tmpInsertItemz As New Dictionary(Of String, String)
+  'Private Function SqlInsTargetTable(prmTargetRow As Dictionary(Of String, String)) As String
+  '  Dim sql As String = String.Empty
+  '  Dim tmpKeyValue As New Dictionary(Of String, String)
+  '  Dim tmpInsertItemz As New Dictionary(Of String, String)
 
-    For Each KeyValue As KeyValuePair(Of String, String) In prmTargetRow
-      ComSetDictionaryVal(tmpKeyValue, KeyValue.Key, KeyValue.Value)
-    Next
-    tmpInsertItemz = ComCreateInsertItem(tmpKeyValue)
+  '  For Each KeyValue As KeyValuePair(Of String, String) In prmTargetRow
+  '    ComSetDictionaryVal(tmpKeyValue, KeyValue.Key, KeyValue.Value)
+  '  Next
+  '  tmpInsertItemz = ComCreateInsertItem(tmpKeyValue)
 
-    sql &= " INSERT INTO " & TargetTableName & "(" & tmpInsertItemz("Keyz") & ") "
-    sql &= " VALUES(" & tmpInsertItemz("Valuez") & ") "
+  '  sql &= " INSERT INTO " & TargetTableName & "(" & tmpInsertItemz("Keyz") & ") "
+  '  sql &= " VALUES(" & tmpInsertItemz("Valuez") & ") "
 
-    Return sql
+  '  Return sql
 
-  End Function
+  'End Function
 
 
-  'なかったので仮に作成したので頂ければ削除！
-  Private Function ComCreateInsertItem(prmKeyValuez As Dictionary(Of String, String)) As Dictionary(Of String, String)
-    Dim result As New Dictionary(Of String, String)
+  ''なかったので仮に作成したので頂ければ削除！
+  'Private Function ComCreateInsertItem(prmKeyValuez As Dictionary(Of String, String)) As Dictionary(Of String, String)
+  '  Dim result As New Dictionary(Of String, String)
 
-    ' 列名をカンマ区切りで連結
-    Dim keys As String = String.Join(",", prmKeyValuez.Keys)
+  '  ' 列名をカンマ区切りで連結
+  '  Dim keys As String = String.Join(",", prmKeyValuez.Keys)
 
-    ' 値をカンマ区切りで連結（シングルクォートで囲む）
-    Dim values As String = String.Join(",", prmKeyValuez.Values.Select(Function(v) $"'{v}'"))
+  '  ' 値をカンマ区切りで連結（シングルクォートで囲む）
+  '  Dim values As String = String.Join(",", prmKeyValuez.Values.Select(Function(v) $"'{v}'"))
 
-    result("Keyz") = keys
-    result("Valuez") = values
+  '  result("Keyz") = keys
+  '  result("Valuez") = values
 
-    Return result
-  End Function
+  '  Return result
+  'End Function
 
   '重複チェック
   Private Function IsDuplicate(prmTargetRow As Dictionary(Of String, String)) As Boolean

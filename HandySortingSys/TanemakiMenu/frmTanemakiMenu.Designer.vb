@@ -21,8 +21,8 @@ Partial Class frmTanemakiMenu
   'メモ: 以下のプロシージャは Windows フォーム デザイナーで必要です。
   'Windows フォーム デザイナーを使用して変更できます。  
   'コード エディターを使って変更しないでください。
-  <System.Diagnostics.DebuggerStepThrough()> _
-  Private Sub InitializeComponent()
+  <System.Diagnostics.DebuggerStepThrough()>
+  Protected Overrides Sub InitializeComponent()
     Me.BtnEnd_L2 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.BtnMainMenuBase2 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.LblProcDateTime2 = New T.R.ZCommonCtrl.LblProcDateTime()
@@ -111,6 +111,7 @@ Partial Class frmTanemakiMenu
     Me.LblBase1.Size = New System.Drawing.Size(376, 48)
     Me.LblBase1.TabIndex = 24
     Me.LblBase1.Text = "種まき処理メニュー"
+    Me.LblBase1.Visible = False
     '
     'frmTanemakiMenu
     '

@@ -1,6 +1,8 @@
 ﻿Imports System.Data
 Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
+Imports T.R.ZCommonClass.clsLenColumnDef
 Imports ClsHandyCommunication
 
 Public Class BtnSendHandy
@@ -15,19 +17,25 @@ Public Class BtnSendHandy
   Public Property TargetFileName As String
   Public Property Handy As New ClsHandyCommunication.clsHandyCommunication(TargetFileName)
   ' プロパティ：項目長
-  Public Property TargetLenClumn As List(Of Tuple(Of String, Integer))
+  Public Property TargetLenClumn As New List(Of Tuple(Of String, Integer))
   ' プロパティ：更新テーブル
   Public Property TargetTableName As String
   ' プロパティ：更新条件
-  Public Property TargetWhere As List(Of String)
+  Public Property TargetWhere As List(Of String) = New List(Of String)
+
   ' プロパティ：更新項目
-  Public Property TargetUpdColumn As List(Of String)
+  Public Property TargetUpdColumn As List(Of String) = New List(Of String)
+
   ' プロパティ：更新ステータス
   Public Property TargetUpdStatus As String
   ' プロパティ：通信時間更新
   Public Property TargetCommunicationDate As New Dictionary(Of String, String)
 
   Public Property TargetCancelParentClick As Boolean = False
+
+  ' 送信完了イベント
+  Public Event SendCompleted()
+
 #End Region
 
 #Region "コンストラクタ"
@@ -63,7 +71,7 @@ Public Class BtnSendHandy
     MyBase.OnClick(e)
 
     Dim tmpDt As New DataTable
-
+    Dim filename As String = String.Empty
     Try
       If TargetCancelParentClick Then
         Exit Sub
@@ -71,26 +79,20 @@ Public Class BtnSendHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      ''通信ツール開示
-      'Handy.OpenCommunicationTool()
+      '通信ツール開示
+      Handy.OpenCommunicationTool()
 
-      ''状態管理ファイル作成チェック
-      'If Not Handy.CreateChkStatusFlagFile() Then
-      '  Exit Sub
-      'Else
-      '  Console.WriteLine("ファイル作成OK")
-      'End If
-      ''状態管理ファイルチェック
-      'If Not Handy.ChkStatusFlagFile() Then
-      '  Exit Sub
-      'Else
-      '  Console.WriteLine("状態管理OK")
-      'End If
-
+      Dim TargetSendFlg As Boolean = False
+      Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg)
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
+      If Not (TargetLenClumn.Equals(LenColumnInMstItem) Or TargetLenClumn.Equals(LenColumnInMstTanto)) Then
+        tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
+      End If
 
-      tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
+      'ﾃｽﾄ用に無視するようにしている
+      Handy.MoveToBackupFolder(TargetFileName)
+
 
       For Each tmpRow In tmpDt.Rows
         '更新項目生成
@@ -115,8 +117,22 @@ Public Class BtnSendHandy
           tmpWhere.Add(Where, tmpRow(Where).ToString)
         Next
 
+        '更新件数チェック
+        Dim cntSql As String = SqlSelGetCount(TargetTableName, tmpWhere)
+        Dim tmpCntDt As New DataTable
+        SqlServer.GetResult(tmpCntDt, cntSql)
+        Dim recCount As Integer = tmpCntDt.Rows(0).Item("CNT").ToString
+        '0件チェック
+        If recCount = 0 Then
+          Throw New Exception("更新対象データが存在しません。")
+        End If
+
         '更新処理
-        SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere))
+        If TargetTableName IsNot Nothing Then
+          If recCount <> SqlServer.Execute(CreateUpdateSql(TargetTableName, tmpUpdColumn, tmpWhere)) Then
+            Throw New Exception("更新に失敗しました。")
+          End If
+        End If
 
       Next
 
@@ -124,14 +140,17 @@ Public Class BtnSendHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      'Handy.CloseCommunicationTool()
+      Handy.CloseCommunicationTool()
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
+
+      RaiseEvent SendCompleted()
+
     Catch ex As Exception
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      'Handy.CloseCommunicationTool()
+      Handy.CloseCommunicationTool()
     Finally
     End Try
   End Sub
@@ -165,6 +184,23 @@ Public Class BtnSendHandy
     result("Valuez") = values
 
     Return result
+  End Function
+
+  Private Function SqlSelGetCount(prmTableName As String, prmWhereDic As Dictionary(Of String, String)) As String
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT COUNT(*) CNT "
+    sql &= " FROM  " & prmTableName
+
+    If prmWhereDic.Count > 0 Then
+      sql &= " WHERE "
+      sql &= String.Join(" AND ",
+        prmWhereDic.Select(Function(kv) $"{kv.Key} = '{kv.Value}'"))
+    End If
+
+
+
+    Return sql
   End Function
 
 End Class

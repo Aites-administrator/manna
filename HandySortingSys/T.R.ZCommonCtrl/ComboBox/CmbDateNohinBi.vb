@@ -32,7 +32,7 @@ Public Class CmbDateNohinBi
     ' データベースより現在日付を文字列で取得し、DateTime値に変換する
     Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
 
-    sql &= " SELECT  CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
+    sql &= " SELECT  TOP " & ReadSettingIniFile("PAST_DATE", "VALUE") & "CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
     sql &= " FROM TRN_SHUKKA "
     sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & ")"
     sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)   "

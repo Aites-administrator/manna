@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DF641FF4-31E4-4865-A1DF-77843FC541F1}</ProjectGuid>
+    <ProjectGuid>{16452AD8-E250-41E5-846F-2AEC4C4A4DC8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>MasterMaintenance.My.MyApplication</StartupObject>
-    <RootNamespace>MasterMaintenance</RootNamespace>
-    <AssemblyName>MasterMaintenance</AssemblyName>
+    <StartupObject>ComMasterMentenance.My.MyApplication</StartupObject>
+    <RootNamespace>ComMasterMentenance</RootNamespace>
+    <AssemblyName>ComMasterMentenance</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,8 +21,8 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\Debug_exe\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>ComMasterMentenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -33,7 +32,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
+    <DocumentationFile>ComMasterMentenance.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,52 +47,6 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\release\exe\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DocumentationFile>MasterMaintenance.xml</DocumentationFile>
-    <Optimize>true</Optimize>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,18 +58,6 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="T.R.ZCommonClass, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Debug_exe\T.R.ZCommonClass.dll</HintPath>
-    </Reference>
-    <Reference Include="T.R.ZCommonCon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Debug_exe\T.R.ZCommonCon.dll</HintPath>
-    </Reference>
-    <Reference Include="T.R.ZCommonCtrl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Debug_exe\T.R.ZCommonCtrl.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -132,11 +73,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmMasterMaintenance.vb">
+    <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMasterMaintenance.Designer.vb">
-      <DependentUpon>frmMasterMaintenance.vb</DependentUpon>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -156,9 +97,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmMasterMaintenance.resx">
-      <DependentUpon>frmMasterMaintenance.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -177,12 +115,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IpcService\IpcService.vbproj">
-      <Project>{0cef3710-7f88-46ed-a0d3-e6d6ff778f1d}</Project>
-      <Name>IpcService</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

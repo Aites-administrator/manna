@@ -22,7 +22,7 @@ Partial Class frmNyukaSendCommunication
   'Windows フォーム デザイナーを使用して変更できます。  
   'コード エディターを使って変更しないでください。
   <System.Diagnostics.DebuggerStepThrough()>
-  Private Sub InitializeComponent()
+  Protected Overloads Sub InitializeComponent()
     Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNyukaSendCommunication))
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateSagyoBi()
@@ -35,9 +35,11 @@ Partial Class frmNyukaSendCommunication
         '
         'BtnEnd_L1
         '
-        Me.BtnEnd_L1.BackColor = System.Drawing.Color.Red
+        Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
+        Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnEnd_L1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
-        Me.BtnEnd_L1.ForeColor = System.Drawing.Color.Black
+        Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.BtnEnd_L1.Location = New System.Drawing.Point(1052, 12)
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
@@ -57,16 +59,16 @@ Partial Class frmNyukaSendCommunication
         Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
         Me.CmbDateSagyoBi1.TabIndex = 8
         Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
-    '
-    'LblBase2
-    '
-    Me.LblBase2.AutoSize = True
+        '
+        'LblBase2
+        '
+        Me.LblBase2.AutoSize = True
         Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
         Me.LblBase2.Location = New System.Drawing.Point(12, 96)
         Me.LblBase2.Name = "LblBase2"
         Me.LblBase2.Size = New System.Drawing.Size(111, 33)
         Me.LblBase2.TabIndex = 7
-        Me.LblBase2.Text = "作業日"
+        Me.LblBase2.Text = "入荷日"
         '
         'LblBase1
         '
@@ -90,13 +92,23 @@ Partial Class frmNyukaSendCommunication
         'BtnSendHandy1
         '
         Me.BtnSendHandy1.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.BtnSendHandy1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.BtnSendHandy1.FlatAppearance.BorderSize = 0
+        Me.BtnSendHandy1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSendHandy1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
         Me.BtnSendHandy1.ForeColor = System.Drawing.Color.Black
         Me.BtnSendHandy1.Location = New System.Drawing.Point(1052, 80)
         Me.BtnSendHandy1.Name = "BtnSendHandy1"
         Me.BtnSendHandy1.Size = New System.Drawing.Size(320, 60)
         Me.BtnSendHandy1.TabIndex = 12
+        Me.BtnSendHandy1.TargetCancelParentClick = False
+        Me.BtnSendHandy1.TargetCommunicationDate = CType(resources.GetObject("BtnSendHandy1.TargetCommunicationDate"), System.Collections.Generic.Dictionary(Of String, String))
         Me.BtnSendHandy1.TargetFileName = Nothing
+        Me.BtnSendHandy1.TargetLenClumn = CType(resources.GetObject("BtnSendHandy1.TargetLenClumn"), System.Collections.Generic.List(Of System.Tuple(Of String, Integer)))
+        Me.BtnSendHandy1.TargetTableName = Nothing
+        Me.BtnSendHandy1.TargetUpdColumn = CType(resources.GetObject("BtnSendHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
+        Me.BtnSendHandy1.TargetUpdStatus = Nothing
+        Me.BtnSendHandy1.TargetWhere = CType(resources.GetObject("BtnSendHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
+        Me.BtnSendHandy1.Text = "F5：送信"
         Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnSendHandy1.UseVisualStyleBackColor = False
         '
