@@ -3,10 +3,17 @@ Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Public Class SoudashiReceiveCommunication
-  Inherits FormCommunication
+  Inherits FormRecieveCommunication
 
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "MST_PICK.DAT"
+
+  Protected Overrides Sub OnLoad(e As EventArgs)
+
+    Me.TextDisplayName = "総出し"
+
+    MyBase.OnLoad(e)
+  End Sub
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)

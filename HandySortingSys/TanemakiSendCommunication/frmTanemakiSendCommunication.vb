@@ -9,7 +9,7 @@ Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
 Public Class frmTanemakiSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private TanaList As New List(Of String)
@@ -23,16 +23,37 @@ Public Class frmTanemakiSendCommunication
   Private Const SEND_PASSWORD_FILE_NAME As String = SEND_FOLDER & "PASSWORD.DAT"
 
 
-  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Protected Overrides Sub OnLoad(e As EventArgs)
     _isInitializing = False
     CmbDateNohinBi1.SelectedIndex = 0
     RegisterSendButton(Me.BtnSendHandy1)
+
+    Me.TextDisplayName = "種まき"
+
+    MyBase.OnLoad(e)
   End Sub
+
+
+  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  'End Sub
 
   Protected Overrides Sub OnSendCompleted()
     MyBase.OnSendCompleted()
     ReloadList()
   End Sub
+
+
+  Private Sub ChkReizoJouon_CheckedChanged(sender As Object, e As EventArgs) Handles ChkReizoJouon.CheckedChanged
+    If _isInitializing Then
+      Exit Sub
+    End If
+
+    ChkReizo.Checked = ChkReizoJouon.Checked
+    ChkJouon.Checked = ChkReizoJouon.Checked
+
+  End Sub
+
+
 
   Private Sub ChkTana_CheckedChanged(sender As Object, e As EventArgs) _
     Handles ChkReito.CheckedChanged,
@@ -55,11 +76,9 @@ Public Class frmTanemakiSendCommunication
     'End If
 
     TanaList.Clear()
-    If ChkReito.Checked Then TanaList.Add("1")
-    If ChkReizo.Checked Then TanaList.Add("2")
-    If ChkJouon.Checked Then TanaList.Add("3")
-
-
+    If ChkReito.Checked Then TanaList.Add(ONDOTAI.REITO)
+    If ChkReizo.Checked Then TanaList.Add(ONDOTAI.REIZO)
+    If ChkJouon.Checked Then TanaList.Add(ONDOTAI.JOUON)
 
     ReloadList()
 
@@ -370,6 +389,7 @@ Public Class frmTanemakiSendCommunication
     ' チェック列を一番左に移動！
     tmpDtJP.Columns("チェック").SetOrdinal(0)
 
+    DgvList1.TargetColumnName = "種まき済"
     DgvList1.SetData(tmpDtJP)
     DgvList1.Columns("送信済み").Visible = False
   End Sub

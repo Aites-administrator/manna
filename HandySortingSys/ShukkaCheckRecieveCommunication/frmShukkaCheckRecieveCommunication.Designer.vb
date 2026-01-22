@@ -1,7 +1,7 @@
 ﻿Imports T.R.ZCommonCtrl
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmShukkaCheckRecieveCommunication
-  Inherits FormCommunication
+  Inherits FormRecieveCommunication
 
   'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
   <System.Diagnostics.DebuggerNonUserCode()> _

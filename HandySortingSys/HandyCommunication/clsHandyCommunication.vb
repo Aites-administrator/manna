@@ -294,7 +294,7 @@ Public Class clsHandyCommunication
         If fileName = Path.GetFileName(prmTargetFileName) Then
           prmTargetSendFlg = True
         Else
-          MoveToBackupFolder(fileName)
+'          MoveToBackupFolder(fileName)
         End If
 
       Loop

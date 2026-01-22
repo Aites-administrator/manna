@@ -106,6 +106,7 @@ Public Class BtnRecieveHandy
 
       Dim tmpDtJP As New DataTable
       tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), TargetMappingName)
+      TargetDataGridView.TargetColumnName = "取込状況FLG"
       TargetDataGridView.SetData(tmpDtJP)
 
       Handy.MoveToBackupFolder(TargetFileName)
@@ -126,6 +127,9 @@ Public Class BtnRecieveHandy
           If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
             If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
               tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
+            End If
+            If TargetTableName <> "TRN_NYUKA" Then
+              Continue For
             End If
           ElseIf UpdColumn.Contains("RECEIVE_DATE") Then
             If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then

@@ -98,6 +98,32 @@
     "NOUHINBI", "UO_DENPYO_NO", "UO_GYO_NO"
   }
 
+
+    MappingDictionary("棚卸予定データ") = New Dictionary(Of String, String) From {
+        {"棚卸日", "TANAOROSHI_DATE"},
+        {"作業予定日", "SAGYO_YOTEI_DATE"},
+        {"発注先CD", "HATCHU_SAKI_CD"},
+        {"発注先名", "HATCHU_SAKI_MEI"},
+        {"自社倉庫CD", "JISHA_SOKO_CD"},
+        {"自社倉庫名", "JISHA_SOKO_MEI"},
+        {"温度帯", "ONDOTAI"},
+        {"自社商品CD", "JISYA_SHOHIN_CD"},
+        {"自社商品名", "JISYA_SHOHIN_MEI"},
+        {"※発注停止FLG", "HATCHU_TEISHI_FLG"},
+        {"発注点", "HATCHUTEN"},
+        {"棚番", "TANABAN"},
+        {"在庫数", "ZAIKO_SU"},
+        {"11/10(月)", "TANA_DATE_ZAIKO_SU"},
+        {"システム在庫数", "SYSTEM_ZAIKO_SU"},
+        {"入数", "IRISU"},
+        {"取込状況FLG", "TORIKOMI_JOKYO_FLG"}
+    }
+
+    DuplicateKeyDictionary("棚卸予定データ") = New List(Of String) From {
+    "TANAOROSHI_DATE", "SAGYO_YOTEI_DATE", "JISYA_SHOHIN_CD"
+  }
+
+
   End Sub
 
   ' CSV種別を指定してマッピングを取得

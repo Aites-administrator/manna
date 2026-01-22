@@ -9,19 +9,25 @@ Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
 Public Class frmShukkaCheckSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_SHOP_FILE_NAME As String = SEND_FOLDER & "MST_SHOP.DAT"
   Private Const SEND_SHOPITEM_FILE_NAME As String = SEND_FOLDER & "SHOPITEM.DAT"
 
-
-  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Protected Overrides Sub OnLoad(e As EventArgs)
     CmbDateNohinBi1.SelectedIndex = 0
     RegisterSendButton(Me.BtnSendHandy1)
 
+    Me.TextDisplayName = "出荷検品"
+
+    MyBase.OnLoad(e)
   End Sub
+
+  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+  'End Sub
 
   Protected Overrides Sub OnSendCompleted()
     MyBase.OnSendCompleted()
@@ -43,7 +49,24 @@ Public Class frmShukkaCheckSendCommunication
         For Each LenColumnInTup In tmpListTuple
           If LenColumnInTup.Item1 = "JISYA_SHOHIN_MEI" Or LenColumnInTup.Item1 = "JIGYOSHO_MEI" Then
             line &= ToFixedLength(StrConv(tmpRow(LenColumnInTup.Item1).ToString(), VbStrConv.Narrow), LenColumnInTup.Item2)
+          ElseIf LenColumnInTup.Item1 = "KENPIN_RECEIVE_DATE" Then
+
+            ' ★ DateTime → yyyyMMddHHmmss に変換
+            Dim tmpVal As String = String.Empty
+
+            If Not IsDBNull(tmpRow(LenColumnInTup.Item1)) AndAlso
+               TypeOf tmpRow(LenColumnInTup.Item1) Is DateTime Then
+
+              tmpVal = CType(tmpRow(LenColumnInTup.Item1), DateTime).ToString("yyyyMMddHHmmss")
+
+            Else
+              tmpVal = ""   ' 必要なら空白埋めなどに変更
+            End If
+
+            line &= ToFixedLength(tmpVal, LenColumnInTup.Item2)
+
           Else
+
             line &= ToFixedLength(tmpRow(LenColumnInTup.Item1).ToString(), LenColumnInTup.Item2)
           End If
         Next

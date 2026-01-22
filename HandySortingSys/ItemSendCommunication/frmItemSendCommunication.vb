@@ -10,14 +10,13 @@ Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
 
 Public Class frmItemSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_ITEM_FILE_NAME As String = SEND_FOLDER & "MST_ITEM.DAT"
 
-
-  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Protected Overrides Sub OnLoad(e As EventArgs)
     Dim mapper As New clsDtHeaderMapping
     Dim tmpDt As New DataTable
     Dim tmpDtJP As New DataTable
@@ -26,7 +25,12 @@ Public Class frmItemSendCommunication
 
     DgvList1.SetData(tmpDtJP)
 
+    MyBase.OnLoad(e)
   End Sub
+
+
+  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  'End Sub
 
 
   Private Sub FormatFixedLengthTrnNyuka(prmDt As DataTable, prmFileName As String, prmLenColumn As List(Of Tuple(Of String, Integer)))

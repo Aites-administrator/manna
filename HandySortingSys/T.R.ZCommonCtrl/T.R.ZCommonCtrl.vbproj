@@ -217,6 +217,9 @@
     <Compile Include="ComboBox\CmbDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ComboBox\CmbDateTanaoroshiBi.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComboBox\CmbDateNohinBiZumi.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -308,6 +311,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\FormComMasterMente.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormRecieveCommunication.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\FormSendCommunication.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form\FormCommunication.vb">
@@ -522,6 +531,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormComMasterMente.resx">
       <DependentUpon>FormComMasterMente.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormRecieveCommunication.resx">
+      <DependentUpon>FormRecieveCommunication.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\FormSendCommunication.resx">
+      <DependentUpon>FormSendCommunication.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\FormCommunication.resx">
       <DependentUpon>FormCommunication.vb</DependentUpon>

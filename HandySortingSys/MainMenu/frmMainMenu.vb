@@ -209,37 +209,37 @@ Public Class frmMainMenu
   End Sub
 
   Public Sub BottonSetting()
-    BtnMainMenuBase1.Title = "F1:入荷処理"
+    BtnMainMenuBase1.Title = "入荷処理(F1)"
     BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaImage.png")
     BtnMainMenuBase1.ButtonColor = ColorTranslator.FromHtml("#dce7f8")
     BtnMainMenuBase1.BtnForeColor = ColorTranslator.FromHtml("#000000")
     BtnMainMenuBase1.SetAccessKey = Keys.F1
 
-    BtnMainMenuBase2.Title = "F2:総出し"
+    BtnMainMenuBase2.Title = "総出し(F2)"
     BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SodashiImage.png")
     BtnMainMenuBase2.ButtonColor = ColorTranslator.FromHtml("#83a0df")
     BtnMainMenuBase2.BtnForeColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase2.SetAccessKey = Keys.F2
 
-    BtnMainMenuBase3.Title = "F3:種まき"
+    BtnMainMenuBase3.Title = "種まき(F3)"
     BtnMainMenuBase3.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "TanemakiImage.png")
     BtnMainMenuBase3.ButtonColor = ColorTranslator.FromHtml("#335294")
     BtnMainMenuBase3.BtnForeColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase3.SetAccessKey = Keys.F3
 
-    BtnMainMenuBase4.Title = "F4:出荷検品"
+    BtnMainMenuBase4.Title = "出荷検品(F4)"
     BtnMainMenuBase4.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "ShukkaCheckImage.png")
     BtnMainMenuBase4.ButtonColor = ColorTranslator.FromHtml("#5ddee6")
     BtnMainMenuBase4.BtnForeColor = ColorTranslator.FromHtml("#000000")
     BtnMainMenuBase4.SetAccessKey = Keys.F4
 
-    BtnMainMenuBase5.Title = "F5:棚卸処理"
+    BtnMainMenuBase5.Title = "棚卸処理(F5)"
     BtnMainMenuBase5.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "TanaoroshiImage.png")
     BtnMainMenuBase5.ButtonColor = ColorTranslator.FromHtml("#3156f1")
     BtnMainMenuBase5.BtnForeColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase5.SetAccessKey = Keys.F5
 
-    BtnMainMenuBase6.Title = "F6:その他処理"
+    BtnMainMenuBase6.Title = "その他処理(F6)"
     BtnMainMenuBase6.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SettingImage.png")
     BtnMainMenuBase6.ButtonColor = ColorTranslator.FromHtml("#7d82f7")
     BtnMainMenuBase6.BtnForeColor = ColorTranslator.FromHtml("#ffffff")
@@ -264,6 +264,13 @@ Public Class frmMainMenu
   End Sub
 
   Private Sub BtnMainMenuBase6_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase6.Click
+    Call ComGetProcessByFilePath(Application.StartupPath & "\" & PASSWORD_ENTRY_MODULE & ".exe" _
+                              , IO.Path.GetFileName(GetIniString("M50", "EXE", IniFileName)))
+
+
+  End Sub
+
+  Private Sub BtnMainMenuBase5_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase5.Click
     ComGetProcessByFilePath(GetIniString("M40", "EXE", IniFileName))
   End Sub
 End Class

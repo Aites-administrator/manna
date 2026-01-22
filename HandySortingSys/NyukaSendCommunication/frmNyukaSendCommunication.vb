@@ -10,17 +10,25 @@ Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
 
 Public Class frmNyukaSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
 
   Private SqlServer As New clsSqlServer
   Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_NYUKA_FILE_NAME As String = SEND_FOLDER & "IN_ITEM.DAT"
 
-  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Protected Overrides Sub OnLoad(e As EventArgs)
     CmbDateSagyoBi1.SelectedIndex = 0
     RegisterSendButton(Me.BtnSendHandy1)
 
+    Me.TextDisplayName = "入荷検品"
+
+    MyBase.OnLoad(e)
   End Sub
+
+
+  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+  'End Sub
 
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateSagyoBi1.SelectedIndexChanged
     ReloadGrid()

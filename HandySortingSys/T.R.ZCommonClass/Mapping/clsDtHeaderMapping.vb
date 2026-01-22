@@ -26,7 +26,7 @@
       {"TANTO_CD", "担当コード"},
       {"RECEIVE_DATE", "検品日付"},
       {"SHOMIKIGEN", "賞味期限"},
-      {"TORIKOMI_JOKYO_FLG", "取込状況フラグ"},
+      {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"HACHU_GYO_NO", "発注NO_行NO"},
       {"TANA_CD", "棚番"}
     }
@@ -53,7 +53,7 @@
       {"SOUDASHI_GOUKI", "号機"},
       {"SOUDASHI_TANTO_CD", "担当者"},
       {"SOUDASHI_RECEIVE_DATE", "作業日時"},
-      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"CASE_TANI", "ケース単位"},
       {"HACHU_TANI", "バラ単位"},
       {"INDEX_ID", "INDEX_ID"}
@@ -99,7 +99,7 @@
       {"GOUKI", "号機"},
       {"TANTO_CD", "担当者"},
       {"RECEIVE_DATE", "作業日時"},
-      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"INDEX_ID", "INDEX_ID"}
     }
 
@@ -124,13 +124,38 @@
       {"SHUKKA_YOTEISU_CASE", "ケース数"},
       {"SHUKKA_YOTEISU_BARA", "バラ数"},
       {"CASE_TANI", "ケース単位"},
-      {"BARA_TANI", "バラ単位"},
-      {"GOUKI", "号機"},
-      {"TANTO_CD", "担当者"},
-      {"RECEIVE_DATE", "作業日時"},
-      {"TORIKOMI_JOKYO_FLG", "ステータス"},
+      {"KENPIN_GOUKI", "号機"},
+      {"KENPIN_TANTO_CD", "担当者"},
+      {"KENPIN_RECEIVE_DATE", "作業日時"},
+      {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"INDEX_ID", "INDEX_ID"}
     }
+
+    ' 棚卸マッピング定義
+    MappingDictionary("棚卸予定データ") = New Dictionary(Of String, String) From {
+    {"TANAOROSHI_DATE", "棚卸日"},
+    {"SAGYO_YOTEI_DATE", "作業予定日"},
+    {"TANA_CD", "棚番"},
+    {"TANA_AREA", "棚エリア"},
+    {"JISYA_SHOHIN_CD", "商品コード"},
+    {"JISYA_SHOHIN_MEI", "商品名"},
+    {"IRISU", "入数"},
+    {"JAN", "JAN"},
+    {"ITF", "ITF"},
+    {"TANA_YOTEISU_CASE", "棚卸予定数_ケース"},
+    {"TANA_YOTEISU_BARA", "棚卸予定数_バラ"},
+    {"TANA_JISSEKI_CASE", "棚卸実績数_ケース"},
+    {"TANA_JISSEKI_BARA", "棚卸実績数_バラ"},
+    {"CASE_TANI", "ケース単位"},
+    {"BARA_TANI", "バラ単位"},
+    {"SHOMIKIGEN", "賞味期限"},
+    {"GOUKI", "号機"},
+    {"TANTO_CD", "担当者"},
+    {"RECEIVE_DATE", "受信日時"},
+    {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
+    {"INDEX_ID", "INDEX_ID"}
+}
+
 
     MappingDictionary("商品マスタ") = New Dictionary(Of String, String) From {
       {"SHOHIN_CD", "商品コード"},

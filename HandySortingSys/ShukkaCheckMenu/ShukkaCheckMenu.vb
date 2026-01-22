@@ -43,15 +43,17 @@ Public Class ShukkaCheckMenu
   End Sub
 
   Public Sub BottonSetting()
-    BtnMainMenuBase1.Title = "ﾊﾝﾃﾞｨ出荷検品" & vbCrLf & "作業ﾃﾞｰﾀ送信"
-    BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaImage.png")
-    BtnMainMenuBase1.ButtonColor = Color.LightBlue
+    BtnMainMenuBase1.Title = "ﾊﾟｿｺﾝ⇒ﾊﾝﾃﾞｨ" & vbCrLf & "　出荷検品(F1）"
+    BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaSendImage.png")
+    BtnMainMenuBase1.ButtonColor = ColorTranslator.FromHtml("#add8e6")
     BtnMainMenuBase1.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase1.AccessKey = Keys.F1
 
-    BtnMainMenuBase2.Title = "ﾊﾝﾃﾞｨ出荷検品" & vbCrLf & "結果受信"
-    BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "SodashiImage.png")
-    BtnMainMenuBase2.ButtonColor = Color.Blue
+    BtnMainMenuBase2.Title = "ﾊﾝﾃﾞｨ⇒ﾊﾟｿｺﾝ" & vbCrLf & "　出荷検品(F2）"
+    BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaReceiveImage.png")
+    BtnMainMenuBase2.ButtonColor = ColorTranslator.FromHtml("#04cfe3")
     BtnMainMenuBase2.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase2.AccessKey = Keys.F2
 
   End Sub
 

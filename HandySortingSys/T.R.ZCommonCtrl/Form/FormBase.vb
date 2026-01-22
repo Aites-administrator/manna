@@ -234,12 +234,17 @@ Public Class FormBase
       CType(cs(0), Label).Text += ":" & T.R.ZCommonClass.clsGlobalData.PRG_TITLE
     End If
 
-
-    For Each tmpCtrl As Control In Me.Controls
+    For Each tmpCtrl As Control In ComGetAllControls(Me)
       If IsTargetControl(New BtnBase, tmpCtrl) Then
-        BtnList.Add(tmpCtrl)
+        BtnList.Add(DirectCast(tmpCtrl, BtnBase))
       End If
     Next
+
+    'For Each tmpCtrl As Control In Me.Controls
+    '  If IsTargetControl(New BtnBase, tmpCtrl) Then
+    '    BtnList.Add(tmpCtrl)
+    '  End If
+    'Next
 
     MaximizeBox = False
     FormBorderStyle = FormBorderStyle.FixedSingle

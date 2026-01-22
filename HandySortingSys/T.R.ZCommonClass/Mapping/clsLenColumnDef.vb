@@ -136,6 +136,40 @@
       Tuple.Create("INDEX_ID", 5)
     }
 
+  '棚卸し棚データ固定桁数定義
+  Public Shared LenColumnInTanaoroshiTana As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("TANA_CD", 2),
+      Tuple.Create("TANA_NAME", 10),
+      Tuple.Create("TORIKOMI_JOKYO_FLG", 1),
+      Tuple.Create("INDEX_ID", 5)
+    }
+
+  '棚卸データ固定桁数定義
+  Public Shared LenColumnInTanaoroshi As New List(Of Tuple(Of String, Integer)) From {
+    Tuple.Create("TANAOROSHI_DATE", 8),
+    Tuple.Create("SAGYO_YOTEI_DATE", 8),
+    Tuple.Create("TANA_CD", 2),
+    Tuple.Create("TANA_AREA", 6),
+    Tuple.Create("JISYA_SHOHIN_CD", 5),
+    Tuple.Create("JISYA_SHOHIN_MEI", 80),
+    Tuple.Create("IRISU", 5),
+    Tuple.Create("JAN", 13),
+    Tuple.Create("ITF", 16),
+    Tuple.Create("TANA_YOTEISU_CASE", 5),
+    Tuple.Create("TANA_YOTEISU_BARA", 5),
+    Tuple.Create("TANA_JISSEKI_CASE", 5),
+    Tuple.Create("TANA_JISSEKI_BARA", 5),
+    Tuple.Create("CASE_TANI", 6),
+    Tuple.Create("BARA_TANI", 6),
+    Tuple.Create("SHOMIKIGEN", 8),
+    Tuple.Create("GOUKI", 2),
+    Tuple.Create("TANTO_CD", 3),
+    Tuple.Create("RECEIVE_DATE", 14),
+    Tuple.Create("TORIKOMI_JOKYO_FLG", 1),
+    Tuple.Create("INDEX_ID", 5)
+}
+
+
   '出荷店舗データ固定桁数定義
   Public Shared LenColumnInShop As New List(Of Tuple(Of String, Integer)) From {
       Tuple.Create("JIGYOSHO_CD", 4),

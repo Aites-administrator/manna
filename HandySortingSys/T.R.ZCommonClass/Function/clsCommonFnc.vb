@@ -64,6 +64,20 @@ Public Class clsCommonFnc
     KENPIN_ZUMI = 7
   End Enum
 
+  ' 出荷ステータスタイプ
+  Public Enum TANAOROSHI_STATUS
+    TORIKOMIZUMI = 1
+    SOUSINZUMI = 2
+    TANAOROSHI_ZUMI = 3
+  End Enum
+
+  ' 温度帯タイプ
+  Public Enum ONDOTAI
+    JOUON = 1
+    REIZO = 2
+    REITO = 3
+  End Enum
+
 
 #Region "メンバ"
 

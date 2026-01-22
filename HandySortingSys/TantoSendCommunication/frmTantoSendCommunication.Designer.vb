@@ -1,7 +1,7 @@
 ﻿Imports T.R.ZCommonCtrl
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmTantoSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
 
   'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
   <System.Diagnostics.DebuggerNonUserCode()> _

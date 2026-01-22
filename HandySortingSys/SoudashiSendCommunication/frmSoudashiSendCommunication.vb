@@ -12,18 +12,21 @@ Imports ClsHandyCommunication
 
 
 Public Class frmSoudashiSendCommunication
-  Inherits FormCommunication
+  Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
     Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "MST_TANA.DAT"
     Private Const SEND_SOUDASHI_FILE_NAME As String = SEND_FOLDER & "MST_PICK.DAT"
 
+  Protected Overrides Sub OnLoad(e As EventArgs)
 
-  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateNohinBi1.SelectedIndex = 0
     RegisterSendButton(Me.BtnSendHandy1)
 
+    Me.TextDisplayName = "総出し"
+
+    MyBase.OnLoad(e)
   End Sub
 
   Protected Overrides Sub OnSendCompleted()
@@ -300,7 +303,7 @@ Public Class frmSoudashiSendCommunication
     End If
     ' チェック列を一番左に移動！
     tmpDtJP.Columns("チェック").SetOrdinal(0)
-
+    DgvList1.TargetColumnName = "総出し済"
     DgvList1.SetData(tmpDtJP)
   End Sub
 

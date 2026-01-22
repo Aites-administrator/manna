@@ -4,9 +4,17 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 
 Public Class frmShukkaCheckRecieveCommunication
-  Inherits FormCommunication
+  Inherits FormRecieveCommunication
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "SHOPITEM.DAT"
+
+  Protected Overrides Sub OnLoad(e As EventArgs)
+
+    Me.TextDisplayName = "出荷検品"
+
+    MyBase.OnLoad(e)
+  End Sub
+
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)

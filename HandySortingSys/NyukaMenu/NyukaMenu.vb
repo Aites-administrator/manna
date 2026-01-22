@@ -45,22 +45,23 @@ Public Class NyukaMenu
   End Sub
 
   Public Sub BottonSetting()
-    BtnMainMenuBase1.Title = "　ﾊﾝﾃﾞｨ入荷" & vbCrLf & "送信"
+    BtnMainMenuBase1.Title = "　ﾊﾟｿｺﾝ⇒ﾊﾝﾃﾞｨ" & vbCrLf & "入荷(F1)"
     BtnMainMenuBase1.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaSendImage.png")
     BtnMainMenuBase1.ButtonColor = ColorTranslator.FromHtml("#add8e6")
     BtnMainMenuBase1.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase1.AccessKey = Keys.F1
 
-    BtnMainMenuBase2.Title = "　ﾊﾝﾃﾞｨ入荷" & vbCrLf & "受信"
+    BtnMainMenuBase2.Title = "　ﾊﾝﾃﾞｨ⇒ﾊﾟｿｺﾝ" & vbCrLf & "入荷(F2)"
     BtnMainMenuBase2.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaReceiveImage.png")
     BtnMainMenuBase2.ButtonColor = ColorTranslator.FromHtml("#04cfe3")
     BtnMainMenuBase2.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase2.AccessKey = Keys.F2
 
-
-    BtnMainMenuBase3.Title = "　入荷検品書"
+    BtnMainMenuBase3.Title = "　入荷検品書(F3)"
     BtnMainMenuBase3.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaOutputImage.png")
     BtnMainMenuBase3.ButtonColor = ColorTranslator.FromHtml("#0494e3")
     BtnMainMenuBase3.Font = New Font("Meiryo", 20, FontStyle.Bold)
-
+    BtnMainMenuBase3.AccessKey = Keys.F3
 
   End Sub
 
