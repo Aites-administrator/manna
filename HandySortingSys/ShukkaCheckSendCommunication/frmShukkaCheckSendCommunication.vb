@@ -17,17 +17,17 @@ Public Class frmShukkaCheckSendCommunication
   Private Const SEND_SHOPITEM_FILE_NAME As String = SEND_FOLDER & "SHOPITEM.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
-    CmbDateNohinBi1.SelectedIndex = 0
-    RegisterSendButton(Me.BtnSendHandy1)
 
     Me.TextDisplayName = "出荷検品"
 
     MyBase.OnLoad(e)
   End Sub
 
-  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    CmbDateNohinBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
 
-  'End Sub
+  End Sub
 
   Protected Overrides Sub OnSendCompleted()
     MyBase.OnSendCompleted()

@@ -17,18 +17,17 @@ Public Class frmNyukaSendCommunication
   Private Const SEND_NYUKA_FILE_NAME As String = SEND_FOLDER & "IN_ITEM.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
-    CmbDateSagyoBi1.SelectedIndex = 0
-    RegisterSendButton(Me.BtnSendHandy1)
-
     Me.TextDisplayName = "入荷検品"
 
     MyBase.OnLoad(e)
   End Sub
 
 
-  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    CmbDateSagyoBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
 
-  'End Sub
+  End Sub
 
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateSagyoBi1.SelectedIndexChanged
     ReloadGrid()
@@ -91,8 +90,8 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.JISYA_SHOHIN_CD "
     sql &= "      ,	TRN_NYUKA.MAKER_SHOHIN_MEI "
     sql &= "      ,	TRN_NYUKA.MAKER_KIKAKU_MEI "
-    sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER * IIF(MAKER_NIAISU=0,1,MAKER_NIAISU) AS NYUKA_YOTEISU_CASE "
-    sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA/MST_ITEM.IRISU) AS NYUKA_YOTEISU_MAKER "
+    sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA/MST_ITEM.IRISU) AS NYUKA_YOTEISU_CASE "
+    sql &= "      ,	TRN_NYUKA.NYUKA_YOTEISU_MAKER * IIF(MAKER_NIAISU=0,1,MAKER_NIAISU) AS NYUKA_YOTEISU_MAKER "
     sql &= "      ,	CONVERT(int,TRN_NYUKA.NYUKA_YOTEISU_JISYA % MST_ITEM.IRISU) NYUKA_YOTEISU_JISYA  "
     sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_MAKER "
     sql &= "      ,	TRN_NYUKA.NYUKA_JISSEKISU_JISYA "

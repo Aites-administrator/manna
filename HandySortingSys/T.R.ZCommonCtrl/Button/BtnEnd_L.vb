@@ -26,6 +26,7 @@ Public Class BtnEnd_L
     Me.BackColor = ColorTranslator.FromHtml("#f4bcbc")
     Me.ForeColor = ColorTranslator.FromHtml("#000000")
     Me.FlatStyle = FlatStyle.Flat
+
     Me.FlatAppearance.BorderSize = 0
 
     MakeRoundedButton(Me, 20)
@@ -47,15 +48,15 @@ Public Class BtnEnd_L
 
 
 #End Region
-  Private Sub MakeRoundedButton(btn As Button, radius As Integer)
-    Dim path As New GraphicsPath()
-    path.AddArc(0, 0, radius, radius, 180, 90)
-    path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)
-    path.AddArc(btn.Width - radius, btn.Height - radius, radius, radius, 0, 90)
-    path.AddArc(0, btn.Height - radius, radius, radius, 90, 90)
-    path.CloseAllFigures()
-    btn.Region = New Region(path)
-  End Sub
+  'Private Sub MakeRoundedButton(btn As Button, radius As Integer)
+  '  Dim path As New GraphicsPath()
+  '  path.AddArc(0, 0, radius, radius, 180, 90)
+  '  path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)
+  '  path.AddArc(btn.Width - radius, btn.Height - radius, radius, radius, 0, 90)
+  '  path.AddArc(0, btn.Height - radius, radius, radius, 90, 90)
+  '  path.CloseAllFigures()
+  '  btn.Region = New Region(path)
+  'End Sub
 
 
 End Class

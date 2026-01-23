@@ -19,12 +19,18 @@ Public Class TanaoroshiMenu
 
   End Sub
 
+  Private Sub TanaoroshiMenu_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
+  End Sub
+
+
   Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_SHUKKA_TORIKOMI "
     sql &= "      ,  MAX(SEND_DATE) AS MAX_SHUKKA_SEND	 "
     sql &= "      ,  MAX(RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
+    sql &= "      ,  MAX(OUTPUT_DATE) AS MAX_SHUKKA_OUTPUT "
     sql &= " FROM TRN_TANAOROSHI "
 
     Return sql
@@ -38,6 +44,7 @@ Public Class TanaoroshiMenu
 
     LblProcDateTime1.Text = tmpNyukaDt.Rows(0).Item("MAX_SHUKKA_SEND").ToString()
     LblProcDateTime2.Text = tmpNyukaDt.Rows(0).Item("MAX_SHUKKA_RECEIVE").ToString()
+    LblProcDateTime3.Text = tmpNyukaDt.Rows(0).Item("MAX_SHUKKA_OUTPUT").ToString()
 
   End Sub
 
@@ -63,11 +70,11 @@ Public Class TanaoroshiMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M42", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M42", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M43", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M43", "EXE", IniFileName)))
   End Sub
 
 End Class

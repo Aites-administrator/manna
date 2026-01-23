@@ -16,13 +16,10 @@ Public Class frmSoudashiSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
-    Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "MST_TANA.DAT"
-    Private Const SEND_SOUDASHI_FILE_NAME As String = SEND_FOLDER & "MST_PICK.DAT"
+  Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "MST_TANA.DAT"
+  Private Const SEND_SOUDASHI_FILE_NAME As String = SEND_FOLDER & "MST_PICK.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
-
-    CmbDateNohinBi1.SelectedIndex = 0
-    RegisterSendButton(Me.BtnSendHandy1)
 
     Me.TextDisplayName = "総出し"
 
@@ -34,6 +31,11 @@ Public Class frmSoudashiSendCommunication
     ReloadGrid()
   End Sub
 
+  Private Sub frmSoudashiSendCommunication_Load(sender As Object, e As EventArgs) Handles Me.Load
+    CmbDateNohinBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
+
+  End Sub
 
 
   Private Sub CmbDateNohinBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateNohinBi1.SelectedIndexChanged

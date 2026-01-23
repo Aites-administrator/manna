@@ -9,14 +9,14 @@ Public Class frmMainMenu
   Private IniFileName As String
   Private Sub frmMainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "MainMenuBackGroundImage.png"
-        SetBackGroundImage(Me, path)
+    SetBackGroundImage(Me, path)
 
-        '    If IO.File.Exists(path) Then
-        '  Me.BackgroundImage = Image.FromFile(path)
-        '  Me.BackgroundImageLayout = ImageLayout.Stretch
-        'End If
+    '    If IO.File.Exists(path) Then
+    '  Me.BackgroundImage = Image.FromFile(path)
+    '  Me.BackgroundImageLayout = ImageLayout.Stretch
+    'End If
 
-        path = PROJECT_DIR_NAME & IMAGE_FORDER & "information.png"
+    path = PROJECT_DIR_NAME & IMAGE_FORDER & "information.png"
     If IO.File.Exists(path) Then
 
       PanelBase1.BackColor = ColorTranslator.FromHtml("#212480")
@@ -77,6 +77,21 @@ Public Class frmMainMenu
 
   End Function
 
+  Private Function SqlSelTanaoroshiMaxDate() As String
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT  MAX(TANAOROSHI_DATE) AS TANAOROSHI_DATE "
+    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
+    sql &= " FROM TRN_TANAOROSHI "
+    sql &= " WHERE NOUHINBI = ("
+    sql &= "       SELECT	MAX(TANAOROSHI_DATE)"
+    sql &= "       FROM	TRN_TANAOROSHI "
+    sql &= " )"
+
+    Return sql
+
+  End Function
+
   Public Sub CaptionDateDisp()
     Dim tmpNyukaDt As New DataTable
     SqlServer.GetResult(tmpNyukaDt, SqlSelNyukaMaxDate)
@@ -86,7 +101,7 @@ Public Class frmMainMenu
 
     LblNyukaSend.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
     LblNyukaReceive.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
-    LblSoudashiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
+    LblSoudashiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
     LblSoudashiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
     LblTanemakiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
     LblTanemakiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
@@ -96,13 +111,13 @@ Public Class frmMainMenu
     '入荷受信ステータス更新
     InformationSetting(NyukaReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(NYUKA_STATUS.KEPINZUMI))
     '総出し送信ステータス更新
-    InformationSetting(SoudashiSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI))
+    InformationSetting(SoudashiSendStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI))
     '総出し受信ステータス更新
-    InformationSetting(SoudashiReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_ZUMI))
+    InformationSetting(SoudashiReceiveStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_ZUMI))
     '種まき送信ステータス更新
-    InformationSetting(TanemakiSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI))
+    InformationSetting(TanemakiSendStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI))
     '総出し受信ステータス更新
-    InformationSetting(TanemakiReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_ZUMI))
+    InformationSetting(TanemakiReceiveStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_ZUMI))
 
 
 
@@ -247,30 +262,32 @@ Public Class frmMainMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M00", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M00", "EXE", IniFileName)))
+
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M10", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M10", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
-    ComGetProcessByFilePath(GetIniString("M20", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M20", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase4_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase4.Click
-    ComGetProcessByFilePath(GetIniString("M30", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M30", "EXE", IniFileName)))
 
   End Sub
 
   Private Sub BtnMainMenuBase6_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase6.Click
-    Call ComGetProcessByFilePath(Application.StartupPath & "\" & PASSWORD_ENTRY_MODULE & ".exe" _
-                              , IO.Path.GetFileName(GetIniString("M50", "EXE", IniFileName)))
+    Call AttachActivateOnExit(Me, ComGetProcessByFilePath(Application.StartupPath & "\" & PASSWORD_ENTRY_MODULE & ".exe" _
+                              , IO.Path.GetFileName(GetIniString("M50", "EXE", IniFileName))))
 
 
   End Sub
 
   Private Sub BtnMainMenuBase5_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase5.Click
-    ComGetProcessByFilePath(GetIniString("M40", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M40", "EXE", IniFileName)))
   End Sub
+
 End Class

@@ -12,8 +12,8 @@
       {"JISYA_SHOHIN_CD", "自社商品CD"},
       {"MAKER_SHOHIN_MEI", "メーカー商品名"},
       {"MAKER_KIKAKU_MEI", "メーカー規格名"},
-      {"NYUKA_YOTEISU_CASE", "個口数"},
-      {"NYUKA_YOTEISU_MAKER", "ケース数"},
+      {"NYUKA_YOTEISU_MAKER", "個口数"},
+      {"NYUKA_YOTEISU_CASE", "ケース数"},
       {"NYUKA_YOTEISU_JISYA", "バラ数量"},
       {"NYUKA_JISSEKISU_MAKER", "実績ケース数"},
       {"NYUKA_JISSEKISU_JISYA", "実績バラ数量"},
@@ -96,9 +96,9 @@
       {"SHUKKA_YOTEISU_BARA", "店舗出荷予定バラ数"},
       {"CASE_TANI", "ケース単位"},
       {"BARA_TANI", "バラ単位"},
-      {"GOUKI", "号機"},
-      {"TANTO_CD", "担当者"},
-      {"RECEIVE_DATE", "作業日時"},
+      {"TANEMAKI_GOUKI", "号機"},
+      {"TANEMAKI_TANTO_CD", "担当者"},
+      {"TANEMAKI_RECEIVE_DATE", "作業日時"},
       {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"INDEX_ID", "INDEX_ID"}
     }
@@ -292,5 +292,15 @@
     ' 見つからなければ日本語名のまま返す
     Return jpColumnName
   End Function
+
+  Public Function GetJapaneseColumnList(mappingName As String) As List(Of String)
+    If Not MappingDictionary.ContainsKey(mappingName) Then
+      Throw New ArgumentException($"マッピング名 '{mappingName}' は定義されていません。")
+    End If
+
+    ' Value（日本語名）だけを List にして返す
+    Return MappingDictionary(mappingName).Values.ToList()
+  End Function
+
 
 End Class

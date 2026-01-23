@@ -15,10 +15,10 @@ Public Class FormComMasterMente
   Private _dt As DataTable
 
   Friend WithEvents DgvList1 As DgvList
-  Friend WithEvents btnSave As Button
-  Friend WithEvents btnDelete As Button
-  Friend WithEvents btnAdd As Button
-  Friend WithEvents btnImport As Button
+  Friend WithEvents btnSave As BtnSave
+  Friend WithEvents btnDelete As BtnDel
+  Friend WithEvents btnAdd As BtnAdd
+  Friend WithEvents btnImport As BtnMstInput
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
 
@@ -28,82 +28,98 @@ Public Class FormComMasterMente
   End Sub
 
   Private Sub FormComMasterMente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-    Me.LblBase1.Text = _definition.Title
-    ' データ取得
-    _dt = _definition.LoadData()
+    Try
+      Me.LblBase1.Text = _definition.Title
+      ' データ取得
+      _dt = _definition.LoadData()
 
-    _dt.AcceptChanges()
+      _dt.AcceptChanges()
 
-    DgvList1.SetData(_dt)
+      DgvList1.SetData(_dt)
 
-    ' 列設定
-    SetupColumns()
+      ' 列設定
+      SetupColumns()
 
-    btnAdd.Enabled = _definition.AllowAdd
-    btnImport.Visible = _definition.AllowImport
+      btnAdd.Visible = Not _definition.AllowImport
+      btnImport.Visible = _definition.AllowImport
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
   End Sub
 
   Private Sub SetupColumns()
-    For Each col In _definition.Columns
-      Dim dgvCol = DgvList1.Columns(col.Name)
+    Try
+      For Each col In _definition.Columns
+        Dim dgvCol = DgvList1.Columns(col.Name)
 
-      If dgvCol IsNot Nothing Then
-        dgvCol.HeaderText = col.DisplayName
-        dgvCol.ReadOnly = Not col.IsEditable
-      End If
-    Next
+        If dgvCol IsNot Nothing Then
+          dgvCol.HeaderText = col.DisplayName
+          dgvCol.ReadOnly = Not col.IsEditable
+        End If
+      Next
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+
   End Sub
 
   Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+    Try
+      Dim changed As DataTable = _dt.GetChanges(DataRowState.Modified Or DataRowState.Added)
 
-    Dim changed As DataTable = _dt.GetChanges(DataRowState.Modified Or DataRowState.Added)
-
-    If changed Is Nothing OrElse changed.Rows.Count = 0 Then
-      ComMessageBox("変更された行はありません。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
-      Return
-    End If
-
-    DgvList1.SetData(changed)
-
-    Dim result = ComMessageBox("変更された行だけを表示しています。" & vbCrLf &
-                                 "この内容で保存しますか？",
-                                 ENTRY_TITLE,
-                                  typMsgBox.MSG_NORMAL,
-                                 MessageBoxButtons.YesNo)
-
-    If result = DialogResult.No Then
-      ' 元の全件に戻す
-      DgvList1.SetData(_dt)
-      SetupColumns()
-
-      Return
-    End If
-
-    For Each row As DataRow In changed.Rows
-
-      Dim errors = _definition.ValidateRow(row)
-      If errors.Any() Then
-        ComMessageBox(String.Join(vbCrLf, errors), ENTRY_TITLE, typMsgBox.MSG_ERROR)
+      If changed Is Nothing OrElse changed.Rows.Count = 0 Then
+        ComMessageBox("変更された行はありません。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
         Return
       End If
 
-      _definition.Save(row)
-    Next
+      DgvList1.SetData(changed)
 
-    ComMessageBox("保存しました。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
+      Dim result = ComMessageBox("変更された行だけを表示しています。" & vbCrLf &
+                                   "この内容で保存しますか？",
+                                   ENTRY_TITLE,
+                                    typMsgBox.MSG_NORMAL,
+                                   MessageBoxButtons.YesNo)
 
-    ' 保存後は全件再読み込み
-    _dt = _definition.LoadData()
-    _dt.AcceptChanges()
-    DgvList1.SetData(_dt)
-    SetupColumns()
+      If result = DialogResult.No Then
+        ' 元の全件に戻す
+        DgvList1.SetData(_dt)
+        SetupColumns()
+
+        Return
+      End If
+
+      For Each row As DataRow In changed.Rows
+
+        Dim errors = _definition.ValidateRow(row)
+        If errors.Any() Then
+          ComMessageBox(String.Join(vbCrLf, errors), ENTRY_TITLE, typMsgBox.MSG_ERROR)
+          Return
+        End If
+
+        _definition.Save(row)
+      Next
+
+      ComMessageBox("保存しました。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
+
+      ' 保存後は全件再読み込み
+      _dt = _definition.LoadData()
+      _dt.AcceptChanges()
+      DgvList1.SetData(_dt)
+      SetupColumns()
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+    End Try
+
+
   End Sub
 
   Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
-    Dim row = GetSelectedRow()
-    If row Is Nothing Then Return
+    Try
+      Dim row = GetSelectedRow()
+      If row Is Nothing Then Return
 
-    Dim result = ComMessageBox(
+      Dim result = ComMessageBox(
         "選択された行を削除しますか？" & vbCrLf &
         "（この操作は元に戻せません）",
         DELETE_TITLE,
@@ -111,36 +127,75 @@ Public Class FormComMasterMente
         MessageBoxButtons.YesNo
     )
 
-    If result = DialogResult.No Then
-      Return
-    End If
+      If result = DialogResult.No Then
+        Return
+      End If
 
-    ComMessageBox("削除しました。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
+      ComMessageBox("削除しました。", ENTRY_TITLE, typMsgBox.MSG_NORMAL)
 
-    _definition.Delete(row)
-    row.Delete()
+      _definition.Delete(row)
+      row.Delete()
+
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+    End Try
 
   End Sub
 
   Private Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
-    Dim newRow = _definition.CreateNewRow(_dt)
-    _dt.Rows.Add(newRow)
+    Try
+      Dim newRow = _definition.CreateNewRow(_dt)
+      _dt.Rows.Add(newRow)
+
+      ScrollToBottom(DgvList1)
+
+
+
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+    End Try
   End Sub
 
-  Private Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
-    _definition.Import()
+  Private Sub ScrollToBottom(dgv As DataGridView)
+    If dgv.Rows.Count = 0 Then Exit Sub
 
-    ' 再読み込み
-    _dt = _definition.LoadData()
-    _dt.AcceptChanges()
-    DgvList1.SetData(_dt)
+    ' 新規行を除いた最後の行
+    Dim last As Integer = dgv.Rows.Count - 1
+    If dgv.AllowUserToAddRows Then last -= 1
+    If last < 0 Then Exit Sub
+
+    ' 最後の行を表示＆フォーカス
+    dgv.FirstDisplayedScrollingRowIndex = last
+    dgv.CurrentCell = dgv.Rows(last).Cells(0)
+  End Sub
+
+
+  Private Sub btnImport_Click(sender As Object, e As EventArgs) Handles btnImport.Click
+    Try
+      _definition.Import()
+
+      ' 再読み込み
+      _dt = _definition.LoadData()
+      _dt.AcceptChanges()
+      DgvList1.SetData(_dt)
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+    End Try
+
   End Sub
 
   Private Function GetSelectedRow() As DataRow
-    If DgvList1.CurrentRow Is Nothing Then Return Nothing
     Dim drv = TryCast(DgvList1.CurrentRow.DataBoundItem, DataRowView)
-    If drv Is Nothing Then Return Nothing
-    Return drv.Row
+
+    Try
+      If DgvList1.CurrentRow Is Nothing Then Return Nothing
+      If drv Is Nothing Then Return Nothing
+      Return drv.Row
+
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+      Return drv.Row
+    End Try
   End Function
 
   '===============================
@@ -148,10 +203,10 @@ Public Class FormComMasterMente
   '===============================
   Protected Overrides Sub InitializeComponent()
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
-    Me.btnSave = New System.Windows.Forms.Button()
-    Me.btnDelete = New System.Windows.Forms.Button()
-    Me.btnAdd = New System.Windows.Forms.Button()
-    Me.btnImport = New System.Windows.Forms.Button()
+    Me.btnSave = New T.R.ZCommonCtrl.BtnSave()
+    Me.btnDelete = New T.R.ZCommonCtrl.BtnDel()
+    Me.btnAdd = New T.R.ZCommonCtrl.BtnAdd()
+    Me.btnImport = New T.R.ZCommonCtrl.BtnMstInput()
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -163,57 +218,82 @@ Public Class FormComMasterMente
     Me.DgvList1.Location = New System.Drawing.Point(13, 174)
     Me.DgvList1.Name = "DgvList1"
     Me.DgvList1.RowTemplate.Height = 21
-    Me.DgvList1.Size = New System.Drawing.Size(1359, 675)
+    Me.DgvList1.Size = New System.Drawing.Size(1659, 675)
     Me.DgvList1.TabIndex = 4
+    Me.DgvList1.TargetColumnName = ""
     '
     'btnSave
     '
-    Me.btnSave.Location = New System.Drawing.Point(1048, 109)
+    Me.btnSave.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
+    Me.btnSave.FlatAppearance.BorderSize = 0
+    Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.btnSave.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.btnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+    Me.btnSave.Location = New System.Drawing.Point(339, 99)
     Me.btnSave.Name = "btnSave"
-    Me.btnSave.Size = New System.Drawing.Size(159, 50)
+    Me.btnSave.Size = New System.Drawing.Size(320, 60)
     Me.btnSave.TabIndex = 5
     Me.btnSave.Text = "保存"
-    Me.btnSave.UseVisualStyleBackColor = True
+    Me.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.btnSave.UseVisualStyleBackColor = False
     '
     'btnDelete
     '
-    Me.btnDelete.Location = New System.Drawing.Point(1213, 109)
+    Me.btnDelete.BackColor = System.Drawing.Color.FromArgb(CType(CType(211, Byte), Integer), CType(CType(47, Byte), Integer), CType(CType(47, Byte), Integer))
+    Me.btnDelete.FlatAppearance.BorderSize = 0
+    Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.btnDelete.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.btnDelete.ForeColor = System.Drawing.Color.Black
+    Me.btnDelete.Location = New System.Drawing.Point(665, 99)
     Me.btnDelete.Name = "btnDelete"
-    Me.btnDelete.Size = New System.Drawing.Size(159, 50)
+    Me.btnDelete.Size = New System.Drawing.Size(320, 60)
     Me.btnDelete.TabIndex = 6
     Me.btnDelete.Text = "削除"
-    Me.btnDelete.UseVisualStyleBackColor = True
+    Me.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.btnDelete.UseVisualStyleBackColor = False
     '
     'btnAdd
     '
-    Me.btnAdd.Location = New System.Drawing.Point(883, 109)
+    Me.btnAdd.BackColor = System.Drawing.Color.FromArgb(CType(CType(76, Byte), Integer), CType(CType(175, Byte), Integer), CType(CType(80, Byte), Integer))
+    Me.btnAdd.FlatAppearance.BorderSize = 0
+    Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.btnAdd.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.btnAdd.ForeColor = System.Drawing.Color.Black
+    Me.btnAdd.Location = New System.Drawing.Point(12, 99)
     Me.btnAdd.Name = "btnAdd"
-    Me.btnAdd.Size = New System.Drawing.Size(159, 50)
+    Me.btnAdd.Size = New System.Drawing.Size(320, 60)
     Me.btnAdd.TabIndex = 7
     Me.btnAdd.Text = "追加"
-    Me.btnAdd.UseVisualStyleBackColor = True
+    Me.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.btnAdd.UseVisualStyleBackColor = False
     '
     'btnImport
     '
-    Me.btnImport.Location = New System.Drawing.Point(718, 109)
+    Me.btnImport.BackColor = System.Drawing.SystemColors.ActiveCaption
+    Me.btnImport.FlatAppearance.BorderSize = 0
+    Me.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.btnImport.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.btnImport.ForeColor = System.Drawing.Color.Black
+    Me.btnImport.Location = New System.Drawing.Point(13, 99)
     Me.btnImport.Name = "btnImport"
-    Me.btnImport.Size = New System.Drawing.Size(159, 50)
+    Me.btnImport.Size = New System.Drawing.Size(320, 60)
     Me.btnImport.TabIndex = 8
     Me.btnImport.Text = "取込"
-    Me.btnImport.UseVisualStyleBackColor = True
+    Me.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.btnImport.UseVisualStyleBackColor = False
     '
     'BtnEnd_L1
     '
     Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
     Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
     Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-    Me.BtnEnd_L1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+    Me.BtnEnd_L1.Font = New System.Drawing.Font("メイリオ", 16.0!, System.Drawing.FontStyle.Bold)
     Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-    Me.BtnEnd_L1.Location = New System.Drawing.Point(1052, 12)
+    Me.BtnEnd_L1.Location = New System.Drawing.Point(1352, 12)
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 22
-    Me.BtnEnd_L1.Text = "ESC" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "終了"
+    Me.BtnEnd_L1.Text = "終了(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '
@@ -229,7 +309,7 @@ Public Class FormComMasterMente
     '
     'FormComMasterMente
     '
-    Me.ClientSize = New System.Drawing.Size(1384, 861)
+    Me.ClientSize = New System.Drawing.Size(1684, 861)
     Me.Controls.Add(Me.LblBase1)
     Me.Controls.Add(Me.BtnEnd_L1)
     Me.Controls.Add(Me.btnImport)

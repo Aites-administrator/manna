@@ -44,6 +44,8 @@ Public Class BtnInput
     Me.FlatStyle = FlatStyle.Flat
     Me.FlatAppearance.BorderSize = 0
 
+
+    MakeRoundedButton(Me, 20)
   End Sub
 
 

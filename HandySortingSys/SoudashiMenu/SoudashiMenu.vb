@@ -19,6 +19,11 @@ Public Class SoudashiMenu
 
   End Sub
 
+  Private Sub SoudashiMenu_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
+  End Sub
+
+
   Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
@@ -57,11 +62,12 @@ Public Class SoudashiMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M12", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M12", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M13", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M13", "EXE", IniFileName)))
 
   End Sub
+
 End Class

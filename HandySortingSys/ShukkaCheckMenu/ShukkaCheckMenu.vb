@@ -20,12 +20,17 @@ Public Class ShukkaCheckMenu
 
   End Sub
 
+  Private Sub ShukkaCheckMenu_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
+  End Sub
+
+
   Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_SHUKKA_TORIKOMI "
-    sql &= "      ,  MAX(TANEMAKI_SEND_DATE) AS MAX_SHUKKA_SEND	 "
-    sql &= "      ,  MAX(TANEMAKI_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
+    sql &= "      ,  MAX(KENPIN_SEND_DATE) AS MAX_SHUKKA_SEND	 "
+    sql &= "      ,  MAX(KENPIN_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
     sql &= " FROM TRN_SHUKKA "
 
     Return sql
@@ -58,13 +63,11 @@ Public Class ShukkaCheckMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M32", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M32", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M33", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M33", "EXE", IniFileName)))
   End Sub
-
-
 
 End Class

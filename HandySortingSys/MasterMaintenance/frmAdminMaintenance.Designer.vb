@@ -31,8 +31,8 @@ Partial Class frmAdminMaintenance
     Me.BtnMainMenuBase6 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.BtnMainMenuBase5 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.BtnMainMenuBase4 = New T.R.ZCommonCtrl.BtnMainMenuBase()
-    Me.LblProcDateTime10 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.LblProcDateTime6 = New T.R.ZCommonCtrl.LblProcDateTime()
+    Me.LblProcDateTime7 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.LblProcDateTime4 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.LblProcDateTime5 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.Panel1 = New T.R.ZCommonCtrl.PanelBase()
@@ -56,9 +56,9 @@ Partial Class frmAdminMaintenance
     Me.BtnMainMenuBase10 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.BtnMainMenuBase9 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.BtnMainMenuBase8 = New T.R.ZCommonCtrl.BtnMainMenuBase()
-    Me.LblProcDateTime9 = New T.R.ZCommonCtrl.LblProcDateTime()
-    Me.LblProcDateTime7 = New T.R.ZCommonCtrl.LblProcDateTime()
+    Me.LblProcDateTime10 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.LblProcDateTime8 = New T.R.ZCommonCtrl.LblProcDateTime()
+    Me.LblProcDateTime9 = New T.R.ZCommonCtrl.LblProcDateTime()
         Me.Panel2.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
@@ -109,8 +109,8 @@ Partial Class frmAdminMaintenance
         Me.Panel5.Controls.Add(Me.BtnMainMenuBase6)
         Me.Panel5.Controls.Add(Me.BtnMainMenuBase5)
         Me.Panel5.Controls.Add(Me.BtnMainMenuBase4)
-        Me.Panel5.Controls.Add(Me.LblProcDateTime10)
         Me.Panel5.Controls.Add(Me.LblProcDateTime6)
+        Me.Panel5.Controls.Add(Me.LblProcDateTime7)
         Me.Panel5.Controls.Add(Me.LblProcDateTime4)
         Me.Panel5.Controls.Add(Me.LblProcDateTime5)
         Me.Panel5.Location = New System.Drawing.Point(2, 84)
@@ -190,28 +190,28 @@ Partial Class frmAdminMaintenance
         Me.BtnMainMenuBase4.Title = Nothing
         Me.BtnMainMenuBase4.UseVisualStyleBackColor = True
         '
-        'LblProcDateTime10
-        '
-        Me.LblProcDateTime10.AutoSize = True
-        Me.LblProcDateTime10.Location = New System.Drawing.Point(78, 419)
-        Me.LblProcDateTime10.Name = "LblProcDateTime10"
-        Me.LblProcDateTime10.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime10.TabIndex = 16
-        Me.LblProcDateTime10.Text = "2025/12/12 12:12:12"
-        '
         'LblProcDateTime6
         '
         Me.LblProcDateTime6.AutoSize = True
-        Me.LblProcDateTime6.Location = New System.Drawing.Point(91, 565)
+        Me.LblProcDateTime6.Location = New System.Drawing.Point(89, 419)
         Me.LblProcDateTime6.Name = "LblProcDateTime6"
         Me.LblProcDateTime6.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime6.TabIndex = 15
+        Me.LblProcDateTime6.TabIndex = 16
         Me.LblProcDateTime6.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime7
+        '
+        Me.LblProcDateTime7.AutoSize = True
+        Me.LblProcDateTime7.Location = New System.Drawing.Point(91, 565)
+        Me.LblProcDateTime7.Name = "LblProcDateTime7"
+        Me.LblProcDateTime7.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime7.TabIndex = 15
+        Me.LblProcDateTime7.Text = "2025/12/12 12:12:12"
         '
         'LblProcDateTime4
         '
         Me.LblProcDateTime4.AutoSize = True
-        Me.LblProcDateTime4.Location = New System.Drawing.Point(91, 128)
+        Me.LblProcDateTime4.Location = New System.Drawing.Point(89, 124)
         Me.LblProcDateTime4.Name = "LblProcDateTime4"
         Me.LblProcDateTime4.Size = New System.Drawing.Size(219, 24)
         Me.LblProcDateTime4.TabIndex = 13
@@ -321,7 +321,7 @@ Partial Class frmAdminMaintenance
         'LblProcDateTime1
         '
         Me.LblProcDateTime1.AutoSize = True
-        Me.LblProcDateTime1.Location = New System.Drawing.Point(85, 132)
+        Me.LblProcDateTime1.Location = New System.Drawing.Point(85, 124)
         Me.LblProcDateTime1.Name = "LblProcDateTime1"
         Me.LblProcDateTime1.Size = New System.Drawing.Size(219, 24)
         Me.LblProcDateTime1.TabIndex = 12
@@ -369,13 +369,13 @@ Partial Class frmAdminMaintenance
         Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
         Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
         Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.BtnEnd_L1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+        Me.BtnEnd_L1.Font = New System.Drawing.Font("メイリオ", 16.0!, System.Drawing.FontStyle.Bold)
         Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.BtnEnd_L1.Location = New System.Drawing.Point(702, 789)
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L1.TabIndex = 3
-        Me.BtnEnd_L1.Text = "ESC" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "終了"
+        Me.BtnEnd_L1.Text = "終了(ESC)"
         Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L1.UseVisualStyleBackColor = False
         '
@@ -419,9 +419,9 @@ Partial Class frmAdminMaintenance
         Me.Panel6.Controls.Add(Me.BtnMainMenuBase10)
         Me.Panel6.Controls.Add(Me.BtnMainMenuBase9)
         Me.Panel6.Controls.Add(Me.BtnMainMenuBase8)
-        Me.Panel6.Controls.Add(Me.LblProcDateTime9)
-        Me.Panel6.Controls.Add(Me.LblProcDateTime7)
+        Me.Panel6.Controls.Add(Me.LblProcDateTime10)
         Me.Panel6.Controls.Add(Me.LblProcDateTime8)
+        Me.Panel6.Controls.Add(Me.LblProcDateTime9)
         Me.Panel6.Location = New System.Drawing.Point(6, 84)
         Me.Panel6.Name = "Panel6"
         Me.Panel6.Size = New System.Drawing.Size(313, 590)
@@ -509,33 +509,33 @@ Partial Class frmAdminMaintenance
         Me.BtnMainMenuBase8.Title = Nothing
         Me.BtnMainMenuBase8.UseVisualStyleBackColor = True
         '
-        'LblProcDateTime9
+        'LblProcDateTime10
         '
-        Me.LblProcDateTime9.AutoSize = True
-        Me.LblProcDateTime9.Location = New System.Drawing.Point(86, 419)
-        Me.LblProcDateTime9.Name = "LblProcDateTime9"
-        Me.LblProcDateTime9.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime9.TabIndex = 13
-        Me.LblProcDateTime9.Text = "2025/12/12 12:12:12"
-        Me.LblProcDateTime9.Visible = False
-        '
-        'LblProcDateTime7
-        '
-        Me.LblProcDateTime7.AutoSize = True
-        Me.LblProcDateTime7.Location = New System.Drawing.Point(78, 132)
-        Me.LblProcDateTime7.Name = "LblProcDateTime7"
-        Me.LblProcDateTime7.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime7.TabIndex = 14
-        Me.LblProcDateTime7.Text = "2025/12/12 12:12:12"
+        Me.LblProcDateTime10.AutoSize = True
+        Me.LblProcDateTime10.Location = New System.Drawing.Point(86, 419)
+        Me.LblProcDateTime10.Name = "LblProcDateTime10"
+        Me.LblProcDateTime10.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime10.TabIndex = 13
+        Me.LblProcDateTime10.Text = "2025/12/12 12:12:12"
+        Me.LblProcDateTime10.Visible = False
         '
         'LblProcDateTime8
         '
         Me.LblProcDateTime8.AutoSize = True
-        Me.LblProcDateTime8.Location = New System.Drawing.Point(86, 272)
+        Me.LblProcDateTime8.Location = New System.Drawing.Point(86, 124)
         Me.LblProcDateTime8.Name = "LblProcDateTime8"
         Me.LblProcDateTime8.Size = New System.Drawing.Size(219, 24)
-        Me.LblProcDateTime8.TabIndex = 15
+        Me.LblProcDateTime8.TabIndex = 14
         Me.LblProcDateTime8.Text = "2025/12/12 12:12:12"
+        '
+        'LblProcDateTime9
+        '
+        Me.LblProcDateTime9.AutoSize = True
+        Me.LblProcDateTime9.Location = New System.Drawing.Point(86, 272)
+        Me.LblProcDateTime9.Name = "LblProcDateTime9"
+        Me.LblProcDateTime9.Size = New System.Drawing.Size(219, 24)
+        Me.LblProcDateTime9.TabIndex = 15
+        Me.LblProcDateTime9.Text = "2025/12/12 12:12:12"
         '
         'frmAdminMaintenance
         '
@@ -578,13 +578,13 @@ Partial Class frmAdminMaintenance
   Friend WithEvents LblProcDateTime3 As T.R.ZCommonCtrl.LblProcDateTime
   Friend WithEvents LblProcDateTime2 As T.R.ZCommonCtrl.LblProcDateTime
   Friend WithEvents LblProcDateTime1 As T.R.ZCommonCtrl.LblProcDateTime
-  Friend WithEvents LblProcDateTime6 As T.R.ZCommonCtrl.LblProcDateTime
+  Friend WithEvents LblProcDateTime7 As T.R.ZCommonCtrl.LblProcDateTime
   Friend WithEvents LblProcDateTime5 As T.R.ZCommonCtrl.LblProcDateTime
   Friend WithEvents LblProcDateTime4 As T.R.ZCommonCtrl.LblProcDateTime
   Friend WithEvents LblBase1 As T.R.ZCommonCtrl.LblBase
-  Friend WithEvents LblProcDateTime7 As LblProcDateTime
   Friend WithEvents LblProcDateTime8 As LblProcDateTime
   Friend WithEvents LblProcDateTime9 As LblProcDateTime
+  Friend WithEvents LblProcDateTime10 As LblProcDateTime
   Friend WithEvents Panel2 As PanelBase
   Friend WithEvents Panel1 As PanelBase
   Friend WithEvents Panel3 As PanelBase
@@ -604,7 +604,7 @@ Partial Class frmAdminMaintenance
   Friend WithEvents BtnMainMenuBase6 As BtnMainMenuBase
   Friend WithEvents BtnMainMenuBase5 As BtnMainMenuBase
   Friend WithEvents BtnMainMenuBase4 As BtnMainMenuBase
-  Friend WithEvents LblProcDateTime10 As LblProcDateTime
+  Friend WithEvents LblProcDateTime6 As LblProcDateTime
   Friend WithEvents BtnMainMenuBase10 As BtnMainMenuBase
   Friend WithEvents BtnMainMenuBase9 As BtnMainMenuBase
   Friend WithEvents BtnMainMenuBase8 As BtnMainMenuBase

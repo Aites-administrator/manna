@@ -64,6 +64,8 @@ Public Class BtnRecieveHandy
     Me.FlatAppearance.BorderSize = 0
     Me.BackColor = SystemColors.ActiveCaption
     Me.ForeColor = Color.Black
+
+    MakeRoundedButton(Me, 20)
   End Sub
 
 

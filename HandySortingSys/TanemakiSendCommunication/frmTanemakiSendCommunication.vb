@@ -24,9 +24,6 @@ Public Class frmTanemakiSendCommunication
 
 
   Protected Overrides Sub OnLoad(e As EventArgs)
-    _isInitializing = False
-    CmbDateNohinBi1.SelectedIndex = 0
-    RegisterSendButton(Me.BtnSendHandy1)
 
     Me.TextDisplayName = "種まき"
 
@@ -34,8 +31,11 @@ Public Class frmTanemakiSendCommunication
   End Sub
 
 
-  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-  'End Sub
+  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    _isInitializing = False
+    CmbDateNohinBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
+  End Sub
 
   Protected Overrides Sub OnSendCompleted()
     MyBase.OnSendCompleted()

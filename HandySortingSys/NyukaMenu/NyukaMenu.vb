@@ -8,19 +8,24 @@ Public Class NyukaMenu
   Private IniFileName As String
 
 
-    Private Sub NyukaMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaMenuBackGroundImage.png"
-        SetBackGroundImage(Me, path)
+  Private Sub NyukaMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaMenuBackGroundImage.png"
+    SetBackGroundImage(Me, path)
 
-        IniFileName = PROJECT_DIR_NAME & "INI\menu.ini"
+    IniFileName = PROJECT_DIR_NAME & "INI\menu.ini"
 
-        CaptionDateDisp()
-        'ボタン設定
-        BottonSetting()
+    CaptionDateDisp()
+    'ボタン設定
+    BottonSetting()
 
   End Sub
 
-    Private Function SqlSelNyukaMaxDate() As String
+  Private Sub NyukaMenu_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
+  End Sub
+
+
+  Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_NYUKA_TORIKOMI "
@@ -66,19 +71,20 @@ Public Class NyukaMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M02", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M02", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M03", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M03", "EXE", IniFileName)))
 
   End Sub
 
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
-    ComGetProcessByFilePath(GetIniString("M04", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M04", "EXE", IniFileName)))
   End Sub
 
-    Private Sub LblProcDateTime1_Click(sender As Object, e As EventArgs) Handles LblProcDateTime1.Click
+  Private Sub LblProcDateTime1_Click(sender As Object, e As EventArgs) Handles LblProcDateTime1.Click
 
-    End Sub
+  End Sub
+
 End Class

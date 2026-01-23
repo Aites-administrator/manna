@@ -4,7 +4,7 @@ Partial Class SoudashiMenu
   Inherits FormBase
 
   'フォームがコンポーネントの一覧をクリーンアップするために dispose をオーバーライドします。
-  <System.Diagnostics.DebuggerNonUserCode()> _
+  <System.Diagnostics.DebuggerNonUserCode()>
   Protected Overrides Sub Dispose(ByVal disposing As Boolean)
     Try
       If disposing AndAlso components IsNot Nothing Then
@@ -103,13 +103,12 @@ Partial Class SoudashiMenu
     Me.BtnEnd_L2.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
     Me.BtnEnd_L2.FlatAppearance.BorderSize = 0
     Me.BtnEnd_L2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-    Me.BtnEnd_L2.Font = New System.Drawing.Font("Segoe UI", 11.0!)
     Me.BtnEnd_L2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
     Me.BtnEnd_L2.Location = New System.Drawing.Point(702, 789)
     Me.BtnEnd_L2.Name = "BtnEnd_L2"
     Me.BtnEnd_L2.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L2.TabIndex = 23
-    Me.BtnEnd_L2.Text = "ESC" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "終了"
+    Me.BtnEnd_L2.Text = "終了(ESC)"
     Me.BtnEnd_L2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L2.UseVisualStyleBackColor = False
     '
@@ -136,9 +135,9 @@ Partial Class SoudashiMenu
   End Sub
 
   Friend WithEvents LblBase1 As LblBase
-    Friend WithEvents BtnMainMenuBase2 As BtnMainMenuBase
-    Friend WithEvents LblProcDateTime2 As LblProcDateTime
-    Friend WithEvents LblProcDateTime1 As LblProcDateTime
-    Friend WithEvents BtnMainMenuBase1 As BtnMainMenuBase
-    Friend WithEvents BtnEnd_L2 As BtnEnd_L
+  Friend WithEvents BtnMainMenuBase2 As BtnMainMenuBase
+  Friend WithEvents LblProcDateTime2 As LblProcDateTime
+  Friend WithEvents LblProcDateTime1 As LblProcDateTime
+  Friend WithEvents BtnMainMenuBase1 As BtnMainMenuBase
+  Friend WithEvents BtnEnd_L2 As BtnEnd_L
 End Class

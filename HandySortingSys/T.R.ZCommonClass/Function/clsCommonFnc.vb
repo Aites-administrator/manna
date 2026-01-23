@@ -69,6 +69,7 @@ Public Class clsCommonFnc
     TORIKOMIZUMI = 1
     SOUSINZUMI = 2
     TANAOROSHI_ZUMI = 3
+    SHUTURYOKUZUMI = 4
   End Enum
 
   ' 温度帯タイプ
@@ -1855,18 +1856,37 @@ Optional ByVal columnCtl As Boolean = False)
     Return dt
   End Function
 
-    Public Shared Function ReadSettingIniFile(strKey As String, keyName As String)
-        Dim strPath As String = IO.Directory.GetParent(Application.StartupPath).FullName & "\INI\setting.ini"
-        Dim stringValue As String = GetIniString(strKey, keyName, strPath)
-        Return stringValue
-    End Function
+  Public Shared Function ReadSettingIniFile(strKey As String, keyName As String)
+    Dim strPath As String = IO.Directory.GetParent(Application.StartupPath).FullName & "\INI\setting.ini"
+    Dim stringValue As String = GetIniString(strKey, keyName, strPath)
+    Return stringValue
+  End Function
 
-    Public Shared Sub SetBackGroundImage(prmForm As Form, prmPath As String)
-        If IO.File.Exists(prmPath) Then
-            prmForm.BackgroundImage = Image.FromFile(prmPath)
-            prmForm.BackgroundImageLayout = ImageLayout.Stretch
-        End If
+  Public Shared Sub SetBackGroundImage(prmForm As Form, prmPath As String)
+    If IO.File.Exists(prmPath) Then
+      prmForm.BackgroundImage = Image.FromFile(prmPath)
+      prmForm.BackgroundImageLayout = ImageLayout.Stretch
+    End If
 
-    End Sub
+  End Sub
+
+  ' ============================================
+  ' プロセス終了時に指定フォームをアクティブにする共通関数
+  ' ============================================
+  Public Shared Sub AttachActivateOnExit(targetForm As Form, proc As Process)
+
+    If proc Is Nothing Then Exit Sub
+
+    proc.EnableRaisingEvents = True
+
+    AddHandler proc.Exited,
+        Sub()
+          If targetForm IsNot Nothing AndAlso Not targetForm.IsDisposed Then
+            targetForm.Invoke(Sub() targetForm.Activate())
+          End If
+        End Sub
+
+  End Sub
+
 
 End Class

@@ -9,11 +9,22 @@ Public Class frmAdminMaintenance
 
   Private Const MAX_NYUKA_TORIKOMI As Integer = 0
   Private Const MAX_SHUKKA_TORIKOMI As Integer = 1
+  Private Const MAX_TANAOROSHI_TORIKOMI As Integer = 2
+  Private Const MAX_COURSE_UPDATE As Integer = 3
+  Private Const MAX_TANTO_UPDATE As Integer = 4
+  Private Const MAX_TANA_UPDATE As Integer = 5
+  Private Const MAX_ITEM_TORIKOMI As Integer = 6
+  Private Const MAX_TANTO_SEND As Integer = 7
+  Private Const MAX_ITEM_SEND As Integer = 8
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.KeyPreview = True
     MyBase.OnLoad(e)
 
+  End Sub
+
+  Private Sub frmAdminMaintenance_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
   End Sub
 
 
@@ -105,6 +116,27 @@ Public Class frmAdminMaintenance
     sql &= " UNION ALL "
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_TORIKOMI "
     sql &= " FROM TRN_SHUKKA "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM TRN_TANAOROSHI "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(UPDATE_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_COURSE "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(UPDATE_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_TANTO "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(UPDATE_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_TANA "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_ITEM "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(SEND_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_TANTO "
+    sql &= " UNION ALL "
+    sql &= " SELECT  MAX(SEND_DATE) AS MAX_TORIKOMI "
+    sql &= " FROM MST_ITEM "
 
     Return sql
 
@@ -112,18 +144,23 @@ Public Class frmAdminMaintenance
 
 
   Public Sub CaptionDateDisp()
-    Dim tmpNyukaDt As New DataTable
-    SqlServer.GetResult(tmpNyukaDt, SqlSelNyukaMaxDate)
+    Try
+      Dim tmpNyukaDt As New DataTable
+      SqlServer.GetResult(tmpNyukaDt, SqlSelNyukaMaxDate)
 
-    LblProcDateTime1.Text = tmpNyukaDt.Rows(MAX_NYUKA_TORIKOMI).Item("MAX_TORIKOMI").ToString()
-    LblProcDateTime2.Text = tmpNyukaDt.Rows(MAX_SHUKKA_TORIKOMI).Item("MAX_TORIKOMI").ToString()
-    LblProcDateTime3.Text = ""
-    LblProcDateTime4.Text = ""
-    LblProcDateTime5.Text = ""
-    LblProcDateTime6.Text = ""
-    LblProcDateTime7.Text = ""
-    LblProcDateTime8.Text = ""
-    LblProcDateTime9.Text = ""
+      LblProcDateTime1.Text = tmpNyukaDt.Rows(MAX_NYUKA_TORIKOMI).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime2.Text = tmpNyukaDt.Rows(MAX_SHUKKA_TORIKOMI).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime3.Text = tmpNyukaDt.Rows(MAX_TANAOROSHI_TORIKOMI).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime4.Text = tmpNyukaDt.Rows(MAX_COURSE_UPDATE).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime5.Text = tmpNyukaDt.Rows(MAX_TANTO_UPDATE).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime6.Text = tmpNyukaDt.Rows(MAX_TANA_UPDATE).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime7.Text = tmpNyukaDt.Rows(MAX_ITEM_TORIKOMI).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime8.Text = tmpNyukaDt.Rows(MAX_TANTO_SEND).Item("MAX_TORIKOMI").ToString()
+      LblProcDateTime9.Text = tmpNyukaDt.Rows(MAX_ITEM_SEND).Item("MAX_TORIKOMI").ToString()
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
 
   End Sub
 
@@ -202,37 +239,37 @@ Public Class frmAdminMaintenance
 
   Private Sub BtnMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
 
-    ComGetProcessByFilePath(GetIniString("M01", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M01", "EXE", IniFileName)))
 
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M11", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M11", "EXE", IniFileName)))
 
   End Sub
 
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
-    ComGetProcessByFilePath(GetIniString("M41", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M41", "EXE", IniFileName)))
 
   End Sub
 
 
   Private Sub BtnMainMenuBase8_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase8.Click
-    ComGetProcessByFilePath(GetIniString("M201", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M201", "EXE", IniFileName)))
 
 
   End Sub
 
 
   Private Sub BtnMainMenuBase9_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase9.Click
-    ComGetProcessByFilePath(GetIniString("M202", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M202", "EXE", IniFileName)))
 
 
   End Sub
 
   Private Sub BtnMainMenuBase11_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase11.Click
 
-    ComGetProcessByFilePath(GetIniString("M203", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M203", "EXE", IniFileName)))
 
   End Sub
 

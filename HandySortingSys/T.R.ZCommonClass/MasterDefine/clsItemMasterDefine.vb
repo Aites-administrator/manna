@@ -1,5 +1,6 @@
 ﻿Imports T.R.ZCommonClass.clsDtHeaderMapping
 Imports T.R.ZCommonClass.clsCommonFnc
+Imports T.R.ZCommonClass
 Imports System.Data.SqlClient
 Imports ClosedXML.Excel
 
@@ -59,6 +60,9 @@ Public Class clsItemMasterDefine
   Private SqlServer As New clsSqlServer
   Private Const TABLE_NAME As String = "MST_ITEM"
 
+  Private mapper As New clsDtHeaderMapping
+
+
   Public ReadOnly Property Title As String Implements IMasterMentenance.Title
     Get
       Return "商品マスタ"
@@ -95,6 +99,7 @@ Public Class clsItemMasterDefine
   Public Sub Import() Implements IMasterMentenance.Import
     Dim dlg As New OpenFileDialog()
     Try
+
       SqlServer.TrnStart()
 
       '=== Excelファイル選択 ===
@@ -107,8 +112,23 @@ Public Class clsItemMasterDefine
 
       Dim filePath As String = dlg.FileName
 
+      Dim headers = ReadExcelHeader(filePath, 8)
+
+      Dim expectedHeaders = mapper.GetJapaneseColumnList("商品マスタExcel")
+
+      Dim missing = expectedHeaders.Where(Function(h) headers.Contains(h) = False).ToList()
+
+
+
+      If missing.Count > 0 Then
+        Throw New Exception("フォーマットが違います。")
+      End If
+
+
       '=== Excel → DataTable（ClosedXML）===
       Dim dtExcel As DataTable = ExcelToDataTable(filePath, 8) ' ← 8行目をヘッダにする例
+
+
 
       Using sqlCon = SqlServer.CreateSqlConnection()
         sqlCon.Open()
@@ -141,9 +161,7 @@ Public Class clsItemMasterDefine
       '=== ロールバック ===
       SqlServer.TrnRollBack()
 
-      Throw New Exception(
-            "Import 処理中にエラーが発生しました。" &
-            vbCrLf & ex.Message, ex)
+      Throw New Exception(ex.Message)
 
     Finally
       SqlServer.Dispose()
@@ -152,6 +170,31 @@ Public Class clsItemMasterDefine
 
 
   End Sub
+
+  Private Function ReadExcelHeader(filePath As String, headerRow As Integer) As List(Of String)
+    Dim headers As New List(Of String)
+
+    Using wb As New ClosedXML.Excel.XLWorkbook(filePath)
+      Dim ws = wb.Worksheet(1)
+
+      For col = 1 To ws.LastColumnUsed().ColumnNumber()
+        Dim value = ws.Cell(headerRow, col).GetString().Trim()
+
+        ' 改行・タブ・余計な空白を除去
+        value = value.Replace(vbCrLf, "") _
+                         .Replace(vbCr, "") _
+                         .Replace(vbLf, "") _
+                         .Replace(vbTab, "") _
+                         .Trim()
+
+
+        headers.Add(value)
+      Next
+    End Using
+
+    Return headers
+  End Function
+
 
   Public Function LoadData() As DataTable Implements IMasterMentenance.LoadData
     Dim dt As New DataTable
@@ -268,13 +311,13 @@ Public Class clsItemMasterDefine
 
     Catch ex As Exception
       Throw New Exception(ex.Message)
+      Return Nothing
     End Try
 
   End Function
 
 
   Public Function ConvertExcelColumnsToDb(dt As DataTable, mappingName As String) As DataTable
-    Dim mapper As New clsDtHeaderMapping
     For Each col As DataColumn In dt.Columns
       col.ColumnName = mapper.GetDbColumnName(mappingName, col.ColumnName.Replace(vbCr, "").Replace(vbLf, ""))
     Next
@@ -388,8 +431,9 @@ Public Class clsItemMasterDefine
     Sql &= "     T.HASSOSAKI_CD = S.HASSOSAKI_CD,"
     Sql &= "     T.HASSOSAKI_MEI = S.HASSOSAKI_MEI,"
     Sql &= "     T.MAKER_CD    = S.MAKER_CD,"
-    Sql &= "     T.KOKEI_KAISIBI = TRY_CONVERT(date, NULLIF(S.KOKEI_KAISIBI, '')),"
-    Sql &= "     T.KOKEI_SHOHIN_CD = S.KOKEI_SHOHIN_CD,"
+    sql &= "     T.OLD_JAN    = S.OLD_JAN ,"
+    sql &= "     T.KOKEI_KAISIBI = TRY_CONVERT(date, NULLIF(S.KOKEI_KAISIBI, '')),"
+    sql &= "     T.KOKEI_SHOHIN_CD = S.KOKEI_SHOHIN_CD,"
     Sql &= "     T.KOKEI_SHOHIN_MEI = S.KOKEI_SHOHIN_MEI,"
     Sql &= "     T.LAST_USE_DATE = TRY_CONVERT(date, NULLIF(S.LAST_USE_DATE, '')),"
     ' ★ TANA_CD は更新しない

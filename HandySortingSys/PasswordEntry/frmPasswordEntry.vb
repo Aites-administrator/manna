@@ -39,9 +39,10 @@ Public Class frmPasswordEntry
     Me.BtnCancel1.Name = "BtnCancel1"
     Me.BtnCancel1.Size = New System.Drawing.Size(216, 55)
     Me.BtnCancel1.TabIndex = 1
-    Me.BtnCancel1.Text = "F1：キャンセル"
+    Me.BtnCancel1.Text = "キャンセル(ESC)"
     Me.BtnCancel1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnCancel1.UseVisualStyleBackColor = True
+    Me.BtnCancel1.AccessKey = Keys.Escape
     '
     'BtnOk1
     '
@@ -52,9 +53,10 @@ Public Class frmPasswordEntry
     Me.BtnOk1.Name = "BtnOk1"
     Me.BtnOk1.Size = New System.Drawing.Size(147, 55)
     Me.BtnOk1.TabIndex = 2
-    Me.BtnOk1.Text = "F2：OK"
+    Me.BtnOk1.Text = "OK(ENT)"
     Me.BtnOk1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnOk1.UseVisualStyleBackColor = True
+    Me.BtnOk1.AccessKey = Keys.Enter
     '
     'Label1
     '

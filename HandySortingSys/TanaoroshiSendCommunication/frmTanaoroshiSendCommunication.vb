@@ -19,17 +19,17 @@ Public Class frmTanaoroshiSendCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
 
-    CmbDateTanaoroshiBi1.SelectedIndex = 0
-    RegisterSendButton(Me.BtnSendHandy1)
-
     Me.TextDisplayName = "棚卸"
 
     MyBase.OnLoad(e)
   End Sub
 
-  'Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+  Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    CmbDateTanaoroshiBi1.SelectedIndex = 0
+    RegisterSendButton(Me.BtnSendHandy1)
 
-  'End Sub
+
+  End Sub
 
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateTanaoroshiBi1.SelectedIndexChanged
     ReloadGrid()

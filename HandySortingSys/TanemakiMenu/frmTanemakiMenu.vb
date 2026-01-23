@@ -19,6 +19,11 @@ Public Class frmTanemakiMenu
 
   End Sub
 
+  Private Sub frmTanemakiMenu_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+    CaptionDateDisp()
+  End Sub
+
+
   Private Function SqlSelNyukaMaxDate() As String
     Dim sql As String = String.Empty
 
@@ -56,12 +61,11 @@ Public Class frmTanemakiMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    ComGetProcessByFilePath(GetIniString("M22", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M22", "EXE", IniFileName)))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    ComGetProcessByFilePath(GetIniString("M23", "EXE", IniFileName))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M23", "EXE", IniFileName)))
   End Sub
-
 
 End Class

@@ -62,6 +62,7 @@ Partial Class frmItemSendCommunication
     Me.DgvList1.RowTemplate.Height = 21
     Me.DgvList1.Size = New System.Drawing.Size(1352, 703)
     Me.DgvList1.TabIndex = 29
+    Me.DgvList1.TargetColumnName = ""
     '
     'LblBase1
     '
@@ -78,13 +79,13 @@ Partial Class frmItemSendCommunication
     Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
     Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
     Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-    Me.BtnEnd_L1.Font = New System.Drawing.Font("Segoe UI", 11.0!)
+    Me.BtnEnd_L1.Font = New System.Drawing.Font("メイリオ", 16.0!, System.Drawing.FontStyle.Bold)
     Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
     Me.BtnEnd_L1.Location = New System.Drawing.Point(1052, 12)
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 27
-    Me.BtnEnd_L1.Text = "ESC" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "終了"
+    Me.BtnEnd_L1.Text = "終了(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '

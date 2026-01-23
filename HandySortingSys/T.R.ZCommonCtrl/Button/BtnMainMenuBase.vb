@@ -131,7 +131,7 @@ Public Class BtnMainMenuBase
     End If
   End Sub
 
-  Private Sub MakeRoundedButton(btn As Button, radius As Integer)
+  Protected Overloads Sub MakeRoundedButton(btn As Button, radius As Integer)
     Dim path As New GraphicsPath()
     path.AddArc(0, 0, radius, radius, 180, 90)
     path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)

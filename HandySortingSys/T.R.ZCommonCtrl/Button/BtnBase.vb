@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports System.Drawing.Drawing2D
+
+''' <summary>
 ''' Btn操作クラス
 ''' </summary>
 ''' 
@@ -102,8 +104,21 @@ Public Class BtnBase
 
       Me.Text = tmpKeyLblHeader & "：" & BtnText
     End If
+
+    Me.Font = New Font("Meiryo", 16, FontStyle.Bold)
     MyBase.InitLayout()
   End Sub
+
+  Public Sub MakeRoundedButton(btn As Button, radius As Integer)
+    Dim path As New GraphicsPath()
+    path.AddArc(0, 0, radius, radius, 180, 90)
+    path.AddArc(btn.Width - radius, 0, radius, radius, 270, 90)
+    path.AddArc(btn.Width - radius, btn.Height - radius, radius, radius, 0, 90)
+    path.AddArc(0, btn.Height - radius, radius, radius, 90, 90)
+    path.CloseAllFigures()
+    btn.Region = New Region(path)
+  End Sub
+
 
 #End Region
 
