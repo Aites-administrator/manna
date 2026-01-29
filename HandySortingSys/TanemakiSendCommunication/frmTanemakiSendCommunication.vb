@@ -150,7 +150,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "      ,  CASE WHEN COUNT(*) > COUNT(TANEMAKI_SEND_DATE) THEN '有' "
     sql &= "         ELSE '無' "
     sql &= "         END AS TANEMAKI_SEND_DATE "
-    sql &= "      ,  CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN '済' "
+    sql &= "      ,  CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN '済' "
     sql &= "         ELSE '未' "
     sql &= "         END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,  CASE WHEN MAX(TANEMAKI_SEND_DATE) IS NULL THEN '無' "
@@ -161,7 +161,7 @@ Public Class frmTanemakiSendCommunication
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE "
     sql &= " ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -194,13 +194,14 @@ Public Class frmTanemakiSendCommunication
     sql &= "      ,	MAX(TANEMAKI_GOUKI) AS GOUKI "
     sql &= "      ,	MAX(TANEMAKI_TANTO_CD) AS TANTO_CD "
     sql &= "      ,	FORMAT(MAX(TANEMAKI_SEND_DATE), 'yyyyMMddHHmmss') AS SEND_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE "
     sql &= " ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -244,13 +245,14 @@ Public Class frmTanemakiSendCommunication
     sql &= "    ,HACHU_TANI AS BARA_TANI "
     sql &= "    ,MAX(TANEMAKI_GOUKI) AS TANEMAKI_GOUKI "
     sql &= "    ,MAX(TANEMAKI_TANTO_CD) AS TANEMAKI_TANTO_CD "
-    sql &= "    ,MAX(TANEMAKI_RECEIVE_DATE) AS TANEMAKI_RECEIVE_DATE "
-    sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "    ,FORMAT(MAX(TANEMAKI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS TANEMAKI_RECEIVE_DATE "
+    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    'sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "    ,'' AS INDEX_ID "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
@@ -301,8 +303,9 @@ Public Class frmTanemakiSendCommunication
     sql &= "    ,HACHU_TANI AS BARA_TANI "
     sql &= "    ,MAX(TANEMAKI_GOUKI) AS TANEMAKI_GOUKI "
     sql &= "    ,MAX(TANEMAKI_TANTO_CD) AS TANEMAKI_TANTO_CD "
-    sql &= "    ,MAX(TANEMAKI_RECEIVE_DATE) AS TANEMAKI_RECEIVE_DATE "
-    sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "    ,FORMAT(MAX(TANEMAKI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS TANEMAKI_RECEIVE_DATE "
+    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    'sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "    ,'' AS INDEX_ID "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
@@ -316,7 +319,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "    FROM TRN_SHUKKA "
     sql &= "    LEFT JOIN MST_ITEM ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= "    LEFT JOIN MST_COURSE ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
@@ -336,7 +339,7 @@ Public Class frmTanemakiSendCommunication
     sql &= " ) COURSE_SURYO "
     sql &= "    ON COURSE_SURYO.NOUHINBI = TRN_SHUKKA.NOUHINBI "
     sql &= "   AND COURSE_SURYO.COURSE_CD = MST_COURSE.COURSE_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))

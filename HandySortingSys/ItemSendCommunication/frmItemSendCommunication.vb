@@ -93,6 +93,7 @@ Public Class frmItemSendCommunication
     sql &= "      , TANKA_TANI AS TANKA_TANI "
     sql &= "      , LEFT(MST_ITEM.TANA_CD, 1) + '-' + SUBSTRING(MST_ITEM.TANA_CD, 2, 1) + '-' + RIGHT(MST_ITEM.TANA_CD, 2) AS TANA_CD "
     sql &= " FROM MST_ITEM "
+    sql &= " WHERE MST_ITEM.TANA_CD IS NOT NULL"
     sql &= " ORDER BY SHOHIN_CD "
 
     Return sql
@@ -115,6 +116,12 @@ Public Class frmItemSendCommunication
       BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_ITEM_FILE_NAME
 
+      '条件項目生成
+      tmpWhere.Add("SHOHIN_CD")
+
+      '通信日付項目生成
+      tmpCommunicationDate.Add("SEND_DATE", ComGetProcTime)
+
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_ITEM_FILE_NAME)
       SqlServer.GetResult(tmpDt, SqlSelTrnShopItemSelect)
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_ITEM_FILE_NAME, LenColumnInMstItem)
@@ -122,6 +129,9 @@ Public Class frmItemSendCommunication
       Handy.DeleteAcquisitionFlag()
 
       BtnSendHandy1.TargetLenClumn = LenColumnInMstItem
+      BtnSendHandy1.TargetWhere = tmpWhere
+      BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
+
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

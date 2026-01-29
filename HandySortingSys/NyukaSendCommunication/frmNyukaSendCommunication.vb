@@ -45,6 +45,7 @@ Public Class frmNyukaSendCommunication
             line &= ToFixedLength(StrConv(tmpRow(LenColumnInNyukaTup.Item1).ToString(), VbStrConv.Narrow), LenColumnInNyukaTup.Item2)
           Else
             line &= ToFixedLength(tmpRow(LenColumnInNyukaTup.Item1).ToString(), LenColumnInNyukaTup.Item2)
+
           End If
         Next
 
@@ -102,7 +103,7 @@ Public Class frmNyukaSendCommunication
     sql &= "      ,	TRN_NYUKA.NYUKA_YOTEI_DATE "
     sql &= "      ,	TRN_NYUKA.GOUKI "
     sql &= "      ,	TRN_NYUKA.TANTO_CD "
-    sql &= "      ,	LEFT('' + SPACE(8), 8)  RECEIVE_DATE "
+    sql &= "      ,	FORMAT(RECEIVE_DATE, 'yyyyMMddHHmmss') AS RECEIVE_DATE "
     sql &= "      ,	LEFT(ISNULL(SHOMIKIGEN,'') + SPACE(1), 8) SHOMIKIGEN "
     sql &= "      , CASE WHEN RECEIVE_DATE IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	LEFT(TRN_NYUKA.HACHU_NO + SPACE(6), 6) + '_' + LEFT(TRN_NYUKA.GYO_NO + SPACE(2), 2) HACHU_GYO_NO "
@@ -110,7 +111,8 @@ Public Class frmNyukaSendCommunication
     sql &= " FROM TRN_NYUKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_NYUKA.JISYA_SHOHIN_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(NYUKA_STATUS.SHUTSURYOKUZUMI)
+    sql &= " WHERE 1=1 "
+    'sql &= " AND TORIKOMI_JOKYO_FLG <> " & CInt(NYUKA_STATUS.SHUTSURYOKUZUMI)
     If CmbDateSagyoBi1.SelectedValue Is Nothing Then
       sql &= " AND NYUKA_YOTEI_DATE = ''"
     Else
@@ -170,6 +172,8 @@ Public Class frmNyukaSendCommunication
     SqlServer.GetResult(tmpDt, SqlSelTrnNyuka())
 
     tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "入荷予定データ")
+
+    DgvList1.TargetColumnName = "取込状況FLG"
 
     DgvList1.SetData(tmpDtJP)
   End Sub

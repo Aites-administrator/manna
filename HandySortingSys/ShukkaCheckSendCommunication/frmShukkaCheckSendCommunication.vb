@@ -128,7 +128,7 @@ Public Class frmShukkaCheckSendCommunication
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
-    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
     sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"

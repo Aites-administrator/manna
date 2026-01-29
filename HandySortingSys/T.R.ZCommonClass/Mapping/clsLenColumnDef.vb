@@ -188,9 +188,9 @@
     Tuple.Create("TANA_CD", 6)
 }
 
-  ' 商品マスタ固定桁数定義
+  ' 担当者マスタ固定桁数定義
   Public Shared LenColumnInMstTanto As New List(Of Tuple(Of String, Integer)) From {
     Tuple.Create("TANTO_CD", 4),
-    Tuple.Create("TANTO_MEI", 30)
+    Tuple.Create("TANTO_NM", 30)
 }
 End Class

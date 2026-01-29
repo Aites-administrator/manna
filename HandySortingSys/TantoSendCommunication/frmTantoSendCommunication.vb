@@ -89,7 +89,7 @@ Public Class frmTantoSendCommunication
     Dim sql As String = String.Empty
 
     sql &= " SELECT TANTO_CD AS TANTO_CD "
-    sql &= " 	    , TANTO_NM AS TANTO_MEI "
+    sql &= " 	    , TANTO_NM AS TANTO_NM "
     sql &= " FROM MST_TANTO "
     sql &= " ORDER BY TANTO_CD "
 
@@ -112,6 +112,12 @@ Public Class frmTantoSendCommunication
       BtnSendHandy1.Handy = Handy
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_TANTO_FILE_NAME
 
+      '条件項目生成
+      tmpWhere.Add("TANTO_CD")
+
+      '通信日付項目生成
+      tmpCommunicationDate.Add("SEND_DATE", ComGetProcTime)
+
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_TANTO_FILE_NAME)
       SqlServer.GetResult(tmpDt, SqlSelMstTantoItemSelect)
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_TANTO_FILE_NAME, LenColumnInMstTanto)
@@ -119,6 +125,8 @@ Public Class frmTantoSendCommunication
       Handy.DeleteAcquisitionFlag()
 
       BtnSendHandy1.TargetLenClumn = LenColumnInMstTanto
+      BtnSendHandy1.TargetWhere = tmpWhere
+      BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
       ComWriteErrLog(ex, False)

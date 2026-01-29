@@ -74,9 +74,9 @@ Public Class clsCommonFnc
 
   ' 温度帯タイプ
   Public Enum ONDOTAI
-    JOUON = 1
+    REITO = 1
     REIZO = 2
-    REITO = 3
+    JOUON = 3
   End Enum
 
 
@@ -1888,5 +1888,27 @@ Optional ByVal columnCtl As Boolean = False)
 
   End Sub
 
+  Public Shared Function ConvertDate14FromDatetime(input As String) As String
+    Dim dt As DateTime
+    If DateTime.TryParse(input, dt) Then
+      Return dt.ToString("yyyyMMddHHmmss")
+    Else
+      Return ""
+    End If
+  End Function
+
+  Public Shared Sub WriteProgressLog(message As String)
+    Try
+      Dim logPath = Path.Combine(Application.StartupPath, "WatchProgress.log")
+      Dim line = $"{DateTime.Now:yyyy/MM/dd HH:mm:ss}  {message}"
+
+      Using sw As New StreamWriter(logPath, True, System.Text.Encoding.UTF8)
+        sw.WriteLine(line)
+      End Using
+
+    Catch ex As Exception
+      ' ログ書き込み失敗時は握りつぶす（処理を止めない）
+    End Try
+  End Sub
 
 End Class

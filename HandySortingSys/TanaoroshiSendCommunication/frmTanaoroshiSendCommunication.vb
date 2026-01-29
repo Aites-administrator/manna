@@ -85,8 +85,37 @@ Public Class frmTanaoroshiSendCommunication
     End If
   End Function
 
+  Private Function SqlSelTrnTanaoroshiTanaSelect() As String
+    Dim sql As String = String.Empty
 
-  Private Function SqlSelTrnTanaoroshi() As String
+    sql &= " SELECT      LEFT(MST_ITEM.TANA_CD, 2) AS TANA_CD "
+    sql &= "        ,   MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
+    sql &= "        ,   CASE WHEN MAX(TRN_TANAOROSHI.SEND_DATE) IS NOT NULL THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE "
+    sql &= "        ,   CASE WHEN MAX(RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= " FROM TRN_TANAOROSHI "
+    sql &= " LEFT JOIN MST_ITEM "
+    sql &= "     ON MST_ITEM.SHOHIN_CD = TRN_TANAOROSHI.JISYA_SHOHIN_CD "
+    sql &= " LEFT JOIN MST_TANA "
+    sql &= "     ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD, 2) "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+
+    If CmbDateTanaoroshiBi1.SelectedValue Is Nothing Then
+      sql &= " AND TANAOROSHI_DATE = ''"
+    Else
+      sql &= " AND TANAOROSHI_DATE = " & CmbDateTanaoroshiBi1.SelectedValue.ToString.Replace("/", "")
+    End If
+
+    sql &= " GROUP BY LEFT(MST_ITEM.TANA_CD, 2) "
+    sql &= "        , MST_TANA.TANA_ONDO "
+    sql &= "        , MST_TANA.FLOOR "
+    sql &= "        , TANAOROSHI_DATE "
+    sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2) "
+
+    Return sql
+
+  End Function
+
+  Private Function SqlSelTrnTanaoroshi(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT TANAOROSHI_DATE "
@@ -99,7 +128,7 @@ Public Class frmTanaoroshiSendCommunication
     sql &= "      ,	MST_ITEM.JAN  "
     sql &= "      ,	MST_ITEM.ITF "
     sql &= "      ,	CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU / ISNULL(TRN_TANAOROSHI.IRISU,1)) AS TANA_YOTEISU_CASE "
-    sql &= "      ,	CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU / ISNULL(TRN_TANAOROSHI.IRISU,1)) AS TANA_YOTEISU_BARA "
+    sql &= "      ,	CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU % ISNULL(TRN_TANAOROSHI.IRISU,1)) AS TANA_YOTEISU_BARA "
     sql &= "      ,	TANA_JISSEKI_CASE "
     sql &= "      ,	TANA_JISSEKI_BARA "
     sql &= "      ,	'C/S' AS CASE_TANI "
@@ -107,41 +136,56 @@ Public Class frmTanaoroshiSendCommunication
     sql &= "      ,	MST_ITEM.SHOMIKIGEN "
     sql &= "      ,	TRN_TANAOROSHI.GOUKI "
     sql &= "      ,	TRN_TANAOROSHI.TANTO_CD "
-    sql &= "      ,	TRN_TANAOROSHI.RECEIVE_DATE "
-    sql &= "      , CASE WHEN TORIKOMI_JOKYO_FLG = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	FORMAT(TRN_TANAOROSHI.RECEIVE_DATE, 'yyyyMMddHHmmss') AS RECEIVE_DATE "
+    sql &= "      ,   CASE WHEN RECEIVE_DATE IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      , CASE WHEN TORIKOMI_JOKYO_FLG = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	'' as INDEX_ID "
     sql &= " FROM TRN_TANAOROSHI "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_TANAOROSHI.JISYA_SHOHIN_CD "
     sql &= " WHERE 1 = 1 "
+    sql &= " AND TANA_DATE_ZAIKO_SU <> 0 "
     If CmbDateTanaoroshiBi1.SelectedValue Is Nothing Then
       sql &= " AND TANAOROSHI_DATE = ''"
     Else
       sql &= " AND TANAOROSHI_DATE = " & CmbDateTanaoroshiBi1.SelectedValue.ToString.Replace("/", "")
     End If
+    If prmTanaList.Count > 0 Then
+      Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
+      sql &= " AND LEFT(MST_ITEM.TANA_CD,2) IN (" & tanaInClause & ")"
+    End If
+    sql &= " ORDER BY TRN_TANAOROSHI.JISYA_SHOHIN_CD "
+
 
     Return sql
 
   End Function
 
-  Private Function SqlSelTrnTanaoroshiTana() As String
+  Private Function SqlSelTrnTanaoroshiTana(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
     sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
-    sql &= "      , CASE WHEN MAX(TORIKOMI_JOKYO_FLG) = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "        ,   CASE WHEN MAX(RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      , CASE WHEN MAX(TORIKOMI_JOKYO_FLG) = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	'' as INDEX_ID "
     sql &= " FROM TRN_TANAOROSHI "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_TANAOROSHI.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
-    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
     sql &= " WHERE 1 = 1 "
+    sql &= " AND TANA_DATE_ZAIKO_SU <> 0 "
     If CmbDateTanaoroshiBi1.SelectedValue Is Nothing Then
       sql &= " AND TANAOROSHI_DATE = ''"
     Else
       sql &= " AND TANAOROSHI_DATE = " & CmbDateTanaoroshiBi1.SelectedValue.ToString.Replace("/", "")
     End If
+    If prmTanaList.Count > 0 Then
+      Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
+      sql &= " AND LEFT(MST_ITEM.TANA_CD,2) IN (" & tanaInClause & ")"
+    End If
+
     sql &= " GROUP BY LEFT(MST_ITEM.TANA_CD,2) "
     sql &= "    ,   MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR "
     sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2) "
@@ -163,12 +207,30 @@ Public Class frmTanaoroshiSendCommunication
       BtnSendHandy1.Handy = Handy
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
+      ' チェックされたTANA_CDのリストを取得
+      Dim selectedTanaList As New List(Of String)
+
+      For Each row As DataGridViewRow In DgvList1.Rows
+        If Not row.IsNewRow AndAlso Convert.ToBoolean(row.Cells("チェック").Value) = True Then
+          Dim tanaCd As String = row.Cells(1).Value?.ToString()
+          If Not String.IsNullOrEmpty(tanaCd) AndAlso Not selectedTanaList.Contains(tanaCd) Then
+            selectedTanaList.Add(tanaCd)
+          End If
+
+          If row.Cells("送信済み").Value?.ToString() = "有" Then
+            BtnSendHandy1.TargetCancelParentClick = True
+          End If
+        End If
+      Next
+
+
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_TANAOROSHI_FILE_NAME)
-      SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshi)
+
+      SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshi(selectedTanaList))
 
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_TANAOROSHI_FILE_NAME, LenColumnInTanaoroshi)
 
-      SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshiTana())
+      SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshiTana(selectedTanaList))
       '棚番マスタ
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_TANA_FILE_NAME, LenColumnInTanaoroshiTana)
 
@@ -188,6 +250,7 @@ Public Class frmTanaoroshiSendCommunication
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_TANAOROSHI_FILE_NAME
       BtnSendHandy1.TargetTableName = "TRN_TANAOROSHI"
       BtnSendHandy1.TargetLenClumn = LenColumnInTanaoroshi
+      BtnSendHandy1.TargetCancelParentClick = False
       BtnSendHandy1.TargetWhere = tmpWhere
       BtnSendHandy1.TargetUpdColumn = tmpUpdColumn
       BtnSendHandy1.TargetUpdStatus = CInt(TANAOROSHI_STATUS.SOUSINZUMI)
@@ -202,13 +265,19 @@ Public Class frmTanaoroshiSendCommunication
     Dim mapper As New clsDtHeaderMapping
     Dim tmpDt As New DataTable
     Dim tmpDtJP As New DataTable
-    SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshi())
+    SqlServer.GetResult(tmpDt, SqlSelTrnTanaoroshiTanaSelect())
 
-    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚卸予定データ")
+    tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚番リスト")
 
-    DgvList1.TargetColumnName = "取込状況FLG"
-
-
+    If Not tmpDtJP.Columns.Contains("チェック") Then
+      tmpDtJP.Columns.Add("チェック", GetType(Boolean))
+      For Each row As DataRow In tmpDtJP.Rows
+        row("チェック") = False ' 初期値
+      Next
+    End If
+    ' チェック列を一番左に移動！
+    tmpDtJP.Columns("チェック").SetOrdinal(0)
+    DgvList1.TargetColumnName = "総出し済"
     DgvList1.SetData(tmpDtJP)
   End Sub
 

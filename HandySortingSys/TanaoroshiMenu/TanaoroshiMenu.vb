@@ -76,5 +76,8 @@ Public Class TanaoroshiMenu
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
     AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M43", "EXE", IniFileName)))
   End Sub
+  Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M44", "EXE", IniFileName)))
+  End Sub
 
 End Class

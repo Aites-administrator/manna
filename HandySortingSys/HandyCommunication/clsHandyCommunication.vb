@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Threading
 Imports System.Windows.Forms
 Imports T.R.ZCommonClass.clsGlobalData
+Imports T.R.ZCommonClass.clsCommonFnc
 
 Public Class clsHandyCommunication
 
@@ -318,14 +319,24 @@ Public Class clsHandyCommunication
 
       Do While True
 
+        WriteProgressLog("FLG作成待ち…")
+
+
         ' Communication.FLG 作成待ち
         ' ファイル名取得
         Dim fileName As String = String.Empty
 
         If Not WaitCommunicationFlagCreated(fileName) Then Exit Do
 
+        WriteProgressLog($"FLG作成検知: {fileName}")
+
+
+
         ' Communication.FLG 削除待ち
         If Not WaitCommunicationFlagDeleted() Then Exit Do
+
+        WriteProgressLog($"FLG削除検知: {fileName}")
+
 
         ' DAT 実体が来るまで待つ
         Dim datPath = Path.Combine(TargetFolder, fileName)
@@ -336,11 +347,16 @@ Public Class clsHandyCommunication
           If timeout > 5000 Then Exit While
         End While
 
+        WriteProgressLog($"DAT検知: {fileName}")
+
+
         ' 最後のファイルなら終了
-        If fileName = prmLastFileName Then
+        If fileName = Path.GetFileName(prmLastFileName) Then
           prmAllReceiveComplete = True
           Exit Do
         Else
+          WriteProgressLog($"ファイル移動: {fileName} {prmLastFileName} ")
+
           ' それ以外はバックアップへ
           MoveToBackupFolder(fileName)
         End If

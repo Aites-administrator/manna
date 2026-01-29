@@ -98,13 +98,14 @@ Public Class frmSoudashiSendCommunication
     sql &= " SELECT		LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
     sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
     sql &= "      ,	CASE WHEN MAX(SOUDASHI_SEND_DATE) is not null THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & SHUKKA_STATUS.SOUDASHI_ZUMI & " THEN '済' ELSE '未' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      , CASE WHEN MAX(SOUDASHI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & SHUKKA_STATUS.SOUDASHI_ZUMI & " THEN '済' ELSE '未' END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
-    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -131,13 +132,14 @@ Public Class frmSoudashiSendCommunication
     sql &= "      ,	MAX(SOUDASHI_GOUKI) AS GOUKI "
     sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS TANTO_CD "
     sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS RECEIVE_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      , CASE WHEN MAX(SOUDASHI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
-    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -173,8 +175,9 @@ Public Class frmSoudashiSendCommunication
     sql &= "      ,	SUM(CONVERT(int,TRN_SHUKKA.JISYA_HACHU_SURYO % ISNULL(MST_ITEM.IRISU,1))) AS SHUKKA_YOTEISU_BARA "
     sql &= "      ,	MAX(SOUDASHI_GOUKI) AS SOUDASHI_GOUKI "
     sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS SOUDASHI_TANTO_CD "
-    sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS SOUDASHI_RECEIVE_DATE "
-    sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	FORMAT(MAX(SOUDASHI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS SOUDASHI_RECEIVE_DATE "
+    sql &= "      , CASE WHEN MAX(SOUDASHI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	 'C/S' AS CASE_TANI"
     sql &= "      ,	 HACHU_TANI AS HACHU_TANI"
     sql &= "      ,	 '' AS INDEX_ID"
@@ -182,8 +185,8 @@ Public Class frmSoudashiSendCommunication
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
-    sql &= " ON MST_TANA.TANA_CD = MST_ITEM.TANA_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else

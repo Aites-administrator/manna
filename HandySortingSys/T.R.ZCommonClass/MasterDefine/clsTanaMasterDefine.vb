@@ -4,10 +4,10 @@ Public Class clsTanaMasterDefine
   Implements IMasterMentenance
 
   '=== 画面列名 ===
-  Private Const COL_CD As String = "棚番"
+  Private Const COL_CD As String = "棚コード"
   Private Const COL_ONDO As String = "温度帯"
-  Private Const COL_FLOOR As String = "フロア"
-  Private Const COL_BLOCK As String = "ブロック"
+  Private Const COL_FLOOR As String = "ブロック"
+  Private Const COL_BLOCK As String = "棚番"
 
   '=== DB列名 ===
   Private Const DB_CD As String = "TANA_CD"
@@ -31,9 +31,9 @@ Public Class clsTanaMasterDefine
       Return New List(Of MasterColumn) From {
           New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = True},
           New MasterColumn With {.Name = COL_ONDO, .DisplayName = COL_ONDO, .IsEditable = True},
-          New MasterColumn With {.Name = COL_FLOOR, .DisplayName = COL_FLOOR, .IsEditable = True},
-          New MasterColumn With {.Name = COL_BLOCK, .DisplayName = COL_BLOCK, .IsEditable = True}
+          New MasterColumn With {.Name = COL_FLOOR, .DisplayName = COL_FLOOR, .IsEditable = True}
       }
+      'New MasterColumn With {.Name = COL_BLOCK, .DisplayName = COL_BLOCK, .IsEditable = True}
     End Get
   End Property
 
@@ -69,7 +69,7 @@ Public Class clsTanaMasterDefine
     If String.IsNullOrWhiteSpace(row(COL_CD).ToString()) Then errors.Add($"{COL_CD}は必須です。")
     If String.IsNullOrWhiteSpace(row(COL_ONDO).ToString()) Then errors.Add($"{COL_ONDO}は必須です。")
     If String.IsNullOrWhiteSpace(row(COL_FLOOR).ToString()) Then errors.Add($"{COL_FLOOR}は必須です。")
-    If String.IsNullOrWhiteSpace(row(COL_BLOCK).ToString()) Then errors.Add($"{COL_BLOCK}は必須です。")
+    '    If String.IsNullOrWhiteSpace(row(COL_BLOCK).ToString()) Then errors.Add($"{COL_BLOCK}は必須です。")
 
     Return errors
   End Function
@@ -86,7 +86,7 @@ Public Class clsTanaMasterDefine
       DicRow(DB_CD) = row(COL_CD)
       DicRow(DB_ONDO) = row(COL_ONDO)
       DicRow(DB_FLOOR) = row(COL_FLOOR)
-      DicRow(DB_BLOCK) = row(COL_BLOCK)
+      DicRow(DB_BLOCK) = "01"
       DicRow(DB_UPDATE) = ComGetProcTime()  ' 現在日付
 
       SqlServer.TrnStart()
@@ -142,7 +142,7 @@ Public Class clsTanaMasterDefine
     sql &= $" SELECT  " & DB_CD
     sql &= $"    ,    " & DB_ONDO
     sql &= $"    ,    " & DB_FLOOR
-    sql &= $"    ,    " & DB_BLOCK
+    '    sql &= $"    ,    " & DB_BLOCK
     sql &= $"    ,    " & DB_ENTRY
     sql &= $"    ,    " & DB_UPDATE
     sql &= $" FROM {TABLE_NAME}"

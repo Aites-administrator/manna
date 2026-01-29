@@ -87,6 +87,11 @@ Public Class BtnRecieveHandy
       Dim TargetReceiveFlg As Boolean = False
       Handy.WatchAndReceiveFiles(TargetFileName, TargetReceiveFlg)
 
+      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
+      Handy.CloseCommunicationTool()
+
+
+
       ''状態管理ファイル作成チェック
       'If Not Handy.WaitCommunicationFlagCreated() Then
       '  Exit Sub
@@ -102,6 +107,8 @@ Public Class BtnRecieveHandy
       'End If
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
+      WriteProgressLog($"取込ファイル準備開始: {TargetFileName}")
+
       tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
 
       Dim mapper As New clsDtHeaderMapping
@@ -111,17 +118,21 @@ Public Class BtnRecieveHandy
       TargetDataGridView.TargetColumnName = "取込状況FLG"
       TargetDataGridView.SetData(tmpDtJP)
 
+      WriteProgressLog($"取込ファイルをGridに表示完了: {TargetFileName}")
+
       Handy.MoveToBackupFolder(TargetFileName)
 
       SqlServer.TrnStart()
 
+      WriteProgressLog($"データベース更新開始:")
+
       For Each tmpRow In tmpDt.Rows
 
-        '検証用にJAN、ITFが空の場合無視する 本番では不要
-        If String.IsNullOrWhiteSpace(tmpRow("JAN").ToString) AndAlso
-          String.IsNullOrWhiteSpace(tmpRow("ITF").ToString) Then
-          Continue For
-        End If
+        ''検証用にJAN、ITFが空の場合無視する 本番では不要
+        'If String.IsNullOrWhiteSpace(tmpRow("JAN").ToString) AndAlso
+        '  String.IsNullOrWhiteSpace(tmpRow("ITF").ToString) Then
+        '  Continue For
+        'End If
 
         '更新項目生成
         Dim tmpUpdColumn As New Dictionary(Of String, String)
@@ -130,11 +141,12 @@ Public Class BtnRecieveHandy
             If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
               tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
             End If
-            If TargetTableName <> "TRN_NYUKA" Then
+            If TargetTableName <> "TRN_NYUKA" _
+              OrElse TargetTableName <> "TRN_TANAOROSHI" Then
               Continue For
             End If
           ElseIf UpdColumn.Contains("RECEIVE_DATE") Then
-            If tmpRow("TORIKOMI_JOKYO_FLG").ToString = "1" Then
+            If Not String.IsNullOrEmpty(tmpRow(UpdColumn).ToString()) Then
               tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
             End If
           Else
@@ -179,9 +191,6 @@ Public Class BtnRecieveHandy
 
       'Excel出力
       DataTable2Excel(tmpDtJP, PROJECT_DIR_NAME & OUTPUT_DIR_NAME & TargetOutputFileName)
-
-      'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
-      Handy.CloseCommunicationTool()
 
       ComMessageBox("受信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
       RaiseEvent ReceiveCompleted()

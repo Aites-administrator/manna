@@ -167,10 +167,10 @@
       {"TANA_CD", "棚番"}
     }
 
-    MappingDictionary("担当者マスタ") = New Dictionary(Of String, String) From {
-      {"TANTO_CD", "担当者コード"},
-      {"TANTO_MEI", "担当者名"}
-    }
+    'MappingDictionary("担当者マスタ") = New Dictionary(Of String, String) From {
+    '  {"TANTO_CD", "担当者コード"},
+    '  {"TANTO_NM", "担当者名"}
+    '}
 
     MappingDictionary("コースマスタ") = New Dictionary(Of String, String) From {
       {"COURSE_CD", "コースコード"},
@@ -181,10 +181,10 @@
     }
 
     MappingDictionary("棚番マスタ") = New Dictionary(Of String, String) From {
-      {"TANA_CD", "棚番"},
+      {"TANA_CD", "棚コード"},
       {"TANA_ONDO", "温度帯"},
-      {"FLOOR", "フロア"},
-      {"BLOCK", "ブロック"},
+      {"FLOOR", "ブロック"},
+      {"BLOCK", "棚番"},
       {"ENTRY_DATE", "登録日"},
       {"UPDATE_DATE", "更新日"}
     }

@@ -207,13 +207,13 @@ Public Class frmAdminMaintenance
     BtnMainMenuBase7.BtnForeColor = ColorTranslator.FromHtml("#000000")
     BtnMainMenuBase7.SetAccessKey = Keys.F7
 
-    BtnMainMenuBase8.Title = "担当者ﾏｽﾀ" & vbCrLf & "送信(F8)"
+    BtnMainMenuBase8.Title = "　ﾊﾟｿｺﾝ⇒ﾊﾝﾃﾞｨ" & vbCrLf & "担当者ﾏｽﾀ(F8)"
     BtnMainMenuBase8.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "TantoMasterSendImage.PNG")
     BtnMainMenuBase8.ButtonColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase8.BtnForeColor = ColorTranslator.FromHtml("#000000")
     BtnMainMenuBase8.SetAccessKey = Keys.F8
 
-    BtnMainMenuBase9.Title = "商品ﾏｽﾀ" & vbCrLf & "送信(F9)"
+    BtnMainMenuBase9.Title = "　ﾊﾟｿｺﾝ⇒ﾊﾝﾃﾞｨ" & vbCrLf & "商品ﾏｽﾀ(F9)"
     BtnMainMenuBase9.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "ItemMasterImage.PNG")
     BtnMainMenuBase9.ButtonColor = ColorTranslator.FromHtml("#ffffff")
     BtnMainMenuBase9.BtnForeColor = ColorTranslator.FromHtml("#000000")

@@ -72,7 +72,7 @@ Public Class clsItemMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False},
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False, .IsSearchTarget = True},
           New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True},
           New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True},
           New MasterColumn With {.Name = COL_AISU, .DisplayName = COL_AISU, .IsEditable = True},
@@ -224,8 +224,10 @@ Public Class clsItemMasterDefine
 
       DicRow(DB_CD) = row(COL_CD)
       DicRow(DB_NAME) = row(COL_NAME)
-      DicRow(DB_JAN) = row(COL_JAN)
-      DicRow(DB_TANKA) = row(COL_TANKA)
+      DicRow(DB_JAN) = If(IsDBNull(row(COL_JAN)), "", row(COL_JAN).ToString())
+      DicRow(DB_ITF) = If(IsDBNull(row(COL_ITF)), "", row(COL_ITF).ToString())
+      DicRow(DB_TANA) = If(IsDBNull(row(COL_TANA)), "", row(COL_TANA).ToString())
+      DicRow(DB_SHOMIKIGEN) = If(IsDBNull(row(COL_SHOMIKIGEN)), "", row(COL_SHOMIKIGEN).ToString())
       DicRow(DB_UPDATE) = ComGetProcTime()
 
       SqlServer.TrnStart()

@@ -20,6 +20,8 @@ Public Class FormComMasterMente
   Friend WithEvents btnAdd As BtnAdd
   Friend WithEvents btnImport As BtnMstInput
   Friend WithEvents LblBase1 As LblBase
+  Friend WithEvents LblBase2 As LblBase
+  Friend WithEvents TxtNumericBase1 As TxtNumericBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
 
   Public Sub New(definition As IMasterMentenance)
@@ -42,6 +44,8 @@ Public Class FormComMasterMente
 
       btnAdd.Visible = Not _definition.AllowImport
       btnImport.Visible = _definition.AllowImport
+      LblBase2.Visible = _definition.AllowImport
+      TxtNumericBase1.Visible = _definition.AllowImport
     Catch ex As Exception
       ComWriteErrLog(ex)
     End Try
@@ -63,6 +67,45 @@ Public Class FormComMasterMente
     End Try
 
   End Sub
+  Private Sub ExecuteSearch()
+    Try
+      Dim keyword = TxtNumericBase1.Text.Trim().Replace("'", "''")
+
+      If keyword = "" Then
+        DgvList1.SetData(_dt)
+        Return
+      End If
+
+      Dim dv As New DataView(_dt)
+      Dim filters As New List(Of String)
+
+      For Each col In _definition.Columns.Where(Function(c) c.IsSearchTarget)
+        If _dt.Columns.Contains(col.Name) AndAlso
+               _dt.Columns(col.Name).DataType Is GetType(String) Then
+
+          filters.Add($"{col.Name} = '{keyword}'")
+        End If
+      Next
+
+      dv.RowFilter = String.Join(" OR ", filters)
+      DgvList1.SetData(dv.ToTable())
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+  End Sub
+
+  Private Sub TxtNumericBase1_Validated(sender As Object, e As EventArgs) Handles TxtNumericBase1.Validated
+    Try
+      ExecuteSearch()
+
+    Catch ex As Exception
+      ComWriteErrLog(ex, False)
+
+    End Try
+  End Sub
+
+
 
   Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
     Try
@@ -118,6 +161,11 @@ Public Class FormComMasterMente
     Try
       Dim row = GetSelectedRow()
       If row Is Nothing Then Return
+
+      If row.RowState = DataRowState.Added Then
+        row.Delete()
+        Return
+      End If
 
       Dim result = ComMessageBox(
         "選択された行を削除しますか？" & vbCrLf &
@@ -209,6 +257,8 @@ Public Class FormComMasterMente
     Me.btnImport = New T.R.ZCommonCtrl.BtnMstInput()
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
+    Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
+    Me.TxtNumericBase1 = New T.R.ZCommonCtrl.TxtNumericBase()
     CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.SuspendLayout()
     '
@@ -229,7 +279,7 @@ Public Class FormComMasterMente
     Me.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.btnSave.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.btnSave.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-    Me.btnSave.Location = New System.Drawing.Point(339, 99)
+    Me.btnSave.Location = New System.Drawing.Point(1026, 99)
     Me.btnSave.Name = "btnSave"
     Me.btnSave.Size = New System.Drawing.Size(320, 60)
     Me.btnSave.TabIndex = 5
@@ -244,7 +294,7 @@ Public Class FormComMasterMente
     Me.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.btnDelete.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.btnDelete.ForeColor = System.Drawing.Color.Black
-    Me.btnDelete.Location = New System.Drawing.Point(665, 99)
+    Me.btnDelete.Location = New System.Drawing.Point(1352, 99)
     Me.btnDelete.Name = "btnDelete"
     Me.btnDelete.Size = New System.Drawing.Size(320, 60)
     Me.btnDelete.TabIndex = 6
@@ -259,7 +309,7 @@ Public Class FormComMasterMente
     Me.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.btnAdd.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.btnAdd.ForeColor = System.Drawing.Color.Black
-    Me.btnAdd.Location = New System.Drawing.Point(12, 99)
+    Me.btnAdd.Location = New System.Drawing.Point(700, 99)
     Me.btnAdd.Name = "btnAdd"
     Me.btnAdd.Size = New System.Drawing.Size(320, 60)
     Me.btnAdd.TabIndex = 7
@@ -274,7 +324,7 @@ Public Class FormComMasterMente
     Me.btnImport.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.btnImport.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.btnImport.ForeColor = System.Drawing.Color.Black
-    Me.btnImport.Location = New System.Drawing.Point(13, 99)
+    Me.btnImport.Location = New System.Drawing.Point(700, 99)
     Me.btnImport.Name = "btnImport"
     Me.btnImport.Size = New System.Drawing.Size(320, 60)
     Me.btnImport.TabIndex = 8
@@ -307,9 +357,32 @@ Public Class FormComMasterMente
     Me.LblBase1.TabIndex = 23
     Me.LblBase1.Text = "タイトル"
     '
+    'LblBase2
+    '
+    Me.LblBase2.AutoSize = True
+    Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.LblBase2.Location = New System.Drawing.Point(14, 111)
+    Me.LblBase2.Name = "LblBase2"
+    Me.LblBase2.Size = New System.Drawing.Size(86, 33)
+    Me.LblBase2.TabIndex = 24
+    Me.LblBase2.Text = "コード"
+    '
+    'TxtNumericBase1
+    '
+    Me.TxtNumericBase1.DisableAllSelect = False
+    Me.TxtNumericBase1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.TxtNumericBase1.ImeMode = System.Windows.Forms.ImeMode.Alpha
+    Me.TxtNumericBase1.Location = New System.Drawing.Point(106, 108)
+    Me.TxtNumericBase1.Name = "TxtNumericBase1"
+    Me.TxtNumericBase1.Size = New System.Drawing.Size(201, 39)
+    Me.TxtNumericBase1.TabIndex = 25
+    Me.TxtNumericBase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+    '
     'FormComMasterMente
     '
     Me.ClientSize = New System.Drawing.Size(1684, 861)
+    Me.Controls.Add(Me.TxtNumericBase1)
+    Me.Controls.Add(Me.LblBase2)
     Me.Controls.Add(Me.LblBase1)
     Me.Controls.Add(Me.BtnEnd_L1)
     Me.Controls.Add(Me.btnImport)
