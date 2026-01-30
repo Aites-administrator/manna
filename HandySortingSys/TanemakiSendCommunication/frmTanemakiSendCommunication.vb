@@ -16,17 +16,15 @@ Public Class frmTanemakiSendCommunication
   Private _isInitializing As Boolean = True
 
 
-  Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "COURSE.DAT"
   Private Const SEND_TANEMAKI_FILE_NAME As String = SEND_FOLDER & "OUT_ITEM.DAT"
   Private Const SEND_TANEMAKI_SUM_FILE_NAME As String = SEND_FOLDER & "ITEM_SUM.DAT"
-  Private Const SEND_PASSWORD_FILE_NAME As String = SEND_FOLDER & "PASSWORD.DAT"
 
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "種まき"
-
     MyBase.OnLoad(e)
   End Sub
 
@@ -150,8 +148,8 @@ Public Class frmTanemakiSendCommunication
     sql &= "      ,  CASE WHEN COUNT(*) > COUNT(TANEMAKI_SEND_DATE) THEN '有' "
     sql &= "         ELSE '無' "
     sql &= "         END AS TANEMAKI_SEND_DATE "
-    sql &= "      ,  CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN '済' "
-    sql &= "         ELSE '未' "
+    sql &= "      ,  CASE WHEN MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI) & " Or MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '未' "
+    sql &= "         ELSE '済' "
     sql &= "         END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,  CASE WHEN MAX(TANEMAKI_SEND_DATE) IS NULL THEN '無' "
     sql &= "         ELSE '有' "
@@ -194,7 +192,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "      ,	MAX(TANEMAKI_GOUKI) AS GOUKI "
     sql &= "      ,	MAX(TANEMAKI_TANTO_CD) AS TANTO_CD "
     sql &= "      ,	FORMAT(MAX(TANEMAKI_SEND_DATE), 'yyyyMMddHHmmss') AS SEND_DATE "
-    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    sql &= "    ,CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI) & " Or MAX(TANEMAKI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
     'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
@@ -246,7 +244,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "    ,MAX(TANEMAKI_GOUKI) AS TANEMAKI_GOUKI "
     sql &= "    ,MAX(TANEMAKI_TANTO_CD) AS TANEMAKI_TANTO_CD "
     sql &= "    ,FORMAT(MAX(TANEMAKI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS TANEMAKI_RECEIVE_DATE "
-    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    sql &= "    ,CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI) & " Or MAX(TANEMAKI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
     'sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "    ,'' AS INDEX_ID "
     sql &= " FROM TRN_SHUKKA "
@@ -304,7 +302,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "    ,MAX(TANEMAKI_GOUKI) AS TANEMAKI_GOUKI "
     sql &= "    ,MAX(TANEMAKI_TANTO_CD) AS TANEMAKI_TANTO_CD "
     sql &= "    ,FORMAT(MAX(TANEMAKI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS TANEMAKI_RECEIVE_DATE "
-    sql &= "    ,CASE WHEN MAX(TANEMAKI_RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
+    sql &= "    ,CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI) & " Or MAX(TANEMAKI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG  "
     'sql &= "    ,CASE WHEN MIN(TORIKOMI_JOKYO_FLG) > " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "    ,'' AS INDEX_ID "
     sql &= " FROM TRN_SHUKKA "

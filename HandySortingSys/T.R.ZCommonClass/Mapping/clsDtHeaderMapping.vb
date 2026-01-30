@@ -35,8 +35,9 @@
     MappingDictionary("棚番リスト") = New Dictionary(Of String, String) From {
       {"TANA_CD", "棚番コード"},
       {"TANA_NAME", "棚番名"},
-      {"SOUDASHI_SEND_DATE", "送信済み"},
-      {"TORIKOMI_JOKYO_FLG", "総出し済"}
+      {"SOUDASHI_SEND_DATE", "未送信(有無)"},
+      {"TORIKOMI_JOKYO_FLG", "総出し済"},
+      {"SOUDASHI_SEND_DATE_ZUMI", "送信済み"}
     }
 
 

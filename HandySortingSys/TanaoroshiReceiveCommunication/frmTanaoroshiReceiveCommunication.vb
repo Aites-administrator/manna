@@ -8,9 +8,9 @@ Public Class frmTanaoroshiReceiveCommunication
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "IN_TANA.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "棚卸"
-
     MyBase.OnLoad(e)
   End Sub
 

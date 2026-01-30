@@ -1,11 +1,14 @@
 ﻿Imports System.Data
 Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
+Imports System.IO
 
 Public Class BtnInput
   Inherits BtnBase
 
 #Region "プライベート"
+  Private Const MASTER_DIR As String = "MASTER\"
   Private SqlServer As New clsSqlServer
 
 #End Region
@@ -63,6 +66,36 @@ Public Class BtnInput
     End If
 
     Try
+      Dim invalidList = GetInvalidItemList(TargetDataTable)
+
+      If invalidList.Rows.Count > 0 Then
+        Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "商品マスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
+        ExportCsv(invalidList, path)
+
+        'CSV を出力したフォルダを開く
+        'Dim folderPath As String = IO.Path.GetDirectoryName(path)
+        'Process.Start("explorer.exe", folderPath)
+
+        'Throw New Exception("マスタに不備があるデータが存在します。" &
+        '                    vbCrLf & "不備データ一覧を確認してください。")
+      End If
+
+      If TargetTableName = "TRN_SHUKKA" Then
+        Dim CourseList = GetInvalidCourseList(TargetDataTable)
+        If CourseList.Rows.Count > 0 Then
+          Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "コースマスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
+          ExportCsv(CourseList, path)
+
+          'CSV を出力したフォルダを開く
+          Dim folderPath As String = IO.Path.GetDirectoryName(path)
+          Process.Start("explorer.exe", folderPath)
+
+          Throw New Exception("マスタに不備があるデータが存在します。" &
+                            vbCrLf & "不備データ一覧を確認してください。")
+        End If
+
+      End If
+
       SqlServer.TrnStart()
 
       mapping = mapper.GetMapping(TargetCsvType)
@@ -128,6 +161,108 @@ Public Class BtnInput
 
   '  Return result
   'End Function
+
+  Private Function GetInvalidItemList(dt As DataTable) As DataTable
+    Dim result As New DataTable
+    result.Columns.Add("区分")
+    result.Columns.Add("商品コード")
+    result.Columns.Add("JAN")
+    result.Columns.Add("ITF")
+    result.Columns.Add("棚番")
+
+    For Each row As DataRow In dt.Rows
+      Dim shohinCd As String = row("自社商品CD").ToString.Replace("'", "''")
+      Dim tmp As New DataTable
+
+      Dim sql As String =
+            $"SELECT SHOHIN_CD, JAN, ITF, TANA_CD
+              FROM MST_ITEM
+              WHERE SHOHIN_CD = '{shohinCd}'"
+
+      SqlServer.GetResult(tmp, sql)
+
+      If tmp.Rows.Count = 0 Then
+        result.Rows.Add("マスタ登録なし", shohinCd, "", "")
+
+        Continue For
+      End If
+
+      Dim m = tmp.Rows(0)
+      Dim jan = m("JAN").ToString()
+      Dim itf = m("ITF").ToString()
+      Dim tana = m("TANA_CD").ToString()
+
+      If String.IsNullOrWhiteSpace(jan) Then
+        result.Rows.Add("JAN登録なし", shohinCd, jan, itf, tana)
+        Continue For
+      End If
+
+      If String.IsNullOrWhiteSpace(jan) Then
+        result.Rows.Add("棚番登録なし", shohinCd, jan, itf, tana)
+        Continue For
+      End If
+    Next
+
+    Return result
+  End Function
+
+  Private Function GetInvalidCourseList(dt As DataTable) As DataTable
+    Dim result As New DataTable
+    result.Columns.Add("区分")
+    result.Columns.Add("コース名")
+
+    For Each row As DataRow In dt.Rows
+      Dim courseName As String = row("配送コース名").ToString.Replace("'", "''")
+      Dim tmp As New DataTable
+
+      Dim sql As String =
+            $"SELECT COURSE_MEI
+              FROM MST_COURSE
+              WHERE COURSE_MEI COLLATE Japanese_CS_AS_KS_WS = '{courseName}'"
+
+      SqlServer.GetResult(tmp, sql)
+
+      If tmp.Rows.Count = 0 Then
+        result.Rows.Add("マスタ登録なし", courseName)
+
+        Continue For
+      End If
+
+      Dim m = tmp.Rows(0)
+      Dim course = m("COURSE_MEI").ToString()
+
+      If String.IsNullOrWhiteSpace(course) Then
+        result.Rows.Add("コース登録なし", course)
+        Continue For
+      End If
+    Next
+
+    Return result.DefaultView.ToTable(True, "区分", "コース名")
+
+  End Function
+
+  Private Sub ExportCsv(dt As DataTable, filePath As String)
+    ' フォルダが無ければ作成
+    Dim dir As String = IO.Path.GetDirectoryName(filePath)
+    If Not IO.Directory.Exists(dir) Then
+      IO.Directory.CreateDirectory(dir)
+    End If
+
+
+    Using sw As New StreamWriter(filePath, False, System.Text.Encoding.UTF8)
+      ' ヘッダ
+      sw.WriteLine(String.Join(",", dt.Columns.Cast(Of DataColumn).Select(Function(c) c.ColumnName)))
+
+      ' データ
+      For Each row As DataRow In dt.Rows
+        Dim fields = row.ItemArray.Select(Function(v) v.ToString().Replace(",", ""))
+        sw.WriteLine(String.Join(",", fields))
+      Next
+    End Using
+  End Sub
+
+
+
 
   '重複チェック
   Private Function IsDuplicate(prmTargetRow As Dictionary(Of String, String)) As Boolean

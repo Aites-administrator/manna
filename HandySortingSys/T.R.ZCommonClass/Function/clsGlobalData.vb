@@ -29,6 +29,11 @@
   Public Shared ReadOnly PRINT_NON_PREVIEW As Integer = 0
 
   ''' <summary>
+  ''' 送信フォルダ
+  ''' </summary>
+  Public Const SEND_FOLDER As String = "SEND\"
+
+  ''' <summary>
   ''' パスワード入力画面モジュール名
   ''' </summary>
   ''' <remarks>
@@ -40,6 +45,11 @@
   ''' パスワード
   ''' </summary>
   Public Shared ReadOnly PASSWORD As String = "1234"
+  ''' <summary>
+  ''' パスワードファイル名
+  ''' </summary>
+  Public Const SEND_PASSWORD_FILE_NAME As String = SEND_FOLDER & "PASSWORD.DAT"
+
 
   ''' <summary>
   ''' イメージフォルダ

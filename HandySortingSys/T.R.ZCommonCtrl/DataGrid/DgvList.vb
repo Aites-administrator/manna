@@ -2,6 +2,11 @@
   Inherits DataGridView
   ' プロパティ：ファイル名
   Public Property TargetColumnName As String = ""
+  Public Property GridFontSize As Integer = 20
+  Public Property HeaderFontSize As Integer = 20
+  Public Property UseCustomSize As Boolean = False
+  Public Property CustomAutoSizeColumnsMode As DataGridViewAutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+  Public Property CustomAutoSizeRowsMode As DataGridViewAutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
 
 
 #Region "コンストラクタ"
@@ -10,10 +15,20 @@
   ''' データグリッド
   ''' </summary>
   Public Sub New()
-
   End Sub
 
+  Public Sub ApplyInitialLayout()
+    If UseCustomSize Then
+      Me.AutoSizeColumnsMode = CustomAutoSizeColumnsMode
+      Me.AutoSizeRowsMode = CustomAutoSizeRowsMode
+      Me.Width = 952
+    End If
+  End Sub
+
+
+
   Protected Overrides Sub InitLayout()
+
   End Sub
 
 #End Region
@@ -35,12 +50,23 @@
       ' フォント設定
       Me.EnableHeadersVisualStyles = False ' 
       Me.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue
-      Me.DefaultCellStyle.Font = New Font("MS UI Gothic", 20)
-      Me.ColumnHeadersDefaultCellStyle.Font = New Font("MS UI Gothic", 20)
+      Me.DefaultCellStyle.Font = New Font("MS UI Gothic", GridFontSize)
+      Me.ColumnHeadersDefaultCellStyle.Font = New Font("MS UI Gothic", HeaderFontSize)
 
       Me.AutoGenerateColumns = True
-      Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
-      Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
+      'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+      'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
+
+      If UseCustomSize Then
+        Me.AutoSizeColumnsMode = CustomAutoSizeColumnsMode
+        Me.AutoSizeRowsMode = CustomAutoSizeRowsMode
+        Me.Width = 952
+      Else
+        Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
+        Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
+      End If
+
+
       'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
       'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
@@ -68,7 +94,7 @@
 
   End Sub
 
-  Private Sub AdjustColumnWidths()
+  Public Sub AdjustColumnWidths()
     Try
       Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
 

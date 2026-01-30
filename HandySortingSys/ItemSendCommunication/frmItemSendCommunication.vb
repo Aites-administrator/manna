@@ -20,6 +20,8 @@ Public Class frmItemSendCommunication
     Dim mapper As New clsDtHeaderMapping
     Dim tmpDt As New DataTable
     Dim tmpDtJP As New DataTable
+    Me.TextDataGrid = DgvList1
+
     SqlServer.GetResult(tmpDt, SqlSelTrnShopItemSelect())
     tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "商品マスタ")
 

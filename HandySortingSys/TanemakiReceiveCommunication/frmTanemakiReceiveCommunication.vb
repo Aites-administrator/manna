@@ -11,6 +11,7 @@ Public Class frmTanemakiReceiveCommunication
   Private Const RECEIVE_NYUKA_LAST_FILE_NAME As String = RECEIVE_FOLDER & "OUT_ITEM.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "種まき"
 

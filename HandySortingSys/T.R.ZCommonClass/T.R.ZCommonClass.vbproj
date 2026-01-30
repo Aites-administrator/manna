@@ -182,6 +182,7 @@
     </Compile>
     <Compile Include="Function\clsGlobalData.vb" />
     <Compile Include="Function\clsCommonFnc.vb" />
+    <Compile Include="Function\clsExcelReportBuilder.vb" />
     <Compile Include="Function\Form_MsgBox.Designer.vb">
       <DependentUpon>Form_MsgBox.vb</DependentUpon>
     </Compile>

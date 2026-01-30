@@ -12,14 +12,13 @@ Public Class frmShukkaCheckSendCommunication
   Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
-  Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_SHOP_FILE_NAME As String = SEND_FOLDER & "MST_SHOP.DAT"
   Private Const SEND_SHOPITEM_FILE_NAME As String = SEND_FOLDER & "SHOPITEM.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "出荷検品"
-
     MyBase.OnLoad(e)
   End Sub
 
@@ -193,6 +192,18 @@ Public Class frmShukkaCheckSendCommunication
       '総出しデータ 未実施
       SqlServer.GetResult(tmpDt, SqlSelTrnShop())
       FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_SHOP_FILE_NAME, LenColumnInShop)
+
+      'パスワードデータ
+      tmpDt.Clear()
+      If Not tmpDt.Columns.Contains("PASSWORD") Then
+        tmpDt.Columns.Add("PASSWORD", GetType(String))
+      End If
+
+      Dim rowPass As DataRow = tmpDt.NewRow
+      rowPass("PASSWORD") = ReadSettingIniFile("PASS", "VALUE")
+      tmpDt.Rows.Add(rowPass)
+      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_PASSWORD_FILE_NAME, LenColumnInPASSWORD)
+
 
       Handy.DeleteAcquisitionFlag()
 

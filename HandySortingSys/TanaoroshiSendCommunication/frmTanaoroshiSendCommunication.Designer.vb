@@ -30,112 +30,119 @@ Partial Class frmTanaoroshiSendCommunication
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.CmbDateTanaoroshiBi1 = New T.R.ZCommonCtrl.CmbDateTanaoroshiBi()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
-    CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
-    Me.SuspendLayout()
-    '
-    'BtnSendHandy1
-    '
-    Me.BtnSendHandy1.BackColor = System.Drawing.SystemColors.ActiveCaption
-    Me.BtnSendHandy1.FlatAppearance.BorderSize = 0
-    Me.BtnSendHandy1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-    Me.BtnSendHandy1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
-    Me.BtnSendHandy1.ForeColor = System.Drawing.Color.Black
-    Me.BtnSendHandy1.Location = New System.Drawing.Point(1052, 80)
-    Me.BtnSendHandy1.Name = "BtnSendHandy1"
-    Me.BtnSendHandy1.Size = New System.Drawing.Size(320, 60)
-    Me.BtnSendHandy1.TabIndex = 18
-    Me.BtnSendHandy1.TargetCancelParentClick = False
-    Me.BtnSendHandy1.TargetCommunicationDate = CType(resources.GetObject("BtnSendHandy1.TargetCommunicationDate"), System.Collections.Generic.Dictionary(Of String, String))
-    Me.BtnSendHandy1.TargetFileName = Nothing
-    Me.BtnSendHandy1.TargetLenClumn = CType(resources.GetObject("BtnSendHandy1.TargetLenClumn"), System.Collections.Generic.List(Of System.Tuple(Of String, Integer)))
-    Me.BtnSendHandy1.TargetTableName = Nothing
-    Me.BtnSendHandy1.TargetUpdColumn = CType(resources.GetObject("BtnSendHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
-    Me.BtnSendHandy1.TargetUpdStatus = Nothing
-    Me.BtnSendHandy1.TargetWhere = CType(resources.GetObject("BtnSendHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
-    Me.BtnSendHandy1.Text = "F5：送信"
-    Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-    Me.BtnSendHandy1.UseVisualStyleBackColor = False
-    '
-    'DgvList1
-    '
-    Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-    Me.DgvList1.Location = New System.Drawing.Point(20, 146)
-    Me.DgvList1.Name = "DgvList1"
-    Me.DgvList1.RowTemplate.Height = 21
-    Me.DgvList1.Size = New System.Drawing.Size(1352, 703)
-    Me.DgvList1.TabIndex = 17
-    Me.DgvList1.TargetColumnName = ""
-    '
-    'LblBase1
-    '
-    Me.LblBase1.AutoSize = True
-    Me.LblBase1.Font = New System.Drawing.Font("MS UI Gothic", 36.0!)
-    Me.LblBase1.Location = New System.Drawing.Point(12, 19)
-    Me.LblBase1.Name = "LblBase1"
-    Me.LblBase1.Size = New System.Drawing.Size(466, 48)
-    Me.LblBase1.TabIndex = 16
-    Me.LblBase1.Text = "ハンディ棚卸データ送信"
-    '
-    'BtnEnd_L1
-    '
-    Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
-    Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
-    Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-    Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-    Me.BtnEnd_L1.Location = New System.Drawing.Point(1052, 12)
-    Me.BtnEnd_L1.Name = "BtnEnd_L1"
-    Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
-    Me.BtnEnd_L1.TabIndex = 15
-    Me.BtnEnd_L1.Text = "終了(ESC)"
-    Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-    Me.BtnEnd_L1.UseVisualStyleBackColor = False
-    '
-    'CmbDateTanaoroshiBi1
-    '
-    Me.CmbDateTanaoroshiBi1.AvailableBlank = False
-    Me.CmbDateTanaoroshiBi1.DisplayMember = "ItemCode"
-    Me.CmbDateTanaoroshiBi1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
-    Me.CmbDateTanaoroshiBi1.FormattingEnabled = True
-    Me.CmbDateTanaoroshiBi1.Location = New System.Drawing.Point(157, 93)
-    Me.CmbDateTanaoroshiBi1.Name = "CmbDateTanaoroshiBi1"
-    Me.CmbDateTanaoroshiBi1.Size = New System.Drawing.Size(226, 41)
-    Me.CmbDateTanaoroshiBi1.TabIndex = 14
-    Me.CmbDateTanaoroshiBi1.ValueMember = "ItemCode"
-    '
-    'LblBase2
-    '
-    Me.LblBase2.AutoSize = True
-    Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
-    Me.LblBase2.Location = New System.Drawing.Point(12, 96)
-    Me.LblBase2.Name = "LblBase2"
-    Me.LblBase2.Size = New System.Drawing.Size(111, 33)
-    Me.LblBase2.TabIndex = 13
-    Me.LblBase2.Text = "棚卸日"
-    '
-    'frmTanaoroshiSendCommunication
-    '
-    Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
-    Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-    Me.ClientSize = New System.Drawing.Size(1384, 861)
-    Me.Controls.Add(Me.BtnSendHandy1)
-    Me.Controls.Add(Me.DgvList1)
-    Me.Controls.Add(Me.LblBase1)
-    Me.Controls.Add(Me.BtnEnd_L1)
-    Me.Controls.Add(Me.CmbDateTanaoroshiBi1)
-    Me.Controls.Add(Me.LblBase2)
-    Me.DoubleBuffered = True
-    Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
-    Me.KeyPreview = True
-    Me.MaximizeBox = False
-    Me.Name = "frmTanaoroshiSendCommunication"
-    Me.Text = "Form1"
-    CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).EndInit()
-    Me.ResumeLayout(False)
-    Me.PerformLayout()
+        CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuspendLayout()
+        '
+        'BtnSendHandy1
+        '
+        Me.BtnSendHandy1.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.BtnSendHandy1.FlatAppearance.BorderSize = 0
+        Me.BtnSendHandy1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnSendHandy1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnSendHandy1.ForeColor = System.Drawing.Color.Black
+        Me.BtnSendHandy1.Location = New System.Drawing.Point(1131, 698)
+        Me.BtnSendHandy1.Name = "BtnSendHandy1"
+        Me.BtnSendHandy1.Size = New System.Drawing.Size(320, 60)
+        Me.BtnSendHandy1.TabIndex = 18
+        Me.BtnSendHandy1.TargetCancelParentClick = False
+        Me.BtnSendHandy1.TargetCommunicationDate = CType(resources.GetObject("BtnSendHandy1.TargetCommunicationDate"), System.Collections.Generic.Dictionary(Of String, String))
+        Me.BtnSendHandy1.TargetFileName = Nothing
+        Me.BtnSendHandy1.TargetLenClumn = CType(resources.GetObject("BtnSendHandy1.TargetLenClumn"), System.Collections.Generic.List(Of System.Tuple(Of String, Integer)))
+        Me.BtnSendHandy1.TargetTableName = Nothing
+        Me.BtnSendHandy1.TargetUpdColumn = CType(resources.GetObject("BtnSendHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
+        Me.BtnSendHandy1.TargetUpdStatus = Nothing
+        Me.BtnSendHandy1.TargetWhere = CType(resources.GetObject("BtnSendHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
+        Me.BtnSendHandy1.Text = "F5：送信"
+        Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnSendHandy1.UseVisualStyleBackColor = False
+        '
+        'DgvList1
+        '
+        Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DgvList1.CustomAutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
+        Me.DgvList1.CustomAutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
+        Me.DgvList1.GridFontSize = 20
+        Me.DgvList1.HeaderFontSize = 20
+        Me.DgvList1.Location = New System.Drawing.Point(20, 146)
+        Me.DgvList1.Name = "DgvList1"
+        Me.DgvList1.RowTemplate.Height = 21
+        Me.DgvList1.Size = New System.Drawing.Size(1352, 703)
+        Me.DgvList1.TabIndex = 17
+        Me.DgvList1.TargetColumnName = ""
+        Me.DgvList1.UseCustomSize = False
+        '
+        'LblBase1
+        '
+        Me.LblBase1.AutoSize = True
+        Me.LblBase1.Font = New System.Drawing.Font("MS UI Gothic", 36.0!)
+        Me.LblBase1.Location = New System.Drawing.Point(12, 19)
+        Me.LblBase1.Name = "LblBase1"
+        Me.LblBase1.Size = New System.Drawing.Size(466, 48)
+        Me.LblBase1.TabIndex = 16
+        Me.LblBase1.Text = "ハンディ棚卸データ送信"
+        '
+        'BtnEnd_L1
+        '
+        Me.BtnEnd_L1.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(188, Byte), Integer), CType(CType(188, Byte), Integer))
+        Me.BtnEnd_L1.FlatAppearance.BorderSize = 0
+        Me.BtnEnd_L1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.BtnEnd_L1.Font = New System.Drawing.Font("メイリオ", 16.0!, System.Drawing.FontStyle.Bold)
+        Me.BtnEnd_L1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.BtnEnd_L1.Location = New System.Drawing.Point(1131, 794)
+        Me.BtnEnd_L1.Name = "BtnEnd_L1"
+        Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
+        Me.BtnEnd_L1.TabIndex = 15
+        Me.BtnEnd_L1.Text = "終了(ESC)"
+        Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.BtnEnd_L1.UseVisualStyleBackColor = False
+        '
+        'CmbDateTanaoroshiBi1
+        '
+        Me.CmbDateTanaoroshiBi1.AvailableBlank = False
+        Me.CmbDateTanaoroshiBi1.DisplayMember = "ItemCode"
+        Me.CmbDateTanaoroshiBi1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+        Me.CmbDateTanaoroshiBi1.FormattingEnabled = True
+        Me.CmbDateTanaoroshiBi1.Location = New System.Drawing.Point(157, 93)
+        Me.CmbDateTanaoroshiBi1.Name = "CmbDateTanaoroshiBi1"
+        Me.CmbDateTanaoroshiBi1.Size = New System.Drawing.Size(226, 41)
+        Me.CmbDateTanaoroshiBi1.TabIndex = 14
+        Me.CmbDateTanaoroshiBi1.ValueMember = "ItemCode"
+        '
+        'LblBase2
+        '
+        Me.LblBase2.AutoSize = True
+        Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+        Me.LblBase2.Location = New System.Drawing.Point(12, 96)
+        Me.LblBase2.Name = "LblBase2"
+        Me.LblBase2.Size = New System.Drawing.Size(111, 33)
+        Me.LblBase2.TabIndex = 13
+        Me.LblBase2.Text = "棚卸日"
+        '
+        'frmTanaoroshiSendCommunication
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(1384, 861)
+        Me.Controls.Add(Me.BtnSendHandy1)
+        Me.Controls.Add(Me.DgvList1)
+        Me.Controls.Add(Me.LblBase1)
+        Me.Controls.Add(Me.BtnEnd_L1)
+        Me.Controls.Add(Me.CmbDateTanaoroshiBi1)
+        Me.Controls.Add(Me.LblBase2)
+        Me.DoubleBuffered = True
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
+        Me.Location = New System.Drawing.Point(1131, 794)
+        Me.MaximizeBox = False
+        Me.Name = "frmTanaoroshiSendCommunication"
+        Me.Text = "Form1"
+        CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
 
-  End Sub
+    End Sub
 
-  Friend WithEvents BtnSendHandy1 As BtnSendHandy
+    Friend WithEvents BtnSendHandy1 As BtnSendHandy
   Friend WithEvents DgvList1 As DgvList
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L

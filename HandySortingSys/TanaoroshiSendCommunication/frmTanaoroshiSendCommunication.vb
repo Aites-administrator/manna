@@ -12,12 +12,12 @@ Imports ClsHandyCommunication
 Public Class frmTanaoroshiSendCommunication
   Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
-  Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_TANA_FILE_NAME As String = SEND_FOLDER & "TANALIST.DAT"
   Private Const SEND_TANAOROSHI_FILE_NAME As String = SEND_FOLDER & "IN_TANA.DAT"
 
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "棚卸"
 
@@ -90,14 +90,18 @@ Public Class frmTanaoroshiSendCommunication
 
     sql &= " SELECT      LEFT(MST_ITEM.TANA_CD, 2) AS TANA_CD "
     sql &= "        ,   MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
-    sql &= "        ,   CASE WHEN MAX(TRN_TANAOROSHI.SEND_DATE) IS NOT NULL THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE "
-    sql &= "        ,   CASE WHEN MAX(RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,  CASE WHEN COUNT(*) > COUNT(TRN_TANAOROSHI.SEND_DATE) THEN '有' "
+    sql &= "         ELSE '無' "
+    sql &= "         END AS SOUDASHI_SEND_DATE "
+    sql &= "        ,   CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or MAX(RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "        ,   CASE WHEN MAX(TRN_TANAOROSHI.SEND_DATE) IS NOT NULL THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE_ZUMI "
     sql &= " FROM TRN_TANAOROSHI "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= "     ON MST_ITEM.SHOHIN_CD = TRN_TANAOROSHI.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
     sql &= "     ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD, 2) "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE 1 = 1 "
+    sql &= " AND TANA_DATE_ZAIKO_SU <> 0 "
 
     If CmbDateTanaoroshiBi1.SelectedValue Is Nothing Then
       sql &= " AND TANAOROSHI_DATE = ''"
@@ -137,7 +141,7 @@ Public Class frmTanaoroshiSendCommunication
     sql &= "      ,	TRN_TANAOROSHI.GOUKI "
     sql &= "      ,	TRN_TANAOROSHI.TANTO_CD "
     sql &= "      ,	FORMAT(TRN_TANAOROSHI.RECEIVE_DATE, 'yyyyMMddHHmmss') AS RECEIVE_DATE "
-    sql &= "      ,   CASE WHEN RECEIVE_DATE IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "        ,   CASE WHEN (TORIKOMI_JOKYO_FLG = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or RECEIVE_DATE IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      , CASE WHEN TORIKOMI_JOKYO_FLG = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	'' as INDEX_ID "
     sql &= " FROM TRN_TANAOROSHI "
@@ -166,7 +170,7 @@ Public Class frmTanaoroshiSendCommunication
 
     sql &= " SELECT LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
     sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
-    sql &= "        ,   CASE WHEN MAX(RECEIVE_DATE) IS NULL THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "        ,   CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or MAX(RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      , CASE WHEN MAX(TORIKOMI_JOKYO_FLG) = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	'' as INDEX_ID "
     sql &= " FROM TRN_TANAOROSHI "
@@ -223,6 +227,16 @@ Public Class frmTanaoroshiSendCommunication
         End If
       Next
 
+      'パスワードデータ
+      tmpDt.Clear()
+      If Not tmpDt.Columns.Contains("PASSWORD") Then
+        tmpDt.Columns.Add("PASSWORD", GetType(String))
+      End If
+
+      Dim rowPass As DataRow = tmpDt.NewRow
+      rowPass("PASSWORD") = ReadSettingIniFile("PASS", "VALUE")
+      tmpDt.Rows.Add(rowPass)
+      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_PASSWORD_FILE_NAME, LenColumnInPASSWORD)
 
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_TANAOROSHI_FILE_NAME)
 
@@ -279,6 +293,7 @@ Public Class frmTanaoroshiSendCommunication
     tmpDtJP.Columns("チェック").SetOrdinal(0)
     DgvList1.TargetColumnName = "総出し済"
     DgvList1.SetData(tmpDtJP)
+    DgvList1.Columns("送信済み").Visible = False
   End Sub
 
 

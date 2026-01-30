@@ -13,12 +13,11 @@ Public Class frmNyukaSendCommunication
   Inherits FormSendCommunication
 
   Private SqlServer As New clsSqlServer
-  Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_NYUKA_FILE_NAME As String = SEND_FOLDER & "IN_ITEM.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
     Me.TextDisplayName = "入荷検品"
-
     MyBase.OnLoad(e)
   End Sub
 
@@ -33,14 +32,15 @@ Public Class frmNyukaSendCommunication
     ReloadGrid()
   End Sub
 
-  Private Sub FormatFixedLengthTrnNyuka(prmDt As DataTable, prmFileName As String)
+  Private Sub FormatFixedLengthTrnNyuka(prmDt As DataTable, prmFileName As String, prmLenColumn As List(Of Tuple(Of String, Integer)))
     Dim writer As New StreamWriter(prmFileName, False, Encoding.GetEncoding("shift-jis"))
     Try
       Dim line As String = String.Empty
+      Dim tmpListTuple As List(Of Tuple(Of String, Integer)) = prmLenColumn
 
       'DataGridのデータを固定長に変換して出力
       For Each tmpRow In prmDt.Rows
-        For Each LenColumnInNyukaTup In LenColumnInNyuka
+        For Each LenColumnInNyukaTup In tmpListTuple
           If LenColumnInNyukaTup.Item1 = "MAKER_SHOHIN_MEI" Or LenColumnInNyukaTup.Item1 = "MAKER_KIKAKU_MEI" Then
             line &= ToFixedLength(StrConv(tmpRow(LenColumnInNyukaTup.Item1).ToString(), VbStrConv.Narrow), LenColumnInNyukaTup.Item2)
           Else
@@ -139,7 +139,19 @@ Public Class frmNyukaSendCommunication
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
       SqlServer.GetResult(tmpDt, SqlSelTrnNyuka)
 
-      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME)
+      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_NYUKA_FILE_NAME, LenColumnInNyuka)
+
+      'パスワードデータ
+      tmpDt.Clear()
+      If Not tmpDt.Columns.Contains("PASSWORD") Then
+        tmpDt.Columns.Add("PASSWORD", GetType(String))
+      End If
+
+      Dim rowPass As DataRow = tmpDt.NewRow
+      rowPass("PASSWORD") = ReadSettingIniFile("PASS", "VALUE")
+      tmpDt.Rows.Add(rowPass)
+      FormatFixedLengthTrnNyuka(tmpDt, PROJECT_DIR_NAME & SEND_PASSWORD_FILE_NAME, LenColumnInPASSWORD)
+
       Handy.DeleteAcquisitionFlag()
 
       '条件項目生成

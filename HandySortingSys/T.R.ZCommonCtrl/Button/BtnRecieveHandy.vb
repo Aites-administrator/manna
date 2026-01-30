@@ -116,6 +116,11 @@ Public Class BtnRecieveHandy
       Dim tmpDtJP As New DataTable
       tmpDtJP = mapper.ConvertColumnNamesToJapanese(ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn), TargetMappingName)
       TargetDataGridView.TargetColumnName = "取込状況FLG"
+
+      TargetDataGridView.UseCustomSize = True
+      TargetDataGridView.GridFontSize = 14
+      TargetDataGridView.HeaderFontSize = 14
+
       TargetDataGridView.SetData(tmpDtJP)
 
       WriteProgressLog($"取込ファイルをGridに表示完了: {TargetFileName}")

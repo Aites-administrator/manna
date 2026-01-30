@@ -9,9 +9,9 @@ Public Class SoudashiReceiveCommunication
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "MST_PICK.DAT"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
+    Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "総出し"
-
     MyBase.OnLoad(e)
   End Sub
 
