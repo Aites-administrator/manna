@@ -120,6 +120,8 @@ Public Class clsHandyCommunication
           Return False
         End If
 
+        Application.DoEvents()
+
         Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
@@ -277,7 +279,8 @@ Public Class clsHandyCommunication
       StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
 
       Do While True
-
+        Application.DoEvents()
+        Thread.Sleep(50)
 
         ' DATファイルがなければターゲットが送信されたかを確認
         If Not ExistsOtherDatFile(prmTargetFileName) Then
@@ -287,10 +290,14 @@ Public Class clsHandyCommunication
           End If
         End If
         Dim fileName As String = String.Empty
-        If Not WaitCommunicationFlagCreated(fileName) Then Exit Do
+        If Not WaitCommunicationFlagCreated(fileName) Then
+          Return False
+        End If
 
 
-        If Not WaitCommunicationFlagDeleted() Then Exit Do
+        If Not WaitCommunicationFlagDeleted() Then
+          Return False
+        End If
 
         If fileName = Path.GetFileName(prmTargetFileName) Then
           prmTargetSendFlg = True
@@ -326,14 +333,18 @@ Public Class clsHandyCommunication
         ' ファイル名取得
         Dim fileName As String = String.Empty
 
-        If Not WaitCommunicationFlagCreated(fileName) Then Exit Do
+        If Not WaitCommunicationFlagCreated(fileName) Then
+          Return False
+        End If
 
         WriteProgressLog($"FLG作成検知: {fileName}")
 
 
 
         ' Communication.FLG 削除待ち
-        If Not WaitCommunicationFlagDeleted() Then Exit Do
+        If Not WaitCommunicationFlagDeleted() Then
+          Return False
+        End If
 
         WriteProgressLog($"FLG削除検知: {fileName}")
 

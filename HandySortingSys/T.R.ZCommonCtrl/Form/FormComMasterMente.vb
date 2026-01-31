@@ -89,7 +89,8 @@ Public Class FormComMasterMente
 
       dv.RowFilter = String.Join(" OR ", filters)
       DgvList1.SetData(dv.ToTable())
-
+      ' 列設定
+      SetupColumns()
     Catch ex As Exception
       Throw New Exception(ex.Message)
     End Try
@@ -226,6 +227,8 @@ Public Class FormComMasterMente
       _dt = _definition.LoadData()
       _dt.AcceptChanges()
       DgvList1.SetData(_dt)
+      ' 列設定
+      SetupColumns()
     Catch ex As Exception
       ComWriteErrLog(ex, False)
     End Try

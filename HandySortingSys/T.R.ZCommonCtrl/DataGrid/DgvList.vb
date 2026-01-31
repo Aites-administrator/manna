@@ -35,6 +35,8 @@
 
   Public Sub SetData(dt As DataTable)
     Try
+      Me.AutoGenerateColumns = True
+
       Me.DataSource = Nothing
       Me.DataSource = dt
       Me.AllowUserToAddRows = False
@@ -53,7 +55,6 @@
       Me.DefaultCellStyle.Font = New Font("MS UI Gothic", GridFontSize)
       Me.ColumnHeadersDefaultCellStyle.Font = New Font("MS UI Gothic", HeaderFontSize)
 
-      Me.AutoGenerateColumns = True
       'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
       'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
 
@@ -70,6 +71,19 @@
       'Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
       'Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells
 
+      ' ★チェック列を強制的に CheckBoxColumn にする
+      If Me.Columns.Contains("チェック") Then
+        Dim colIndex = Me.Columns("チェック").Index
+
+        Dim chkCol As New DataGridViewCheckBoxColumn()
+        chkCol.Name = "チェック"
+        chkCol.HeaderText = "チェック"
+        chkCol.DataPropertyName = "チェック"
+        chkCol.ReadOnly = False
+
+        Me.Columns.Remove("チェック")
+        Me.Columns.Insert(colIndex, chkCol)
+      End If
       ' ★ここで取り込み状況フラグを先頭へ
       If Me.Columns.Contains(TargetColumnName) Then
         Me.Columns(TargetColumnName).DisplayIndex = 0
@@ -145,5 +159,47 @@
       Throw New Exception(ex.Message)
     End Try
   End Sub
+  Private Sub DgvList1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Me.CellClick
+    If e.RowIndex < 0 Then Exit Sub
+
+    If Me.Columns(e.ColumnIndex).Name = "チェック" Then
+
+      ' ★編集モードに入る
+      Me.BeginEdit(True)
+
+      Dim cell = Me.Rows(e.RowIndex).Cells("チェック")
+      cell.Value = Not CBool(cell.Value)
+
+      ' ★編集を確定（これがないと UI が更新されない）
+      Me.CommitEdit(DataGridViewDataErrorContexts.Commit)
+
+      ' ★さらに確実に更新
+      Me.EndEdit()
+    End If
+
+  End Sub
+
+  Private Sub DgvList_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles Me.CellMouseClick
+    ' ヘッダークリック以外は無視
+    If e.RowIndex <> -1 Then Exit Sub
+
+    ' 「チェック」列のヘッダーをクリックしたときだけ動作
+    If Me.Columns(e.ColumnIndex).Name = "チェック" Then
+
+      ' 現在の状態を確認（全部チェック済みか）
+      Dim allChecked As Boolean =
+            Me.Rows.Cast(Of DataGridViewRow)().
+            All(Function(r) CBool(r.Cells("チェック").Value))
+
+      ' 全部チェック or 全部解除
+      For Each row As DataGridViewRow In Me.Rows
+        row.Cells("チェック").Value = Not allChecked
+      Next
+
+      ' UI 更新
+      Me.Refresh()
+    End If
+  End Sub
+
 
 End Class

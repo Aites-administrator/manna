@@ -209,6 +209,8 @@ Public Class frmTanaoroshiSendCommunication
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
       BtnSendHandy1.Handy = Handy
+      Me.TextHandy = Handy
+
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
       ' チェックされたTANA_CDのリストを取得

@@ -225,6 +225,8 @@ Public Class frmSoudashiSendCommunication
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
       BtnSendHandy1.TargetCancelParentClick = False
       BtnSendHandy1.Handy = Handy
+      Me.TextHandy = Handy
+
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
       Handy.CreateAcquisitionFlag(PROJECT_DIR_NAME & SEND_SHUKKA_FILE_NAME)
@@ -327,5 +329,8 @@ Public Class frmSoudashiSendCommunication
     DgvList1.Columns("送信済み").Visible = False
 
   End Sub
+
+
+
 
 End Class

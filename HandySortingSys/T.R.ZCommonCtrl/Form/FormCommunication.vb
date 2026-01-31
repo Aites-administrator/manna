@@ -1,8 +1,10 @@
 ﻿Imports T.R.ZCommonClass.clsCommonFnc
+Imports System.IO
 Imports IpcService
 Imports System.Runtime.Remoting
 Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Channels.Ipc
+Imports System.ComponentModel
 
 Public Class FormCommunication
   Inherits FormBase
@@ -14,6 +16,7 @@ Public Class FormCommunication
   Public Overridable Property TextButtonName As String = "送信（F5）"
   Public Overridable Property TextDisplayName As String = "入荷検品"
   Public Overridable Property TextDataGrid As DgvList
+  Public Overridable Property TextHandy As New ClsHandyCommunication.clsHandyCommunication("")
 
 
 #Region "イベントプロシージャー"
@@ -141,6 +144,29 @@ Public Class FormCommunication
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("7. 「閉じる」ボタンを押してください。" & vbCrLf)
+  End Sub
+
+  Private Sub FormCommunication_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+
+  End Sub
+
+  Private Sub FormCommunication_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    Try
+      ' DAT ファイルをすべてバックアップへ移動
+      Dim folder As String = TextHandy.TargetFolder
+
+      For Each filePath In Directory.GetFiles(folder, "*.DAT")
+        Dim fileName As String = Path.GetFileName(filePath)
+        TextHandy.MoveToBackupFolder(fileName)
+      Next
+
+      TextHandy.CloseCommunicationTool()
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
   End Sub
 
 

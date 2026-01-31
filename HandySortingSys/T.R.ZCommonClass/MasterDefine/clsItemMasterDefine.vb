@@ -146,8 +146,8 @@ Public Class clsItemMasterDefine
 
           bulk.WriteToServer(dtExcel)
         End Using
-      End Using
 
+      End Using
 
       '=== MERGE（OleDb）===
       SqlServer.Execute(SqlMerge())
@@ -320,9 +320,21 @@ Public Class clsItemMasterDefine
 
 
   Public Function ConvertExcelColumnsToDb(dt As DataTable, mappingName As String) As DataTable
+    Dim removeList As New List(Of DataColumn)
+
     For Each col As DataColumn In dt.Columns
+      Dim beforeName As String = col.ColumnName
       col.ColumnName = mapper.GetDbColumnName(mappingName, col.ColumnName.Replace(vbCr, "").Replace(vbLf, ""))
+      If col.ColumnName = beforeName Then
+        removeList.Add(col)
+
+      End If
     Next
+
+    For Each col As DataColumn In removeList
+      dt.Columns.Remove(col)
+    Next
+
     Return dt
   End Function
 
@@ -384,13 +396,13 @@ Public Class clsItemMasterDefine
     Dim sql As String = ""
 
     sql &= "CREATE TABLE ##TMP_MST_ITEM ("
-    sql &= " SHOHIN_RANK        CHAR(1),"
-    sql &= " SHOHIN_CD          CHAR(5),"
+    sql &= " SHOHIN_RANK        varchar(1),"
+    sql &= " SHOHIN_CD          varchar(5),"
     sql &= " SHOHIN_MEI         NVARCHAR(128),"
     sql &= " IRISU              NUMERIC(10,2),"
-    sql &= " AISU               VARCHAR(1),"
+    sql &= " AISU               VARCHAR(2),"
     sql &= " ONDO_TAI           CHAR(4),"
-    sql &= " SHOHI_ZEI          NUMERIC(1,0),"
+    sql &= " SHOHI_ZEI          NUMERIC(2,0),"
     sql &= " TANKA_TANI         CHAR(3),"
     sql &= " SIIRE_CD           CHAR(4),"
     sql &= " SIIRE_MEI          NVARCHAR(64),"

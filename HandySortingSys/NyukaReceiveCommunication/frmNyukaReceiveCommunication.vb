@@ -26,6 +26,8 @@ Public Class frmNyukaReceiveCommunication
       'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
       BtnRecieveHandy1.Handy = Handy
+      Me.TextHandy = Handy
+
       Handy.TargetFolder = PROJECT_DIR_NAME & RECEIVE_FOLDER
       BtnRecieveHandy1.TargetFileName = PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME
 

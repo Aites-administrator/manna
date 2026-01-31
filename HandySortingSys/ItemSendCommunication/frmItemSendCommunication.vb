@@ -116,6 +116,8 @@ Public Class frmItemSendCommunication
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
       BtnSendHandy1.Handy = Handy
+      Me.TextHandy = Handy
+
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_ITEM_FILE_NAME
 
       '条件項目生成

@@ -85,7 +85,11 @@ Public Class BtnSendHandy
       Handy.OpenCommunicationTool()
 
       Dim TargetSendFlg As Boolean = False
-      Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg)
+
+      If Not Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg) Then
+        Handy.CloseCommunicationTool()
+        Exit Sub
+      End If
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
 
       If Not (TargetLenClumn.Equals(LenColumnInMstItem) Or TargetLenClumn.Equals(LenColumnInMstTanto)) Then

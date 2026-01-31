@@ -73,11 +73,11 @@ Public Class BtnInput
         ExportCsv(invalidList, path)
 
         'CSV を出力したフォルダを開く
-        'Dim folderPath As String = IO.Path.GetDirectoryName(path)
-        'Process.Start("explorer.exe", folderPath)
+        Dim folderPath As String = IO.Path.GetDirectoryName(path)
+        Process.Start("explorer.exe", folderPath)
 
-        'Throw New Exception("マスタに不備があるデータが存在します。" &
-        '                    vbCrLf & "不備データ一覧を確認してください。")
+        Throw New Exception("マスタに不備があるデータが存在します。" &
+                            vbCrLf & "不備データ一覧を確認してください。")
       End If
 
       If TargetTableName = "TRN_SHUKKA" Then
@@ -192,12 +192,12 @@ Public Class BtnInput
       Dim itf = m("ITF").ToString()
       Dim tana = m("TANA_CD").ToString()
 
-      If String.IsNullOrWhiteSpace(jan) Then
-        result.Rows.Add("JAN登録なし", shohinCd, jan, itf, tana)
-        Continue For
-      End If
+      'If String.IsNullOrWhiteSpace(jan) Then
+      '  result.Rows.Add("JAN登録なし", shohinCd, jan, itf, tana)
+      '  Continue For
+      'End If
 
-      If String.IsNullOrWhiteSpace(jan) Then
+      If String.IsNullOrWhiteSpace(tana) Then
         result.Rows.Add("棚番登録なし", shohinCd, jan, itf, tana)
         Continue For
       End If

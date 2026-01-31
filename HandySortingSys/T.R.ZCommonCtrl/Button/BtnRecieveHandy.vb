@@ -85,7 +85,11 @@ Public Class BtnRecieveHandy
       Handy.OpenCommunicationTool()
 
       Dim TargetReceiveFlg As Boolean = False
-      Handy.WatchAndReceiveFiles(TargetFileName, TargetReceiveFlg)
+
+      If Not Handy.WatchAndReceiveFiles(TargetFileName, TargetReceiveFlg) Then
+        Handy.CloseCommunicationTool()
+        Exit Sub
+      End If
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
@@ -154,6 +158,18 @@ Public Class BtnRecieveHandy
             If Not String.IsNullOrEmpty(tmpRow(UpdColumn).ToString()) Then
               tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
             End If
+            'ElseIf UpdColumn = "NYUKA_JISSEKISU_MAKER" Then
+            '  '商品の情報を取得して、荷合いで割る必要がある
+            '  Dim tmpNiaisu As Decimal = If(tmpRow("MAKER_NIAISU") = "0", 1, tmpRow("MAKER_NIAISU"))
+            '  Dim tmpNyukaJissekisuMaker As String = Math.Floor(CDec(tmpRow(UpdColumn)) / CDec(tmpNiaisu)).ToString
+            '  tmpUpdColumn.Add(UpdColumn, tmpNyukaJissekisuMaker)
+            'ElseIf UpdColumn = "NYUKA_JISSEKISU_JISYA" Then
+            '  '商品の情報を取得して、NYUKA_JISSEKISU_MAKER×IRISUになる必要がある
+            '  Dim tmpItemDt As New DataTable
+            '  SqlServer.GetResult(tmpItemDt, SqlSelItem(tmpRow("JISYA_SHOHIN_CD")))
+            '  Dim tmpIrisu As Decimal = 0
+            '  Dim tmpNyukaJissekisuJisya As String = Math.Floor(CDec(tmpRow(UpdColumn)) * CDec(tmpItemDt.Rows(0).Item("IRISU"))).ToString
+            '  tmpUpdColumn.Add(UpdColumn, tmpNyukaJissekisuJisya)
           Else
             tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
           End If
@@ -223,14 +239,19 @@ Public Class BtnRecieveHandy
 
     Return rtn
   End Function
-  Private Function SqlUpdItem(prmItemCd As String) As String
+
+  Private Function SqlSelItem(prmItemCd As String) As String
     Dim sql As String = String.Empty
 
-    sql += " UPDATE MST_ITEM "
-    sql += " WHERE ITEM_CODE = '" & prmItemCd & "'"
+    sql += " SELECT IRISU  "
+    sql += " FROM MST_ITEM "
+    sql += " WHERE SHOHIN_CD = '" & prmItemCd & "'"
 
     Return sql
   End Function
+
+
+
 #End Region
 
 

@@ -8,6 +8,7 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
+Imports System.ComponentModel
 
 Public Class frmTantoSendCommunication
   Inherits FormSendCommunication
@@ -112,6 +113,8 @@ Public Class frmTantoSendCommunication
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
       BtnSendHandy1.Handy = Handy
+      Me.TextHandy = Handy
+
       BtnSendHandy1.TargetFileName = PROJECT_DIR_NAME & SEND_TANTO_FILE_NAME
 
       '条件項目生成
@@ -135,6 +138,7 @@ Public Class frmTantoSendCommunication
     End Try
   End Sub
 
-
-
+  'Private Sub frmTantoSendCommunication_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+  '  TextHandy.CloseCommunicationTool()
+  'End Sub
 End Class
