@@ -100,6 +100,15 @@ Public Class FormBase
 
 #Region "コントロール制御関連"
 
+  Public Sub New()
+    Me.StartPosition = FormStartPosition.CenterScreen
+  End Sub
+
+  Private Sub BaseForm_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+    Me.CenterToScreen()
+  End Sub
+
+
   ''' <summary>
   ''' 画面上の全てのコントロールを初期化する
   ''' </summary>
@@ -217,7 +226,8 @@ Public Class FormBase
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     'フォームを画面の真ん中に表示する
-    Me.SetBounds((Screen.PrimaryScreen.Bounds.Width - Width) / 2, (Screen.PrimaryScreen.Bounds.Height - Height) / 2 - 25, Width, Height)
+    'Me.SetBounds((Screen.PrimaryScreen.Bounds.Width - Width) / 2, (Screen.PrimaryScreen.Bounds.Height - Height) / 2 - 25, Width, Height)
+
 
     Me.KeyPreview = True
 

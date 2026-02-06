@@ -4,6 +4,7 @@ Imports IpcService
 Imports System.Runtime.Remoting
 Imports System.Runtime.Remoting.Channels
 Imports System.Runtime.Remoting.Channels.Ipc
+Imports System.ComponentModel
 
 Public Class FormComMasterMente
   Inherits FormBase
@@ -21,7 +22,7 @@ Public Class FormComMasterMente
   Friend WithEvents btnImport As BtnMstInput
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents LblBase2 As LblBase
-  Friend WithEvents TxtNumericBase1 As TxtNumericBase
+  Friend WithEvents TxtBase1 As TxtBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
 
   Public Sub New(definition As IMasterMentenance)
@@ -45,7 +46,7 @@ Public Class FormComMasterMente
       btnAdd.Visible = Not _definition.AllowImport
       btnImport.Visible = _definition.AllowImport
       LblBase2.Visible = _definition.AllowImport
-      TxtNumericBase1.Visible = _definition.AllowImport
+      TxtBase1.Visible = _definition.AllowImport
     Catch ex As Exception
       ComWriteErrLog(ex)
     End Try
@@ -69,7 +70,7 @@ Public Class FormComMasterMente
   End Sub
   Private Sub ExecuteSearch()
     Try
-      Dim keyword = TxtNumericBase1.Text.Trim().Replace("'", "''")
+      Dim keyword = TxtBase1.Text.Trim().Replace("'", "''")
 
       If keyword = "" Then
         DgvList1.SetData(_dt)
@@ -83,12 +84,12 @@ Public Class FormComMasterMente
         If _dt.Columns.Contains(col.Name) AndAlso
                _dt.Columns(col.Name).DataType Is GetType(String) Then
 
-          filters.Add($"{col.Name} = '{keyword}'")
+          filters.Add($"{col.Name} LIKE '%{keyword}%'")
         End If
       Next
 
       dv.RowFilter = String.Join(" OR ", filters)
-      DgvList1.SetData(dv.ToTable())
+      DgvList1.DataSource = dv
       ' 列設定
       SetupColumns()
     Catch ex As Exception
@@ -96,7 +97,7 @@ Public Class FormComMasterMente
     End Try
   End Sub
 
-  Private Sub TxtNumericBase1_Validated(sender As Object, e As EventArgs) Handles TxtNumericBase1.Validated
+  Private Sub TxtNumericBase1_Validated(sender As Object, e As EventArgs) Handles TxtBase1.Validated
     Try
       ExecuteSearch()
 
@@ -106,10 +107,20 @@ Public Class FormComMasterMente
     End Try
   End Sub
 
+  Private Sub DgvList1_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) _
+    Handles DgvList1.CellEndEdit
+
+    DgvList1.EndEdit()
+    DgvList1.CommitEdit(DataGridViewDataErrorContexts.Commit)
+  End Sub
 
 
   Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
     Try
+      DgvList1.EndEdit()
+      DgvList1.CommitEdit(DataGridViewDataErrorContexts.Commit)
+      DgvList1.CurrentCell = Nothing
+
       Dim changed As DataTable = _dt.GetChanges(DataRowState.Modified Or DataRowState.Added)
 
       If changed Is Nothing OrElse changed.Rows.Count = 0 Then
@@ -127,7 +138,7 @@ Public Class FormComMasterMente
 
       If result = DialogResult.No Then
         ' 元の全件に戻す
-        DgvList1.SetData(_dt)
+        ExecuteSearch()
         SetupColumns()
 
         Return
@@ -235,6 +246,34 @@ Public Class FormComMasterMente
 
   End Sub
 
+  Private Sub FormComMasterMente_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+    DgvList1.EndEdit()
+    DgvList1.CommitEdit(DataGridViewDataErrorContexts.Commit)
+    DgvList1.CurrentCell = Nothing
+
+    Dim changed As DataTable = _dt.GetChanges(DataRowState.Modified Or DataRowState.Added)
+    If changed IsNot Nothing Then
+      If changed.Rows.Count <> 0 Then
+        DgvList1.SetData(changed)
+        ' 列設定
+        SetupColumns()
+
+        Dim result = ComMessageBox("保存されていない行があります。" & vbCrLf &
+                                   "本当に終了しますか？",
+                                   ENTRY_TITLE,
+                                    typMsgBox.MSG_NORMAL,
+                                   MessageBoxButtons.YesNo)
+
+        If result = DialogResult.No Then
+          e.Cancel = True
+        End If
+        Return
+      End If
+
+    End If
+
+  End Sub
+
   Private Function GetSelectedRow() As DataRow
     Dim drv = TryCast(DgvList1.CurrentRow.DataBoundItem, DataRowView)
 
@@ -261,7 +300,7 @@ Public Class FormComMasterMente
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
-    Me.TxtNumericBase1 = New T.R.ZCommonCtrl.TxtNumericBase()
+    Me.TxtBase1 = New T.R.ZCommonCtrl.TxtBase()
     CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.SuspendLayout()
     '
@@ -286,9 +325,10 @@ Public Class FormComMasterMente
     Me.btnSave.Name = "btnSave"
     Me.btnSave.Size = New System.Drawing.Size(320, 60)
     Me.btnSave.TabIndex = 5
-    Me.btnSave.Text = "保存"
+    Me.btnSave.Text = "保存(F9)"
     Me.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnSave.UseVisualStyleBackColor = False
+    Me.btnSave.AccessKey = Keys.F9
     '
     'btnDelete
     '
@@ -301,9 +341,10 @@ Public Class FormComMasterMente
     Me.btnDelete.Name = "btnDelete"
     Me.btnDelete.Size = New System.Drawing.Size(320, 60)
     Me.btnDelete.TabIndex = 6
-    Me.btnDelete.Text = "削除"
+    Me.btnDelete.Text = "削除(F8)"
     Me.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnDelete.UseVisualStyleBackColor = False
+    Me.btnDelete.AccessKey = Keys.F8
     '
     'btnAdd
     '
@@ -316,9 +357,10 @@ Public Class FormComMasterMente
     Me.btnAdd.Name = "btnAdd"
     Me.btnAdd.Size = New System.Drawing.Size(320, 60)
     Me.btnAdd.TabIndex = 7
-    Me.btnAdd.Text = "追加"
+    Me.btnAdd.Text = "追加(F4)"
     Me.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnAdd.UseVisualStyleBackColor = False
+    Me.btnAdd.AccessKey = Keys.F4
     '
     'btnImport
     '
@@ -331,9 +373,10 @@ Public Class FormComMasterMente
     Me.btnImport.Name = "btnImport"
     Me.btnImport.Size = New System.Drawing.Size(320, 60)
     Me.btnImport.TabIndex = 8
-    Me.btnImport.Text = "取込"
+    Me.btnImport.Text = "取込(F1)"
     Me.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnImport.UseVisualStyleBackColor = False
+    Me.btnImport.AccessKey = Keys.F1
     '
     'BtnEnd_L1
     '
@@ -346,7 +389,7 @@ Public Class FormComMasterMente
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 22
-    Me.BtnEnd_L1.Text = "終了(ESC)"
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '
@@ -368,23 +411,23 @@ Public Class FormComMasterMente
     Me.LblBase2.Name = "LblBase2"
     Me.LblBase2.Size = New System.Drawing.Size(86, 33)
     Me.LblBase2.TabIndex = 24
-    Me.LblBase2.Text = "コード"
+    Me.LblBase2.Text = "名称"
     '
     'TxtNumericBase1
     '
-    Me.TxtNumericBase1.DisableAllSelect = False
-    Me.TxtNumericBase1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
-    Me.TxtNumericBase1.ImeMode = System.Windows.Forms.ImeMode.Alpha
-    Me.TxtNumericBase1.Location = New System.Drawing.Point(106, 108)
-    Me.TxtNumericBase1.Name = "TxtNumericBase1"
-    Me.TxtNumericBase1.Size = New System.Drawing.Size(201, 39)
-    Me.TxtNumericBase1.TabIndex = 25
-    Me.TxtNumericBase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+    Me.TxtBase1.DisableAllSelect = False
+    Me.TxtBase1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.TxtBase1.ImeMode = System.Windows.Forms.ImeMode.On
+    Me.TxtBase1.Location = New System.Drawing.Point(106, 108)
+    Me.TxtBase1.Name = "TxtNumericBase1"
+    Me.TxtBase1.Size = New System.Drawing.Size(201, 39)
+    Me.TxtBase1.TabIndex = 25
+    Me.TxtBase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
     '
     'FormComMasterMente
     '
     Me.ClientSize = New System.Drawing.Size(1684, 861)
-    Me.Controls.Add(Me.TxtNumericBase1)
+    Me.Controls.Add(Me.TxtBase1)
     Me.Controls.Add(Me.LblBase2)
     Me.Controls.Add(Me.LblBase1)
     Me.Controls.Add(Me.BtnEnd_L1)
@@ -403,5 +446,6 @@ Public Class FormComMasterMente
     Me.PerformLayout()
 
   End Sub
+
 
 End Class

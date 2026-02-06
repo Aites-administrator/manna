@@ -32,6 +32,8 @@ Public Class clsHandyCommunication
   Private TargetFileName As String
   Private p As New Process
 
+  Private USE_FILE_NAME As String = String.Empty
+
   Public Sub New(prmFileName As String)
     TargetFileName = prmFileName
   End Sub
@@ -116,13 +118,15 @@ Public Class clsHandyCommunication
       Dim elapsed As Integer = 0
 
       While Not FlgHandySendStart
+        Application.DoEvents()
+
+        WriteProgressLog($"FLG作成中")
+
         If Not Process.GetProcessesByName(p.ProcessName).Any() Then
           Return False
         End If
 
-        Application.DoEvents()
-
-        Thread.Sleep(intervalMs)
+        'Thread.Sleep(intervalMs)
         elapsed += intervalMs
 
         If elapsed >= timeoutSec * 1000 Then
@@ -130,11 +134,15 @@ Public Class clsHandyCommunication
         End If
       End While
 
+      WriteProgressLog($"読み取り状態確認開始")
+
       If Not WaitUntilCommunicationFlagReadable(1000) Then
         Return False
       End If
 
       prmFileName = ReadCommunicationFlag()
+      WriteProgressLog($"FLG作成完了")
+
       Return True
     Catch ex As Exception
       Throw New Exception(ex.Message)
@@ -146,6 +154,8 @@ Public Class clsHandyCommunication
 
     While elapsed < timeoutMs
       Try
+        WriteProgressLog(StatusFlagFilePath)
+
         ' ファイルが存在し、かつ読み取り可能か？
         If IO.File.Exists(StatusFlagFilePath) Then
           Using fs = IO.File.Open(StatusFlagFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
@@ -211,6 +221,9 @@ Public Class clsHandyCommunication
       Exit Sub
     End If
 
+    If fileName = AcquisitionFlagFilePath Then
+      Exit Sub
+    End If
 
     Dim src As String = Path.Combine(TargetFolder, fileName)
 
@@ -289,11 +302,10 @@ Public Class clsHandyCommunication
             Exit Do
           End If
         End If
-        Dim fileName As String = String.Empty
-        If Not WaitCommunicationFlagCreated(fileName) Then
-          Return False
-        End If
-
+        Dim fileName As String = USE_FILE_NAME
+        'If Not WaitCommunicationFlagCreated(fileName) Then
+        '  Return False
+        'End If
 
         If Not WaitCommunicationFlagDeleted() Then
           Return False
@@ -302,7 +314,11 @@ Public Class clsHandyCommunication
         If fileName = Path.GetFileName(prmTargetFileName) Then
           prmTargetSendFlg = True
         Else
-          MoveToBackupFolder(fileName)
+          Dim MoveFile As String = Path.GetDirectoryName(prmTargetFileName) & "\" & fileName
+          If IO.File.Exists(MoveFile) Then
+            WriteProgressLog($"ファイル移動: {MoveFile} {prmTargetFileName} ")
+            MoveToBackupFolder(MoveFile)
+          End If
         End If
 
       Loop
@@ -327,15 +343,17 @@ Public Class clsHandyCommunication
       Do While True
 
         WriteProgressLog("FLG作成待ち…")
+        Application.DoEvents()
+        Thread.Sleep(50)
 
 
         ' Communication.FLG 作成待ち
         ' ファイル名取得
-        Dim fileName As String = String.Empty
+        Dim fileName As String = USE_FILE_NAME
 
-        If Not WaitCommunicationFlagCreated(fileName) Then
-          Return False
-        End If
+        'If Not WaitCommunicationFlagCreated(fileName) Then
+        '  Return False
+        'End If
 
         WriteProgressLog($"FLG作成検知: {fileName}")
 
@@ -350,6 +368,8 @@ Public Class clsHandyCommunication
 
 
         ' DAT 実体が来るまで待つ
+        'Dim datPath = Path.Combine(TargetFolder, fileName)
+        'fileName = Path.GetFileName(prmLastFileName)
         Dim datPath = Path.Combine(TargetFolder, fileName)
         Dim timeout = 0
         While Not IO.File.Exists(datPath)
@@ -367,9 +387,11 @@ Public Class clsHandyCommunication
           Exit Do
         Else
           WriteProgressLog($"ファイル移動: {fileName} {prmLastFileName} ")
+          If IO.File.Exists(fileName) Then
+            ' それ以外はバックアップへ
+            MoveToBackupFolder(fileName)
+          End If
 
-          ' それ以外はバックアップへ
-          MoveToBackupFolder(fileName)
         End If
 
       Loop
@@ -415,7 +437,10 @@ Public Class clsHandyCommunication
 
   Private Sub OnFlagCreated(sender As Object, e As FileSystemEventArgs)
     FlgHandySendStart = True
+    WriteProgressLog("ファイル作成:" & e.FullPath)
 
+    USE_FILE_NAME = ReadCommunicationFlag()
+    WriteProgressLog("ファイル内は、" & ReadCommunicationFlag())
 
   End Sub
 

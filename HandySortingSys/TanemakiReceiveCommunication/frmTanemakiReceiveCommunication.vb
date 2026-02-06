@@ -13,7 +13,7 @@ Public Class frmTanemakiReceiveCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "種まき"
+    Me.TextDisplayName = "3.種まき作業"
 
     MyBase.OnLoad(e)
   End Sub

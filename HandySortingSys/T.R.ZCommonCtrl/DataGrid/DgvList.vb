@@ -37,7 +37,7 @@
     Try
       Me.AutoGenerateColumns = True
 
-      Me.DataSource = Nothing
+      '      Me.DataSource = Nothing
       Me.DataSource = dt
       Me.AllowUserToAddRows = False
       Me.ReadOnly = False

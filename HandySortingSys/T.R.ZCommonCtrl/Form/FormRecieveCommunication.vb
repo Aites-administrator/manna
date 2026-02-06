@@ -12,7 +12,7 @@ Public Class FormRecieveCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextName = "受信"
-    Me.TextHandyName = "データ送信"
+    Me.TextHandyName = "9.データ送信"
     Me.TextButtonName = "受信（F6）"
 
     MyBase.OnLoad(e)

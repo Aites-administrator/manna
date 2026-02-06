@@ -51,7 +51,8 @@ Public Class frmMainMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(NYUKA_YOTEI_DATE) AS NYUKA_YOTEI_DATE "
-    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
+    sql &= "      ,  MIN(SEND_DATE) SEND_DATE "
+    sql &= "      ,  MIN(RECEIVE_DATE) RECEIVE_DATE "
     sql &= " FROM TRN_NYUKA "
     sql &= " WHERE NYUKA_YOTEI_DATE = ("
     sql &= "       SELECT	MAX(NYUKA_YOTEI_DATE)"
@@ -62,11 +63,29 @@ Public Class frmMainMenu
 
 
   End Function
-  Private Function SqlSelSyukkaMaxDate() As String
+  Private Function SqlSelSoudashiMaxDate() As String
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(NOUHINBI) AS NOUHINBI "
-    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
+    sql &= "      ,  MIN(SOUDASHI_SEND_DATE) SOUDASHI_SEND_DATE"
+    sql &= "      ,  MIN(SOUDASHI_RECEIVE_DATE) SOUDASHI_RECEIVE_DATE "
+    sql &= " FROM TRN_SHUKKA "
+    sql &= " WHERE NOUHINBI = ("
+    sql &= "       SELECT	MAX(NOUHINBI)"
+    sql &= "       FROM	TRN_SHUKKA "
+    sql &= " )"
+
+    Return sql
+
+  End Function
+
+  Private Function SqlSelTanemakiMaxDate() As String
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT  MAX(NOUHINBI) AS NOUHINBI "
+    sql &= "      ,  MIN(TANEMAKI_SEND_DATE) TANEMAKI_SEND_DATE "
+    sql &= "      ,  MIN(TANEMAKI_RECEIVE_DATE) TANEMAKI_RECEIVE_DATE "
+    sql &= "      ,  MIN(KENPIN_RECEIVE_DATE) KENPIN_RECEIVE_DATE "
     sql &= " FROM TRN_SHUKKA "
     sql &= " WHERE NOUHINBI = ("
     sql &= "       SELECT	MAX(NOUHINBI)"
@@ -81,7 +100,7 @@ Public Class frmMainMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(TANAOROSHI_DATE) AS TANAOROSHI_DATE "
-    sql &= "      ,  MIN(TORIKOMI_JOKYO_FLG) TORIKOMI_JOKYO_FLG "
+    sql &= "      ,  MIN(RECEVE_DATE) TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_TANAOROSHI "
     sql &= " WHERE NOUHINBI = ("
     sql &= "       SELECT	MAX(TANAOROSHI_DATE)"
@@ -95,29 +114,31 @@ Public Class frmMainMenu
   Public Sub CaptionDateDisp()
     Dim tmpNyukaDt As New DataTable
     SqlServer.GetResult(tmpNyukaDt, SqlSelNyukaMaxDate)
-    Dim tmpSyukkaDt As New DataTable
-    SqlServer.GetResult(tmpSyukkaDt, SqlSelSyukkaMaxDate)
+    Dim tmpSouDashiDt As New DataTable
+    SqlServer.GetResult(tmpSouDashiDt, SqlSelSoudashiMaxDate)
+    Dim tmpTanemakiDt As New DataTable
+    SqlServer.GetResult(tmpTanemakiDt, SqlSelTanemakiMaxDate)
 
 
     LblNyukaSend.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
     LblNyukaReceive.Text = If(String.IsNullOrWhiteSpace(tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString), "", tmpNyukaDt.Rows(0)("NYUKA_YOTEI_DATE").ToString)
-    LblSoudashiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
-    LblSoudashiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
-    LblTanemakiSend.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
-    LblTanemakiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSyukkaDt.Rows(0)("NOUHINBI").ToString), "", tmpSyukkaDt.Rows(0)("NOUHINBI").ToString)
+    LblSoudashiSend.Text = If(String.IsNullOrWhiteSpace(tmpSouDashiDt.Rows(0)("NOUHINBI").ToString), "", tmpSouDashiDt.Rows(0)("NOUHINBI").ToString)
+    LblSoudashiReceive.Text = If(String.IsNullOrWhiteSpace(tmpSouDashiDt.Rows(0)("NOUHINBI").ToString), "", tmpSouDashiDt.Rows(0)("NOUHINBI").ToString)
+    LblTanemakiSend.Text = If(String.IsNullOrWhiteSpace(tmpTanemakiDt.Rows(0)("NOUHINBI").ToString), "", tmpTanemakiDt.Rows(0)("NOUHINBI").ToString)
+    LblTanemakiReceive.Text = If(String.IsNullOrWhiteSpace(tmpTanemakiDt.Rows(0)("NOUHINBI").ToString), "", tmpTanemakiDt.Rows(0)("NOUHINBI").ToString)
 
     '入荷送信ステータス更新
-    InformationSetting(NyukaSendStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(NYUKA_STATUS.SOUSINZUMI))
+    InformationSetting(NyukaSendStatus, tmpNyukaDt.Rows(0)("SEND_DATE").ToString, LblNyukaSend.Text)
     '入荷受信ステータス更新
-    InformationSetting(NyukaReceiveStatus, tmpNyukaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(NYUKA_STATUS.KEPINZUMI))
+    InformationSetting(NyukaReceiveStatus, tmpNyukaDt.Rows(0)("RECEIVE_DATE").ToString, LblNyukaReceive.Text)
     '総出し送信ステータス更新
-    InformationSetting(SoudashiSendStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI))
+    InformationSetting(SoudashiSendStatus, tmpSouDashiDt.Rows(0)("SOUDASHI_SEND_DATE").ToString, LblSoudashiSend.Text)
     '総出し受信ステータス更新
-    InformationSetting(SoudashiReceiveStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.SOUDASHI_ZUMI))
+    InformationSetting(SoudashiReceiveStatus, tmpSouDashiDt.Rows(0)("SOUDASHI_RECEIVE_DATE").ToString, LblSoudashiReceive.Text)
     '種まき送信ステータス更新
-    InformationSetting(TanemakiSendStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_SOUSINZUMI))
+    InformationSetting(TanemakiSendStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_SEND_DATE").ToString, LblTanemakiSend.Text, tmpTanemakiDt.Rows(0)("KENPIN_RECEIVE_DATE").ToString)
     '総出し受信ステータス更新
-    InformationSetting(TanemakiReceiveStatus, tmpSyukkaDt.Rows(0)("TORIKOMI_JOKYO_FLG").ToString, CInt(SHUKKA_STATUS.TANEMAKI_ZUMI))
+    InformationSetting(TanemakiReceiveStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_RECEIVE_DATE").ToString, LblTanemakiReceive.Text, tmpTanemakiDt.Rows(0)("KENPIN_RECEIVE_DATE").ToString)
 
 
 
@@ -203,13 +224,17 @@ Public Class frmMainMenu
 
   End Sub
 
-  Private Sub InformationSetting(prmLabel As Label, prmTorikomiJokyoFlg As String, prmStatus As Integer)
+  Private Sub InformationSetting(prmLabel As Label, prmTorikomiJokyoDate As String, prmNohinbi As String, Optional prmKenpinDate As String = "")
     With prmLabel
-      If String.IsNullOrWhiteSpace(prmTorikomiJokyoFlg) Then
+      If String.IsNullOrWhiteSpace(prmNohinbi) Then
         .Text = ""
         .BackColor = Color.White
         .ForeColor = Color.Black
-      ElseIf CInt(prmTorikomiJokyoFlg) < prmStatus Then
+      ElseIf Not String.IsNullOrWhiteSpace(prmKenpinDate) Then
+        .Text = "済"
+        .BackColor = Color.White
+        .ForeColor = Color.Black
+      ElseIf String.IsNullOrWhiteSpace(prmTorikomiJokyoDate) Then
         .Text = "未"
         .BackColor = Color.Red
         .ForeColor = Color.White

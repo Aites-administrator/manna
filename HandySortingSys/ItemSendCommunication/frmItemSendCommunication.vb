@@ -27,6 +27,8 @@ Public Class frmItemSendCommunication
 
     DgvList1.SetData(tmpDtJP)
 
+    Me.TextDisplayName = "6.商品マスタ"
+
     MyBase.OnLoad(e)
   End Sub
 

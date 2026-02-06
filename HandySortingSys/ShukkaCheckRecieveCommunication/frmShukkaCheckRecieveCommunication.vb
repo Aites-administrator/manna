@@ -10,7 +10,7 @@ Public Class frmShukkaCheckRecieveCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
-    Me.TextDisplayName = "出荷検品"
+    Me.TextDisplayName = "4.出荷検品"
     MyBase.OnLoad(e)
   End Sub
 

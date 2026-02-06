@@ -28,7 +28,7 @@ Partial Class frmShukkaCheckSendCommunication
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
-    Me.CmbDateNohinBi1 = New T.R.ZCommonCtrl.CmbDateNohinBi()
+    Me.CmbDateNohinBi1 = New T.R.ZCommonCtrl.CmbDateNohinBiZumi()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
         CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -52,8 +52,8 @@ Partial Class frmShukkaCheckSendCommunication
         Me.BtnSendHandy1.TargetUpdColumn = Nothing
         Me.BtnSendHandy1.TargetUpdStatus = Nothing
         Me.BtnSendHandy1.TargetWhere = Nothing
-        Me.BtnSendHandy1.Text = "F5：送信"
-        Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnSendHandy1.Text = "送信(F5)"
+    Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnSendHandy1.UseVisualStyleBackColor = False
         '
         'DgvList1
@@ -92,8 +92,8 @@ Partial Class frmShukkaCheckSendCommunication
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L1.TabIndex = 21
-        Me.BtnEnd_L1.Text = "終了(ESC)"
-        Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
+    Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L1.UseVisualStyleBackColor = False
         '
         'CmbDateNohinBi1
@@ -145,6 +145,6 @@ Partial Class frmShukkaCheckSendCommunication
   Friend WithEvents DgvList1 As DgvList
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
-  Friend WithEvents CmbDateNohinBi1 As CmbDateNohinBi
+  Friend WithEvents CmbDateNohinBi1 As CmbDateNohinBiZumi
   Friend WithEvents LblBase2 As LblBase
 End Class

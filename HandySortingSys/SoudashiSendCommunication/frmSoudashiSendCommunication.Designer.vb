@@ -52,7 +52,7 @@ Partial Class frmSoudashiSendCommunication
     Me.BtnSendHandy1.TargetUpdColumn = Nothing
     Me.BtnSendHandy1.TargetUpdStatus = Nothing
     Me.BtnSendHandy1.TargetWhere = Nothing
-    Me.BtnSendHandy1.Text = "F5：送信"
+    Me.BtnSendHandy1.Text = "送信(F5)"
     Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnSendHandy1.UseVisualStyleBackColor = False
     '
@@ -87,7 +87,7 @@ Partial Class frmSoudashiSendCommunication
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 15
-    Me.BtnEnd_L1.Text = "終了(ESC)"
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '

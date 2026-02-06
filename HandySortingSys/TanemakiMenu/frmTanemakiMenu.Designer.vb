@@ -41,7 +41,7 @@ Partial Class frmTanemakiMenu
         Me.BtnEnd_L2.Name = "BtnEnd_L2"
         Me.BtnEnd_L2.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L2.TabIndex = 29
-        Me.BtnEnd_L2.Text = "終了(ESC)"
+        Me.BtnEnd_L2.Text = "閉じる(ESC)"
         Me.BtnEnd_L2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L2.UseVisualStyleBackColor = False
         '

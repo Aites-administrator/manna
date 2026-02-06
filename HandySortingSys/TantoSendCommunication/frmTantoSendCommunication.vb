@@ -29,7 +29,7 @@ Public Class frmTantoSendCommunication
     DgvList1.SetData(tmpDtJP)
 
 
-    Me.TextDisplayName = "担当者"
+    Me.TextDisplayName = "7.担当者マスタ"
 
     MyBase.OnLoad(e)
   End Sub

@@ -52,8 +52,8 @@ Partial Class frmNyukaReceiveCommunication
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L1.TabIndex = 12
-        Me.BtnEnd_L1.Text = "終了(ESC)"
-        Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
+    Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L1.UseVisualStyleBackColor = False
         '
         'BtnRecieveHandy1
@@ -78,8 +78,8 @@ Partial Class frmNyukaReceiveCommunication
         Me.BtnRecieveHandy1.TargetUpdColumn = CType(resources.GetObject("BtnRecieveHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
         Me.BtnRecieveHandy1.TargetUpdStatus = Nothing
         Me.BtnRecieveHandy1.TargetWhere = CType(resources.GetObject("BtnRecieveHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
-        Me.BtnRecieveHandy1.Text = "F6:受信"
-        Me.BtnRecieveHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnRecieveHandy1.Text = "受信(F6)"
+    Me.BtnRecieveHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnRecieveHandy1.UseVisualStyleBackColor = False
         '
         'DgvList1

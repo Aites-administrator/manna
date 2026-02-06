@@ -12,7 +12,7 @@ Public Class FormSendCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextName = "送信"
-    Me.TextHandyName = "データ受信"
+    Me.TextHandyName = "1.データ受信"
     Me.TextButtonName = "送信（F5）"
 
     MyBase.OnLoad(e)

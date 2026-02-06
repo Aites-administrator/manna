@@ -10,7 +10,7 @@ Public Class frmTanaoroshiReceiveCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "棚卸"
+    Me.TextDisplayName = "5.棚卸作業"
     MyBase.OnLoad(e)
   End Sub
 

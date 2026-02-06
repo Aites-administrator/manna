@@ -17,7 +17,7 @@ Public Class frmNyukaSendCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
-    Me.TextDisplayName = "入荷検品"
+    Me.TextDisplayName = "1.入荷検品"
     MyBase.OnLoad(e)
   End Sub
 

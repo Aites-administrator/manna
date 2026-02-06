@@ -111,7 +111,7 @@ Public Class FormCommunication
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("1. 「" & Me.TextHandyName & "」を選択します。" & vbCrLf)
-    rtb.AppendText("2. " & Me.TextDisplayName & "を選択します。" & vbCrLf)
+    rtb.AppendText("2. 「" & Me.TextDisplayName & "」を選択します。" & vbCrLf)
 
     ' PC操作（緑）
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
@@ -121,7 +121,7 @@ Public Class FormCommunication
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("3. " & Me.TextButtonName & " ボタンを押します。" & vbCrLf)
-    rtb.AppendText("4. 通信ツールが立ち上がります。待機中になったら、ハンディをクレードルに置いてください。" & vbCrLf)
+    rtb.AppendText("4. 通信ツールが立ち上がります。待ち受け開始が表示されたら、ハンディの「ENT」ボタンを押してから" & vbCrLf & "クレードルに置いてください。" & vbCrLf)
 
     ' 通信中（オレンジ）
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
@@ -129,8 +129,8 @@ Public Class FormCommunication
     rtb.AppendText("【通信中】" & vbCrLf)
 
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
-    rtb.SelectionColor = Color.Black
-    rtb.AppendText("5. 完了メッセージが出るまで、ハンディをクレードルから外さないでください。" & vbCrLf)
+    rtb.SelectionColor = Color.Red
+    rtb.AppendText("※完了メッセージが出るまで" & vbCrLf & "ハンディをクレードルから外さないでください。" & vbCrLf)
 
     ' 通信中（オレンジ）
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
@@ -139,11 +139,11 @@ Public Class FormCommunication
 
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("6. 完了メッセージが出たら、「OK」ボタンを押してください。" & vbCrLf)
+    rtb.AppendText("5. 完了メッセージが出たら、「OK」ボタンを押してください。" & vbCrLf)
 
     rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("7. 「閉じる」ボタンを押してください。" & vbCrLf)
+    rtb.AppendText("6. 「閉じる」ボタンを押してください。" & vbCrLf)
   End Sub
 
   Private Sub FormCommunication_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing

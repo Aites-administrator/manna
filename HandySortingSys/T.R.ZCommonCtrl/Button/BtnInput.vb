@@ -21,6 +21,11 @@ Public Class BtnInput
   Public Property TargetTableName As String
   ' プロパティ：CSVタイプ
   Public Property TargetCsvType As String
+
+  Private SHOHIN_CD As String = "自社商品CD"
+  Private SHOHIN_NM As String = ""
+
+
 #End Region
 
 #Region "コンストラクタ"
@@ -166,12 +171,25 @@ Public Class BtnInput
     Dim result As New DataTable
     result.Columns.Add("区分")
     result.Columns.Add("商品コード")
+    result.Columns.Add("商品名")
     result.Columns.Add("JAN")
     result.Columns.Add("ITF")
     result.Columns.Add("棚番")
 
+    Select Case TargetTableName
+      Case "TRN_NYUKA"
+        SHOHIN_NM = "メーカー商品名"
+      Case "TRN_SHUKKA"
+        SHOHIN_NM = "自社商品名1"
+      Case "TRN_TANAOROSHI"
+        SHOHIN_NM = "自社商品名"
+
+    End Select
+
+
     For Each row As DataRow In dt.Rows
-      Dim shohinCd As String = row("自社商品CD").ToString.Replace("'", "''")
+      Dim shohinCd As String = row(SHOHIN_CD).ToString.Replace("'", "''")
+      Dim shohinNM As String = row(SHOHIN_NM).ToString.Replace("'", "''")
       Dim tmp As New DataTable
 
       Dim sql As String =
@@ -182,7 +200,7 @@ Public Class BtnInput
       SqlServer.GetResult(tmp, sql)
 
       If tmp.Rows.Count = 0 Then
-        result.Rows.Add("マスタ登録なし", shohinCd, "", "")
+        result.Rows.Add("マスタ登録なし", shohinCd, shohinNM, "", "")
 
         Continue For
       End If
@@ -198,7 +216,7 @@ Public Class BtnInput
       'End If
 
       If String.IsNullOrWhiteSpace(tana) Then
-        result.Rows.Add("棚番登録なし", shohinCd, jan, itf, tana)
+        result.Rows.Add("棚番登録なし", shohinCd, shohinNM, jan, itf, tana)
         Continue For
       End If
     Next

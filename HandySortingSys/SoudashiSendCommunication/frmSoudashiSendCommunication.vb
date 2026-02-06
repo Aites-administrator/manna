@@ -22,7 +22,7 @@ Public Class frmSoudashiSendCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "総出し"
+    Me.TextDisplayName = "2.総出し作業"
     MyBase.OnLoad(e)
   End Sub
 

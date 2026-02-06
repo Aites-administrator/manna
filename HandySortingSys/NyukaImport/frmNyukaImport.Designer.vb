@@ -45,7 +45,7 @@ Partial Class frmNyukaImport
     Me.BtnInput1.TargetCsvType = Nothing
     Me.BtnInput1.TargetDataTable = Nothing
     Me.BtnInput1.TargetTableName = Nothing
-    Me.BtnInput1.Text = "F1：取込"
+    Me.BtnInput1.Text = "取込(F1)"
     Me.BtnInput1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnInput1.UseVisualStyleBackColor = False
     '
@@ -59,7 +59,7 @@ Partial Class frmNyukaImport
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 1
-    Me.BtnEnd_L1.Text = "終了(ESC)"
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '

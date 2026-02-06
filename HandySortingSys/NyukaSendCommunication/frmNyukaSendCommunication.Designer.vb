@@ -44,8 +44,8 @@ Partial Class frmNyukaSendCommunication
         Me.BtnEnd_L1.Name = "BtnEnd_L1"
         Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
         Me.BtnEnd_L1.TabIndex = 9
-        Me.BtnEnd_L1.Text = "終了(ESC)"
-        Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
+    Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnEnd_L1.UseVisualStyleBackColor = False
         '
         'CmbDateSagyoBi1
@@ -114,8 +114,8 @@ Partial Class frmNyukaSendCommunication
         Me.BtnSendHandy1.TargetUpdColumn = CType(resources.GetObject("BtnSendHandy1.TargetUpdColumn"), System.Collections.Generic.List(Of String))
         Me.BtnSendHandy1.TargetUpdStatus = Nothing
         Me.BtnSendHandy1.TargetWhere = CType(resources.GetObject("BtnSendHandy1.TargetWhere"), System.Collections.Generic.List(Of String))
-        Me.BtnSendHandy1.Text = "F5：送信"
-        Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+    Me.BtnSendHandy1.Text = "送信(F5)"
+    Me.BtnSendHandy1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.BtnSendHandy1.UseVisualStyleBackColor = False
         '
         'frmNyukaSendCommunication

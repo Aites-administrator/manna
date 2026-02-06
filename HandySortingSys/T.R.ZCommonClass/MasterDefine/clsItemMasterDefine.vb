@@ -72,8 +72,8 @@ Public Class clsItemMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False, .IsSearchTarget = True},
-          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True},
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False},
+          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True, .IsSearchTarget = True},
           New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True},
           New MasterColumn With {.Name = COL_AISU, .DisplayName = COL_AISU, .IsEditable = True},
           New MasterColumn With {.Name = COL_JAN, .DisplayName = COL_JAN, .IsEditable = True},

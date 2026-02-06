@@ -44,7 +44,7 @@ Partial Class frmTanaoroshiPrint
     Me.BtnEnd_L1.Name = "BtnEnd_L1"
     Me.BtnEnd_L1.Size = New System.Drawing.Size(320, 60)
     Me.BtnEnd_L1.TabIndex = 12
-    Me.BtnEnd_L1.Text = "ESC：終了"
+    Me.BtnEnd_L1.Text = "閉じる(ESC)"
     Me.BtnEnd_L1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
     Me.BtnEnd_L1.UseVisualStyleBackColor = False
     '
