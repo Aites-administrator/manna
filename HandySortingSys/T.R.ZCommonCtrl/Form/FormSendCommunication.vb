@@ -14,6 +14,7 @@ Public Class FormSendCommunication
     Me.TextName = "送信"
     Me.TextHandyName = "1.データ受信"
     Me.TextButtonName = "送信（F5）"
+    Me.TextMessage = "送信が完了しました。"
 
     MyBase.OnLoad(e)
   End Sub

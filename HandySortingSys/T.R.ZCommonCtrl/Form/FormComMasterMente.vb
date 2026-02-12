@@ -22,7 +22,9 @@ Public Class FormComMasterMente
   Friend WithEvents btnImport As BtnMstInput
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents LblBase2 As LblBase
-  Friend WithEvents TxtBase1 As TxtBase
+  Friend WithEvents TxtCode As TxtNumericBase
+  Friend WithEvents TxtName As TxtBase
+  Friend WithEvents LblBase3 As LblBase
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
 
   Public Sub New(definition As IMasterMentenance)
@@ -36,7 +38,7 @@ Public Class FormComMasterMente
       ' データ取得
       _dt = _definition.LoadData()
 
-      _dt.AcceptChanges()
+      DgvList1.TrimDataTable(_dt)
 
       DgvList1.SetData(_dt)
 
@@ -46,12 +48,41 @@ Public Class FormComMasterMente
       btnAdd.Visible = Not _definition.AllowImport
       btnImport.Visible = _definition.AllowImport
       LblBase2.Visible = _definition.AllowImport
-      TxtBase1.Visible = _definition.AllowImport
+      TxtCode.Visible = _definition.AllowImport
+      LblBase3.Visible = _definition.AllowImport
+      TxtName.Visible = _definition.AllowImport
     Catch ex As Exception
       ComWriteErrLog(ex)
     End Try
 
   End Sub
+
+  Private Sub DgvList1_EditingControlShowing(
+    sender As Object,
+    e As DataGridViewEditingControlShowingEventArgs
+) Handles DgvList1.EditingControlShowing
+
+    Dim txt = TryCast(e.Control, TextBox)
+    If txt Is Nothing Then Return
+
+    RemoveHandler txt.KeyPress, AddressOf NumericOnly_KeyPress
+
+    Dim colName = DgvList1.Columns(DgvList1.CurrentCell.ColumnIndex).Name
+
+    ' ★ definition の設定を参照
+    Dim colDef = _definition.Columns.FirstOrDefault(Function(c) c.Name = colName)
+
+    If colDef IsNot Nothing AndAlso colDef.IsNumeric Then
+      AddHandler txt.KeyPress, AddressOf NumericOnly_KeyPress
+    End If
+  End Sub
+
+  Private Sub NumericOnly_KeyPress(sender As Object, e As KeyPressEventArgs)
+    If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back Then
+      e.Handled = True
+    End If
+  End Sub
+
 
   Private Sub SetupColumns()
     Try
@@ -60,6 +91,7 @@ Public Class FormComMasterMente
 
         If dgvCol IsNot Nothing Then
           dgvCol.HeaderText = col.DisplayName
+          dgvCol.Visible = col.IsVisible
           dgvCol.ReadOnly = Not col.IsEditable
         End If
       Next
@@ -68,36 +100,95 @@ Public Class FormComMasterMente
     End Try
 
   End Sub
+  'Private Sub ExecuteSearch()
+  '  Try
+  '    Dim keyword = TxtBase1.Text.Trim().Replace("'", "''")
+
+  '    If keyword = "" Then
+  '      DgvList1.SetData(_dt)
+  '      Return
+  '    End If
+
+  '    Dim dv As New DataView(_dt)
+  '    Dim filters As New List(Of String)
+
+  '    For Each col In _definition.Columns.Where(Function(c) c.IsSearchTarget)
+  '      If _dt.Columns.Contains(col.Name) AndAlso
+  '             _dt.Columns(col.Name).DataType Is GetType(String) Then
+
+  '        filters.Add($"{col.Name} LIKE '%{keyword}%'")
+  '      End If
+  '    Next
+
+  '    dv.RowFilter = String.Join(" OR ", filters)
+  '    DgvList1.DataSource = dv
+  '    ' 列設定
+  '    SetupColumns()
+  '  Catch ex As Exception
+  '    Throw New Exception(ex.Message)
+  '  End Try
+  'End Sub
+
   Private Sub ExecuteSearch()
     Try
-      Dim keyword = TxtBase1.Text.Trim().Replace("'", "''")
+      Dim filters As New List(Of String)
 
-      If keyword = "" Then
+      ' --- コード検索項目の Caption と検索条件 ---
+      If TxtCode.Text.Trim() <> "" Then
+        Dim code = TxtCode.Text.Trim().Replace("'", "''")
+
+        For Each col In _definition.Columns.Where(Function(c) c.IsSearchTarget AndAlso c.SearchType = "Code")
+          If _dt.Columns.Contains(col.Name) Then
+
+            ' Caption 取得（改行など制御文字除去）
+            Dim cap = _dt.Columns(col.Name).Caption
+            cap = New String(cap.Where(Function(ch) Not Char.IsControl(ch)).ToArray())
+
+            ' 数値列でも検索できるように CONVERT を使用
+            filters.Add($"CONVERT([{col.Name}], 'System.String') LIKE '%{code}%'")
+          End If
+        Next
+      End If
+
+      ' --- 名称検索項目の Caption と検索条件 ---
+      If TxtName.Text.Trim() <> "" Then
+        Dim name = TxtName.Text.Trim().Replace("'", "''")
+
+        For Each col In _definition.Columns.Where(Function(c) c.IsSearchTarget AndAlso c.SearchType = "Name")
+          If _dt.Columns.Contains(col.Name) Then
+
+            ' Caption 取得（改行など制御文字除去）
+            Dim cap = _dt.Columns(col.Name).Caption
+            cap = New String(cap.Where(Function(ch) Not Char.IsControl(ch)).ToArray())
+
+            filters.Add($"[{col.Name}] LIKE '%{name}%'")
+          End If
+        Next
+      End If
+
+      ' --- フィルタなし → 全件表示 ---
+      If filters.Count = 0 Then
         DgvList1.SetData(_dt)
         Return
       End If
 
+      ' --- DataView にフィルタ適用 ---
       Dim dv As New DataView(_dt)
-      Dim filters As New List(Of String)
+      dv.RowFilter = String.Join(" AND ", filters)
 
-      For Each col In _definition.Columns.Where(Function(c) c.IsSearchTarget)
-        If _dt.Columns.Contains(col.Name) AndAlso
-               _dt.Columns(col.Name).DataType Is GetType(String) Then
-
-          filters.Add($"{col.Name} LIKE '%{keyword}%'")
-        End If
-      Next
-
-      dv.RowFilter = String.Join(" OR ", filters)
       DgvList1.DataSource = dv
+
       ' 列設定
       SetupColumns()
+
     Catch ex As Exception
       Throw New Exception(ex.Message)
     End Try
+
   End Sub
 
-  Private Sub TxtNumericBase1_Validated(sender As Object, e As EventArgs) Handles TxtBase1.Validated
+
+  Private Sub TxtNumericBase1_Validated(sender As Object, e As EventArgs) Handles TxtCode.Validated, TxtName.Validated
     Try
       ExecuteSearch()
 
@@ -159,7 +250,7 @@ Public Class FormComMasterMente
 
       ' 保存後は全件再読み込み
       _dt = _definition.LoadData()
-      _dt.AcceptChanges()
+      DgvList1.TrimDataTable(_dt)
       DgvList1.SetData(_dt)
       SetupColumns()
     Catch ex As Exception
@@ -226,7 +317,11 @@ Public Class FormComMasterMente
 
     ' 最後の行を表示＆フォーカス
     dgv.FirstDisplayedScrollingRowIndex = last
-    dgv.CurrentCell = dgv.Rows(last).Cells(0)
+    If dgv.Rows(last).Cells(0).Visible Then
+      dgv.CurrentCell = dgv.Rows(last).Cells(0)
+    Else
+      dgv.CurrentCell = dgv.Rows(last).Cells(1)
+    End If
   End Sub
 
 
@@ -300,19 +395,26 @@ Public Class FormComMasterMente
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
-    Me.TxtBase1 = New T.R.ZCommonCtrl.TxtBase()
+    Me.TxtCode = New T.R.ZCommonCtrl.TxtNumericBase()
+    Me.TxtName = New T.R.ZCommonCtrl.TxtBase()
+    Me.LblBase3 = New T.R.ZCommonCtrl.LblBase()
     CType(Me.DgvList1, System.ComponentModel.ISupportInitialize).BeginInit()
     Me.SuspendLayout()
     '
     'DgvList1
     '
     Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+    Me.DgvList1.CustomAutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells
+    Me.DgvList1.CustomAutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells
+    Me.DgvList1.GridFontSize = 20
+    Me.DgvList1.HeaderFontSize = 20
     Me.DgvList1.Location = New System.Drawing.Point(13, 174)
     Me.DgvList1.Name = "DgvList1"
     Me.DgvList1.RowTemplate.Height = 21
     Me.DgvList1.Size = New System.Drawing.Size(1659, 675)
     Me.DgvList1.TabIndex = 4
     Me.DgvList1.TargetColumnName = ""
+    Me.DgvList1.UseCustomSize = False
     '
     'btnSave
     '
@@ -328,7 +430,6 @@ Public Class FormComMasterMente
     Me.btnSave.Text = "保存(F9)"
     Me.btnSave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnSave.UseVisualStyleBackColor = False
-    Me.btnSave.AccessKey = Keys.F9
     '
     'btnDelete
     '
@@ -344,7 +445,6 @@ Public Class FormComMasterMente
     Me.btnDelete.Text = "削除(F8)"
     Me.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnDelete.UseVisualStyleBackColor = False
-    Me.btnDelete.AccessKey = Keys.F8
     '
     'btnAdd
     '
@@ -360,7 +460,6 @@ Public Class FormComMasterMente
     Me.btnAdd.Text = "追加(F4)"
     Me.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnAdd.UseVisualStyleBackColor = False
-    Me.btnAdd.AccessKey = Keys.F4
     '
     'btnImport
     '
@@ -376,7 +475,6 @@ Public Class FormComMasterMente
     Me.btnImport.Text = "取込(F1)"
     Me.btnImport.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
     Me.btnImport.UseVisualStyleBackColor = False
-    Me.btnImport.AccessKey = Keys.F1
     '
     'BtnEnd_L1
     '
@@ -407,27 +505,50 @@ Public Class FormComMasterMente
     '
     Me.LblBase2.AutoSize = True
     Me.LblBase2.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
-    Me.LblBase2.Location = New System.Drawing.Point(14, 111)
+    Me.LblBase2.Location = New System.Drawing.Point(344, 111)
     Me.LblBase2.Name = "LblBase2"
-    Me.LblBase2.Size = New System.Drawing.Size(86, 33)
+    Me.LblBase2.Size = New System.Drawing.Size(79, 33)
     Me.LblBase2.TabIndex = 24
     Me.LblBase2.Text = "名称"
     '
-    'TxtNumericBase1
+    'TxtCode
     '
-    Me.TxtBase1.DisableAllSelect = False
-    Me.TxtBase1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
-    Me.TxtBase1.ImeMode = System.Windows.Forms.ImeMode.On
-    Me.TxtBase1.Location = New System.Drawing.Point(106, 108)
-    Me.TxtBase1.Name = "TxtNumericBase1"
-    Me.TxtBase1.Size = New System.Drawing.Size(201, 39)
-    Me.TxtBase1.TabIndex = 25
-    Me.TxtBase1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+    Me.TxtCode.DisableAllSelect = False
+    Me.TxtCode.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.TxtCode.ImeMode = System.Windows.Forms.ImeMode.Disable
+    Me.TxtCode.Location = New System.Drawing.Point(106, 111)
+    Me.TxtCode.Name = "TxtCode"
+    Me.TxtCode.Size = New System.Drawing.Size(201, 39)
+    Me.TxtCode.TabIndex = 25
+    Me.TxtCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+    '
+    'TxtName
+    '
+    Me.TxtName.DisableAllSelect = False
+    Me.TxtName.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.TxtName.ImeMode = System.Windows.Forms.ImeMode.[On]
+    Me.TxtName.Location = New System.Drawing.Point(429, 111)
+    Me.TxtName.Name = "TxtName"
+    Me.TxtName.Size = New System.Drawing.Size(201, 39)
+    Me.TxtName.TabIndex = 25
+    Me.TxtName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left
+    '
+    'LblBase3
+    '
+    Me.LblBase3.AutoSize = True
+    Me.LblBase3.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.LblBase3.Location = New System.Drawing.Point(14, 111)
+    Me.LblBase3.Name = "LblBase3"
+    Me.LblBase3.Size = New System.Drawing.Size(86, 33)
+    Me.LblBase3.TabIndex = 26
+    Me.LblBase3.Text = "コード"
     '
     'FormComMasterMente
     '
     Me.ClientSize = New System.Drawing.Size(1684, 861)
-    Me.Controls.Add(Me.TxtBase1)
+    Me.Controls.Add(Me.LblBase3)
+    Me.Controls.Add(Me.TxtCode)
+    Me.Controls.Add(Me.TxtName)
     Me.Controls.Add(Me.LblBase2)
     Me.Controls.Add(Me.LblBase1)
     Me.Controls.Add(Me.BtnEnd_L1)

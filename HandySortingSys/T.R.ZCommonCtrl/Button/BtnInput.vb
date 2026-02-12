@@ -1,4 +1,5 @@
 ﻿Imports System.Data
+Imports Microsoft.Office.Interop
 Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
@@ -71,35 +72,11 @@ Public Class BtnInput
     End If
 
     Try
-      Dim invalidList = GetInvalidItemList(TargetDataTable)
-
-      If invalidList.Rows.Count > 0 Then
-        Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "商品マスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
-        ExportCsv(invalidList, path)
-
-        'CSV を出力したフォルダを開く
-        Dim folderPath As String = IO.Path.GetDirectoryName(path)
-        Process.Start("explorer.exe", folderPath)
-
-        Throw New Exception("マスタに不備があるデータが存在します。" &
-                            vbCrLf & "不備データ一覧を確認してください。")
+      'マスタチェック
+      If ReadSettingIniFile("MASTER_CHECK", "VALUE") = "1" Then
+        MasterCheck()
       End If
 
-      If TargetTableName = "TRN_SHUKKA" Then
-        Dim CourseList = GetInvalidCourseList(TargetDataTable)
-        If CourseList.Rows.Count > 0 Then
-          Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "コースマスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
-          ExportCsv(CourseList, path)
-
-          'CSV を出力したフォルダを開く
-          Dim folderPath As String = IO.Path.GetDirectoryName(path)
-          Process.Start("explorer.exe", folderPath)
-
-          Throw New Exception("マスタに不備があるデータが存在します。" &
-                            vbCrLf & "不備データ一覧を確認してください。")
-        End If
-
-      End If
 
       SqlServer.TrnStart()
 
@@ -126,8 +103,8 @@ Public Class BtnInput
       SqlServer.TrnCommit()
     Catch ex As Exception
       SqlServer.TrnRollBack()
-      ComWriteErrLog(ex, False)
       TargetDataTable.Clear()
+      ComWriteErrLog(ex, False)
     End Try
   End Sub
 
@@ -167,14 +144,53 @@ Public Class BtnInput
   '  Return result
   'End Function
 
+  Private Sub MasterCheck()
+    Try
+      Dim invalidList = GetInvalidItemList(TargetDataTable)
+
+      If invalidList.Rows.Count > 0 Then
+        Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "商品マスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx")
+        ExportExcel(invalidList, path)
+
+        'CSV を出力したフォルダを開く
+        Dim folderPath As String = IO.Path.GetDirectoryName(path)
+        Process.Start("explorer.exe", folderPath)
+
+        Throw New Exception("マスタに不備があるデータが存在します。" &
+                            vbCrLf & "不備データ一覧を確認してください。")
+      End If
+
+      If TargetTableName = "TRN_SHUKKA" Then
+        Dim CourseList = GetInvalidCourseList(TargetDataTable)
+        If CourseList.Rows.Count > 0 Then
+          Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "コースマスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
+          ExportExcel(CourseList, path)
+
+          'CSV を出力したフォルダを開く
+          Dim folderPath As String = IO.Path.GetDirectoryName(path)
+          Process.Start("explorer.exe", folderPath)
+
+          Throw New Exception("マスタに不備があるデータが存在します。" &
+                            vbCrLf & "不備データ一覧を確認してください。")
+        End If
+
+      End If
+
+    Catch ex As Exception
+      Throw New Exception(ex.Message)
+    End Try
+  End Sub
+
   Private Function GetInvalidItemList(dt As DataTable) As DataTable
     Dim result As New DataTable
     result.Columns.Add("区分")
     result.Columns.Add("商品コード")
     result.Columns.Add("商品名")
-    result.Columns.Add("JAN")
-    result.Columns.Add("ITF")
-    result.Columns.Add("棚番")
+    result.Columns.Add("入り数")
+
+    'result.Columns.Add("JAN")
+    'result.Columns.Add("ITF")
+    'result.Columns.Add("棚番")
 
     Select Case TargetTableName
       Case "TRN_NYUKA"
@@ -190,6 +206,7 @@ Public Class BtnInput
     For Each row As DataRow In dt.Rows
       Dim shohinCd As String = row(SHOHIN_CD).ToString.Replace("'", "''")
       Dim shohinNM As String = row(SHOHIN_NM).ToString.Replace("'", "''")
+      Dim Irisu As String = "1"
       Dim tmp As New DataTable
 
       Dim sql As String =
@@ -200,7 +217,7 @@ Public Class BtnInput
       SqlServer.GetResult(tmp, sql)
 
       If tmp.Rows.Count = 0 Then
-        result.Rows.Add("マスタ登録なし", shohinCd, shohinNM, "", "")
+        result.Rows.Add("マスタ登録なし", shohinCd, shohinNM, Irisu)
 
         Continue For
       End If
@@ -210,20 +227,21 @@ Public Class BtnInput
       Dim itf = m("ITF").ToString()
       Dim tana = m("TANA_CD").ToString()
 
-      'If String.IsNullOrWhiteSpace(jan) Then
-      '  result.Rows.Add("JAN登録なし", shohinCd, jan, itf, tana)
-      '  Continue For
-      'End If
+      If ReadSettingIniFile("JAN_CHECK", "VALUE") = "1" Then
+        If String.IsNullOrWhiteSpace(jan) Then
+          result.Rows.Add("JAN登録なし", shohinCd, shohinNM, Irisu)
+          Continue For
+        End If
+      End If
 
       If String.IsNullOrWhiteSpace(tana) Then
-        result.Rows.Add("棚番登録なし", shohinCd, shohinNM, jan, itf, tana)
+        result.Rows.Add("棚番登録なし", shohinCd, shohinNM, Irisu)
         Continue For
       End If
     Next
 
     Return result
   End Function
-
   Private Function GetInvalidCourseList(dt As DataTable) As DataTable
     Dim result As New DataTable
     result.Columns.Add("区分")
@@ -303,4 +321,48 @@ Public Class BtnInput
     Dim count = tmpDt.Rows(0).Item("cnt").ToString
     Return count > 0
   End Function
+
+  Private Sub ExportExcel(dt As DataTable, filePath As String)
+    Dim excel As New Excel.Application
+    excel.Visible = False
+
+    Dim wb = excel.Workbooks.Add()
+    Dim ws = CType(wb.Sheets(1), Excel.Worksheet)
+
+    dt = dt.DefaultView.ToTable(True)
+
+    Dim rowCount = dt.Rows.Count
+    Dim colCount = dt.Columns.Count
+
+
+    ' 2次元配列を作成（Excelは1-based）
+    Dim data(0 To rowCount, 0 To colCount - 1) As Object
+
+    ' ヘッダ
+    For c = 0 To colCount - 1
+      data(0, c) = dt.Columns(c).ColumnName
+    Next
+
+    ' データ
+    For i = 0 To rowCount - 1
+      For c = 0 To colCount - 1
+        data(i + 1, c) = dt.Rows(i)(c)
+      Next
+    Next
+
+    ' 一括書き込み
+    Dim startCell = ws.Cells(1, 1)
+    Dim endCell = ws.Cells(rowCount + 1, colCount)
+    Dim writeRange = ws.Range(startCell, endCell)
+    writeRange.Value = data
+
+    ' 列幅自動調整
+    ws.Columns.AutoFit()
+
+    wb.SaveAs(filePath)
+    wb.Close()
+    excel.Quit()
+  End Sub
+
+
 End Class

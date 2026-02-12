@@ -14,6 +14,7 @@ Imports ClsHandyCommunication
 Public Class frmSoudashiSendCommunication
   Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
+  Private FrmPassword As New FormPassword
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
   Private Const SEND_SHUKKA_FILE_NAME As String = SEND_FOLDER & "MST_TANA.DAT"
@@ -132,10 +133,14 @@ Public Class frmSoudashiSendCommunication
     sql &= " SELECT	NOUHINBI AS NOUHINBI  "
     sql &= " 	    	,	LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
     sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
-    sql &= "      ,	MAX(SOUDASHI_GOUKI) AS GOUKI "
-    sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS TANTO_CD "
-    sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS RECEIVE_DATE "
-    sql &= "      , CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) & " Or MAX(SOUDASHI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	'' AS GOUKI "
+    sql &= "      ,	'' AS TANTO_CD "
+    sql &= "      ,	'' AS RECEIVE_DATE "
+    sql &= "      , '0' AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      ,	MAX(SOUDASHI_GOUKI) AS GOUKI "
+    'sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS TANTO_CD "
+    'sql &= "      ,	MAX(SOUDASHI_RECEIVE_DATE) AS RECEIVE_DATE "
+    'sql &= "      , CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) & " Or MAX(SOUDASHI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
@@ -176,10 +181,14 @@ Public Class frmSoudashiSendCommunication
     sql &= "      ,	MST_ITEM.ITF AS ITF "
     sql &= "      ,	SUM(CONVERT(int,TRN_SHUKKA.JISYA_HACHU_SURYO / ISNULL(MST_ITEM.IRISU,1))) AS SHUKKA_YOTEISU_CASE "
     sql &= "      ,	SUM(CONVERT(int,TRN_SHUKKA.JISYA_HACHU_SURYO % ISNULL(MST_ITEM.IRISU,1))) AS SHUKKA_YOTEISU_BARA "
-    sql &= "      ,	MAX(SOUDASHI_GOUKI) AS SOUDASHI_GOUKI "
-    sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS SOUDASHI_TANTO_CD "
-    sql &= "      ,	FORMAT(MAX(SOUDASHI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS SOUDASHI_RECEIVE_DATE "
-    sql &= "      , CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) & " Or MAX(SOUDASHI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "      ,	'' AS SOUDASHI_GOUKI "
+    sql &= "      ,	'' AS SOUDASHI_TANTO_CD "
+    sql &= "      ,	'' AS SOUDASHI_RECEIVE_DATE "
+    sql &= "      , '0' AS TORIKOMI_JOKYO_FLG "
+    'sql &= "      ,	MAX(SOUDASHI_GOUKI) AS SOUDASHI_GOUKI "
+    'sql &= "      ,	MAX(SOUDASHI_TANTO_CD) AS SOUDASHI_TANTO_CD "
+    'sql &= "      ,	FORMAT(MAX(SOUDASHI_RECEIVE_DATE), 'yyyyMMddHHmmss') AS SOUDASHI_RECEIVE_DATE "
+    'sql &= "      , CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) & " Or MAX(SOUDASHI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	 'C/S' AS CASE_TANI"
     sql &= "      ,	 HACHU_TANI AS HACHU_TANI"
@@ -246,6 +255,13 @@ Public Class frmSoudashiSendCommunication
           End If
         End If
       Next
+
+      If selectedTanaList.Count = 0 Then
+        BtnSendHandy1.TargetCancelParentClick = True
+        Throw New Exception("送信するデータがチェックされておりません。")
+      End If
+
+
 
       If BtnSendHandy1.TargetCancelParentClick Then
         Dim result As String = InputBox("送信済みのデータが含まれます。本当に送信しますか？", "認証")

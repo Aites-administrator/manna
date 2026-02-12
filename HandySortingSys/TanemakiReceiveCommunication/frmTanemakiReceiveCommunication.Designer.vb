@@ -53,8 +53,8 @@ Partial Class frmTanemakiReceiveCommunication
         Me.BtnRecieveHandy1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BtnRecieveHandy1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
         Me.BtnRecieveHandy1.ForeColor = System.Drawing.Color.Black
-        Me.BtnRecieveHandy1.Location = New System.Drawing.Point(1131, 698)
-        Me.BtnRecieveHandy1.Name = "BtnRecieveHandy1"
+    Me.BtnRecieveHandy1.Location = New System.Drawing.Point(1131, 731)
+    Me.BtnRecieveHandy1.Name = "BtnRecieveHandy1"
         Me.BtnRecieveHandy1.Size = New System.Drawing.Size(320, 60)
         Me.BtnRecieveHandy1.TabIndex = 21
         Me.BtnRecieveHandy1.TargetCommunicationDate = CType(resources.GetObject("BtnRecieveHandy1.TargetCommunicationDate"), System.Collections.Generic.Dictionary(Of String, String))

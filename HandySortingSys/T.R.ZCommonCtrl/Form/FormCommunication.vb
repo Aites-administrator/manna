@@ -17,6 +17,7 @@ Public Class FormCommunication
   Public Overridable Property TextDisplayName As String = "入荷検品"
   Public Overridable Property TextDataGrid As DgvList
   Public Overridable Property TextHandy As New ClsHandyCommunication.clsHandyCommunication("")
+  Public Overridable Property TextMessage As String = "受信が完了しました。"
 
 
 #Region "イベントプロシージャー"
@@ -43,8 +44,8 @@ Public Class FormCommunication
 
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     TextDataGrid.UseCustomSize = True
-    TextDataGrid.GridFontSize = 14
-    TextDataGrid.HeaderFontSize = 14
+    'TextDataGrid.GridFontSize = 14
+    'TextDataGrid.HeaderFontSize = 14
     TextDataGrid.ApplyInitialLayout()
 
   End Sub
@@ -79,7 +80,7 @@ Public Class FormCommunication
 
     ' ★右側パネル
     Dim pnl As New Panel()
-    pnl.Width = 700
+    pnl.Width = 750
     pnl.Dock = DockStyle.Right
     pnl.BackColor = Color.FromArgb(255, 250, 230)
     pnl.Padding = New Padding(10)
@@ -98,50 +99,48 @@ Public Class FormCommunication
     rtb.Clear()
 
     ' タイトル
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("【ハンディ" & Me.TextName & "手順】" & vbCrLf)
 
     ' ハンディ操作（青）
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.RoyalBlue
     rtb.AppendText("【ハンディ操作】" & vbCrLf)
 
     ' 本文
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("1. 「" & Me.TextHandyName & "」を選択します。" & vbCrLf)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
+    rtb.SelectionColor = Color.Black
     rtb.AppendText("2. 「" & Me.TextDisplayName & "」を選択します。" & vbCrLf)
 
     ' PC操作（緑）
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.ForestGreen
     rtb.AppendText("【PC操作】" & vbCrLf)
 
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("3. " & Me.TextButtonName & " ボタンを押します。" & vbCrLf)
-    rtb.AppendText("4. 通信ツールが立ち上がります。待ち受け開始が表示されたら、ハンディの「ENT」ボタンを押してから" & vbCrLf & "クレードルに置いてください。" & vbCrLf)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
+    rtb.SelectionColor = Color.Black
+    rtb.AppendText("4. 通信ツールが立ち上がります。待ち受け開始が表示されたら、ハンディの「ENT」ボタンを押してから" & vbCrLf & "クレードルに置いてください。(通信が開始します)" & vbCrLf)
 
     ' 通信中（オレンジ）
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
-    rtb.SelectionColor = Color.DarkOrange
-    rtb.AppendText("【通信中】" & vbCrLf)
 
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Red
     rtb.AppendText("※完了メッセージが出るまで" & vbCrLf & "ハンディをクレードルから外さないでください。" & vbCrLf)
 
     ' 通信中（オレンジ）
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
-    rtb.SelectionColor = Color.DarkOliveGreen
-    rtb.AppendText("【通信完了】" & vbCrLf)
 
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("5. 完了メッセージが出たら、「OK」ボタンを押してください。" & vbCrLf)
+    rtb.AppendText("5. 「" & Me.TextMessage & "」が表示されたら、" & vbCrLf & "「OK」ボタンを押してください。" & vbCrLf)
 
-    rtb.SelectionFont = New Font("Meiryo", 18, FontStyle.Bold)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("6. 「閉じる」ボタンを押してください。" & vbCrLf)
   End Sub

@@ -143,7 +143,7 @@ Public Class frmTanemakiSendCommunication
   Private Function SqlSelTrnSoudashiCourseSelect(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
-    sql &= " SELECT  MST_COURSE.COURSE_CD COURSE_CD "
+    sql &= " SELECT  MST_COURSE.DISP_ORDER DISP_ORDER "
     sql &= "      ,  HAISOU_COURSE_MEI HAISOU_COURSE_MEI "
     sql &= "      ,  CASE WHEN COUNT(*) > COUNT(TANEMAKI_SEND_DATE) THEN '有' "
     sql &= "         ELSE '無' "
@@ -159,7 +159,8 @@ Public Class frmTanemakiSendCommunication
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE "
     sql &= " ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -170,7 +171,7 @@ Public Class frmTanemakiSendCommunication
       sql &= " AND LEFT(MST_ITEM.TANA_CD,1) IN (" & tanaInClause & ")"
     Else
       sql &= " AND LEFT(MST_ITEM.TANA_CD,1) IN ('')"
-
+        
     End If
     sql &= " GROUP BY COURSE_CD "
     sql &= "    ,   HAISOU_COURSE_MEI "
@@ -199,7 +200,8 @@ Public Class frmTanemakiSendCommunication
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE "
     sql &= " ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -213,14 +215,15 @@ Public Class frmTanemakiSendCommunication
     'コース
     If prmCourseList.Count > 0 Then
       Dim CourseInClause As String = String.Join(",", prmCourseList.Select(Function(cd) $"'{cd}'"))
-      sql &= " AND MST_COURSE.COURSE_CD IN (" & CourseInClause & ")"
+      sql &= " AND TRN_SHUKKA.HAISOU_COURSE_MEI IN (" & CourseInClause & ")"
     End If
 
     '検討ーーーーーー
     sql &= " GROUP BY MST_COURSE.COURSE_CD "
+    sql &= "    ,   MST_COURSE.DISP_ORDER "
     sql &= "    ,   NOUHINBI "
     sql &= "    ,   TRN_SHUKKA.HAISOU_COURSE_MEI  "
-    sql &= " ORDER BY MST_COURSE.COURSE_CD "
+    sql &= " ORDER BY MST_COURSE.DISP_ORDER "
 
     Return sql
 
@@ -250,7 +253,8 @@ Public Class frmTanemakiSendCommunication
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
@@ -259,7 +263,7 @@ Public Class frmTanemakiSendCommunication
     'コース
     If prmCourseList.Count > 0 Then
       Dim CourseInClause As String = String.Join(",", prmCourseList.Select(Function(cd) $"'{cd}'"))
-      sql &= " AND MST_COURSE.COURSE_CD IN (" & CourseInClause & ")"
+      sql &= " AND TRN_SHUKKA.HAISOU_COURSE_MEI IN (" & CourseInClause & ")"
     End If
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND TRN_SHUKKA.NOUHINBI = '' "
@@ -267,13 +271,14 @@ Public Class frmTanemakiSendCommunication
       sql &= " AND TRN_SHUKKA.NOUHINBI = " & CmbDateNohinBi1.SelectedValue.ToString.Replace("/", "")
     End If
     sql &= " GROUP BY MST_COURSE.COURSE_CD "
+    sql &= "        ,MST_COURSE.DISP_ORDER "
     sql &= "        ,TRN_SHUKKA.HAISOU_COURSE_MEI "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2 "
     sql &= "        ,MST_ITEM.JAN "
     sql &= "        ,MST_ITEM.ITF "
     sql &= "        ,HACHU_TANI "
-    sql &= " ORDER BY MST_COURSE.COURSE_CD "
+    sql &= " ORDER BY MST_COURSE.DISP_ORDER "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_CD "
 
     Return sql
@@ -317,7 +322,8 @@ Public Class frmTanemakiSendCommunication
     sql &= "    FROM TRN_SHUKKA "
     sql &= "    LEFT JOIN MST_ITEM ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= "    LEFT JOIN MST_COURSE ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
@@ -326,7 +332,7 @@ Public Class frmTanemakiSendCommunication
     'コース
     If prmCourseList.Count > 0 Then
       Dim CourseInClause As String = String.Join(",", prmCourseList.Select(Function(cd) $"'{cd}'"))
-      sql &= " AND MST_COURSE.COURSE_CD IN (" & CourseInClause & ")"
+      sql &= " AND TRN_SHUKKA.HAISOU_COURSE_MEI IN (" & CourseInClause & ")"
     End If
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND TRN_SHUKKA.NOUHINBI = '' "
@@ -337,7 +343,8 @@ Public Class frmTanemakiSendCommunication
     sql &= " ) COURSE_SURYO "
     sql &= "    ON COURSE_SURYO.NOUHINBI = TRN_SHUKKA.NOUHINBI "
     sql &= "   AND COURSE_SURYO.COURSE_CD = MST_COURSE.COURSE_CD "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     '棚番
     If prmTanaList.Count > 0 Then
       Dim tanaInClause As String = String.Join(",", prmTanaList.Select(Function(cd) $"'{cd}'"))
@@ -346,7 +353,7 @@ Public Class frmTanemakiSendCommunication
     'コース
     If prmCourseList.Count > 0 Then
       Dim CourseInClause As String = String.Join(",", prmCourseList.Select(Function(cd) $"'{cd}'"))
-      sql &= " AND MST_COURSE.COURSE_CD IN (" & CourseInClause & ")"
+      sql &= " AND TRN_SHUKKA.HAISOU_COURSE_MEI IN (" & CourseInClause & ")"
     End If
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND TRN_SHUKKA.NOUHINBI = '' "
@@ -355,6 +362,7 @@ Public Class frmTanemakiSendCommunication
     End If
     sql &= " GROUP BY TRN_SHUKKA.NOUHINBI "
     sql &= "        ,MST_COURSE.COURSE_CD "
+    sql &= "        ,MST_COURSE.DISP_ORDER "
     sql &= "        ,TRN_SHUKKA.HAISOU_COURSE_MEI "
     sql &= "        ,JIGYOSHO_CD "
     sql &= "        ,JIGYOSHO_MEI "
@@ -366,7 +374,7 @@ Public Class frmTanemakiSendCommunication
     sql &= "        ,COURSE_SURYO.SHUKKA_YOTEISU_CASE "
     sql &= "        ,COURSE_SURYO.SHUKKA_YOTEISU_BARA "
     sql &= " ORDER BY TRN_SHUKKA.NOUHINBI "
-    sql &= "        ,MST_COURSE.COURSE_CD "
+    sql &= "        ,MST_COURSE.DISP_ORDER "
     sql &= "        ,TRN_SHUKKA.JISYA_SHOHIN_CD "
 
     Return sql
@@ -417,7 +425,7 @@ Public Class frmTanemakiSendCommunication
 
       For Each row As DataGridViewRow In DgvList1.Rows
         If Not row.IsNewRow AndAlso Convert.ToBoolean(row.Cells("チェック").Value) = True Then
-          Dim tanaCd As String = row.Cells(1).Value?.ToString()
+          Dim tanaCd As String = row.Cells(2).Value?.ToString()
           If Not String.IsNullOrEmpty(tanaCd) AndAlso Not selectedCouseList.Contains(tanaCd) Then
             selectedCouseList.Add(tanaCd)
           End If

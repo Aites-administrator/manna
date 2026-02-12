@@ -14,6 +14,7 @@ Public Class FormRecieveCommunication
     Me.TextName = "受信"
     Me.TextHandyName = "9.データ送信"
     Me.TextButtonName = "受信（F6）"
+    Me.TextMessage = "受信が完了しました。"
 
     MyBase.OnLoad(e)
   End Sub

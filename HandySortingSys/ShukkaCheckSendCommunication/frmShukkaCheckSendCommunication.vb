@@ -128,7 +128,8 @@ Public Class frmShukkaCheckSendCommunication
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_TANA "
     sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else
@@ -156,7 +157,8 @@ Public Class frmShukkaCheckSendCommunication
     sql &= " 	    	,	JIGYOSHO_MEI AS JIGYOSHO_MEI "
     sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.KENPIN_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= " FROM TRN_SHUKKA "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG <> " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
     Else

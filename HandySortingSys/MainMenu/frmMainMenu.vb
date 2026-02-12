@@ -51,8 +51,17 @@ Public Class frmMainMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(NYUKA_YOTEI_DATE) AS NYUKA_YOTEI_DATE "
-    sql &= "      ,  MIN(SEND_DATE) SEND_DATE "
-    sql &= "      ,  MIN(RECEIVE_DATE) RECEIVE_DATE "
+    sql &= "      ,  CASE WHEN COUNT(SEND_DATE) < COUNT(*) "
+    sql &= "         THEN NULL"
+    sql &= "         ELSE MIN(SEND_DATE)"
+    sql &= "         END AS SEND_DATE"
+    sql &= "      ,  CASE WHEN COUNT(RECEIVE_DATE) < COUNT(*) "
+    sql &= "         THEN NULL"
+    sql &= "         ELSE MIN(RECEIVE_DATE)"
+    sql &= "         END AS RECEIVE_DATE"
+
+    'sql &= "      ,  MIN(SEND_DATE) SEND_DATE "
+    'sql &= "      ,  MIN(RECEIVE_DATE) RECEIVE_DATE "
     sql &= " FROM TRN_NYUKA "
     sql &= " WHERE NYUKA_YOTEI_DATE = ("
     sql &= "       SELECT	MAX(NYUKA_YOTEI_DATE)"
@@ -67,8 +76,16 @@ Public Class frmMainMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(NOUHINBI) AS NOUHINBI "
-    sql &= "      ,  MIN(SOUDASHI_SEND_DATE) SOUDASHI_SEND_DATE"
-    sql &= "      ,  MIN(SOUDASHI_RECEIVE_DATE) SOUDASHI_RECEIVE_DATE "
+    sql &= "      ,  CASE WHEN COUNT(SOUDASHI_SEND_DATE) < COUNT(*) "
+    sql &= "         THEN NULL"
+    sql &= "         ELSE MIN(SOUDASHI_SEND_DATE)"
+    sql &= "         END AS SOUDASHI_SEND_DATE"
+    sql &= "      ,  CASE WHEN COUNT(SOUDASHI_RECEIVE_DATE) < COUNT(*) "
+    sql &= "         THEN NULL"
+    sql &= "         ELSE MIN(SOUDASHI_RECEIVE_DATE)"
+    sql &= "         END AS SOUDASHI_RECEIVE_DATE"
+    'sql &= "      ,  MIN(SOUDASHI_SEND_DATE) SOUDASHI_SEND_DATE"
+    'sql &= "      ,  MIN(SOUDASHI_RECEIVE_DATE) SOUDASHI_RECEIVE_DATE "
     sql &= " FROM TRN_SHUKKA "
     sql &= " WHERE NOUHINBI = ("
     sql &= "       SELECT	MAX(NOUHINBI)"
@@ -83,9 +100,26 @@ Public Class frmMainMenu
     Dim sql As String = String.Empty
 
     sql &= " SELECT  MAX(NOUHINBI) AS NOUHINBI "
-    sql &= "      ,  MIN(TANEMAKI_SEND_DATE) TANEMAKI_SEND_DATE "
-    sql &= "      ,  MIN(TANEMAKI_RECEIVE_DATE) TANEMAKI_RECEIVE_DATE "
-    sql &= "      ,  MIN(KENPIN_RECEIVE_DATE) KENPIN_RECEIVE_DATE "
+    sql &= "      ,  CASE WHEN COUNT(TANEMAKI_SEND_DATE) < COUNT(*) "
+    sql &= "         THEN NULL"
+    sql &= "         ELSE MIN(TANEMAKI_SEND_DATE)"
+    sql &= "         END AS TANEMAKI_SEND_DATE"
+    sql &= "      ,  CASE WHEN SUM( "
+    sql &= "                  CASE WHEN TANEMAKI_RECEIVE_DATE IS NULL "
+    sql &= "                        AND KENPIN_RECEIVE_DATE IS NULL "
+    sql &= "                  THEN 1 "
+    sql &= "                  ELSE 0 "
+    sql &= "                  END) > 0 "
+    sql &= "        THEN NULL "
+    sql &= "        ELSE 1 "
+    sql &= "        END AS TANEMAKI_RECEIVE_DATE "
+    'sql &= "      ,  CASE WHEN COUNT(KENPIN_RECEIVE_DATE) < COUNT(*) "
+    'sql &= "         THEN NULL"
+    'sql &= "         ELSE MIN(KENPIN_RECEIVE_DATE)"
+    'sql &= "         END AS KENPIN_RECEIVE_DATE"
+    'sql &= "      ,  MIN(TANEMAKI_SEND_DATE) TANEMAKI_SEND_DATE "
+    'sql &= "      ,  MIN(TANEMAKI_RECEIVE_DATE) TANEMAKI_RECEIVE_DATE "
+    'sql &= "      ,  MIN(KENPIN_RECEIVE_DATE) KENPIN_RECEIVE_DATE "
     sql &= " FROM TRN_SHUKKA "
     sql &= " WHERE NOUHINBI = ("
     sql &= "       SELECT	MAX(NOUHINBI)"
@@ -136,9 +170,9 @@ Public Class frmMainMenu
     '総出し受信ステータス更新
     InformationSetting(SoudashiReceiveStatus, tmpSouDashiDt.Rows(0)("SOUDASHI_RECEIVE_DATE").ToString, LblSoudashiReceive.Text)
     '種まき送信ステータス更新
-    InformationSetting(TanemakiSendStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_SEND_DATE").ToString, LblTanemakiSend.Text, tmpTanemakiDt.Rows(0)("KENPIN_RECEIVE_DATE").ToString)
+    InformationSetting(TanemakiSendStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_SEND_DATE").ToString, LblTanemakiSend.Text)
     '総出し受信ステータス更新
-    InformationSetting(TanemakiReceiveStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_RECEIVE_DATE").ToString, LblTanemakiReceive.Text, tmpTanemakiDt.Rows(0)("KENPIN_RECEIVE_DATE").ToString)
+    InformationSetting(TanemakiReceiveStatus, tmpTanemakiDt.Rows(0)("TANEMAKI_RECEIVE_DATE").ToString, LblTanemakiReceive.Text)
 
 
 

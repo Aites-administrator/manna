@@ -96,7 +96,10 @@ Public Class frmItemSendCommunication
     sql &= "      , IRISU AS IRISU"
     sql &= "      , TANKA_TANI AS TANKA_TANI "
     sql &= "      , LEFT(MST_ITEM.TANA_CD, 1) + '-' + SUBSTRING(MST_ITEM.TANA_CD, 2, 1) + '-' + RIGHT(MST_ITEM.TANA_CD, 2) AS TANA_CD "
+    sql &= "      , MST_TANA.TANA_ONDO + MST_TANA.FLOOR TANA_NAME "
     sql &= " FROM MST_ITEM "
+    sql &= " LEFT JOIN MST_TANA "
+    sql &= " ON MST_TANA.TANA_CD = LEFT(MST_ITEM.TANA_CD,2) "
     sql &= " WHERE MST_ITEM.TANA_CD IS NOT NULL"
     sql &= " ORDER BY SHOHIN_CD "
 

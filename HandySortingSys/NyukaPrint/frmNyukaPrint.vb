@@ -49,7 +49,7 @@ Public Class frmNyukaPrint
     sql &= "      , CASE "
     sql &= "          WHEN NYUKA_YOTEISU_JISYA = NYUKA_JISSEKISU_MAKER * MST_ITEM.IRISU + NYUKA_JISSEKISU_JISYA "
     sql &= "          THEN 'OK'  "
-    sql &= "        ELSE CAST(NYUKA_YOTEISU_JISYA - (NYUKA_JISSEKISU_MAKER * MST_ITEM.IRISU + NYUKA_JISSEKISU_JISYA) AS NVARCHAR) "
+    sql &= "        ELSE CAST((NYUKA_JISSEKISU_MAKER * MST_ITEM.IRISU + NYUKA_JISSEKISU_JISYA) - NYUKA_YOTEISU_JISYA AS NVARCHAR) "
     sql &= "        END AS 検品結果 "
     sql &= "      ,	ISNULL(NYUKA_JISSEKISU_JISYA,0)	入荷実績数_自社 "
     sql &= "      ,	MAKER_HACHU_TANI		単位 "

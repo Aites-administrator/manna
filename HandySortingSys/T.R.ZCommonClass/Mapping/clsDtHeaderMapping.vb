@@ -73,7 +73,7 @@
     ' 種まきマッピング定義
 
     MappingDictionary("種まきコースリスト") = New Dictionary(Of String, String) From {
-      {"COURSE_CD", "コースコード"},
+      {"DISP_ORDER", "表示順"},
       {"HAISOU_COURSE_MEI", "コース名"},
       {"TANEMAKI_SEND_DATE", "未送信(有無)"},
       {"TORIKOMI_JOKYO_FLG", "種まき済"},

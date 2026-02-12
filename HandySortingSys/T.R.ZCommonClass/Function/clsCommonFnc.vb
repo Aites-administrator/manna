@@ -422,18 +422,21 @@ Err_Exit:
     Dim FormatText As String = String.Empty
 
     Try
-      If prmTargetText.Contains("/") Then
-        ' 変換対象に"/"が含まれる
-        FormatText = DateTxt2DateTxt(prmTargetText)
+      ' ★ ここで曜日を切る
+      Dim work As String = prmTargetText
+      Dim p As Integer = work.IndexOf(" "c)
+      If p >= 0 Then
+        work = work.Substring(0, p)
+      End If
+
+      If work.Contains("/") Then
+        FormatText = DateTxt2DateTxt(work)
       Else
-        ' 変換対象に"/"が含まれない
-        FormatText = NumTxt2Date(prmTargetText)
+        FormatText = NumTxt2Date(work)
       End If
 
       If FormatText <> "" Then
-        ' 日付形式では無い
         If False = IsDate(FormatText) Then Throw New Exception(prmTargetText & "は日付形式ではありません")
-        ' 指定範囲外（～ 1999/12/31 ）
         If DateDiff("d", "2000/01/01", CDate(FormatText)) < 0 Then Throw New Exception(prmTargetText & "は指定範囲外です")
       End If
 
@@ -442,9 +445,9 @@ Err_Exit:
       Throw New Exception("日付文字列変換に失敗しました")
     End Try
 
-
     Return FormatText
   End Function
+
 
 
   ''' <summary>

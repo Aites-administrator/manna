@@ -1,5 +1,8 @@
 ﻿Public Class DgvList
   Inherits DataGridView
+
+  Private CommunicationWidth As Integer = 902
+
   ' プロパティ：ファイル名
   Public Property TargetColumnName As String = ""
   Public Property GridFontSize As Integer = 20
@@ -21,7 +24,7 @@
     If UseCustomSize Then
       Me.AutoSizeColumnsMode = CustomAutoSizeColumnsMode
       Me.AutoSizeRowsMode = CustomAutoSizeRowsMode
-      Me.Width = 952
+      Me.Width = CommunicationWidth
     End If
   End Sub
 
@@ -35,9 +38,10 @@
 
   Public Sub SetData(dt As DataTable)
     Try
+
+
       Me.AutoGenerateColumns = True
 
-      '      Me.DataSource = Nothing
       Me.DataSource = dt
       Me.AllowUserToAddRows = False
       Me.ReadOnly = False
@@ -61,7 +65,7 @@
       If UseCustomSize Then
         Me.AutoSizeColumnsMode = CustomAutoSizeColumnsMode
         Me.AutoSizeRowsMode = CustomAutoSizeRowsMode
-        Me.Width = 952
+        Me.Width = CommunicationWidth
       Else
         Me.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells
         Me.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells
@@ -199,6 +203,24 @@
       ' UI 更新
       Me.Refresh()
     End If
+  End Sub
+
+  Public Sub TrimDataTable(dt As DataTable)
+    For Each col As DataColumn In dt.Columns
+      If col.DataType Is GetType(String) Then
+        For Each row As DataRow In dt.Rows
+          If Not row.IsNull(col) Then
+            Dim s = CStr(row(col))
+            Dim trimmed = s.Trim()
+            If trimmed <> s Then
+              row(col) = trimmed
+            End If
+          End If
+        Next
+      End If
+    Next
+
+    dt.AcceptChanges()
   End Sub
 
 

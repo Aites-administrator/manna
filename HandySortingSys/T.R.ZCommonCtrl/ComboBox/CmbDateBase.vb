@@ -78,11 +78,11 @@ Public Class CmbDateBase
           End If
           ' 入力された値を日付形式に変換
           tmpDateText = ComCreateDateText(.Text)
-          .Text = ComCreateDateText(.Text)
-          .SelectedValue = .Text
+        '.Text = ComCreateDateText(.Text)
+        .SelectedValue = tmpDateText
 
-          ' 一覧に存在しない日付を入力された場合は、選択項目の先頭に追加する
-          If .SelectedValue Is Nothing Then
+        ' 一覧に存在しない日付を入力された場合は、選択項目の先頭に追加する
+        If .SelectedValue Is Nothing Then
             With DirectCast(.DataSource, DataTable)
               Dim tmpNewItem As DataRow = .NewRow
               tmpNewItem(0) = tmpDateText

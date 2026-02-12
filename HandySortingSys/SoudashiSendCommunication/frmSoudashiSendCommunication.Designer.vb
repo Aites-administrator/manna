@@ -40,7 +40,7 @@ Partial Class frmSoudashiSendCommunication
     Me.BtnSendHandy1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.BtnSendHandy1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.BtnSendHandy1.ForeColor = System.Drawing.Color.Black
-    Me.BtnSendHandy1.Location = New System.Drawing.Point(1131, 698)
+    Me.BtnSendHandy1.Location = New System.Drawing.Point(1131, 731)
     Me.BtnSendHandy1.Name = "BtnSendHandy1"
     Me.BtnSendHandy1.Size = New System.Drawing.Size(320, 60)
     Me.BtnSendHandy1.TabIndex = 18
@@ -94,14 +94,14 @@ Partial Class frmSoudashiSendCommunication
     'CmbDateNohinBi1
     '
     Me.CmbDateNohinBi1.AvailableBlank = False
-    Me.CmbDateNohinBi1.DisplayMember = "ItemCode"
+    'Me.CmbDateNohinBi1.DisplayMember = "ItemCode"
     Me.CmbDateNohinBi1.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
     Me.CmbDateNohinBi1.FormattingEnabled = True
     Me.CmbDateNohinBi1.Location = New System.Drawing.Point(157, 93)
     Me.CmbDateNohinBi1.Name = "CmbDateNohinBi1"
-    Me.CmbDateNohinBi1.Size = New System.Drawing.Size(226, 41)
+    Me.CmbDateNohinBi1.Size = New System.Drawing.Size(256, 41)
     Me.CmbDateNohinBi1.TabIndex = 14
-    Me.CmbDateNohinBi1.ValueMember = "ItemCode"
+    'Me.CmbDateNohinBi1.ValueMember = "ItemCode"
     '
     'LblBase2
     '

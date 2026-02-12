@@ -72,13 +72,14 @@ Public Class clsItemMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False},
-          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True, .IsSearchTarget = True},
-          New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True},
-          New MasterColumn With {.Name = COL_AISU, .DisplayName = COL_AISU, .IsEditable = True},
-          New MasterColumn With {.Name = COL_JAN, .DisplayName = COL_JAN, .IsEditable = True},
-          New MasterColumn With {.Name = COL_ITF, .DisplayName = COL_ITF, .IsEditable = True},
-          New MasterColumn With {.Name = COL_TANA, .DisplayName = COL_TANA, .IsEditable = True},
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False, .IsSearchTarget = True, .SearchType = "Code", .IsNumeric = True},
+          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True, .IsSearchTarget = True, .SearchType = "Name"},
+          New MasterColumn With {.Name = COL_MAKER, .DisplayName = COL_MAKER, .IsEditable = False},
+          New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_AISU, .DisplayName = COL_AISU, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_JAN, .DisplayName = COL_JAN, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_ITF, .DisplayName = COL_ITF, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_TANA, .DisplayName = COL_TANA, .IsEditable = True, .IsNumeric = True},
           New MasterColumn With {.Name = COL_SHOMIKIGEN, .DisplayName = COL_SHOMIKIGEN, .IsEditable = True}
       }
     End Get
@@ -300,7 +301,17 @@ Public Class clsItemMasterDefine
 
           Dim colIndex As Integer = 1
           For i As Integer = 0 To dt.Columns.Count - 1
-            dr(i) = row.Cell(colIndex).GetString()
+            Dim tmpColumn As String = dt.Columns(i).Caption.Replace(vbCrLf, "").Replace(vbCr, "").Replace(vbLf, "")
+
+            If tmpColumn = "消費税（％）" Then
+              If String.IsNullOrWhiteSpace(row.Cell(colIndex).GetString()) Then
+                dr(i) = "8"
+              Else
+                dr(i) = row.Cell(colIndex).GetString()
+              End If
+            Else
+              dr(i) = row.Cell(colIndex).GetString()
+            End If
             colIndex += 1
           Next
 
@@ -345,6 +356,7 @@ Public Class clsItemMasterDefine
 
     sql &= " SELECT  " & DB_CD
     sql &= "    ,    " & DB_NAME
+    sql &= "    ,    " & DB_MAKER
     sql &= "    ,    " & DB_IRISU
     sql &= "    ,    " & DB_AISU
     sql &= "    ,    " & DB_JAN

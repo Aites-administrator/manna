@@ -25,7 +25,7 @@ Public Class clsTantoMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = True},
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = True, .IsNumeric = True},
           New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True}
       }
     End Get

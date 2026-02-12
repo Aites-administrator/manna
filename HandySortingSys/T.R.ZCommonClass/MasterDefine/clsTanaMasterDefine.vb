@@ -29,7 +29,7 @@ Public Class clsTanaMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = True},
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = True, .IsNumeric = True},
           New MasterColumn With {.Name = COL_ONDO, .DisplayName = COL_ONDO, .IsEditable = True},
           New MasterColumn With {.Name = COL_FLOOR, .DisplayName = COL_FLOOR, .IsEditable = True}
       }

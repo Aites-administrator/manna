@@ -185,7 +185,8 @@
     Tuple.Create("ITF", 16),
     Tuple.Create("IRISU", 10),
     Tuple.Create("TANKA_TANI", 6),
-    Tuple.Create("TANA_CD", 6)
+    Tuple.Create("TANA_CD", 6),
+    Tuple.Create("TANA_NAME", 10)
 }
 
   ' 担当者マスタ固定桁数定義

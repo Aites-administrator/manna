@@ -3,7 +3,7 @@
 Public Class CmbDateNohinBiZumi
   Inherits CmbDateBase
 
-  Private Const CODE_FORMAT As String = "yyyy/MM/dd"
+  Private Const CODE_FORMAT As String = "yyyy/MM/dd (ddd)"
 
 #Region "コンストラクタ"
 
@@ -32,10 +32,12 @@ Public Class CmbDateNohinBiZumi
     ' データベースより現在日付を文字列で取得し、DateTime値に変換する
     Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
 
-    sql &= " SELECT  TOP " & ReadSettingIniFile("PAST_DATE", "VALUE") & "CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
+    sql &= " SELECT  TOP " & ReadSettingIniFile("PAST_DATE", "VALUE")
+    sql &= "         CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
+    sql &= "      ,  FORMAT(CONVERT(date, NOUHINBI, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
     sql &= " FROM TRN_SHUKKA "
     sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
-    sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)   "
+    sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111),NOUHINBI    "
     sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  DESC"
 
     Console.WriteLine(sql)

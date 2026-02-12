@@ -24,9 +24,9 @@ Public Class clsCourseMasterDefine
   Public ReadOnly Property Columns As List(Of MasterColumn) Implements IMasterMentenance.Columns
     Get
       Return New List(Of MasterColumn) From {
-          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False},
-          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True},
-          New MasterColumn With {.Name = COL_ORDER, .DisplayName = COL_ORDER, .IsEditable = True}
+          New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False, .IsVisible = False, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_ORDER, .DisplayName = COL_ORDER, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True}
       }
     End Get
   End Property
@@ -147,7 +147,7 @@ Public Class clsCourseMasterDefine
     sql &= "    ,    " & DB_ENTRY
     sql &= "    ,    " & DB_UPDATE
     sql &= " FROM MST_COURSE "
-    sql &= " ORDER BY CAST(" & DB_CD & " AS INT) "
+    sql &= " ORDER BY CAST(" & DB_ORDER & " AS INT) "
 
     Return sql
   End Function
