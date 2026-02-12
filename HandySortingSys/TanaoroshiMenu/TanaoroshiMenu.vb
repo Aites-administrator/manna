@@ -6,6 +6,7 @@ Public Class TanaoroshiMenu
   Inherits FormBase
   Private SqlServer As New clsSqlServer
   Private IniFileName As String
+  Private FileName As String = String.Empty
 
   Private Sub TanaoroshiMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "TanaMenuBackGroundImage.png"
@@ -70,14 +71,21 @@ Public Class TanaoroshiMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M42", "EXE", IniFileName)))
+    FileName = GetIniString("M42", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M42", "EXE", IniFileName), , True))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M43", "EXE", IniFileName)))
+    FileName = GetIniString("M43", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M43", "EXE", IniFileName), , True))
   End Sub
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
+    FileName = GetIniString("M44", "EXE", IniFileName)
     AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M44", "EXE", IniFileName)))
   End Sub
 
+  Private Sub TanaoroshiMenu_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    KillProcessByFileName(FileName)
+
+  End Sub
 End Class

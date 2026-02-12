@@ -45,6 +45,7 @@
       Me.DataSource = dt
       Me.AllowUserToAddRows = False
       Me.ReadOnly = False
+      Me.RowHeadersVisible = False
 
       For Each tmpClomn In Me.Columns
         ' チェック列だけ編集可能にする
@@ -166,6 +167,8 @@
   Private Sub DgvList1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles Me.CellClick
     If e.RowIndex < 0 Then Exit Sub
 
+    If e.ColumnIndex < 0 Then Exit Sub
+
     If Me.Columns(e.ColumnIndex).Name = "チェック" Then
 
       ' ★編集モードに入る
@@ -186,6 +189,7 @@
   Private Sub DgvList_CellMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles Me.CellMouseClick
     ' ヘッダークリック以外は無視
     If e.RowIndex <> -1 Then Exit Sub
+    If e.ColumnIndex < 0 Then Exit Sub
 
     ' 「チェック」列のヘッダーをクリックしたときだけ動作
     If Me.Columns(e.ColumnIndex).Name = "チェック" Then

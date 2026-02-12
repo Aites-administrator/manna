@@ -255,14 +255,14 @@ Public Class frmAdminMaintenance
 
 
   Private Sub BtnMainMenuBase8_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase8.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M201", "EXE", IniFileName)))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M201", "EXE", IniFileName),, True))
 
 
   End Sub
 
 
   Private Sub BtnMainMenuBase9_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase9.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M202", "EXE", IniFileName)))
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M202", "EXE", IniFileName), , True))
 
 
   End Sub

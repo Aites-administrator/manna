@@ -169,6 +169,9 @@ Public Class FormCommunication
   End Sub
 
 
+  Private Sub OnProcessExited(sender As Object, e As EventArgs)
+    ' プロセス終了時にここが走る
+  End Sub
 
 #End Region
 

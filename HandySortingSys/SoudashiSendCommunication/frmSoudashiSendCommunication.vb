@@ -329,7 +329,6 @@ Public Class frmSoudashiSendCommunication
     Dim tmpDt As New DataTable
     Dim tmpDtJP As New DataTable
     SqlServer.GetResult(tmpDt, SqlSelTrnSoudashiTanaSelect())
-    'BlnTorikomiZumi = tmpDt.AsEnumerable().Any(Function(row) row.Field(Of Integer)("TORIKOMI_JOKYO_FLG") = 1)
     tmpDtJP = mapper.ConvertColumnNamesToJapanese(tmpDt, "棚番リスト")
 
     If Not tmpDtJP.Columns.Contains("チェック") Then

@@ -6,7 +6,7 @@ Public Class NyukaMenu
   Inherits FormBase
   Private SqlServer As New clsSqlServer
   Private IniFileName As String
-
+  Private FileName As String = String.Empty
 
   Private Sub NyukaMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaMenuBackGroundImage.png"
@@ -71,15 +71,18 @@ Public Class NyukaMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M02", "EXE", IniFileName)))
+    FileName = GetIniString("M02", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M02", "EXE", IniFileName), , True))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M03", "EXE", IniFileName)))
+    FileName = GetIniString("M03", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M03", "EXE", IniFileName), , True))
 
   End Sub
 
   Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
+    FileName = GetIniString("M04", "EXE", IniFileName)
     AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M04", "EXE", IniFileName)))
   End Sub
 
@@ -87,4 +90,7 @@ Public Class NyukaMenu
 
   End Sub
 
+  Private Sub NyukaMenu_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    KillProcessByFileName(FileName)
+  End Sub
 End Class

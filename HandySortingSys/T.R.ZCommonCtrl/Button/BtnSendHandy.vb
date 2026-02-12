@@ -123,6 +123,13 @@ Public Class BtnSendHandy
           tmpWhere.Add(Where, tmpRow(Where).ToString)
         Next
 
+        '総出し送信処理のとき、総出し済みは更新しない
+        If TargetUpdStatus = CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) Then
+          If SoudashiNotUpdateCheckStatus(tmpWhere) Then
+            Continue For
+          End If
+        End If
+
         '更新件数チェック
         Dim cntSql As String = SqlSelGetCount(TargetTableName, tmpWhere)
         Dim tmpCntDt As New DataTable
@@ -149,8 +156,10 @@ Public Class BtnSendHandy
       Handy.CloseCommunicationTool()
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
-
       RaiseEvent SendCompleted()
+
+      '親画面編集不可をコメント
+      'CType(Me.Parent, Form).TopMost = True
 
     Catch ex As Exception
       SqlServer.TrnRollBack()
@@ -207,6 +216,35 @@ Public Class BtnSendHandy
 
 
     Return sql
+  End Function
+
+  Private Function SqlSelGetStatus(prmTableName As String, prmWhereDic As Dictionary(Of String, String)) As String
+    Dim sql As String = String.Empty
+
+    sql &= " SELECT TORIKOMI_JOKYO_FLG "
+    sql &= " FROM  " & prmTableName
+
+    If prmWhereDic.Count > 0 Then
+      sql &= " WHERE "
+      sql &= String.Join(" AND ",
+        prmWhereDic.Select(Function(kv) $"{kv.Key} = '{kv.Value}'"))
+    End If
+
+    Return sql
+  End Function
+
+  Private Function SoudashiNotUpdateCheckStatus(prmWhere As Dictionary(Of String, String)) As Boolean
+    Dim rtn As Boolean = False
+    Dim tmpDt As New DataTable
+
+    SqlServer.GetResult(tmpDt, SqlSelGetStatus(TargetTableName, prmWhere))
+
+    If tmpDt.Rows(0).Item("TORIKOMI_JOKYO_FLG") >= CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) Then
+      rtn = True
+    End If
+
+    Return rtn
+
   End Function
 
 End Class

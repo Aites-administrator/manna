@@ -122,6 +122,12 @@ Public Class clsCommonFnc
         ret = System.Diagnostics.Process.GetProcessById(Convert.ToInt32(moc(0)("ProcessId")))
       End If
 
+      If pRestart Then
+        ret.Kill()
+        ret.Dispose()
+        ret = Nothing
+      End If
+
       moc.Dispose()
     End If
 
@@ -1880,7 +1886,12 @@ Optional ByVal columnCtl As Boolean = False)
 
     If proc Is Nothing Then Exit Sub
 
+    '親画面編集不可をコメント
+    'targetForm.Enabled = False
+
     proc.EnableRaisingEvents = True
+
+
 
     AddHandler proc.Exited,
         Sub()
@@ -1889,6 +1900,11 @@ Optional ByVal columnCtl As Boolean = False)
           End If
         End Sub
 
+    '親画面編集不可をコメント
+    'proc.WaitForExit()
+
+    '親画面編集不可をコメント
+    'targetForm.Enabled = True
   End Sub
 
   Public Shared Function ConvertDate14FromDatetime(input As String) As String
@@ -1912,6 +1928,18 @@ Optional ByVal columnCtl As Boolean = False)
     Catch ex As Exception
       ' ログ書き込み失敗時は握りつぶす（処理を止めない）
     End Try
+  End Sub
+
+  Public Shared Sub KillProcessByFileName(exeName As String)
+    Dim ps = Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(exeName))
+
+    For Each p In ps
+      Try
+        p.Kill()
+      Catch ex As Exception
+        ' ログなど
+      End Try
+    Next
   End Sub
 
 End Class

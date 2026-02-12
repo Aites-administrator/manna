@@ -6,6 +6,7 @@ Public Class frmTanemakiMenu
   Inherits FormBase
   Private SqlServer As New clsSqlServer
   Private IniFileName As String
+  Private FileName As String = String.Empty
 
   Private Sub SoudashiMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     Dim path As String = PROJECT_DIR_NAME & IMAGE_FORDER & "TanemakiMenuBackGroundImage.png"
@@ -61,11 +62,17 @@ Public Class frmTanemakiMenu
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M22", "EXE", IniFileName)))
+    FileName = GetIniString("M22", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M22", "EXE", IniFileName), , True))
   End Sub
 
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
-    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M23", "EXE", IniFileName)))
+    FileName = GetIniString("M23", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M23", "EXE", IniFileName), , True))
   End Sub
 
+  Private Sub frmTanemakiMenu_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    KillProcessByFileName(FileName)
+
+  End Sub
 End Class
