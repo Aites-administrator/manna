@@ -230,6 +230,9 @@
     <Compile Include="ComboBox\CmbDateBase.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ComboBox\CmbDateTanaoroshi.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ComboBox\CmbDateTanaoroshiBi.vb">
       <SubType>Component</SubType>
     </Compile>

@@ -70,6 +70,7 @@ Public Class BtnSendHandy
 
 #Region "イベントプロシージャー"
   Protected Overrides Sub OnClick(e As EventArgs)
+    Me.Enabled = False
     MyBase.OnClick(e)
 
     Dim tmpDt As New DataTable
@@ -167,6 +168,8 @@ Public Class BtnSendHandy
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
     Finally
+      Me.Enabled = True
+
     End Try
   End Sub
 

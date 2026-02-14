@@ -31,6 +31,11 @@ Public Class frmTanaoroshiSendCommunication
 
   End Sub
 
+  Protected Overrides Sub OnSendCompleted()
+    MyBase.OnSendCompleted()
+    ReloadGrid()
+  End Sub
+
   Private Sub CmbDateSagyoBi1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CmbDateTanaoroshiBi1.SelectedIndexChanged
     ReloadGrid()
   End Sub
@@ -89,11 +94,11 @@ Public Class frmTanaoroshiSendCommunication
     Dim sql As String = String.Empty
 
     sql &= " SELECT      LEFT(MST_ITEM.TANA_CD, 2) AS TANA_CD "
-    sql &= "        ,   MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
+    sql &= "        ,   MST_TANA.TANA_ONDO + MST_TANA.FLOOR AS TANA_NAME "
     sql &= "      ,  CASE WHEN COUNT(*) > COUNT(TRN_TANAOROSHI.SEND_DATE) THEN '有' "
     sql &= "         ELSE '無' "
     sql &= "         END AS SOUDASHI_SEND_DATE "
-    sql &= "        ,   CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or MAX(RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
+    sql &= "        ,   CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or MAX(RECEIVE_DATE) IS NULL) THEN '未' ELSE '済' END AS TORIKOMI_JOKYO_FLG "
     sql &= "        ,   CASE WHEN MAX(TRN_TANAOROSHI.SEND_DATE) IS NOT NULL THEN '有' ELSE '無' END AS SOUDASHI_SEND_DATE_ZUMI "
     sql &= " FROM TRN_TANAOROSHI "
     sql &= " LEFT JOIN MST_ITEM "
@@ -169,7 +174,7 @@ Public Class frmTanaoroshiSendCommunication
     Dim sql As String = String.Empty
 
     sql &= " SELECT LEFT(MST_ITEM.TANA_CD,2) AS TANA_CD "
-    sql &= "      ,	MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR AS TANA_NAME "
+    sql &= "      ,	MST_TANA.TANA_ONDO + MST_TANA.FLOOR AS TANA_NAME "
     sql &= "        ,   CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(TANAOROSHI_STATUS.SOUSINZUMI) & " Or MAX(RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      , CASE WHEN MAX(TORIKOMI_JOKYO_FLG) = " & TANAOROSHI_STATUS.TANAOROSHI_ZUMI & " THEN '1' ELSE '0' END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	'' as INDEX_ID "
@@ -191,7 +196,7 @@ Public Class frmTanaoroshiSendCommunication
     End If
 
     sql &= " GROUP BY LEFT(MST_ITEM.TANA_CD,2) "
-    sql &= "    ,   MST_TANA.TANA_ONDO + ' ' + MST_TANA.FLOOR "
+    sql &= "    ,   MST_TANA.TANA_ONDO + MST_TANA.FLOOR "
     sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2) "
 
     Return sql
@@ -228,6 +233,24 @@ Public Class frmTanaoroshiSendCommunication
           End If
         End If
       Next
+
+      If selectedTanaList.Count = 0 Then
+        BtnSendHandy1.TargetCancelParentClick = True
+        Throw New Exception("送信するデータがチェックされておりません。")
+
+      End If
+
+      If BtnSendHandy1.TargetCancelParentClick Then
+        Dim result As String = InputBox("送信済みのデータが含まれます。本当に送信しますか？", "認証")
+        If result = ReadSettingIniFile("PASS", "VALUE") Then
+          BtnSendHandy1.TargetCancelParentClick = False
+        Else
+          BtnSendHandy1.TargetCancelParentClick = True
+          Exit Sub
+        End If
+
+      End If
+
 
       'パスワードデータ
       tmpDt.Clear()

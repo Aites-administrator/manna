@@ -29,7 +29,7 @@ Public Class CmbDateTanaorosi
   Public Function SqlSelListSrc(prmCode As String) As String
     Dim sql As String = String.Empty
 
-    sql &= " SELECT Format(OROSIBI,'" & CODE_FORMAT & "') AS ItemCode  "
+    sql &= " SELECT Format(TANAOROSIBI,'" & CODE_FORMAT & "') AS ItemCode  "
     sql &= " FROM TANAOROSI "
     sql &= " GROUP BY OROSIBI "
     sql &= " ORDER BY OROSIBI DESC; "

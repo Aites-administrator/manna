@@ -84,6 +84,8 @@ Public Class clsHandyCommunication
 
       WaitCommunicationFlagDeleted()
 
+
+
       SendKeys.SendWait("^e")
       Thread.Sleep(3000)
 
@@ -318,6 +320,7 @@ Public Class clsHandyCommunication
           If IO.File.Exists(MoveFile) Then
             WriteProgressLog($"ファイル移動: {MoveFile} {prmTargetFileName} ")
             MoveToBackupFolder(MoveFile)
+
           End If
         End If
 

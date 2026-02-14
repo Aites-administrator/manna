@@ -26,10 +26,10 @@ Public Class frmTanaoroshiImport
       ofd.Filter = "Excelファイル (*.xlsx;*.xls)|*.xlsx;*.xls|CSVファイル (*.csv)|*.csv|すべてのファイル (*.*)|*.*"
       Dim result = ofd.ShowDialog(Me)
 
-      ExcelToCsv(ofd.FileName, System.IO.Path.GetDirectoryName(ofd.FileName) & "\" & CSV_FILE_NAME, CSV_COL_COUNT)
-
       'DataTable変換
       If result = DialogResult.OK Then
+        ExcelToCsv(ofd.FileName, System.IO.Path.GetDirectoryName(ofd.FileName) & "\" & CSV_FILE_NAME, CSV_COL_COUNT)
+
         dtNyukaData = LoadCsvToDataTable(System.IO.Path.GetDirectoryName(ofd.FileName) & "\" & CSV_FILE_NAME)
 
         dtNyukaData.Columns.Add("取込状況FLG")

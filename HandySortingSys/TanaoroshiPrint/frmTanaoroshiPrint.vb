@@ -34,7 +34,7 @@ Public Class frmTanaoroshiPrint
     sql &= "      , TRN_TANAOROSHI.IRISU AS 入り数 "
     sql &= "      , CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU / ISNULL(TRN_TANAOROSHI.IRISU,1)) AS 在庫予定数_ケース数 "
     sql &= "      ,	'C/S' AS ケース単位_予定 "
-    sql &= "      ,	CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU / ISNULL(TRN_TANAOROSHI.IRISU,1)) AS 在庫予定数_バラ数 "
+    sql &= "      ,	CONVERT(int,TRN_TANAOROSHI.TANA_DATE_ZAIKO_SU % ISNULL(TRN_TANAOROSHI.IRISU,1)) AS 在庫予定数_バラ数 "
     sql &= "      , MST_ITEM.TANKA_TANI　AS バラ単位_予定 "
     sql &= "      , TANA_JISSEKI_CASE AS 在庫実績数_ケース数 "
     sql &= "      ,	'C/S' AS ケース単位_実績 "

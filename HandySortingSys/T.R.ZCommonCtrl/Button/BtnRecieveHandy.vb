@@ -74,6 +74,7 @@ Public Class BtnRecieveHandy
 
 #Region "イベントプロシージャー"
   Protected Overrides Sub OnClick(e As EventArgs)
+    Me.Enabled = False
     MyBase.OnClick(e)
 
     Dim tmpDt As New DataTable
@@ -136,7 +137,11 @@ Public Class BtnRecieveHandy
       WriteProgressLog($"データベース更新開始:")
 
       For Each tmpRow In tmpDt.Rows
-
+        If tmpDt.Columns.Contains("RECEIVE_DATE") Then
+          If String.IsNullOrWhiteSpace(tmpRow("RECEIVE_DATE").ToString) Then
+            Continue For
+          End If
+        End If
         ''検証用にJAN、ITFが空の場合無視する 本番では不要
         'If String.IsNullOrWhiteSpace(tmpRow("JAN").ToString) AndAlso
         '  String.IsNullOrWhiteSpace(tmpRow("ITF").ToString) Then
@@ -157,6 +162,15 @@ Public Class BtnRecieveHandy
           ElseIf UpdColumn.Contains("RECEIVE_DATE") Then
             If Not String.IsNullOrEmpty(tmpRow(UpdColumn).ToString()) Then
               tmpUpdColumn.Add(UpdColumn, DateTimeConvert(tmpRow(UpdColumn).ToString))
+            End If
+
+          ElseIf UpdColumn = "NYUKA_JISSEKISU_MAKER" Then
+            If Not String.IsNullOrWhiteSpace(tmpRow(UpdColumn).ToString()) Then
+              tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
+            End If
+          ElseIf UpdColumn = "NYUKA_JISSEKISU_JISYA" Then
+            If Not String.IsNullOrWhiteSpace(tmpRow(UpdColumn).ToString()) Then
+              tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
             End If
           Else
             tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
@@ -210,6 +224,8 @@ Public Class BtnRecieveHandy
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
     Finally
+      Me.Enabled = True
+
     End Try
   End Sub
 

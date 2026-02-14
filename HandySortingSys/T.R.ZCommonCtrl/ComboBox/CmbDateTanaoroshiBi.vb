@@ -34,7 +34,7 @@ Public Class CmbDateTanaoroshiBi
 
     sql &= " SELECT DISTINCT TOP " & ReadSettingIniFile("PAST_DATE", "VALUE") & "CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  AS ItemCode  "
     sql &= " FROM TRN_TANAOROSHI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(TANAOROSHI_STATUS.TANAOROSHI_ZUMI) & ")"
+    sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(TANAOROSHI_STATUS.SHUTURYOKUZUMI) & ")"
     sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)   "
     sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  DESC"
 

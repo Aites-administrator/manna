@@ -37,7 +37,7 @@ Public Class CmbDateNohinBi
     sql &= "         CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
     sql &= "      ,  FORMAT(CONVERT(date, NOUHINBI, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
     sql &= " FROM TRN_SHUKKA "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI) & ")"
+    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
     sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111),NOUHINBI   "
     sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  DESC"
 
