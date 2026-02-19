@@ -46,10 +46,14 @@ Public Class frmNyukaImport
 
       Dim headers = lines(0).Split(","c)
       For Each h In headers
-        dt.Columns.Add(h)
+        dt.Columns.Add(RemoveQuotes(h))
       Next
       For i As Integer = 1 To lines.Length - 1
-        dt.Rows.Add(lines(i).Split(","c))
+        Dim fields = lines(i).Split(","c)
+        For j As Integer = 0 To fields.Length - 1
+          fields(j) = RemoveQuotes(fields(j))
+        Next
+        dt.Rows.Add(fields)
       Next
       Return dt
 
@@ -57,5 +61,19 @@ Public Class frmNyukaImport
       Throw New Exception(ex.Message)
     End Try
   End Function
+
+  Private Function RemoveQuotes(value As String) As String
+    If String.IsNullOrEmpty(value) Then Return value
+
+    ' 前後の " を削除
+    If value.StartsWith("""") AndAlso value.EndsWith("""") Then
+      value = value.Substring(1, value.Length - 2)
+    End If
+
+    ' CSV のエスケープ "" → "
+    value = value.Replace("""""", """")
+    Return value
+  End Function
+
 
 End Class

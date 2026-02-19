@@ -257,15 +257,16 @@ Public Class clsHandyCommunication
   ' Acquisition.FLG を作成（上位アプリ側）
   '==========================================================
   Public Function CreateAcquisitionFlag(prmOutFilePath As String) As Boolean
-    Try
-      StatusFlagFilePath = TargetFolder & "\" & COMMUNICATION_FLG
-      AcquisitionFlagFilePath = TargetFolder & "\" & ACQUISITION_FLG
+    Return True
+    'Try
+    '  StatusFlagFilePath = TargetFolder & "\" & COMMUNICATION_FLG
+    '  AcquisitionFlagFilePath = TargetFolder & "\" & ACQUISITION_FLG
 
-      IO.File.WriteAllText(AcquisitionFlagFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
-      Return True
-    Catch ex As Exception
-      Throw New Exception(ex.Message)
-    End Try
+    '  IO.File.WriteAllText(AcquisitionFlagFilePath, prmOutFilePath, Encoding.GetEncoding("shift-jis"))
+    '  Return True
+    'Catch ex As Exception
+    '  Throw New Exception(ex.Message)
+    'End Try
   End Function
 
 
@@ -273,15 +274,16 @@ Public Class clsHandyCommunication
   ' Acquisition.FLG 削除
   '==========================================================
   Public Function DeleteAcquisitionFlag() As Boolean
-    Try
-      If IO.File.Exists(AcquisitionFlagFilePath) Then
-        IO.File.Delete(AcquisitionFlagFilePath)
-      End If
+    Return True
+    'Try
+    '  If IO.File.Exists(AcquisitionFlagFilePath) Then
+    '    IO.File.Delete(AcquisitionFlagFilePath)
+    '  End If
 
-      Return True
-    Catch ex As Exception
-      Throw New Exception(ex.Message)
-    End Try
+    '  Return True
+    'Catch ex As Exception
+    '  Throw New Exception(ex.Message)
+    'End Try
   End Function
 
 
@@ -423,6 +425,7 @@ Public Class clsHandyCommunication
     watcher.NotifyFilter = NotifyFilters.FileName Or NotifyFilters.CreationTime Or NotifyFilters.LastWrite
 
     AddHandler watcher.Created, AddressOf OnFlagCreated
+    AddHandler watcher.Changed, AddressOf OnFlagChanged
     AddHandler watcher.Deleted, AddressOf OnFlagDeleted
 
     watcher.EnableRaisingEvents = True
@@ -432,6 +435,7 @@ Public Class clsHandyCommunication
     If watcher IsNot Nothing Then
       watcher.EnableRaisingEvents = False
       RemoveHandler watcher.Created, AddressOf OnFlagCreated
+      RemoveHandler watcher.Changed, AddressOf OnFlagChanged
       RemoveHandler watcher.Deleted, AddressOf OnFlagDeleted
       watcher.Dispose()
       watcher = Nothing
@@ -440,9 +444,20 @@ Public Class clsHandyCommunication
 
   Private Sub OnFlagCreated(sender As Object, e As FileSystemEventArgs)
     FlgHandySendStart = True
-    WriteProgressLog("ファイル作成:" & e.FullPath)
+    WriteProgressLog("Create時ファイル作成:" & e.FullPath)
 
     USE_FILE_NAME = ReadCommunicationFlag()
+    WriteProgressLog("Create時ファイル内は、" & ReadCommunicationFlag())
+
+  End Sub
+
+  Private Sub OnFlagChanged(sender As Object, e As FileSystemEventArgs)
+    FlgHandySendStart = True
+    WriteProgressLog("ファイル作成:" & e.FullPath)
+
+    If Not String.IsNullOrWhiteSpace(ReadCommunicationFlag()) Then
+      USE_FILE_NAME = ReadCommunicationFlag()
+    End If
     WriteProgressLog("ファイル内は、" & ReadCommunicationFlag())
 
   End Sub

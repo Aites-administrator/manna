@@ -163,7 +163,7 @@ Public Class BtnInput
       If TargetTableName = "TRN_SHUKKA" Then
         Dim CourseList = GetInvalidCourseList(TargetDataTable)
         If CourseList.Rows.Count > 0 Then
-          Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "コースマスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".csv")
+          Dim path = IO.Path.Combine(PROJECT_DIR_NAME & MASTER_DIR & "コースマスタ不備データ一覧_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx")
           ExportExcel(CourseList, path)
 
           'CSV を出力したフォルダを開く
@@ -334,7 +334,6 @@ Public Class BtnInput
     Dim rowCount = dt.Rows.Count
     Dim colCount = dt.Columns.Count
 
-
     ' 2次元配列を作成（Excelは1-based）
     Dim data(0 To rowCount, 0 To colCount - 1) As Object
 
@@ -354,6 +353,7 @@ Public Class BtnInput
     Dim startCell = ws.Cells(1, 1)
     Dim endCell = ws.Cells(rowCount + 1, colCount)
     Dim writeRange = ws.Range(startCell, endCell)
+    writeRange.NumberFormat = "@"
     writeRange.Value = data
 
     ' 列幅自動調整
