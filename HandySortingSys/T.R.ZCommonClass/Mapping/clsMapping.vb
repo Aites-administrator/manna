@@ -95,7 +95,7 @@
     }
 
     DuplicateKeyDictionary("出荷データ") = New List(Of String) From {
-    "NOUHINBI", "UO_DENPYO_NO", "UO_GYO_NO"
+    "NOUHINBI", "DENPYO_NO", "GYO_NO"
   }
 
 

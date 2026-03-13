@@ -66,23 +66,49 @@ Public Class FormComMasterMente
     If txt Is Nothing Then Return
 
     RemoveHandler txt.KeyPress, AddressOf NumericOnly_KeyPress
+    RemoveHandler txt.KeyPress, AddressOf NumericDecimal_KeyPress
 
     Dim colName = DgvList1.Columns(DgvList1.CurrentCell.ColumnIndex).Name
 
     ' ★ definition の設定を参照
     Dim colDef = _definition.Columns.FirstOrDefault(Function(c) c.Name = colName)
 
-    If colDef IsNot Nothing AndAlso colDef.IsNumeric Then
+    If colDef IsNot Nothing AndAlso colDef.IsNumeric AndAlso colDef.IsDecimal Then
+      AddHandler txt.KeyPress, AddressOf NumericDecimal_KeyPress
+    ElseIf colDef IsNot Nothing AndAlso colDef.IsNumeric Then
       AddHandler txt.KeyPress, AddressOf NumericOnly_KeyPress
     End If
   End Sub
 
   Private Sub NumericOnly_KeyPress(sender As Object, e As KeyPressEventArgs)
-    If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back Then
+    If Not ("0"c <= e.KeyChar AndAlso e.KeyChar <= "9"c) _
+       AndAlso e.KeyChar <> ControlChars.Back Then
       e.Handled = True
     End If
+
   End Sub
 
+  Private Sub NumericDecimal_KeyPress(sender As Object, e As KeyPressEventArgs)
+    Dim txt = DirectCast(sender, TextBox)
+
+    ' バックスペースは許可
+    If e.KeyChar = ControlChars.Back Then
+      Return
+    End If
+
+    ' 半角数字は許可
+    If "0"c <= e.KeyChar AndAlso e.KeyChar <= "9"c Then
+      Return
+    End If
+
+    ' 小数点は 1 回だけ許可
+    If e.KeyChar = "."c AndAlso Not txt.Text.Contains("."c) Then
+      Return
+    End If
+
+    ' 上記以外は拒否
+    e.Handled = True
+  End Sub
 
   Private Sub SetupColumns()
     Try

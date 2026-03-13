@@ -5,6 +5,10 @@ Imports T.R.ZCommonClass.clsLenColumnDef
 Public Class frmNyukaReceiveCommunication
   Inherits FormRecieveCommunication
 
+  'test用
+  Private _isFirstActivated As Boolean = True
+
+
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "IN_ITEM.DAT"
 
@@ -65,4 +69,13 @@ Public Class frmNyukaReceiveCommunication
 
   End Sub
 
+  'Private Sub frmNyukaReceiveCommunication_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+  '  If _isFirstActivated Then
+  '    _isFirstActivated = False
+  '    Return   ' ← 初回は何もせず終了
+  '  End If
+
+  '  Me.BtnRecieveHandy1.PerformClick()
+
+  'End Sub
 End Class

@@ -74,8 +74,8 @@ Public Class clsItemMasterDefine
       Return New List(Of MasterColumn) From {
           New MasterColumn With {.Name = COL_CD, .DisplayName = COL_CD, .IsEditable = False, .IsSearchTarget = True, .SearchType = "Code", .IsNumeric = True},
           New MasterColumn With {.Name = COL_NAME, .DisplayName = COL_NAME, .IsEditable = True, .IsSearchTarget = True, .SearchType = "Name"},
-          New MasterColumn With {.Name = COL_MAKER, .DisplayName = COL_MAKER, .IsEditable = False},
-          New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_MAKER, .DisplayName = COL_MAKER, .IsEditable = True, .IsNumeric = True},
+          New MasterColumn With {.Name = COL_IRISU, .DisplayName = COL_IRISU, .IsEditable = True, .IsNumeric = True, .IsDecimal = True},
           New MasterColumn With {.Name = COL_AISU, .DisplayName = COL_AISU, .IsEditable = True, .IsNumeric = True},
           New MasterColumn With {.Name = COL_JAN, .DisplayName = COL_JAN, .IsEditable = True, .IsNumeric = True},
           New MasterColumn With {.Name = COL_ITF, .DisplayName = COL_ITF, .IsEditable = True, .IsNumeric = True},
@@ -225,6 +225,9 @@ Public Class clsItemMasterDefine
 
       DicRow(DB_CD) = row(COL_CD)
       DicRow(DB_NAME) = row(COL_NAME)
+      DicRow(DB_IRISU) = If(IsDBNull(row(COL_IRISU)), "", row(COL_IRISU).ToString())
+      DicRow(DB_MAKER) = If(IsDBNull(row(COL_MAKER)), "", row(COL_MAKER).ToString())
+      DicRow(DB_AISU) = If(IsDBNull(row(COL_AISU)), "", row(COL_AISU).ToString())
       DicRow(DB_JAN) = If(IsDBNull(row(COL_JAN)), "", row(COL_JAN).ToString())
       DicRow(DB_ITF) = If(IsDBNull(row(COL_ITF)), "", row(COL_ITF).ToString())
       DicRow(DB_TANA) = If(IsDBNull(row(COL_TANA)), "", row(COL_TANA).ToString())
@@ -448,15 +451,15 @@ Public Class clsItemMasterDefine
     Sql &= " WHEN MATCHED THEN"
     Sql &= "   UPDATE SET"
     Sql &= "     T.SHOHIN_RANK = S.SHOHIN_RANK,"
-    Sql &= "     T.SHOHIN_MEI  = S.SHOHIN_MEI,"
-    Sql &= "     T.ONDO_TAI    = S.ONDO_TAI,"
+    'Sql &= "     T.SHOHIN_MEI  = S.SHOHIN_MEI,"
+    sql &= "     T.ONDO_TAI    = S.ONDO_TAI,"
     Sql &= "     T.SHOHI_ZEI   = S.SHOHI_ZEI,"
     Sql &= "     T.TANKA_TANI  = S.TANKA_TANI,"
     Sql &= "     T.SIIRE_CD    = S.SIIRE_CD,"
     Sql &= "     T.SIIRE_MEI   = S.SIIRE_MEI,"
     Sql &= "     T.HASSOSAKI_CD = S.HASSOSAKI_CD,"
     Sql &= "     T.HASSOSAKI_MEI = S.HASSOSAKI_MEI,"
-    Sql &= "     T.MAKER_CD    = S.MAKER_CD,"
+    'Sql &= "     T.MAKER_CD    = S.MAKER_CD,"
     sql &= "     T.OLD_JAN    = S.OLD_JAN ,"
     sql &= "     T.KOKEI_KAISIBI = TRY_CONVERT(date, NULLIF(S.KOKEI_KAISIBI, '')),"
     sql &= "     T.KOKEI_SHOHIN_CD = S.KOKEI_SHOHIN_CD,"

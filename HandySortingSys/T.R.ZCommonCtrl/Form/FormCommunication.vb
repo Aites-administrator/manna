@@ -115,6 +115,9 @@ Public Class FormCommunication
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
     rtb.AppendText("2. 「" & Me.TextDisplayName & "」を選択します。" & vbCrLf)
+    rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
+    rtb.SelectionColor = Color.Black
+    rtb.AppendText("3. 「ENT」ボタンを押します" & vbCrLf)
 
     ' PC操作（緑）
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
@@ -123,10 +126,13 @@ Public Class FormCommunication
 
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("3. " & Me.TextButtonName & " ボタンを押します。" & vbCrLf)
+    rtb.AppendText("4. " & Me.TextButtonName & " ボタンを押します。" & vbCrLf)
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("4. 通信ツールが立ち上がります。待ち受け開始が表示されたら、ハンディの「ENT」ボタンを押してから" & vbCrLf & "クレードルに置いてください。(通信が開始します)" & vbCrLf)
+    rtb.AppendText("5. 通信ツールが立ち上がります。待ち受け開始が表示されたら、クレードルに置いてください。")
+    rtb.SelectionFont = New Font("Meiryo", 17, FontStyle.Bold)
+    rtb.SelectionColor = Color.Black
+    rtb.AppendText("(通信が開始します)" & vbCrLf)
 
     ' 通信中（オレンジ）
 
@@ -138,11 +144,11 @@ Public Class FormCommunication
 
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("5. 「" & Me.TextMessage & "」が表示されたら、" & vbCrLf & "「OK」ボタンを押してください。" & vbCrLf)
+    rtb.AppendText("6. 「" & Me.TextMessage & "」が表示されたら、" & vbCrLf & "「OK」ボタンを押してください。" & vbCrLf)
 
     rtb.SelectionFont = New Font("Meiryo", 20, FontStyle.Bold)
     rtb.SelectionColor = Color.Black
-    rtb.AppendText("6. 「閉じる」ボタンを押してください。" & vbCrLf)
+    rtb.AppendText("7. 「閉じる」ボタンを押してください。" & vbCrLf)
   End Sub
 
   Private Sub FormCommunication_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -152,13 +158,8 @@ Public Class FormCommunication
 
   Private Sub FormCommunication_Closed(sender As Object, e As EventArgs) Handles Me.Closed
     Try
-      ' DAT ファイルをすべてバックアップへ移動
-      Dim folder As String = TextHandy.TargetFolder
 
-      For Each filePath In Directory.GetFiles(folder, "*.DAT")
-        Dim fileName As String = Path.GetFileName(filePath)
-        TextHandy.MoveToBackupFolder(fileName)
-      Next
+      WriteProgressLog($"フォームの閉じる")
 
       TextHandy.CloseCommunicationTool()
 

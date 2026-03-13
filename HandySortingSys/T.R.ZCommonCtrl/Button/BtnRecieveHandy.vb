@@ -95,7 +95,8 @@ Public Class BtnRecieveHandy
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       Handy.CloseCommunicationTool()
 
-
+      'ﾃｽﾄのため完了させない。
+      '      Exit Sub
 
       ''状態管理ファイル作成チェック
       'If Not Handy.WaitCommunicationFlagCreated() Then
@@ -206,7 +207,6 @@ Public Class BtnRecieveHandy
           SqlServer.Execute(CreateUpdateSql("MST_ITEM", tmpItemUpdColumn, tmpWhere))
 
         End If
-
 
       Next
 

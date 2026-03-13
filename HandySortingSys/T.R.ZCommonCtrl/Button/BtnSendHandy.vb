@@ -36,6 +36,10 @@ Public Class BtnSendHandy
   ' 送信完了イベント
   Public Event SendCompleted()
 
+  Private SEND_END_FILE_NAME As String = "END.DAT"
+
+
+
 #End Region
 
 #Region "コンストラクタ"
@@ -71,6 +75,9 @@ Public Class BtnSendHandy
 #Region "イベントプロシージャー"
   Protected Overrides Sub OnClick(e As EventArgs)
     Me.Enabled = False
+    'IO.File.WriteAllText(PROJECT_DIR_NAME & SEND_FOLDER & SEND_END_FILE_NAME, "1", System.Text.Encoding.GetEncoding("shift-jis"))
+
+
     MyBase.OnClick(e)
 
     Dim tmpDt As New DataTable
@@ -87,19 +94,28 @@ Public Class BtnSendHandy
 
       Dim TargetSendFlg As Boolean = False
 
-      If Not Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg) Then
+      '      If Not Handy.WatchAndArchiveSentFiles(TargetFileName, TargetSendFlg) Then
+      If Not Handy.WatchAndReceiveFiles(TargetFileName, TargetSendFlg) Then
         Handy.CloseCommunicationTool()
         Exit Sub
       End If
+
+
+
       'ﾃｽﾄ用に無視するようにしている！！！ここまで！！！
+      Handy.CloseCommunicationTool()
+
+      'ﾃｽﾄのため完了させない。
+
+      '      Exit Sub
 
       If Not (TargetLenClumn.Equals(LenColumnInMstItem) Or TargetLenClumn.Equals(LenColumnInMstTanto)) Then
         tmpDt = ParseFixedLengthTextToTable(TargetFileName, TargetLenClumn)
       End If
 
       'ﾃｽﾄ用に無視するようにしている
-      Handy.MoveToBackupFolder(TargetFileName)
-
+      'Handy.MoveToBackupFolder(TargetFileName)
+      Handy.MoveAllFile()
 
       For Each tmpRow In tmpDt.Rows
         '更新項目生成
@@ -154,8 +170,6 @@ Public Class BtnSendHandy
 
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
-      Handy.CloseCommunicationTool()
-
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
       RaiseEvent SendCompleted()
 
@@ -166,6 +180,8 @@ Public Class BtnSendHandy
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
+      WriteProgressLog($"何かしらの送信ボタンエラー")
+
       Handy.CloseCommunicationTool()
     Finally
       Me.Enabled = True

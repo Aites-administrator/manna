@@ -7,7 +7,6 @@ Imports System.Runtime.Remoting.Channels.Ipc
 Public Class FormSendCommunication
   Inherits FormCommunication
 
-
 #Region "イベントプロシージャー"
 
   Protected Overrides Sub OnLoad(e As EventArgs)

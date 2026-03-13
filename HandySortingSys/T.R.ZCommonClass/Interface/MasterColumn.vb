@@ -6,4 +6,5 @@
   Public Property SearchType As String
   Public Property IsVisible As Boolean = True
   Public Property IsNumeric As Boolean
+  Public Property IsDecimal As Boolean
 End Class

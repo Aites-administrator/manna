@@ -12,6 +12,11 @@ Imports System.ComponentModel
 
 Public Class frmTantoSendCommunication
   Inherits FormSendCommunication
+
+  'test用
+  Private _isFirstActivated As Boolean = True
+
+
   Private SqlServer As New clsSqlServer
   Private BlnTorikomiZumi As Boolean = False
   Private Const SEND_FOLDER As String = "SEND\"
@@ -137,6 +142,16 @@ Public Class frmTantoSendCommunication
       ComWriteErrLog(ex, False)
     End Try
   End Sub
+
+  'Private Sub frmTantoSendCommunication_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+  '  If _isFirstActivated Then
+  '    _isFirstActivated = False
+  '    Return   ' ← 初回は何もせず終了
+  '  End If
+
+  '  Me.BtnSendHandy1.PerformClick()
+  'End Sub
+
 
   'Private Sub frmTantoSendCommunication_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
   '  TextHandy.CloseCommunicationTool()

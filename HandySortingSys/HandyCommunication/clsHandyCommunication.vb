@@ -18,8 +18,9 @@ Public Class clsHandyCommunication
 
   ' 上位アプリ側が作るフラグ（取得要求）
   Private Const ACQUISITION_FLG As String = "Acquisition.FLG"
+  ' 最終ファイル名
+  Private Const LAST_FILE_NAME As String = "RECEIVE\END.DAT"
   Private LastReceivedFileName As String
-
 
   Private Const BHT_COMMICATION_TOOL As String =
       "C:\Program Files (x86)\DENSO WAVE\BHT Advanced Pack II\BHTADP2T.exe"
@@ -33,6 +34,11 @@ Public Class clsHandyCommunication
   Private p As New Process
 
   Private USE_FILE_NAME As String = String.Empty
+  Public ComFlgDel As Boolean = True
+  Public EndFlg As Boolean = False
+  Public EndComFlg As Boolean = False
+
+
 
   Public Sub New(prmFileName As String)
     TargetFileName = prmFileName
@@ -52,6 +58,8 @@ Public Class clsHandyCommunication
       p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
       p.Start()
 
+      IO.File.Delete(PROJECT_DIR_NAME & LAST_FILE_NAME)
+
       Thread.Sleep(3000)
 
       ' Ctrl+S で開始
@@ -59,7 +67,7 @@ Public Class clsHandyCommunication
 
       Thread.Sleep(1000)
 
-      StartWatching()
+      'StartWatching()
 
       Return True
     Catch ex As Exception
@@ -77,23 +85,28 @@ Public Class clsHandyCommunication
         Return True
       End If
 
-      ' DATファイルがあるなら待機
-      If ExistsOtherDatFile(TargetFileName) Then
-        Return False
+      '' DATファイルがあるなら待機
+      'If ExistsOtherDatFile(TargetFileName) Then
+      '  Return False
+      'End If
+
+      'WaitCommunicationFlagDeleted()
+
+      If Not Process.GetProcessesByName(p.ProcessName).Any() Then
+        StopWatching()
+        Return True
       End If
 
-      WaitCommunicationFlagDeleted()
-
-
-
       SendKeys.SendWait("^e")
-      Thread.Sleep(3000)
+      Thread.Sleep(1000)
 
       If Not p.HasExited Then
         If Process.GetProcessesByName(p.ProcessName).Any() Then
           p.Kill()
         End If
       End If
+
+      IO.File.Delete(PROJECT_DIR_NAME & LAST_FILE_NAME)
 
       StopWatching()
 
@@ -104,76 +117,76 @@ Public Class clsHandyCommunication
   End Function
 
 
-  '==========================================================
-  ' Communication.FLG が作られるのを待つ
-  '==========================================================
-  Public Function WaitCommunicationFlagCreated(ByRef prmFileName As String) As Boolean
-    Try
-      If KANKYO_HONBAN <> "HONBAN" Then
-        Return True
-      End If
+  ''==========================================================
+  '' Communication.FLG が作られるのを待つ
+  ''==========================================================
+  'Public Function WaitCommunicationFlagCreated(ByRef prmFileName As String) As Boolean
+  '  Try
+  '    If KANKYO_HONBAN <> "HONBAN" Then
+  '      Return True
+  '    End If
 
-      FlgHandySendStart = False
+  '    FlgHandySendStart = False
 
-      Dim timeoutSec As Integer = 45
-      Dim intervalMs As Integer = 20
-      Dim elapsed As Integer = 0
+  '    Dim timeoutSec As Integer = 45
+  '    Dim intervalMs As Integer = 20
+  '    Dim elapsed As Integer = 0
 
-      While Not FlgHandySendStart
-        Application.DoEvents()
+  '    While Not FlgHandySendStart
+  '      Application.DoEvents()
 
-        WriteProgressLog($"FLG作成中")
+  '      WriteProgressLog($"FLG作成中")
 
-        If Not Process.GetProcessesByName(p.ProcessName).Any() Then
-          Return False
-        End If
+  '      If Not Process.GetProcessesByName(p.ProcessName).Any() Then
+  '        Return False
+  '      End If
 
-        'Thread.Sleep(intervalMs)
-        elapsed += intervalMs
+  '      'Thread.Sleep(intervalMs)
+  '      elapsed += intervalMs
 
-        If elapsed >= timeoutSec * 1000 Then
-          Return False
-        End If
-      End While
+  '      If elapsed >= timeoutSec * 1000 Then
+  '        Return False
+  '      End If
+  '    End While
 
-      WriteProgressLog($"読み取り状態確認開始")
+  '    WriteProgressLog($"読み取り状態確認開始")
 
-      If Not WaitUntilCommunicationFlagReadable(1000) Then
-        Return False
-      End If
+  '    If Not WaitUntilCommunicationFlagReadable(1000) Then
+  '      Return False
+  '    End If
 
-      prmFileName = ReadCommunicationFlag()
-      WriteProgressLog($"FLG作成完了")
+  '    prmFileName = ReadCommunicationFlag()
+  '    WriteProgressLog($"FLG作成完了")
 
-      Return True
-    Catch ex As Exception
-      Throw New Exception(ex.Message)
-    End Try
-  End Function
+  '    Return True
+  '  Catch ex As Exception
+  '    Throw New Exception(ex.Message)
+  '  End Try
+  'End Function
 
-  Private Function WaitUntilCommunicationFlagReadable(timeoutMs As Integer) As Boolean
-    Dim elapsed = 0
+  'Private Function WaitUntilCommunicationFlagReadable(timeoutMs As Integer) As Boolean
+  '  Dim elapsed = 0
 
-    While elapsed < timeoutMs
-      Try
-        WriteProgressLog(StatusFlagFilePath)
+  '  While elapsed < timeoutMs
+  '    Try
+  '      WriteProgressLog(StatusFlagFilePath)
 
-        ' ファイルが存在し、かつ読み取り可能か？
-        If IO.File.Exists(StatusFlagFilePath) Then
-          Using fs = IO.File.Open(StatusFlagFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
-            Return True   ' ← 読み取れる状態になった！
-          End Using
-        End If
-      Catch
-        ' まだ書き込み中 or ロック中 → 少し待つ
-      End Try
+  '      ' ファイルが存在し、かつ読み取り可能か？
+  '      If IO.File.Exists(StatusFlagFilePath) Then
+  '        Using fs = IO.File.Open(StatusFlagFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+  '          Return True   ' ← 読み取れる状態になった！
+  '        End Using
+  '      End If
+  '    Catch
+  '      ' まだ書き込み中 or ロック中 → 少し待つ
+  '    End Try
 
-      Thread.Sleep(20)
-      elapsed += 20
-    End While
+  '    Thread.Sleep(20)
+  '    elapsed += 20
+  '  End While
 
-    Return False   ' 読み取れる状態にならなかった
-  End Function
+  '  Return False   ' 読み取れる状態にならなかった
+  'End Function
 
 
   '==========================================================
@@ -187,21 +200,25 @@ Public Class clsHandyCommunication
 
       End If
 
-      Dim timeoutSec As Integer = 45
-      Dim intervalMs As Integer = 20
-      Dim elapsed As Integer = 0
+      'Dim timeoutSec As Integer = 45
+      'Dim intervalMs As Integer = 20
+      'Dim elapsed As Integer = 0
 
-      While IO.File.Exists(StatusFlagFilePath)
-        If Not Process.GetProcessesByName(p.ProcessName).Any() Then
-          Return False
-        End If
+      'While IO.File.Exists(StatusFlagFilePath)
+      '  If Not Process.GetProcessesByName(p.ProcessName).Any() Then
+      '    Return False
+      '  End If
 
-        Thread.Sleep(intervalMs)
-        elapsed += intervalMs
+      '  Thread.Sleep(intervalMs)
+      '  elapsed += intervalMs
 
-        If elapsed >= timeoutSec * 1000 Then
-          Return False
-        End If
+      '  If elapsed >= timeoutSec * 1000 Then
+      '    Return False
+      '  End If
+      'End While
+
+      While Not ComFlgDel
+
       End While
 
       Return True
@@ -212,10 +229,28 @@ Public Class clsHandyCommunication
 
 
   Private Function ReadCommunicationFlag() As String
+    StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
+
     If IO.File.Exists(StatusFlagFilePath) Then
-      Return IO.File.ReadAllText(StatusFlagFilePath, Encoding.GetEncoding("shift-jis")).Trim()
+
+      Using fs As New FileStream(
+            StatusFlagFilePath,
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.ReadWrite   ' ← 共有許可（読み書きOK）
+        )
+        Using sr As New StreamReader(fs, Encoding.GetEncoding("shift-jis"))
+          Return sr.ReadToEnd().Trim()
+        End Using
+      End Using
     End If
+
     Return ""
+
+    'If IO.File.Exists(StatusFlagFilePath) Then
+    '  Return IO.File.ReadAllText(StatusFlagFilePath, Encoding.GetEncoding("shift-jis")).Trim()
+    'End If
+    'Return ""
   End Function
 
   Public Sub MoveToBackupFolder(fileName As String)
@@ -293,38 +328,46 @@ Public Class clsHandyCommunication
         Return True
       End If
 
-      StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
+      'StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
 
       Do While True
         Application.DoEvents()
-        Thread.Sleep(50)
 
-        ' DATファイルがなければターゲットが送信されたかを確認
-        If Not ExistsOtherDatFile(prmTargetFileName) Then
-          'ターゲットが送信済みなら終了
-          If prmTargetSendFlg Then
-            Exit Do
-          End If
+        'Thread.Sleep(50)
+
+        '通信完了していれば終了
+        If EndComFlg Then
+          Exit Do
         End If
-        Dim fileName As String = USE_FILE_NAME
-        'If Not WaitCommunicationFlagCreated(fileName) Then
+
+        'Dim fileName As String = USE_FILE_NAME
+
+        'If String.IsNullOrWhiteSpace(fileName) Then
+        '  WriteProgressLog($"空のあとの取得する: {USE_FILE_NAME}")
+        '  USE_FILE_NAME = ReadCommunicationFlag() 'Application.DoEvents()
+        '  WriteProgressLog($"空のあとの取得できたか: {USE_FILE_NAME}")
+
+        '  If String.IsNullOrWhiteSpace(USE_FILE_NAME) Then
+        '    Continue Do
+        '  Else
+        '    fileName = USE_FILE_NAME
+        '  End If
+        'End If
+
+        'If Not WaitCommunicationFlagDeleted() Then
+
         '  Return False
         'End If
 
-        If Not WaitCommunicationFlagDeleted() Then
-          Return False
-        End If
-
-        If fileName = Path.GetFileName(prmTargetFileName) Then
-          prmTargetSendFlg = True
-        Else
-          Dim MoveFile As String = Path.GetDirectoryName(prmTargetFileName) & "\" & fileName
-          If IO.File.Exists(MoveFile) Then
-            WriteProgressLog($"ファイル移動: {MoveFile} {prmTargetFileName} ")
-            MoveToBackupFolder(MoveFile)
-
-          End If
-        End If
+        'If fileName = Path.GetFileName(prmTargetFileName) Then
+        '  prmTargetSendFlg = True
+        'Else
+        '  'Dim MoveFile As String = Path.GetDirectoryName(prmTargetFileName) & "\" & fileName
+        '  'If IO.File.Exists(MoveFile) Then
+        '  '  WriteProgressLog($"ファイル移動: {MoveFile} {prmTargetFileName} ")
+        '  '  'MoveToBackupFolder(MoveFile)
+        '  'End If
+        'End If
 
       Loop
 
@@ -343,61 +386,79 @@ Public Class clsHandyCommunication
     Try
       If KANKYO_HONBAN <> "HONBAN" Then Return True
 
-      StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
+      'StopWatching()
+      'StatusFlagFilePath = Path.Combine(TargetFolder, COMMUNICATION_FLG)
 
       Do While True
-
-        WriteProgressLog("FLG作成待ち…")
         Application.DoEvents()
-        Thread.Sleep(50)
+        'Thread.Sleep(50)
+
+        If IO.File.Exists(PROJECT_DIR_NAME & LAST_FILE_NAME) Then
+          Exit Do
+        End If
 
 
-        ' Communication.FLG 作成待ち
-        ' ファイル名取得
-        Dim fileName As String = USE_FILE_NAME
+        '通信完了していれば終了
+        'If EndComFlg Then
+        '  Exit Do
+        'End If
 
-        'If Not WaitCommunicationFlagCreated(fileName) Then
+        'If IO.File.Exists(prmLastFileName) Then
+        '  Exit Do
+        'End If
+
+        '' Communication.FLG 作成待ち
+        '' ファイル名取得
+        'Dim fileName As String = USE_FILE_NAME
+
+        'WriteProgressLog($"ファイル名は？: {USE_FILE_NAME}")
+        'If String.IsNullOrWhiteSpace(fileName) Then
+        '  USE_FILE_NAME = ReadCommunicationFlag() 'Application.DoEvents()
+        '  WriteProgressLog($"空のあとの取得ができたかどうか: {USE_FILE_NAME}")
+        '  If String.IsNullOrWhiteSpace(USE_FILE_NAME) Then
+        '    Continue Do
+        '  Else
+        '    fileName = USE_FILE_NAME
+        '  End If
+        'End If
+
+
+        'WriteProgressLog($"FLG作成検知: {fileName}")
+
+
+
+        '' Communication.FLG 削除待ち
+        'If Not WaitCommunicationFlagDeleted() Then
         '  Return False
         'End If
 
-        WriteProgressLog($"FLG作成検知: {fileName}")
+        'WriteProgressLog($"FLG削除検知: {fileName}")
 
 
-
-        ' Communication.FLG 削除待ち
-        If Not WaitCommunicationFlagDeleted() Then
-          Return False
-        End If
-
-        WriteProgressLog($"FLG削除検知: {fileName}")
-
-
-        ' DAT 実体が来るまで待つ
+        '' DAT 実体が来るまで待つ
         'Dim datPath = Path.Combine(TargetFolder, fileName)
-        'fileName = Path.GetFileName(prmLastFileName)
-        Dim datPath = Path.Combine(TargetFolder, fileName)
-        Dim timeout = 0
-        While Not IO.File.Exists(datPath)
-          Thread.Sleep(20)
-          timeout += 20
-          If timeout > 5000 Then Exit While
-        End While
+        'Dim timeout = 0
+        'While Not IO.File.Exists(datPath)
+        '  Thread.Sleep(20)
+        '  timeout += 20
+        '  If timeout > 5000 Then Exit While
+        'End While
 
-        WriteProgressLog($"DAT検知: {fileName}")
+        'WriteProgressLog($"DAT検知: {fileName}")
 
 
-        ' 最後のファイルなら終了
-        If fileName = Path.GetFileName(prmLastFileName) Then
-          prmAllReceiveComplete = True
-          Exit Do
-        Else
-          WriteProgressLog($"ファイル移動: {fileName} {prmLastFileName} ")
-          If IO.File.Exists(fileName) Then
-            ' それ以外はバックアップへ
-            MoveToBackupFolder(fileName)
-          End If
+        '' 最後のファイルなら終了
+        'If fileName = Path.GetFileName(prmLastFileName) Then
+        '  prmAllReceiveComplete = True
+        '  Exit Do
+        'Else
+        '  'WriteProgressLog($"ファイル移動: {fileName} {prmLastFileName} ")
+        '  'If IO.File.Exists(fileName) Then
+        '  '  ' それ以外はバックアップへ
+        '  '  'MoveToBackupFolder(fileName)
+        '  'End If
 
-        End If
+        'End If
 
       Loop
 
@@ -440,30 +501,95 @@ Public Class clsHandyCommunication
       watcher.Dispose()
       watcher = Nothing
     End If
+    WriteProgressLog("ウォッチ終了")
+
   End Sub
 
   Private Sub OnFlagCreated(sender As Object, e As FileSystemEventArgs)
-    FlgHandySendStart = True
-    WriteProgressLog("Create時ファイル作成:" & e.FullPath)
+    Try
+      'FlgHandySendStart = True
+      If Path.GetFileName(e.FullPath) = COMMUNICATION_FLG Then
+        ComFlgDel = False
+      End If
 
-    USE_FILE_NAME = ReadCommunicationFlag()
-    WriteProgressLog("Create時ファイル内は、" & ReadCommunicationFlag())
+      WriteProgressLog("Create時ファイル作成:" & e.FullPath)
+      'For i As Integer = 1 To 10
+      'USE_FILE_NAME = ReadCommunicationFlag()
+      '  If Not String.IsNullOrWhiteSpace(USE_FILE_NAME) Then
+      '    Exit For
+      '  End If
+      'Next
+
+      USE_FILE_NAME = ReadCommunicationFlag()
+      If (LAST_FILE_NAME = USE_FILE_NAME) Then
+        EndFlg = True
+      Else
+        EndFlg = False
+      End If
+
+      WriteProgressLog("Create時ファイル内は、" & USE_FILE_NAME)
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
 
   End Sub
 
   Private Sub OnFlagChanged(sender As Object, e As FileSystemEventArgs)
-    FlgHandySendStart = True
-    WriteProgressLog("ファイル作成:" & e.FullPath)
+    Dim InFileName As String = String.Empty
+    Try
+      'FlgHandySendStart = True
+      WriteProgressLog("ファイル作成:" & e.FullPath)
+      InFileName = ReadCommunicationFlag()
+      If Not String.IsNullOrWhiteSpace(InFileName) Then
+        USE_FILE_NAME = InFileName
+        If (LAST_FILE_NAME = USE_FILE_NAME) Then
+          EndFlg = True
+        Else
+          EndFlg = False
+        End If
 
-    If Not String.IsNullOrWhiteSpace(ReadCommunicationFlag()) Then
-      USE_FILE_NAME = ReadCommunicationFlag()
-    End If
-    WriteProgressLog("ファイル内は、" & ReadCommunicationFlag())
+      End If
+      WriteProgressLog("ファイル内は、" & USE_FILE_NAME)
+
+      WriteProgressLog("ENDFLG" & EndFlg.ToString)
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
 
   End Sub
 
   Private Sub OnFlagDeleted(sender As Object, e As FileSystemEventArgs)
-    ' 特に処理なし
+    Try
+      WriteProgressLog("ファイル削除開始")
+      ' 特に処理なし
+      If Path.GetFileName(e.FullPath) = COMMUNICATION_FLG Then
+        ComFlgDel = True
+      End If
+
+      WriteProgressLog("削除：" & Path.GetFileName(e.FullPath))
+
+      If EndFlg Then
+        WriteProgressLog("完了！ツール閉じます！")
+
+        CloseCommunicationTool()
+        EndComFlg = True
+      End If
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+
+    End Try
+  End Sub
+
+  Public Sub MoveAllFile()
+    ' DAT ファイルをすべてバックアップへ移動
+    Dim folder As String = Me.TargetFolder
+
+    For Each filePath In Directory.GetFiles(folder, "*.DAT")
+      Dim fileName As String = Path.GetFileName(filePath)
+      Me.MoveToBackupFolder(fileName)
+    Next
 
   End Sub
 
