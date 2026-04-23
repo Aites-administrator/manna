@@ -21,7 +21,7 @@ Public Class ShukkaImport
 
       'DataTable変換
       If result = DialogResult.OK Then
-        dtShukkaData = LoadCsvToDataTable(ofd.FileName, "発注区分", "在庫品")
+        dtShukkaData = LoadCsvToDataTable(ofd.FileName)
 
         dtShukkaData.Columns.Add("取込状況FLG")
         For Each row As DataRow In dtShukkaData.Rows
@@ -40,8 +40,20 @@ Public Class ShukkaImport
 
   End Sub
 
-  Private Function LoadCsvToDataTable(filePath As String, filterColumnName As String, filterValue As String) As DataTable
+  ''' <summary>
+  ''' 販売実績ファイル取込
+  ''' </summary>
+  ''' <param name="filePath">取込対象CSVファイルパス</param>
+  ''' <remarks>
+  '''   以下のいづれかの条件に一致する行を取込
+  '''   ・[発注区分] = [在庫品]
+  '''   ・[発注区分] = [スルー品]
+  '''         かつ [発注書区分] = [総量発注書のみで発注] 
+  ''' </remarks>
+  ''' <returns>CSVの内容を保持したdatatable</returns>
+  Private Function LoadCsvToDataTable(filePath As String) As DataTable
     Dim dt As New DataTable()
+
     Try
       Dim lines = IO.File.ReadAllLines(filePath, Encoding.GetEncoding("Shift-JIS"))
       If lines.Length = 0 Then Return dt
@@ -52,15 +64,23 @@ Public Class ShukkaImport
       Next
 
       ' フィルター対象の列インデックスを取得
-      Dim filterIndex As Integer = Array.IndexOf(headers, filterColumnName)
+      Dim tmpOrderClassIdx As Integer = Array.IndexOf(headers, "発注区分")
+      Dim tmpOrderPaperClass As Integer = Array.IndexOf(headers, "発注書区分")
+
 
       For i As Integer = 1 To lines.Length - 1
         Dim values = lines(i).Split(","c)
         If values.Length <> headers.Length Then Continue For ' 列数不一致はスキップ
 
-        If values(filterIndex) = filterValue Then
+        If values(tmpOrderClassIdx).Trim = "在庫品".Trim Then
+          ' 発注区分が在庫品
+          dt.Rows.Add(values)
+        ElseIf values(tmpOrderClassIdx).Trim = "スルー品".Trim _
+                And values(tmpOrderPaperClass).Trim = "総量発注書のみで発注".Trim Then
+          '発注区分がスルー品 かつ 発注書区分が総量発注書のみで発注 
           dt.Rows.Add(values)
         End If
+
       Next
 
       Return dt
@@ -69,6 +89,7 @@ Public Class ShukkaImport
       Throw New Exception(ex.Message)
     End Try
   End Function
+
 
 
 

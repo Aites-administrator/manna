@@ -121,7 +121,8 @@ Public Class frmShukkaCheckSendCommunication
     sql &= "      ,	MAX(KENPIN_RECEIVE_DATE) AS KENPIN_RECEIVE_DATE "
     sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.KENPIN_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	 'C/S' AS CASE_TANI"
-    sql &= "      ,	 HACHU_TANI AS BARA_TANI"
+    'sql &= "      ,	 HACHU_TANI AS BARA_TANI"
+    sql &= "      ,	 ISNULL(MST_ITEM.TANKA_TANI,MAX(TRN_SHUKKA.HACHU_TANI)) AS BARA_TANI"
     sql &= "      ,	 '' AS INDEX_ID"
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
@@ -142,7 +143,8 @@ Public Class frmShukkaCheckSendCommunication
     sql &= "    ,	TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2 "
     sql &= "    , MST_ITEM.ITF "
     sql &= "    , MST_ITEM.JAN "
-    sql &= "    , HACHU_TANI "
+    sql &= "    , MST_ITEM.TANKA_TANI "
+    'sql &= "    , HACHU_TANI "
     sql &= " ORDER BY NOUHINBI,JIGYOSHO_CD,JISYA_SHOHIN_CD "
 
     Return sql

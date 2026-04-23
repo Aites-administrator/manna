@@ -169,6 +169,11 @@ Public Class frmSoudashiSendCommunication
 
   End Function
 
+  ''' <summary>
+  ''' 総出しファイル (MST_PICK.DAT)ソース抽出SQL文作成
+  ''' </summary>
+  ''' <param name="prmTanaList">対象の棚番リスト</param>
+  ''' <returns></returns>
   Private Function SqlSelTrnSoudashi(prmTanaList As List(Of String)) As String
     Dim sql As String = String.Empty
 
@@ -191,7 +196,8 @@ Public Class frmSoudashiSendCommunication
     'sql &= "      , CASE WHEN (MIN(TORIKOMI_JOKYO_FLG) = " & CInt(SHUKKA_STATUS.SOUDASHI_SOUSINZUMI) & " Or MAX(SOUDASHI_RECEIVE_DATE) IS NULL) THEN '0' ELSE '1' END AS TORIKOMI_JOKYO_FLG "
     'sql &= "      ,	CASE WHEN MIN(TORIKOMI_JOKYO_FLG) >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI) & " THEN 1 ELSE 0 END AS TORIKOMI_JOKYO_FLG "
     sql &= "      ,	 'C/S' AS CASE_TANI"
-    sql &= "      ,	 HACHU_TANI AS HACHU_TANI"
+    'sql &= "      ,	 HACHU_TANI AS HACHU_TANI"
+    sql &= "      ,	 ISNULL(MST_ITEM.TANKA_TANI,MAX(TRN_SHUKKA.HACHU_TANI)) AS HACHU_TANI"
     sql &= "      ,	 '' AS INDEX_ID"
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
@@ -210,12 +216,13 @@ Public Class frmSoudashiSendCommunication
     End If
 
     sql &= " GROUP BY MST_ITEM.TANA_CD "
-    sql &= "    ,   NOUHINBI "
-    sql &= "    ,TRN_SHUKKA.JISYA_SHOHIN_CD "
-    sql &= "    ,TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2"
-    sql &= "    ,MST_ITEM.JAN"
-    sql &= "    ,MST_ITEM.ITF "
-    sql &= "    ,HACHU_TANI "
+    sql &= "         ,NOUHINBI "
+    sql &= "         ,TRN_SHUKKA.JISYA_SHOHIN_CD "
+    sql &= "         ,TRN_SHUKKA.JISYA_SHOHIN_MEI1 + TRN_SHUKKA.JISYA_SHOHIN_MEI2"
+    sql &= "         ,MST_ITEM.JAN"
+    sql &= "         ,MST_ITEM.ITF "
+    sql &= "         ,MST_ITEM.TANKA_TANI "
+    'sql &= "         ,HACHU_TANI "
     sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2),TRN_SHUKKA.JISYA_SHOHIN_CD "
 
     Return sql
