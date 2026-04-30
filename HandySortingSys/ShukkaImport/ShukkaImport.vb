@@ -79,6 +79,10 @@ Public Class ShukkaImport
                 And values(tmpOrderPaperClass).Trim = "総量発注書のみで発注".Trim Then
           '発注区分がスルー品 かつ 発注書区分が総量発注書のみで発注 
           dt.Rows.Add(values)
+        ElseIf values(tmpOrderClassIdx).Trim = "事業所直送".Trim _
+                And values(tmpOrderPaperClass).Trim = "総量発注書のみで発注".Trim Then
+          '発注区分が事業所直送 かつ 発注書区分が総量発注書のみで発注 
+          dt.Rows.Add(values)
         End If
 
       Next
