@@ -41,6 +41,16 @@
     }
 
 
+    ' 総出しマッピング定義
+    MappingDictionary("温度帯リスト") = New Dictionary(Of String, String) From {
+      {"ONDO_CD", "温度帯コード"},
+      {"ONDO_NAME", "温度帯名"},
+      {"COURSE_SOUDASHI_SEND_DATE", "未送信(有無)"},
+      {"TORIKOMI_JOKYO_FLG", "総出し済"},
+      {"COURSE_SOUDASHI_SEND_DATE_ZUMI", "送信済み"}
+    }
+
+
     MappingDictionary("総出しデータ") = New Dictionary(Of String, String) From {
       {"NOUHINBI", "納品日"},
       {"TANA_CD", "棚番コード"},
@@ -57,7 +67,8 @@
       {"TORIKOMI_JOKYO_FLG", "取込状況FLG"},
       {"CASE_TANI", "ケース単位"},
       {"HACHU_TANI", "バラ単位"},
-      {"INDEX_ID", "INDEX_ID"}
+      {"INDEX_ID", "INDEX_ID"},
+      {"IRISU", "入数"}
     }
 
     MappingDictionary("総出し棚データ") = New Dictionary(Of String, String) From {
@@ -248,8 +259,31 @@
       {"LAST_USE_DATE", "最終使用日"}
   }
 
+    MappingDictionary("総出しコースデータ") = New Dictionary(Of String, String) From {
+    {"NOUHINBI", "納品日"},
+    {"COURSE_CD", "コースコード"},
+    {"HAISOU_COURSE_MEI", "コース名"},
+    {"JISYA_SHOHIN_CD", "商品コード"},
+    {"JISYA_SHOHIN_MEI", "商品名"},
+    {"JAN", "JAN"},
+    {"ITF", "ITF"},
+    {"SHUKKA_YOTEISU_CASE", "出荷予定数_ケース数"},
+    {"SHUKKA_YOTEISU_BARA", "出荷予定数_バラ数"},
+    {"SHUKKA_COURSE_YOTEISU_CASE", "コースごと出荷予定数_ケース数"},
+    {"SHUKKA_COURSE_YOTEISU_BARA", "コースごと出荷予定数_バラ数"},
+    {"IRISU", "入数"},
+    {"CASE_TANI", "ケース単位"},
+    {"BARA_TANI", "バラ単位"},
+    {"COURSE_SOUDASHI_GOUKI", "号機"},
+    {"COURSE_SOUDASHI_TANTO_CD", "担当者"},
+    {"COURSE_SOUDASHI_RECEIVE_DATE", "作業日時"},
+    {"COURSE_SOUDASHI_FLG", "ステータス"},
+    {"INDEX_ID", "INDEX"}
+}
+
 
   End Sub
+
 
   Public Function ConvertColumnNamesToJapanese(source As DataTable, mappingName As String) As DataTable
     If Not MappingDictionary.ContainsKey(mappingName) Then

@@ -54,6 +54,51 @@
       Tuple.Create("TORIKOMI_JOKYO_FLG", 1),
       Tuple.Create("CASE_TANI", 6),
       Tuple.Create("HACHU_TANI", 6),
+      Tuple.Create("INDEX_ID", 5),
+      Tuple.Create("IRISU", 10)
+    }
+
+  '総出し温度帯データ固定桁数定義
+  Public Shared LenColumnInSoudashiOndo As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("ONDO_NAME", 10),
+      Tuple.Create("COURSE_SOUDASHI_FLG", 1),
+      Tuple.Create("INDEX_ID", 5)
+    }
+
+  '総出しデータ(コース)固定桁数定義
+  Public Shared LenColumnInSoudashiCourseItem As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("NOUHINBI", 8),
+      Tuple.Create("ONDO_NAME", 10),
+      Tuple.Create("JISYA_SHOHIN_CD", 5),
+      Tuple.Create("JISYA_SHOHIN_MEI", 80),
+      Tuple.Create("JAN", 13),
+      Tuple.Create("ITF", 16),
+      Tuple.Create("TANA_AREA", 6),
+      Tuple.Create("TANA_NAME", 10),
+      Tuple.Create("COURSE_SOUDASHI_FLG", 1),
+      Tuple.Create("INDEX_ID", 5)
+    }
+
+  '総出しデータ固定桁数定義
+  Public Shared LenColumnInSoudashiCourse As New List(Of Tuple(Of String, Integer)) From {
+      Tuple.Create("NOUHINBI", 8),
+      Tuple.Create("COURSE_CD", 2),
+      Tuple.Create("HAISOU_COURSE_MEI", 6),
+      Tuple.Create("JISYA_SHOHIN_CD", 5),
+      Tuple.Create("JISYA_SHOHIN_MEI", 80),
+      Tuple.Create("JAN", 13),
+      Tuple.Create("ITF", 16),
+      Tuple.Create("SHUKKA_YOTEISU_CASE", 5),
+      Tuple.Create("SHUKKA_YOTEISU_BARA", 5),
+      Tuple.Create("SHUKKA_COURSE_YOTEISU_CASE", 5),
+      Tuple.Create("SHUKKA_COURSE_YOTEISU_BARA", 5),
+      Tuple.Create("IRISU", 10),
+      Tuple.Create("CASE_TANI", 6),
+      Tuple.Create("BARA_TANI", 6),
+      Tuple.Create("COURSE_SOUDASHI_GOUKI", 2),
+      Tuple.Create("COURSE_SOUDASHI_TANTO_CD", 3),
+      Tuple.Create("COURSE_SOUDASHI_RECEIVE_DATE", 14),
+      Tuple.Create("COURSE_SOUDASHI_FLG", 1),
       Tuple.Create("INDEX_ID", 5)
     }
 

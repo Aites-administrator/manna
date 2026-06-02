@@ -23,10 +23,13 @@ Public Class BtnInput
   ' プロパティ：CSVタイプ
   Public Property TargetCsvType As String
 
+  ' リスト登録日付
+  Public Shared DATE_LIST As String
+
   Private SHOHIN_CD As String = "自社商品CD"
   Private SHOHIN_NM As String = ""
 
-
+  Public Event InputCompleted()
 #End Region
 
 #Region "コンストラクタ"
@@ -87,6 +90,13 @@ Public Class BtnInput
         For Each col As DataColumn In TargetDataTable.Columns
           Dim key As String = col.ColumnName
           Dim value As Object = row(col)
+          If key = "入荷予定日" _
+            OrElse key = "納品日" _
+            OrElse key = "棚卸日" Then
+            DATE_LIST = value
+
+          End If
+
           TargetRowData.Add(mapping(key), value)
         Next
 
@@ -99,12 +109,15 @@ Public Class BtnInput
 
       Next
 
+      RaiseEvent InputCompleted()
       MessageBox.Show("取込が完了しました。")
       SqlServer.TrnCommit()
     Catch ex As Exception
       SqlServer.TrnRollBack()
       TargetDataTable.Clear()
       ComWriteErrLog(ex, False)
+    Finally
+      HideProcessing()
     End Try
   End Sub
 
@@ -364,5 +377,40 @@ Public Class BtnInput
     excel.Quit()
   End Sub
 
+  Public Shared Function SqlInsDateList(prmTableName As String, prmDate As String) As String
+    Dim sql As String = ""
+
+    sql &= " INSERT INTO " & prmTableName & "("
+    sql &= "    DATE_LIST,"
+    sql &= "    DISP_CHK"
+    sql &= " )"
+
+    sql &= " SELECT"
+    sql &= "    '" & prmDate & "' AS DATE_LIST,"
+    sql &= "    1 AS DISP_CHK"
+
+    sql &= " WHERE NOT EXISTS ("
+    sql &= "    SELECT 1"
+    sql &= "    FROM " & prmTableName
+    sql &= "    WHERE DATE_LIST = '" & prmDate & "'"
+    sql &= " )"
+
+    Return sql
+  End Function
+
+  Public Shared Function SqlDelDateList(prmTableName As String) As String
+    Dim sql As String = ""
+
+    sql &= " DELETE FROM " & prmTableName
+    sql &= " WHERE DATE_LIST NOT IN ("
+    sql &= "    SELECT TOP " & ReadSettingIniFile("PAST_DATE", "VALUE")
+    sql &= "        DATE_LIST"
+    sql &= "    FROM " & prmTableName
+    sql &= "    ORDER BY"
+    sql &= "        DATE_LIST DESC"
+    sql &= " );"
+
+    Return sql
+  End Function
 
 End Class

@@ -26,6 +26,7 @@ Partial Class frmNyukaPrint
   <System.Diagnostics.DebuggerStepThrough()>
   Protected Overloads Sub InitializeComponent()
     Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmNyukaPrint))
+    Me.BtnDataListChk = New Button
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
     Me.BtnOutput1 = New T.R.ZCommonCtrl.BtnOutput()
@@ -82,6 +83,15 @@ Partial Class frmNyukaPrint
     Me.CmbDateSagyoBi1.TabIndex = 4
     Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
     '
+    'BtnDataListChk
+    '
+    Me.BtnDataListChk.Location = New System.Drawing.Point(385, 88)
+    Me.BtnDataListChk.Size = New System.Drawing.Size(100, 41)
+    Me.BtnDataListChk.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.BtnDataListChk.BackColor = Color.SteelBlue
+    Me.BtnDataListChk.Text = "設定"
+
+    '
     'DgvList1
     '
     Me.DgvList1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -111,6 +121,7 @@ Partial Class frmNyukaPrint
     Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
     Me.ClientSize = New System.Drawing.Size(1384, 861)
+    Me.Controls.Add(Me.BtnDataListChk)
     Me.Controls.Add(Me.BtnEnd_L1)
     Me.Controls.Add(Me.DgvList1)
     Me.Controls.Add(Me.CmbDateSagyoBi1)
@@ -129,6 +140,7 @@ Partial Class frmNyukaPrint
 
   End Sub
 
+  Friend WithEvents BtnDataListChk As Button
   Friend WithEvents LblBase1 As LblBase
   Friend WithEvents LblBase2 As LblBase
   Friend WithEvents BtnOutput1 As BtnOutput

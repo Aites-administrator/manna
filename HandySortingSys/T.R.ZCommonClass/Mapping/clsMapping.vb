@@ -113,7 +113,7 @@
         {"発注点", "HATCHUTEN"},
         {"棚番", "TANABAN"},
         {"在庫数", "ZAIKO_SU"},
-        {"11/10(月)", "TANA_DATE_ZAIKO_SU"},
+        {"棚卸日時点在庫数", "TANA_DATE_ZAIKO_SU"},
         {"システム在庫数", "SYSTEM_ZAIKO_SU"},
         {"入数", "IRISU"},
         {"取込状況FLG", "TORIKOMI_JOKYO_FLG"}

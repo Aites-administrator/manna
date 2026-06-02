@@ -31,6 +31,8 @@ Public Class SoudashiMenu
     sql &= " SELECT  MAX(ENTRY_DATE) AS MAX_SHUKKA_TORIKOMI "
     sql &= "      ,  MAX(SOUDASHI_SEND_DATE) AS MAX_SHUKKA_SEND	 "
     sql &= "      ,  MAX(SOUDASHI_RECEIVE_DATE) AS MAX_SHUKKA_RECEIVE  "
+    sql &= "      ,  MAX(COURSE_SOUDASHI_SEND_DATE) AS MAX_COURSE_SHUKKA_SEND	 "
+    sql &= "      ,  MAX(COURSE_SOUDASHI_RECEIVE_DATE) AS MAX_COURSE_SHUKKA_RECEIVE  "
     sql &= " FROM TRN_SHUKKA "
 
     Return sql
@@ -44,6 +46,8 @@ Public Class SoudashiMenu
 
     LblProcDateTime1.Text = tmpNyukaDt.Rows(0).Item("MAX_SHUKKA_SEND").ToString()
     LblProcDateTime2.Text = tmpNyukaDt.Rows(0).Item("MAX_SHUKKA_RECEIVE").ToString()
+    LblProcDateTime3.Text = tmpNyukaDt.Rows(0).Item("MAX_COURSE_SHUKKA_SEND").ToString()
+    LblProcDateTime4.Text = tmpNyukaDt.Rows(0).Item("MAX_COURSE_SHUKKA_RECEIVE").ToString()
 
   End Sub
 
@@ -60,6 +64,18 @@ Public Class SoudashiMenu
     BtnMainMenuBase2.Font = New Font("Meiryo", 20, FontStyle.Bold)
     BtnMainMenuBase2.AccessKey = Keys.F2
 
+    BtnMainMenuBase3.Title = "ﾊﾟｿｺﾝ⇒ﾊﾝﾃﾞｨ" & vbCrLf & "総出しｺｰｽ(F3)"
+    BtnMainMenuBase3.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaSendImage.png")
+    BtnMainMenuBase3.ButtonColor = ColorTranslator.FromHtml("#C8EEC0")
+    BtnMainMenuBase3.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase3.AccessKey = Keys.F3
+
+    BtnMainMenuBase4.Title = "　ﾊﾝﾃﾞｨ⇒ﾊﾟｿｺﾝ" & vbCrLf & "総出しｺｰｽ(F4)"
+    BtnMainMenuBase4.Icon = Image.FromFile(PROJECT_DIR_NAME & IMAGE_FORDER & "NyukaReceiveImage.png")
+    BtnMainMenuBase4.ButtonColor = ColorTranslator.FromHtml("#8FD89A")
+    BtnMainMenuBase4.Font = New Font("Meiryo", 20, FontStyle.Bold)
+    BtnMainMenuBase4.AccessKey = Keys.F4
+
   End Sub
 
   Private Sub BtnMainMenuBase1_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase1.Click
@@ -70,6 +86,17 @@ Public Class SoudashiMenu
   Private Sub BtnMainMenuBase2_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase2.Click
     FileName = GetIniString("M13", "EXE", IniFileName)
     AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M13", "EXE", IniFileName), , True))
+
+  End Sub
+
+  Private Sub BtnMainMenuBase3_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase3.Click
+    FileName = GetIniString("M14", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M14", "EXE", IniFileName), , True))
+  End Sub
+
+  Private Sub BtnMainMenuBase4_Click(sender As Object, e As EventArgs) Handles BtnMainMenuBase4.Click
+    FileName = GetIniString("M15", "EXE", IniFileName)
+    AttachActivateOnExit(Me, ComGetProcessByFilePath(GetIniString("M15", "EXE", IniFileName), , True))
 
   End Sub
 

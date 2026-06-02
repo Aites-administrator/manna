@@ -8,6 +8,8 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
+Imports DateListChk
+
 Public Class frmShukkaCheckSendCommunication
   Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
@@ -18,7 +20,7 @@ Public Class frmShukkaCheckSendCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "4.出荷検品"
+    Me.TextDisplayName = "5.出荷検品"
     MyBase.OnLoad(e)
   End Sub
 
@@ -188,6 +190,7 @@ Public Class frmShukkaCheckSendCommunication
     Try
 
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      ShowProcessing("データ取得中…")
 
       BtnSendHandy1.Handy = Handy
       Me.TextHandy = Handy
@@ -238,6 +241,7 @@ Public Class frmShukkaCheckSendCommunication
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
+      Call BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
   End Sub
@@ -252,5 +256,27 @@ Public Class frmShukkaCheckSendCommunication
     DgvList1.SetData(tmpDtJP)
   End Sub
 
+
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
+
+      Dim frm As New frmDateListChk("SHUKKA_ZUMI_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateNohinBi1.InitCmb()
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
+  End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
 
 End Class

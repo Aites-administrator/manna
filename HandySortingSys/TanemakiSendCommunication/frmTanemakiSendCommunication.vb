@@ -8,6 +8,8 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
+Imports DateListChk
+
 Public Class frmTanemakiSendCommunication
   Inherits FormSendCommunication
   Private SqlServer As New clsSqlServer
@@ -24,7 +26,7 @@ Public Class frmTanemakiSendCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "3.種まき作業"
+    Me.TextDisplayName = "4.種まき作業"
     MyBase.OnLoad(e)
   End Sub
 
@@ -159,7 +161,7 @@ Public Class frmTanemakiSendCommunication
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
     sql &= " LEFT JOIN MST_COURSE "
     sql &= " ON MST_COURSE.COURSE_MEI = TRN_SHUKKA.HAISOU_COURSE_MEI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.SOUDASHI_ZUMI)
+    sql &= " WHERE TORIKOMI_JOKYO_FLG >= " & CInt(SHUKKA_STATUS.TORIKOMIZUMI)
     sql &= " AND TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.KENPIN_ZUMI)
     If CmbDateNohinBi1.SelectedValue Is Nothing Then
       sql &= " AND NOUHINBI = ''"
@@ -171,7 +173,7 @@ Public Class frmTanemakiSendCommunication
       sql &= " AND LEFT(MST_ITEM.TANA_CD,1) IN (" & tanaInClause & ")"
     Else
       sql &= " AND LEFT(MST_ITEM.TANA_CD,1) IN ('')"
-        
+
     End If
     sql &= " GROUP BY COURSE_CD "
     sql &= "    ,   HAISOU_COURSE_MEI "
@@ -426,6 +428,7 @@ Public Class frmTanemakiSendCommunication
     Dim tmpCommunicationDate As New Dictionary(Of String, String)
 
     Try
+      ShowProcessing("データ取得中…")
       BtnSendHandy1.TargetCancelParentClick = False
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
       BtnSendHandy1.Handy = Handy
@@ -516,8 +519,33 @@ Public Class frmTanemakiSendCommunication
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
+      Call BtnSendHandy1_SendCompleted()
+
       ComWriteErrLog(ex, False)
     End Try
   End Sub
 
+
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
+
+      Dim frm As New frmDateListChk("SHUKKA_ZUMI_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateNohinBi1.InitCmb()
+
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
+  End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
 End Class

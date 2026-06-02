@@ -27,19 +27,37 @@ Public Class CmbDateNohinBi
 
 #Region "パブリック"
   ' コンボボックスソース抽出用
+  'Public Function SqlSelListSrc(prmCode As String) As String
+  '  Dim sql As String = String.Empty
+
+  '  ' データベースより現在日付を文字列で取得し、DateTime値に変換する
+  '  Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
+
+  '  sql &= " SELECT  TOP " & ReadSettingIniFile("PAST_DATE", "VALUE")
+  '  sql &= "         CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
+  '  sql &= "      ,  FORMAT(CONVERT(date, NOUHINBI, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
+  '  sql &= " FROM TRN_SHUKKA "
+  '  sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
+  '  sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111),NOUHINBI   "
+  '  sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  DESC"
+
+  '  Console.WriteLine(sql)
+
+  '  Return sql
+  'End Function
+
   Public Function SqlSelListSrc(prmCode As String) As String
     Dim sql As String = String.Empty
 
     ' データベースより現在日付を文字列で取得し、DateTime値に変換する
     Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
 
-    sql &= " SELECT  TOP " & ReadSettingIniFile("PAST_DATE", "VALUE")
-    sql &= "         CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  AS ItemCode  "
-    sql &= "      ,  FORMAT(CONVERT(date, NOUHINBI, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
-    sql &= " FROM TRN_SHUKKA "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG < " & CInt(SHUKKA_STATUS.TANEMAKI_ZUMI)
-    sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111),NOUHINBI   "
-    sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, NOUHINBI, 112), 111)  DESC"
+    sql &= " SELECT  "
+    sql &= "         CONVERT(varchar(10), CONVERT(date, DATE_LIST, 112), 111)  AS ItemCode  "
+    sql &= "      ,  FORMAT(CONVERT(date, DATE_LIST, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
+    sql &= " FROM SHUKKA_DATE_LIST "
+    sql &= " WHERE DISP_CHK = 1 "
+    sql &= " ORDER BY DATE_LIST desc "
 
     Console.WriteLine(sql)
 

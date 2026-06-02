@@ -1,4 +1,5 @@
 ﻿Imports T.R.ZCommonCtrl
+Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
@@ -11,14 +12,30 @@ Public Class frmNyukaReceiveCommunication
 
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "IN_ITEM.DAT"
+  Private SqlServer As New clsSqlServer
+  Private Const DATE_LIST_TABLE_NAME As String = "NYUKA_ZUMI_DATE_LIST"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "1.入荷検品"
+    AddHandler BtnRecieveHandy1.ReceiveCompleted, AddressOf AfterReceiveProcess
+
     MyBase.OnLoad(e)
   End Sub
 
+  Private Sub AfterReceiveProcess()
+    '日付登録
+    Try
+
+      SqlServer.Execute(BtnRecieveHandy1.SqlInsDateList(DATE_LIST_TABLE_NAME, BtnRecieveHandy1.DATE_LIST))
+      SqlServer.Execute(BtnRecieveHandy1.SqlDelDateList(DATE_LIST_TABLE_NAME))
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
+  End Sub
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
     Dim Handy As New ClsHandyCommunication.clsHandyCommunication(PROJECT_DIR_NAME & RECEIVE_NYUKA_FILE_NAME)
@@ -28,6 +45,7 @@ Public Class frmNyukaReceiveCommunication
 
     Try
       'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      ShowProcessing("データ取得中…")
 
       BtnRecieveHandy1.Handy = Handy
       Me.TextHandy = Handy
@@ -64,6 +82,7 @@ Public Class frmNyukaReceiveCommunication
       BtnRecieveHandy1.TargetOutputFileName = "NYUKA_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 
     Catch ex As Exception
+      HideProcessing()
       ComWriteErrLog(ex, False)
     End Try
 

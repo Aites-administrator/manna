@@ -24,6 +24,10 @@ Partial Class SoudashiMenu
   <System.Diagnostics.DebuggerStepThrough()>
   Protected Overloads Sub InitializeComponent()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
+    Me.BtnMainMenuBase4 = New T.R.ZCommonCtrl.BtnMainMenuBase()
+    Me.LblProcDateTime4 = New T.R.ZCommonCtrl.LblProcDateTime()
+    Me.BtnMainMenuBase3 = New T.R.ZCommonCtrl.BtnMainMenuBase()
+    Me.LblProcDateTime3 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.BtnMainMenuBase2 = New T.R.ZCommonCtrl.BtnMainMenuBase()
     Me.LblProcDateTime2 = New T.R.ZCommonCtrl.LblProcDateTime()
     Me.LblProcDateTime1 = New T.R.ZCommonCtrl.LblProcDateTime()
@@ -42,6 +46,61 @@ Partial Class SoudashiMenu
     Me.LblBase1.Text = "総出し処理メニュー"
     Me.LblBase1.Visible = False
     '
+    'BtnMainMenuBase4
+    '
+    Me.BtnMainMenuBase4.BtnForeColor = System.Drawing.Color.Empty
+    Me.BtnMainMenuBase4.ButtonColor = System.Drawing.Color.Empty
+    Me.BtnMainMenuBase4.FlatAppearance.BorderSize = 0
+    Me.BtnMainMenuBase4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.BtnMainMenuBase4.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.BtnMainMenuBase4.Icon = Nothing
+    Me.BtnMainMenuBase4.Location = New System.Drawing.Point(644, 501)
+    Me.BtnMainMenuBase4.Name = "BtnMainMenuBase4"
+    Me.BtnMainMenuBase4.SetAccessKey = System.Windows.Forms.Keys.None
+    Me.BtnMainMenuBase4.Size = New System.Drawing.Size(331, 235)
+    Me.BtnMainMenuBase4.TabIndex = 22
+    Me.BtnMainMenuBase4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+    Me.BtnMainMenuBase4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.BtnMainMenuBase4.Title = Nothing
+    Me.BtnMainMenuBase4.UseVisualStyleBackColor = True
+    '
+    'LblProcDateTime4
+    '
+    Me.LblProcDateTime4.AutoSize = True
+    Me.LblProcDateTime4.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+    Me.LblProcDateTime4.Location = New System.Drawing.Point(756, 751)
+    Me.LblProcDateTime4.Name = "LblProcDateTime4"
+    Me.LblProcDateTime4.Size = New System.Drawing.Size(219, 24)
+    Me.LblProcDateTime4.TabIndex = 20
+    Me.LblProcDateTime4.Text = "2025/12/12 12:12:12"    '
+    '
+    'LblProcDateTime3
+    '
+    Me.LblProcDateTime3.AutoSize = True
+    Me.LblProcDateTime3.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
+    Me.LblProcDateTime3.Location = New System.Drawing.Point(231, 751)
+    Me.LblProcDateTime3.Name = "LblProcDateTime3"
+    Me.LblProcDateTime3.Size = New System.Drawing.Size(219, 24)
+    Me.LblProcDateTime3.TabIndex = 19
+    Me.LblProcDateTime3.Text = "2025/12/12 12:12:12"
+    '
+    'BtnMainMenuBase3
+    '
+    Me.BtnMainMenuBase3.BtnForeColor = System.Drawing.Color.Empty
+    Me.BtnMainMenuBase3.ButtonColor = System.Drawing.Color.Empty
+    Me.BtnMainMenuBase3.FlatAppearance.BorderSize = 0
+    Me.BtnMainMenuBase3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+    Me.BtnMainMenuBase3.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
+    Me.BtnMainMenuBase3.Icon = Nothing
+    Me.BtnMainMenuBase3.Location = New System.Drawing.Point(119, 501)
+    Me.BtnMainMenuBase3.Name = "BtnMainMenuBase3"
+    Me.BtnMainMenuBase3.SetAccessKey = System.Windows.Forms.Keys.None
+    Me.BtnMainMenuBase3.Size = New System.Drawing.Size(331, 235)
+    Me.BtnMainMenuBase3.TabIndex = 21
+    Me.BtnMainMenuBase3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+    Me.BtnMainMenuBase3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+    Me.BtnMainMenuBase3.Title = Nothing
+    Me.BtnMainMenuBase3.UseVisualStyleBackColor = True
     'BtnMainMenuBase2
     '
     Me.BtnMainMenuBase2.BtnForeColor = System.Drawing.Color.Empty
@@ -50,7 +109,7 @@ Partial Class SoudashiMenu
     Me.BtnMainMenuBase2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.BtnMainMenuBase2.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.BtnMainMenuBase2.Icon = Nothing
-    Me.BtnMainMenuBase2.Location = New System.Drawing.Point(644, 301)
+    Me.BtnMainMenuBase2.Location = New System.Drawing.Point(644, 201)
     Me.BtnMainMenuBase2.Name = "BtnMainMenuBase2"
     Me.BtnMainMenuBase2.SetAccessKey = System.Windows.Forms.Keys.None
     Me.BtnMainMenuBase2.Size = New System.Drawing.Size(331, 235)
@@ -64,7 +123,7 @@ Partial Class SoudashiMenu
     '
     Me.LblProcDateTime2.AutoSize = True
     Me.LblProcDateTime2.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
-    Me.LblProcDateTime2.Location = New System.Drawing.Point(756, 551)
+    Me.LblProcDateTime2.Location = New System.Drawing.Point(756, 451)
     Me.LblProcDateTime2.Name = "LblProcDateTime2"
     Me.LblProcDateTime2.Size = New System.Drawing.Size(219, 24)
     Me.LblProcDateTime2.TabIndex = 20
@@ -74,7 +133,7 @@ Partial Class SoudashiMenu
     '
     Me.LblProcDateTime1.AutoSize = True
     Me.LblProcDateTime1.Font = New System.Drawing.Font("MS UI Gothic", 18.0!)
-    Me.LblProcDateTime1.Location = New System.Drawing.Point(231, 551)
+    Me.LblProcDateTime1.Location = New System.Drawing.Point(231, 451)
     Me.LblProcDateTime1.Name = "LblProcDateTime1"
     Me.LblProcDateTime1.Size = New System.Drawing.Size(219, 24)
     Me.LblProcDateTime1.TabIndex = 19
@@ -88,7 +147,7 @@ Partial Class SoudashiMenu
     Me.BtnMainMenuBase1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
     Me.BtnMainMenuBase1.Font = New System.Drawing.Font("メイリオ", 24.0!, System.Drawing.FontStyle.Bold)
     Me.BtnMainMenuBase1.Icon = Nothing
-    Me.BtnMainMenuBase1.Location = New System.Drawing.Point(119, 301)
+    Me.BtnMainMenuBase1.Location = New System.Drawing.Point(119, 201)
     Me.BtnMainMenuBase1.Name = "BtnMainMenuBase1"
     Me.BtnMainMenuBase1.SetAccessKey = System.Windows.Forms.Keys.None
     Me.BtnMainMenuBase1.Size = New System.Drawing.Size(331, 235)
@@ -118,6 +177,10 @@ Partial Class SoudashiMenu
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
     Me.ClientSize = New System.Drawing.Size(1034, 861)
     Me.Controls.Add(Me.BtnEnd_L2)
+    Me.Controls.Add(Me.BtnMainMenuBase4)
+    Me.Controls.Add(Me.LblProcDateTime4)
+    Me.Controls.Add(Me.BtnMainMenuBase3)
+    Me.Controls.Add(Me.LblProcDateTime3)
     Me.Controls.Add(Me.BtnMainMenuBase2)
     Me.Controls.Add(Me.LblProcDateTime2)
     Me.Controls.Add(Me.LblProcDateTime1)
@@ -135,6 +198,10 @@ Partial Class SoudashiMenu
   End Sub
 
   Friend WithEvents LblBase1 As LblBase
+  Friend WithEvents BtnMainMenuBase4 As BtnMainMenuBase
+  Friend WithEvents LblProcDateTime4 As LblProcDateTime
+  Friend WithEvents BtnMainMenuBase3 As BtnMainMenuBase
+  Friend WithEvents LblProcDateTime3 As LblProcDateTime
   Friend WithEvents BtnMainMenuBase2 As BtnMainMenuBase
   Friend WithEvents LblProcDateTime2 As LblProcDateTime
   Friend WithEvents LblProcDateTime1 As LblProcDateTime

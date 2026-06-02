@@ -34,7 +34,7 @@ Public Class frmTantoSendCommunication
     DgvList1.SetData(tmpDtJP)
 
 
-    Me.TextDisplayName = "7.担当者マスタ"
+    Me.TextDisplayName = "8.担当者マスタ"
 
     MyBase.OnLoad(e)
   End Sub
@@ -113,6 +113,7 @@ Public Class frmTantoSendCommunication
     Dim tmpCommunicationDate As New Dictionary(Of String, String)
 
     Try
+      ShowProcessing("データ取得中…")
 
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
@@ -139,9 +140,15 @@ Public Class frmTantoSendCommunication
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
+      BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
   End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
+
 
   'Private Sub frmTantoSendCommunication_Activated(sender As Object, e As EventArgs) Handles Me.Activated
   '  If _isFirstActivated Then

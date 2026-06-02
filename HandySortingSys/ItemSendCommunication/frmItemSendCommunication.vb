@@ -27,7 +27,7 @@ Public Class frmItemSendCommunication
 
     DgvList1.SetData(tmpDtJP)
 
-    Me.TextDisplayName = "6.商品マスタ"
+    Me.TextDisplayName = "7.商品マスタ"
 
     MyBase.OnLoad(e)
   End Sub
@@ -118,6 +118,8 @@ Public Class frmItemSendCommunication
 
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
+      ShowProcessing("データ取得中…")
+
       Handy.TargetFolder = PROJECT_DIR_NAME & SEND_FOLDER
 
       BtnSendHandy1.Handy = Handy
@@ -143,8 +145,12 @@ Public Class frmItemSendCommunication
 
 
     Catch ex As Exception
+      BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
+  End Sub
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
   End Sub
 
 

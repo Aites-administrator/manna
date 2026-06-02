@@ -25,6 +25,24 @@ Public Class CmbDateTanaoroshiBi
 #Region "メソッド"
 
 #Region "パブリック"
+  '' コンボボックスソース抽出用
+  'Public Function SqlSelListSrc(prmCode As String) As String
+  '  Dim sql As String = String.Empty
+
+  '  ' データベースより現在日付を文字列で取得し、DateTime値に変換する
+  '  Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
+
+  '  sql &= " SELECT DISTINCT TOP " & ReadSettingIniFile("PAST_DATE", "VALUE") & "CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  AS ItemCode  "
+  '  sql &= " FROM TRN_TANAOROSHI "
+  '  sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(TANAOROSHI_STATUS.SHUTURYOKUZUMI) & ")"
+  '  sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)   "
+  '  sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  DESC"
+
+  '  Console.WriteLine(sql)
+
+  '  Return sql
+  'End Function
+
   ' コンボボックスソース抽出用
   Public Function SqlSelListSrc(prmCode As String) As String
     Dim sql As String = String.Empty
@@ -32,11 +50,12 @@ Public Class CmbDateTanaoroshiBi
     ' データベースより現在日付を文字列で取得し、DateTime値に変換する
     Dim dt As DateTime = DateTime.Parse(ComGetProcDate())
 
-    sql &= " SELECT DISTINCT TOP " & ReadSettingIniFile("PAST_DATE", "VALUE") & "CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  AS ItemCode  "
-    sql &= " FROM TRN_TANAOROSHI "
-    sql &= " WHERE TORIKOMI_JOKYO_FLG NOT IN (" & CInt(TANAOROSHI_STATUS.SHUTURYOKUZUMI) & ")"
-    sql &= " GROUP BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)   "
-    sql &= " ORDER BY CONVERT(varchar(10), CONVERT(date, TANAOROSHI_DATE, 112), 111)  DESC"
+    sql &= " SELECT  "
+    sql &= "         CONVERT(varchar(10), CONVERT(date, DATE_LIST, 112), 111)  AS ItemCode  "
+    sql &= "      ,  FORMAT(CONVERT(date, DATE_LIST, 112), '" & CODE_FORMAT & "', 'ja-JP') AS ItemName "
+    sql &= " FROM TANAOROSHI_DATE_LIST "
+    sql &= " WHERE DISP_CHK = 1 "
+    sql &= " ORDER BY DATE_LIST desc "
 
     Console.WriteLine(sql)
 

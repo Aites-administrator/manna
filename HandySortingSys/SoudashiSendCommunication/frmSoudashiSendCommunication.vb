@@ -8,7 +8,7 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
-
+Imports DateListChk
 
 
 Public Class frmSoudashiSendCommunication
@@ -204,6 +204,7 @@ Public Class frmSoudashiSendCommunication
     sql &= "        ELSE MST_ITEM.TANKA_TANI "
     sql &= "       END AS HACHU_TANI "
     sql &= "      ,	 '' AS INDEX_ID"
+    sql &= "      ,	 MST_ITEM.IRISU AS IRISU "
     sql &= " FROM TRN_SHUKKA "
     sql &= " LEFT JOIN MST_ITEM "
     sql &= " ON MST_ITEM.SHOHIN_CD = TRN_SHUKKA.JISYA_SHOHIN_CD "
@@ -227,6 +228,7 @@ Public Class frmSoudashiSendCommunication
     sql &= "         ,MST_ITEM.JAN"
     sql &= "         ,MST_ITEM.ITF "
     sql &= "         ,MST_ITEM.TANKA_TANI "
+    sql &= "         ,MST_ITEM.IRISU "
     'sql &= "         ,HACHU_TANI "
     sql &= " ORDER BY LEFT(MST_ITEM.TANA_CD, 2),TRN_SHUKKA.JISYA_SHOHIN_CD "
 
@@ -242,7 +244,7 @@ Public Class frmSoudashiSendCommunication
     Dim tmpCommunicationDate As New Dictionary(Of String, String)
 
     Try
-
+      ShowProcessing("データ取得中…")
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
       BtnSendHandy1.TargetCancelParentClick = False
       BtnSendHandy1.Handy = Handy
@@ -332,6 +334,7 @@ Public Class frmSoudashiSendCommunication
 
 
     Catch ex As Exception
+      Call BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
   End Sub
@@ -358,6 +361,26 @@ Public Class frmSoudashiSendCommunication
   End Sub
 
 
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
 
+      Dim frm As New frmDateListChk("SHUKKA_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateNohinBi1.InitCmb()
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
+  End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
 
 End Class

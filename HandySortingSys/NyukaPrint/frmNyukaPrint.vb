@@ -1,7 +1,7 @@
 ﻿Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonCtrl
-
+Imports DateListChk
 Public Class frmNyukaPrint
   Inherits FormBase
 
@@ -12,13 +12,33 @@ Public Class frmNyukaPrint
 
   Private Sub frmNyukaPrint_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     '    CmbDateSagyoBi1.SelectedIndex = 0
+    CmbDateSagyoBi1.InitCmb()
+    AddHandler BtnOutput1.ReceiveCompleted, AddressOf ReceiveCompleted
+
   End Sub
+
+
+  Private Sub ReceiveCompleted()
+    '日付登録
+    Try
+
+      HideProcessing()
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
+  End Sub
+
 
   Private Sub BtnOutput1_Click(sender As Object, e As EventArgs) Handles BtnOutput1.Click
     Try
+      ShowProcessing("データ取得中…")
+
       BtnOutput1.TargetDataGridView = DgvList1
 
     Catch ex As Exception
+      ReceiveCompleted()
 
     End Try
 
@@ -74,6 +94,23 @@ Public Class frmNyukaPrint
 
     DgvList1.SetData(tmpDt)
 
+  End Sub
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
+
+      Dim frm As New frmDateListChk("NYUKA_ZUMI_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateSagyoBi1.InitCmb()
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
   End Sub
 
 End Class

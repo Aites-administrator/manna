@@ -24,6 +24,7 @@ Partial Class frmTanemakiSendCommunication
   <System.Diagnostics.DebuggerStepThrough()>
   Protected Overrides Sub InitializeComponent()
     Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTanemakiSendCommunication))
+    Me.BtnDataListChk = New Button
     Me.BtnSendHandy1 = New T.R.ZCommonCtrl.BtnSendHandy()
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
@@ -119,6 +120,15 @@ Partial Class frmTanemakiSendCommunication
     Me.CmbDateNohinBi1.TabIndex = 20
     'Me.CmbDateNohinBi1.ValueMember = "ItemCode"
     '
+    'BtnDataListChk
+    '
+    Me.BtnDataListChk.Location = New System.Drawing.Point(415, 93)
+    Me.BtnDataListChk.Size = New System.Drawing.Size(100, 41)
+    Me.BtnDataListChk.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.BtnDataListChk.BackColor = Color.SteelBlue
+    Me.BtnDataListChk.Text = "設定"
+
+    '
     'LblBase2
     '
     Me.LblBase2.AutoSize = True
@@ -189,6 +199,7 @@ Partial Class frmTanemakiSendCommunication
     Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
     Me.ClientSize = New System.Drawing.Size(1384, 861)
+    Me.Controls.Add(Me.BtnDataListChk)
     Me.Controls.Add(Me.ChkJouon)
     Me.Controls.Add(Me.ChkReizo)
     Me.Controls.Add(Me.GroupBox1)
@@ -213,6 +224,7 @@ Partial Class frmTanemakiSendCommunication
 
   End Sub
 
+  Friend WithEvents BtnDataListChk As Button
   Friend WithEvents BtnSendHandy1 As BtnSendHandy
   Friend WithEvents DgvList1 As DgvList
   Friend WithEvents LblBase1 As LblBase

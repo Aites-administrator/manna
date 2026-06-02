@@ -87,6 +87,8 @@ Public Class clsCommonFnc
 #End Region
   ' プロセスＩＤ
   Private Shared procesID As System.Diagnostics.Process
+  ' プロセスフォーム
+  Private Shared processingForm As Form
 #End Region
 
 
@@ -1453,18 +1455,24 @@ Err_Exit:
     End Try
   End Function
 
-  Public Shared Function DataTable2Excel(prmDt As DataTable, prmExcelFilePath As String, Optional ByRef prmOutPutCount As Integer = 0) As Boolean
+  Public Shared Function DataTable2Excel(prmDt As DataTable,
+                                       prmExcelFilePath As String,
+                                       Optional ByRef prmOutPutCount As Integer = 0) As Boolean
+
+    If prmDt Is Nothing OrElse prmDt.Rows.Count = 0 Then
+      Return False
+    End If
+
+    prmOutPutCount = prmDt.Rows.Count
+
+    '-----------------------------------------
+    ' Excel オブジェクト生成
+    '-----------------------------------------
     Dim xlApp As Excel.Application = Nothing
     Dim xlBook As Excel.Workbook = Nothing
     Dim xlSheet As Excel.Worksheet = Nothing
 
     Try
-      If prmDt Is Nothing OrElse prmDt.Rows.Count = 0 Then
-        Return False
-      End If
-
-      prmOutPutCount = prmDt.Rows.Count
-
       xlApp = New Excel.Application()
       xlBook = xlApp.Workbooks.Add()
       xlSheet = CType(xlBook.Sheets(1), Excel.Worksheet)
@@ -1472,48 +1480,85 @@ Err_Exit:
       Dim totalRows = prmDt.Rows.Count
       Dim totalCols = prmDt.Columns.Count
 
-      ' 文字列書式を全体に適用
-      Dim dataRange As Excel.Range = xlSheet.Range(xlSheet.Cells(1, 1), xlSheet.Cells(totalRows + 1, totalCols))
-      dataRange.NumberFormat = "@"
+      '-----------------------------------------
+      ' 2次元配列にデータを格納
+      '-----------------------------------------
+      Dim data(totalRows, totalCols - 1) As Object
 
-      ' ヘッダー出力
-      For col As Integer = 0 To prmDt.Columns.Count - 1
-        xlSheet.Cells(1, col + 1) = prmDt.Columns(col).ColumnName
+      ' ヘッダー
+      For col As Integer = 0 To totalCols - 1
+        data(0, col) = prmDt.Columns(col).ColumnName
       Next
 
-      ' データ出力
-      For row As Integer = 0 To prmDt.Rows.Count - 1
-        For col As Integer = 0 To prmDt.Columns.Count - 1
-          xlSheet.Cells(row + 2, col + 1) = prmDt.Rows(row)(col).ToString()
+      ' データ
+      For row As Integer = 0 To totalRows - 1
+        For col As Integer = 0 To totalCols - 1
+          data(row + 1, col) = prmDt.Rows(row)(col)
         Next
       Next
 
-      ' 保存
-      xlBook.SaveAs(prmExcelFilePath)
-      xlBook.Close()
-      xlApp.Quit()
+      ' Excel に一括書き込み
+      Dim writeRange As Excel.Range =
+            xlSheet.Range(xlSheet.Cells(1, 1), xlSheet.Cells(totalRows + 1, totalCols))
 
-      Return True
+      writeRange.NumberFormat = "@"
+      writeRange.Value = data
+
+      '-----------------------------------------
+      ' SaveAs（1 回目）
+      '-----------------------------------------
+      Try
+        xlApp.DisplayAlerts = False
+        xlBook.SaveAs(prmExcelFilePath)
+        Return True
+
+      Catch ex As Exception
+        ' Excel が開いている可能性が高い
+        Dim result = MessageBox.Show(
+                $"Excelファイル '{prmExcelFilePath}' が開かれています。" & vbCrLf &
+                "閉じてから OK を押してください。",
+                "ファイルを閉じてください",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning
+            )
+
+        If result = DialogResult.Cancel Then
+          Throw New Exception("Excelファイルの保存がキャンセルされました。", ex)
+        End If
+      End Try
+
+      '-----------------------------------------
+      ' SaveAs（2 回目＝リトライ）
+      '-----------------------------------------
+      Try
+        xlBook.SaveAs(prmExcelFilePath)
+        Return True
+
+      Catch ex As Exception
+        Throw New Exception("ファイル名:" & prmExcelFilePath & vbCrLf & "Excelファイルを出力できませんでした。", ex)
+      End Try
 
     Catch ex As Exception
-      ComWriteErrLog(ex)
-      Throw New Exception("Excelファイルの出力に失敗しました。")
+      ComWriteErrLog(ex, False)
+      Throw
+
     Finally
-      ' COMオブジェクトの解放（重要！）
-      If Not xlSheet Is Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlSheet)
-      If Not xlBook Is Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlBook)
-      If Not xlApp Is Nothing Then
+      ' COM解放
+      If xlSheet IsNot Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlSheet)
+      If xlBook IsNot Nothing Then Runtime.InteropServices.Marshal.ReleaseComObject(xlBook)
+      If xlApp IsNot Nothing Then
         xlApp.Quit()
         Runtime.InteropServices.Marshal.ReleaseComObject(xlApp)
       End If
+
       xlSheet = Nothing
       xlBook = Nothing
       xlApp = Nothing
       GC.Collect()
       GC.WaitForPendingFinalizers()
     End Try
-  End Function
 
+  End Function
   ' ------------------------------------------------------
   ' ini ファイル読み込み
   ' ------------------------------------------------------
@@ -1706,7 +1751,7 @@ Optional ByVal columnCtl As Boolean = False)
 
 
       If (False = tmpObjectEnumlator.MoveNext()) Then Throw New ApplicationException("Couldn't Get ParrentProcessId.")
-      tmpBaseObject = tmpObjectEnumlator.Current
+        tmpBaseObject = tmpObjectEnumlator.Current
 
       '親プロセスのPIDを取得
       tmpProcessId = tmpBaseObject.Item("ParentProcessId")
@@ -1942,4 +1987,39 @@ Optional ByVal columnCtl As Boolean = False)
     Next
   End Sub
 
+  Public Shared Sub ShowProcessing(Optional message As String = "処理中です…")
+
+    If processingForm Is Nothing Then
+      processingForm = New Form With {
+          .Width = 300,
+          .Height = 100,
+          .FormBorderStyle = FormBorderStyle.FixedDialog,
+          .StartPosition = FormStartPosition.CenterScreen,
+          .ControlBox = False,
+          .Text = "処理中"
+      }
+
+      Dim lbl As New Label With {
+          .Dock = DockStyle.Fill,
+          .TextAlign = ContentAlignment.MiddleCenter,
+          .Font = New Font("Meiryo", 12),
+          .Text = message
+      }
+
+      processingForm.Controls.Add(lbl)
+    Else
+      ' メッセージだけ更新
+      Dim lbl = TryCast(processingForm.Controls(0), Label)
+      If lbl IsNot Nothing Then lbl.Text = message
+    End If
+
+    processingForm.Show()
+    processingForm.Refresh()
+  End Sub
+
+  Public Shared Sub HideProcessing()
+    If processingForm IsNot Nothing Then
+      processingForm.Hide()
+    End If
+  End Sub
 End Class

@@ -21,7 +21,6 @@ Public Class BtnBase
   Public AccessKey As Keys
 #End Region
 
-
 #Region "コンストラクタ"
   ''' <summary>
   ''' コンストラクタ

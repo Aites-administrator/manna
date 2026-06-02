@@ -1,4 +1,5 @@
-﻿Imports T.R.ZCommonClass.clsCommonFnc
+﻿Imports T.R.ZCommonClass
+Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
@@ -7,12 +8,29 @@ Public Class SoudashiReceiveCommunication
 
   Private Const RECEIVE_FOLDER As String = "RECEIVE\"
   Private Const RECEIVE_NYUKA_FILE_NAME As String = RECEIVE_FOLDER & "MST_PICK.DAT"
+  Private SqlServer As New clsSqlServer
+  Private Const DATE_LIST_TABLE_NAME As String = "SHUKKA_ZUMI_DATE_LIST"
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
     Me.TextDisplayName = "2.総出し作業"
+    AddHandler BtnRecieveHandy1.ReceiveCompleted, AddressOf AfterReceiveProcess
+
     MyBase.OnLoad(e)
+  End Sub
+
+  Private Sub AfterReceiveProcess()
+    '日付登録
+    Try
+
+      SqlServer.Execute(BtnRecieveHandy1.SqlInsDateList(DATE_LIST_TABLE_NAME, BtnRecieveHandy1.DATE_LIST))
+      SqlServer.Execute(BtnRecieveHandy1.SqlDelDateList(DATE_LIST_TABLE_NAME))
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
   End Sub
 
   Private Sub BtnRecieveHandy1_Click(sender As Object, e As EventArgs) Handles BtnRecieveHandy1.Click
@@ -22,6 +40,8 @@ Public Class SoudashiReceiveCommunication
     Dim tmpItemUpdColumn As New List(Of String)
 
     Try
+      ShowProcessing("データ取得中…")
+
       'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
 
       BtnRecieveHandy1.Handy = Handy
@@ -54,6 +74,7 @@ Public Class SoudashiReceiveCommunication
       BtnRecieveHandy1.TargetOutputFileName = "SOUDASHI_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 
     Catch ex As Exception
+      HideProcessing()
       ComWriteErrLog(ex, False)
     End Try
 

@@ -101,6 +101,7 @@ Public Class FormBase
 #Region "コントロール制御関連"
 
   Public Sub New()
+    'InitializeComponent()
     Me.StartPosition = FormStartPosition.CenterScreen
   End Sub
 

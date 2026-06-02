@@ -24,9 +24,10 @@ Partial Class frmTanaoroshiPrint
   <System.Diagnostics.DebuggerStepThrough()>
   Protected Overloads Sub InitializeComponent()
     Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTanaoroshiPrint))
+    Me.BtnDataListChk = New Button
     Me.BtnEnd_L1 = New T.R.ZCommonCtrl.BtnEnd_L()
     Me.DgvList1 = New T.R.ZCommonCtrl.DgvList()
-    Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateTanaoroshiBi()
+    Me.CmbDateSagyoBi1 = New T.R.ZCommonCtrl.CmbDateTanaoroshiBiZumi()
     Me.BtnOutput1 = New T.R.ZCommonCtrl.BtnOutput()
     Me.LblBase2 = New T.R.ZCommonCtrl.LblBase()
     Me.LblBase1 = New T.R.ZCommonCtrl.LblBase()
@@ -69,6 +70,15 @@ Partial Class frmTanaoroshiPrint
     Me.CmbDateSagyoBi1.Size = New System.Drawing.Size(226, 41)
     Me.CmbDateSagyoBi1.TabIndex = 10
     Me.CmbDateSagyoBi1.ValueMember = "ItemCode"
+    '
+    'BtnDataListChk
+    '
+    Me.BtnDataListChk.Location = New System.Drawing.Point(385, 90)
+    Me.BtnDataListChk.Size = New System.Drawing.Size(100, 41)
+    Me.BtnDataListChk.Font = New System.Drawing.Font("MS UI Gothic", 24.0!)
+    Me.BtnDataListChk.BackColor = Color.SteelBlue
+    Me.BtnDataListChk.Text = "設定"
+
     '
     'BtnOutput1
     '
@@ -113,6 +123,7 @@ Partial Class frmTanaoroshiPrint
     Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
     Me.ClientSize = New System.Drawing.Size(1384, 861)
+    Me.Controls.Add(Me.BtnDataListChk)
     Me.Controls.Add(Me.BtnEnd_L1)
     Me.Controls.Add(Me.DgvList1)
     Me.Controls.Add(Me.CmbDateSagyoBi1)
@@ -131,9 +142,10 @@ Partial Class frmTanaoroshiPrint
 
   End Sub
 
+  Friend WithEvents BtnDataListChk As Button
   Friend WithEvents BtnEnd_L1 As BtnEnd_L
   Friend WithEvents DgvList1 As DgvList
-  Friend WithEvents CmbDateSagyoBi1 As CmbDateTanaoroshiBi
+  Friend WithEvents CmbDateSagyoBi1 As CmbDateTanaoroshiBiZumi
   Friend WithEvents BtnOutput1 As BtnOutput
   Friend WithEvents LblBase2 As LblBase
   Friend WithEvents LblBase1 As LblBase

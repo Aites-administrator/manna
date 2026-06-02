@@ -43,6 +43,9 @@ Public Class FormCommunication
   End Sub
 
   Private Sub BaseForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    If Me.DesignMode Then
+      Return
+    End If
     TextDataGrid.UseCustomSize = True
     'TextDataGrid.GridFontSize = 14
     'TextDataGrid.HeaderFontSize = 14
@@ -173,6 +176,7 @@ Public Class FormCommunication
   Private Sub OnProcessExited(sender As Object, e As EventArgs)
     ' プロセス終了時にここが走る
   End Sub
+
 
 #End Region
 

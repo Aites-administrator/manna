@@ -78,11 +78,12 @@ Public Class BtnSendHandy
     'IO.File.WriteAllText(PROJECT_DIR_NAME & SEND_FOLDER & SEND_END_FILE_NAME, "1", System.Text.Encoding.GetEncoding("shift-jis"))
 
 
-    MyBase.OnClick(e)
 
     Dim tmpDt As New DataTable
     Dim filename As String = String.Empty
     Try
+      MyBase.OnClick(e)
+
       If TargetCancelParentClick Then
         Exit Sub
       End If
@@ -121,7 +122,8 @@ Public Class BtnSendHandy
         '更新項目生成
         Dim tmpUpdColumn As New Dictionary(Of String, String)
         For Each UpdColumn In TargetUpdColumn
-          If UpdColumn = "TORIKOMI_JOKYO_FLG" Then
+          If UpdColumn = "TORIKOMI_JOKYO_FLG" _
+            OrElse UpdColumn = "COURSE_SOUDASHI_FLG" Then
             tmpUpdColumn.Add(UpdColumn, TargetUpdStatus)
           Else
             tmpUpdColumn.Add(UpdColumn, tmpRow(UpdColumn).ToString)
@@ -171,7 +173,6 @@ Public Class BtnSendHandy
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
 
       ComMessageBox("送信が完了しました。", "確認", typMsgBox.MSG_NORMAL)
-      RaiseEvent SendCompleted()
 
       '親画面編集不可をコメント
       'CType(Me.Parent, Form).TopMost = True
@@ -179,12 +180,14 @@ Public Class BtnSendHandy
     Catch ex As Exception
       SqlServer.TrnRollBack()
       ComWriteErrLog(ex, False)
+
       'ﾃｽﾄ用に無視するようにしている！！！ここから！！！
       WriteProgressLog($"何かしらの送信ボタンエラー")
 
       Handy.CloseCommunicationTool()
     Finally
       Me.Enabled = True
+      HideProcessing()
 
     End Try
   End Sub

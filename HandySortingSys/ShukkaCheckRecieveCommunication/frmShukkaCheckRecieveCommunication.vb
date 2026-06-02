@@ -10,8 +10,20 @@ Public Class frmShukkaCheckRecieveCommunication
 
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
-    Me.TextDisplayName = "4.出荷検品"
+    Me.TextDisplayName = "5.出荷検品"
+    AddHandler BtnRecieveHandy1.ReceiveCompleted, AddressOf AfterReceiveProcess
+
     MyBase.OnLoad(e)
+  End Sub
+
+  Private Sub AfterReceiveProcess()
+    '日付登録
+    Try
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    Finally
+    End Try
   End Sub
 
 
@@ -23,6 +35,7 @@ Public Class frmShukkaCheckRecieveCommunication
 
     Try
       'ComMessageBox("ハンディターミナルを送信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      ShowProcessing("データ取得中…")
 
       BtnRecieveHandy1.Handy = Handy
       Me.TextHandy = Handy
@@ -55,6 +68,7 @@ Public Class frmShukkaCheckRecieveCommunication
       BtnRecieveHandy1.TargetOutputFileName = "SHUKKA_KENPIN_" & DateTime.Parse(ComGetProcTime()).ToString("yyyyMMddHHmmss") & ".xlsx"
 
     Catch ex As Exception
+      AfterReceiveProcess()
       ComWriteErrLog(ex, False)
     End Try
 

@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports T.R.ZCommonClass
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonCtrl
 Imports ClosedXML.Excel
@@ -15,6 +16,8 @@ Public Class frmTanaoroshiImport
 
   Private Const CSV_COL_COUNT As Integer = 16
 
+  Private Const DATE_LIST_TABLE_NAME As String = "TANAOROSHI_DATE_LIST"
+  Private SqlServer As New clsSqlServer
 
 
   Private Sub BtnInput1_Click(sender As Object, e As EventArgs) Handles BtnInput1.Click
@@ -26,6 +29,7 @@ Public Class frmTanaoroshiImport
       ofd.Filter = "Excelファイル (*.xlsx;*.xls)|*.xlsx;*.xls|CSVファイル (*.csv)|*.csv|すべてのファイル (*.*)|*.*"
       Dim result = ofd.ShowDialog(Me)
 
+      ShowProcessing("データ取得中…")
       'DataTable変換
       If result = DialogResult.OK Then
         ExcelToCsv(ofd.FileName, System.IO.Path.GetDirectoryName(ofd.FileName) & "\" & CSV_FILE_NAME, CSV_COL_COUNT)
@@ -42,8 +46,11 @@ Public Class frmTanaoroshiImport
         BtnInput1.TargetTableName = TABLE_NAME
         BtnInput1.TargetCsvType = CSV_TYPE
         DgvList1.SetData(dtNyukaData)
+      Else
+        HideProcessing()
       End If
     Catch ex As Exception
+      HideProcessing()
       ComWriteErrLog(ex, False)
     End Try
 
@@ -122,6 +129,21 @@ Public Class frmTanaoroshiImport
 
   End Sub
 
+  Private Sub frmTanaoroshiImport_Load(sender As Object, e As EventArgs) Handles Me.Load
+    AddHandler BtnInput1.InputCompleted, AddressOf InputReceiveProcess
+  End Sub
 
+  Private Sub InputReceiveProcess()
+    '日付登録
+    Try
+
+      SqlServer.Execute(BtnInput.SqlInsDateList(DATE_LIST_TABLE_NAME, BtnInput.DATE_LIST))
+      SqlServer.Execute(BtnInput.SqlDelDateList(DATE_LIST_TABLE_NAME))
+
+    Catch ex As Exception
+      ComWriteErrLog(ex)
+    End Try
+
+  End Sub
 
 End Class

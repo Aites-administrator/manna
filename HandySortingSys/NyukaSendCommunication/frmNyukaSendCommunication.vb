@@ -8,6 +8,7 @@ Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports T.R.ZCommonCtrl
 Imports ClsHandyCommunication
+Imports DateListChk
 
 Public Class frmNyukaSendCommunication
   Inherits FormSendCommunication
@@ -132,6 +133,7 @@ Public Class frmNyukaSendCommunication
 
     Try
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      ShowProcessing("データ取得中…")
 
       BtnSendHandy1.Handy = Handy
       Me.TextHandy = Handy
@@ -175,6 +177,7 @@ Public Class frmNyukaSendCommunication
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
+      BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
   End Sub
@@ -192,4 +195,25 @@ Public Class frmNyukaSendCommunication
     DgvList1.SetData(tmpDtJP)
   End Sub
 
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
+
+      Dim frm As New frmDateListChk("NYUKA_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateSagyoBi1.InitCmb()
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
+  End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
 End Class

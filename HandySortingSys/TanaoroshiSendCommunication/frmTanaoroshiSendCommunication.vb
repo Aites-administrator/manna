@@ -8,6 +8,7 @@ Imports T.R.ZCommonClass.clsGlobalData
 Imports T.R.ZCommonClass.clsCommonFnc
 Imports T.R.ZCommonClass.clsLenColumnDef
 Imports ClsHandyCommunication
+Imports DateListChk
 
 Public Class frmTanaoroshiSendCommunication
   Inherits FormSendCommunication
@@ -19,7 +20,7 @@ Public Class frmTanaoroshiSendCommunication
   Protected Overrides Sub OnLoad(e As EventArgs)
     Me.TextDataGrid = DgvList1
 
-    Me.TextDisplayName = "5.棚卸作業"
+    Me.TextDisplayName = "6.棚卸作業"
 
     MyBase.OnLoad(e)
   End Sub
@@ -27,7 +28,6 @@ Public Class frmTanaoroshiSendCommunication
   Private Sub frmNyukaSendCommunication_Load(sender As Object, e As EventArgs) Handles MyBase.Load
     CmbDateTanaoroshiBi1.SelectedIndex = 0
     RegisterSendButton(Me.BtnSendHandy1)
-
 
   End Sub
 
@@ -212,6 +212,7 @@ Public Class frmTanaoroshiSendCommunication
 
     Try
       'ComMessageBox("ハンディターミナルを受信画面にしてクレードルに置いてください。", "お願い", typMsgBox.MSG_WARNING, typMsgBoxButton.BUTTON_OK)
+      ShowProcessing("データ取得中…")
 
       BtnSendHandy1.Handy = Handy
       Me.TextHandy = Handy
@@ -296,6 +297,7 @@ Public Class frmTanaoroshiSendCommunication
       BtnSendHandy1.TargetCommunicationDate = tmpCommunicationDate
 
     Catch ex As Exception
+      BtnSendHandy1_SendCompleted()
       ComWriteErrLog(ex, False)
     End Try
   End Sub
@@ -321,5 +323,26 @@ Public Class frmTanaoroshiSendCommunication
     DgvList1.Columns("送信済み").Visible = False
   End Sub
 
+  Private Sub BtnDataListChk_Click(sender As Object, e As EventArgs) Handles BtnDataListChk.Click
+    Try
+
+      Dim frm As New frmDateListChk("TANAOROSHI_DATE_LIST")
+
+      frm.ShowDialog()
+
+      CmbDateTanaoroshiBi1.InitCmb()
+
+    Catch ex As Exception
+
+      ComMessageBox(ex.Message,
+                    "エラー",
+                    typMsgBox.MSG_ERROR)
+
+    End Try
+  End Sub
+
+  Private Sub BtnSendHandy1_SendCompleted() Handles BtnSendHandy1.SendCompleted
+    HideProcessing()
+  End Sub
 
 End Class
